@@ -1,0 +1,297 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+:root {
+  font-family: "Inter", sans-serif;
+  color: #1a1a1a;
+  background: #faf9f6;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #faf9f6;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100svh;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+@font-face {
+  font-family: "Nohemi";
+  src:
+    url("/fonts/Nohemi-ExtraLight.woff2") format("woff2"),
+    url("/fonts/Nohemi-ExtraLight.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nohemi";
+  src:
+    url("/fonts/Nohemi-Light.woff2") format("woff2"),
+    url("/fonts/Nohemi-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nohemi";
+  src:
+    url("/fonts/Nohemi-Bold.woff2") format("woff2"),
+    url("/fonts/Nohemi-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nohemi";
+  src:
+    url("/fonts/Nohemi-ExtraBold.woff2") format("woff2"),
+    url("/fonts/Nohemi-ExtraBold.woff") format("woff");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nohemi";
+  src:
+    url("/fonts/Nohemi-Black.woff2") format("woff2"),
+    url("/fonts/Nohemi-Black.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-heading {
+  font-family: "Nohemi", "Inter", sans-serif;
+  font-weight: 900;
+}
+
+.font-body-serif {
+  font-family: "Nohemi", "Inter", sans-serif;
+  font-weight: 300;
+}
+
+.portfolio-card {
+  border-bottom: 1px solid var(--grid-line, #e5e1da);
+}
+
+@media (min-width: 1024px) {
+  .portfolio-card {
+    border-right: 1px solid var(--grid-line, #e5e1da);
+  }
+
+  .portfolio-card:nth-child(4n) {
+    border-right: 0;
+  }
+
+  .portfolio-card:nth-child(n + 5) {
+    border-bottom: 0;
+  }
+}
+
+.mode-button {
+  color: rgb(26 26 26 / 0.55);
+  transition: color 280ms ease;
+}
+
+.toggle-thumb {
+  background: var(--toggle-active, var(--accent));
+  transition:
+    transform 280ms cubic-bezier(0.65, 0, 0.35, 1),
+    background-color 280ms ease;
+}
+
+.about-intro {
+  transition: color 160ms ease;
+}
+
+.card-link:hover .about-intro:hover {
+  color: #0f3a8a;
+}
+
+.toggle-group {
+  background: var(--toggle-bg, #faf9f6);
+}
+
+.mode-button:hover {
+  color: var(--accent-text, var(--accent));
+}
+
+.mode-button.active {
+  color: var(--toggle-active-text, #fff);
+}
+
+.accent-dot,
+.accent-rule {
+  background: var(--accent);
+}
+
+.accent-text {
+  color: var(--accent-text, var(--accent));
+}
+
+.contact-link:hover {
+  color: var(--accent);
+}
+
+.card-link:hover .card-title {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.mood-swatch {
+  box-shadow: inset 0 -8px 0 var(--accent);
+}
+
+.tool-chip {
+  transition:
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.tool-chip:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.contact-link {
+  text-underline-offset: 5px;
+  transition: color 160ms ease;
+}
+
+.contact-link:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent, #0f3a8a);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-card,
+  .mode-button,
+  .toggle-thumb,
+  .tool-chip,
+  .contact-link {
+    transition: none;
+  }
+}
+
+.fade-others .card-link {
+  transition: opacity 160ms ease;
+}
+
+@media (min-width: 1024px) {
+  .fade-others:has(.card-link:hover) .card-link:not(:hover) {
+    opacity: 0.35;
+  }
+}
+
+.card-link:hover .card-title {
+  text-decoration-color: var(--accent);
+}
+
+main,
+main * {
+  text-transform: lowercase;
+}
+
+.open-line {
+  background: var(--line);
+  transform-origin: top;
+  animation: line-run 950ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+@keyframes line-run {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .open-line {
+    animation: none;
+    transition: none;
+  }
+}
+
+.mood-item {
+  opacity: 0;
+  transform: translateX(-16px);
+  transition:
+    opacity 260ms ease,
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--r) * 70ms);
+}
+
+.card-link:hover .mood-item {
+  opacity: 0.55;
+  transform: none;
+  transition-delay: calc(var(--i) * 110ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mood-item {
+    transition: none;
+  }
+}
+
+.page-article:has([data-essay]) > header {
+  border-bottom: 1px solid rgb(26 26 26 / 0.15);
+  padding-bottom: 1.5rem;
+}
+
+.hl-btn {
+  background: var(--hl, #0f3a8a);
+  color: var(--hl-text, #fff);
+  transition: opacity 160ms ease;
+}
+
+.hl-btn:hover {
+  opacity: 0.8;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.5rem;
+  font-weight: 500;
+  color: var(--hl-link, #0f3a8a);
+  transition: opacity 160ms ease;
+}
+
+.back-btn:hover {
+  opacity: 0.7;
+}
+
+button:not(:disabled):not(.mode-button),
+a[href],
+[role="button"] {
+  cursor: pointer;
+}
