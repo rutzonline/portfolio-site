@@ -1258,27 +1258,45 @@ function CasesPage({ mode }: { mode: Mode }) {
 const pageTitle = (k: PageKey, m: Mode) =>
   k === "moodboard" && m === "growth" ? "Case studies" : titles[k]
 
-function readHash(): PageKey | null {
-  const h = window.location.hash.replace("#", "") as PageKey
-  return PAGE_KEYS.includes(h) ? h : null
+const SLUGS: Record<PageKey, string> = {
+  about: "about",
+  projects: "experience",
+  work: "skills-and-stack",
+  notes: "notes",
+  moodboard: "moodboard",
+  upto: "what-im-up-to",
+}
+
+const slugOf = (k: PageKey, m: Mode) =>
+  k === "moodboard" && m === "growth" ? "case-studies" : SLUGS[k]
+
+function readHash(): { mode: Mode | null; page: PageKey | null } {
+  const [m, slug] = window.location.hash.replace("#", "").split("/")
+  const mode = m === "growth" || m === "brand" ? m : null
+  const page = PAGE_KEYS.find((k) => mode && slugOf(k, mode) === slug) ?? null
+  return { mode, page }
 }
 
 export default function App() {
-  const [mode, setMode] = useState<Mode>("brand")
+  const [mode, setMode] = useState<Mode>(() => readHash().mode ?? "growth")
   const [copied, setCopied] = useState(false)
-  const [page, setPage] = useState<PageKey | null>(readHash)
+  const [page, setPage] = useState<PageKey | null>(() => readHash().page)
   const content = modeCopy[mode]
   const accent = mode === "growth" ? SAPPHIRE : "#E88D6D"
   const tint = (k: PageKey) => content.tints[k] ?? CREAM
 
   useEffect(() => {
-    const onHash = () => setPage(readHash())
+    const onHash = () => {
+      const h = readHash()
+      if (h.mode) setMode(h.mode)
+      setPage(h.page)
+    }
     window.addEventListener("hashchange", onHash)
     return () => window.removeEventListener("hashchange", onHash)
   }, [])
 
   const open = (k: PageKey) => {
-    window.location.hash = k
+    window.location.hash = `${mode}/${slugOf(k, mode)}`
   }
   const [, bump] = useState(0)
   useEffect(() => {
@@ -1291,7 +1309,7 @@ export default function App() {
     close()
   }
   const close = () => {
-    history.pushState(null, "", window.location.pathname)
+    history.pushState(null, "", `${window.location.pathname}#${mode}`)
     setPage(null)
   }
 
@@ -1438,7 +1456,14 @@ export default function App() {
                   key={option}
                   type="button"
                   aria-pressed={mode === option}
-                  onClick={() => setMode(option)}
+                  onClick={() => {
+                    setMode(option)
+                    history.replaceState(
+                      null,
+                      "",
+                      `#${option}${page ? `/${slugOf(page, option)}` : ""}`,
+                    )
+                  }}
                   className={`mode-button relative min-h-8 rounded-[3px] px-3 text-base font-medium capitalize ${
                     mode === option ? "active" : ""
                   }`}

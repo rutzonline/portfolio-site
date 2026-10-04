@@ -1,7 +1,12 @@
 {
-  "description": "A responsive personal portfolio for growth marketers and writers featuring a clean bento grid layout with toggleable modes highlighting tailored content and projects.",
-  "robots": {
-    "index": false
+  "title": "Rutuja Rochkari",
+  "description": "Growth Marketer & Brand Storyteller.",
+  "language": "EN",
+  "icons": {
+    "icon": "/favicon.svg"
+  },
+  "openGraph": {
+    "image": "/.figma/make/social-image.png"
   },
   "accessibility": {
     "addBypassLinks": false,

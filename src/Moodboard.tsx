@@ -51,8 +51,28 @@ const catColor = (c: string) =>
 const card = "overflow-hidden rounded-xl border border-[#E5E1DA] bg-white"
 const grid4 = "grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
 
+const dotColors = ["#FF9FC0", "#DDF080", "#E88D6D", "#9EC5F4", "#0F3A8A"]
+
+function Loading() {
+  return (
+    <div
+      role="status"
+      aria-label="loading"
+      className="pointer-events-none absolute inset-0 flex items-center justify-center gap-2"
+    >
+      {dotColors.map((c, i) => (
+        <span
+          key={c}
+          className="wave-dot size-2.5 rounded-full"
+          style={{ background: c, animationDelay: `${i * 120}ms` }}
+        />
+      ))}
+    </div>
+  )
+}
+
 function State({ status, count }: { status: string; count: number }) {
-  if (status === "loading") return <p className="text-[#1A1A1A]/50">loading…</p>
+  if (status === "loading") return <Loading />
   if (status === "error")
     return (
       <p className="text-[#1A1A1A]/50">
@@ -299,7 +319,7 @@ export default function Moodboard() {
             ))}
           </div>
         </nav>
-        <div className="relative lg:min-h-0">
+        <div className="relative max-lg:min-h-[50svh] lg:min-h-0">
           <div
             key={cur}
             onScroll={(e) => {
