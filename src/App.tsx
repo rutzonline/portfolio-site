@@ -19,11 +19,7 @@ import liq7 from "@/imports/liquide/l7.png"
 import liq8 from "@/imports/liquide/l8.png"
 import liq9 from "@/imports/liquide/l9.png"
 import liq10 from "@/imports/liquide/l10.png"
-import stateplateLogo from "@/imports/what_i_bring__2000_x_1000_px___5_.png"
-import tspChallenge from "@/imports/4__1_.jpg"
-import tspApproach from "@/imports/IMG_6413-1.JPG"
-import tspDid from "@/imports/IMG_0249.jpg"
-import tspResults from "@/imports/IMG_0329.PNG"
+import stateplateLogo from "@/imports/Report_Card.png"
 import freelanceLogo from "@/imports/freelance___1_.png"
 import Moodboard from "@/Moodboard"
 import { aboutContent } from "@/aboutContent"
@@ -600,16 +596,6 @@ function Experience({ mode }: { mode: Mode }) {
       </ul>
       <div key={sel} ref={bodyRef} className="scroll-mt-14 px-6 py-8 lg:px-10">
         <CaseStudy
-          images={
-            timeline[sel][0] === "the state plate"
-              ? {
-                  Challenge: tspChallenge,
-                  Approach: tspApproach,
-                  "What I Did": tspDid,
-                  Results: tspResults,
-                }
-              : undefined
-          }
           md={
             timeline[sel][0] === "the state plate"
               ? statePlateCase
@@ -972,10 +958,8 @@ function CaseStudy({
   meta,
   header,
   footer,
-  images,
 }: {
   md: string
-  images?: Record<string, string>
   meta?: CaseMeta
   header?: ReactNode
   footer?: ReactNode
@@ -1113,11 +1097,7 @@ function CaseStudy({
       if (imgDue) {
         out.push(
           <figure key={`img-${i}`} className="my-2">
-            <ImageSlot
-              alt={imgDue}
-              src={images?.[imgDue]}
-              className="aspect-[16/9]"
-            />
+            <ImageSlot alt={imgDue} className="aspect-[16/9]" />
             <figcaption className="mt-1.5 text-sm text-[#1A1A1A]/50">
               {imgDue}
             </figcaption>
