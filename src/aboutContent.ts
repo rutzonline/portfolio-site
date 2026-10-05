@@ -1,7 +1,19 @@
+import cooking from "@/imports/a4ebfa7d97a0cbad273f046153d61bb2-1.jpg"
+import nyt from "@/imports/IMG_8735-1.jpg"
+import f1 from "@/imports/e879fbe87a6553c74fafc66039d7eecbx-1.jpg"
+import futbol from "@/imports/image00002-1.jpeg"
+import fpl from "@/imports/fpl-1.png"
+import window1 from "@/imports/image00001.jpeg"
+import boardGames from "@/imports/IMG_5557.jpg"
+import hotChoc from "@/imports/16.jpg"
+import skincare from "@/imports/IMG_5623.jpg"
+import fruit from "@/imports/IMG_7686-1.jpg"
+
 export type AboutExtra = {
   bio: string
   languages: [string, string][]
   interests: string[]
+  interestImages?: string[]
   faqs: [string, string][]
 }
 
@@ -13,7 +25,14 @@ export const aboutContent: Record<"growth" | "brand", AboutExtra> = {
       ["hindi", "native"],
       ["marathi", "native"],
     ],
-    interests: ["growth loops", "pricing & positioning", "sports", "pop culture", "daily puzzles"],
+    interests: [
+      "cooking (for 1)",
+      "nyt games <3",
+      "watching in my goat max neverstappen make a comeback @ the 'bahrain' gp",
+      "watching futbol",
+      "crushing it in fpl",
+    ],
+    interestImages: [cooking, nyt, f1, futbol, fpl],
     faqs: [
       ["what kind of growth work do you do?", "early-stage product growth: activation, lifecycle, paid and creator experiments, plus the reporting that tells you what actually moved."],
       ["what stage of company do you work best with?", "seed to series a, where one person can still touch positioning, channels and measurement."],
@@ -30,7 +49,14 @@ export const aboutContent: Record<"growth" | "brand", AboutExtra> = {
       ["hindi", "native"],
       ["marathi", "native"],
     ],
-    interests: ["storytelling", "brand voice", "newsletters", "pop culture", "sports", "daily puzzles"],
+    interests: [
+      "staring outside the window",
+      "losing in board games",
+      "drinking ungodly amounts of hot chocolate (winter edition)",
+      "skincare <3",
+      "chopping fruit",
+    ],
+    interestImages: [window1, boardGames, hotChoc, skincare, fruit],
     faqs: [
       ["what do you write?", "product narratives, brand voice, lifecycle emails, essays and social copy."],
       ["do you work with founders directly?", "yes, most of my freelance work is with founders who need a clear voice fast."],

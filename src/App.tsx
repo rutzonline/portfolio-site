@@ -19,7 +19,11 @@ import liq7 from "@/imports/liquide/l7.png"
 import liq8 from "@/imports/liquide/l8.png"
 import liq9 from "@/imports/liquide/l9.png"
 import liq10 from "@/imports/liquide/l10.png"
-import stateplateLogo from "@/imports/Report_Card.png"
+import stateplateLogo from "@/imports/what_i_bring__2000_x_1000_px___5_.png"
+import tspChallenge from "@/imports/4__1_.jpg"
+import tspApproach from "@/imports/IMG_6413-1.JPG"
+import tspDid from "@/imports/IMG_0249.jpg"
+import tspResults from "@/imports/IMG_0329.PNG"
 import freelanceLogo from "@/imports/freelance___1_.png"
 import Moodboard from "@/Moodboard"
 import { aboutContent } from "@/aboutContent"
@@ -313,18 +317,27 @@ let backHandler: (() => boolean) | null = null
 let backLabel = ""
 
 function useBack(fn: (() => boolean) | null, label = "") {
+  backHandler = fn
+  const active = fn !== null
+  useEffect(
+    () => () => {
+      backHandler = null
+    },
+    [],
+  )
   useEffect(() => {
-    backHandler = fn
-    backLabel = fn ? label : ""
-    window.dispatchEvent(new Event("backchange"))
+    const next = active ? label : ""
+    if (backLabel !== next) {
+      backLabel = next
+      window.dispatchEvent(new Event("backchange"))
+    }
     return () => {
-      if (backHandler === fn) {
-        backHandler = null
+      if (backLabel !== "") {
         backLabel = ""
         window.dispatchEvent(new Event("backchange"))
       }
     }
-  })
+  }, [active, label])
 }
 
 function Card({
@@ -587,6 +600,16 @@ function Experience({ mode }: { mode: Mode }) {
       </ul>
       <div key={sel} ref={bodyRef} className="scroll-mt-14 px-6 py-8 lg:px-10">
         <CaseStudy
+          images={
+            timeline[sel][0] === "the state plate"
+              ? {
+                  Challenge: tspChallenge,
+                  Approach: tspApproach,
+                  "What I Did": tspDid,
+                  Results: tspResults,
+                }
+              : undefined
+          }
           md={
             timeline[sel][0] === "the state plate"
               ? statePlateCase
@@ -673,9 +696,13 @@ function AboutExtras({ mode }: { mode: Mode }) {
           interests
         </h3>
         <ul className="flex flex-wrap gap-x-8 gap-y-6">
-          {c.interests.map((t) => (
+          {c.interests.map((t, i) => (
             <li key={t} className="flex w-36 flex-col gap-2">
-              <ImageSlot alt={t} className="aspect-[4/3]" />
+              <ImageSlot
+                alt={t}
+                src={c.interestImages?.[i]}
+                className="aspect-[4/3]"
+              />
               <span className="leading-snug">{t}</span>
             </li>
           ))}
@@ -945,8 +972,10 @@ function CaseStudy({
   meta,
   header,
   footer,
+  images,
 }: {
   md: string
+  images?: Record<string, string>
   meta?: CaseMeta
   header?: ReactNode
   footer?: ReactNode
@@ -1084,7 +1113,11 @@ function CaseStudy({
       if (imgDue) {
         out.push(
           <figure key={`img-${i}`} className="my-2">
-            <ImageSlot alt={imgDue} className="aspect-[16/9]" />
+            <ImageSlot
+              alt={imgDue}
+              src={images?.[imgDue]}
+              className="aspect-[16/9]"
+            />
             <figcaption className="mt-1.5 text-sm text-[#1A1A1A]/50">
               {imgDue}
             </figcaption>
@@ -1653,15 +1686,18 @@ export default function App() {
                 {copied ? "Copied!" : "Email"}
               </button>
               {[
-                ["LinkedIn", "https://www.linkedin.com/"],
-                ["X (twitter)", "https://x.com/"],
-                ["Are.na", "https://www.are.na/"],
-                ["macos site", "https://www.notion.so/"],
-                ["Cursor", "https://cursor.com/"],
+                ["LinkedIn", "https://www.linkedin.com/in/rutuja-rochkari"],
+                ["X (twitter)", "https://x.com/rutzpective"],
+                mode === "brand"
+                  ? ["Are.na", "https://www.are.na/rutzine"]
+                  : ["Cursor", "https://cursor.com/@rutuja"],
+                mode === "brand"
+                  ? ["macos site", "https://rutujarochkari.vercel.app/"]
+                  : ["GitHub", "https://github.com/rutzonline"],
                 ["Cal.com", "https://cal.com/rutujarochkari"],
               ].map(([label, href]) => (
                 <a
-                  key={label}
+                  key={`${label}-${href}`}
                   className="contact-link"
                   href={href}
                   target="_blank"
