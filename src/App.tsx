@@ -982,12 +982,14 @@ function CaseStudy({
   header,
   footer,
   independentScroll = false,
+  backControl,
 }: {
   md: string
   meta?: CaseMeta
   header?: ReactNode
   footer?: ReactNode
   independentScroll?: boolean
+  backControl?: ReactNode
 }) {
   const [active, setActive] = useState(0)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -1163,8 +1165,9 @@ function CaseStudy({
       {toc.length > 1 && (
         <nav
           aria-label="contents"
-          className={`hidden self-start lg:block ${independentScroll ? "max-h-full overflow-y-auto overscroll-contain" : "lg:sticky lg:top-6"}`}
+          className={`hidden self-start lg:block ${independentScroll ? "max-h-full overflow-y-auto overscroll-contain pt-6" : "lg:sticky lg:top-6"}`}
         >
+          {backControl && <div className="mb-6">{backControl}</div>}
           <ul className="flex flex-col gap-2 text-[15px] leading-tight">
             {toc.map(([id, label], k) => (
               <li key={id}>
@@ -1204,7 +1207,7 @@ function CaseStudy({
         tabIndex={independentScroll ? 0 : undefined}
         className={`min-w-0 ${independentScroll ? "min-h-0 overflow-y-auto overscroll-contain" : ""}`}
       >
-        <div className={`flex max-w-[44rem] flex-col gap-4 ${independentScroll ? "mr-6 pb-6 pr-3 lg:mr-10" : ""}`}>
+        <div className={`flex max-w-[44rem] flex-col gap-4 ${independentScroll ? "mr-6 pb-6 pr-3 pt-6 lg:mr-10 lg:pt-[88px]" : ""}`}>
           {header}
           {meta && (
             <div className="mb-4 flex flex-col gap-6">
@@ -1253,20 +1256,20 @@ function CasesPage({ mode }: { mode: Mode }) {
   if (open !== null) {
     const [name, sub, domain] = cases[open]
     return (
-      <div data-essay className="-mr-6 flex min-h-0 flex-1 flex-col gap-6 overflow-hidden lg:-mr-10">
-        <div className="flex shrink-0 flex-wrap items-center gap-4 max-lg:hidden">
-          <button
-            type="button"
-            onClick={() => setOpen(null)}
-            className="back-btn"
-          >
-            <Chev />
-            all case studies
-          </button>
-        </div>
+      <div data-essay className="-mr-6 -mt-6 flex min-h-0 flex-1 flex-col overflow-hidden lg:-mr-10">
         {caseContent[name] ? (
           <CaseStudy
             independentScroll
+            backControl={
+              <button
+                type="button"
+                onClick={() => setOpen(null)}
+                className="back-btn"
+              >
+                <Chev />
+                all case studies
+              </button>
+            }
             md={caseContent[name]}
             header={<CaseHeader name={name} sub={sub} domain={domain} />}
             meta={{
