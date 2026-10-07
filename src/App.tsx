@@ -978,13 +978,16 @@ function CaseStudy({
   meta,
   header,
   footer,
+  independentScroll = false,
 }: {
   md: string
   meta?: CaseMeta
   header?: ReactNode
   footer?: ReactNode
+  independentScroll?: boolean
 }) {
   const [active, setActive] = useState(0)
+  const contentRef = useRef<HTMLDivElement>(null)
   const toc: [string, string][] = []
   let imgDue: string | null = null
   const lines = md.split("\n")
@@ -1130,8 +1133,11 @@ function CaseStudy({
   }
   const tocKey = toc.length
   useEffect(() => {
+    setActive(0)
+    const content = contentRef.current
+    if (independentScroll) content?.scrollTo({ top: 0 })
     const els = Array.from({ length: tocKey }, (_, k) =>
-      document.getElementById(`sec-${k}`),
+      content?.querySelector<HTMLElement>(`#sec-${k}`),
     ).filter(Boolean) as HTMLElement[]
     if (!els.length) return
     const visible = new Set<number>()
@@ -1144,17 +1150,17 @@ function CaseStudy({
         }
         if (visible.size) setActive(Math.min(...visible))
       },
-      { rootMargin: "0px 0px -65% 0px" },
+      { root: independentScroll ? content : null, rootMargin: "0px 0px -65% 0px" },
     )
     els.forEach((el) => io.observe(el))
     return () => io.disconnect()
-  }, [tocKey, md])
+  }, [tocKey, md, independentScroll])
   return (
-    <div className="grid gap-10 lg:grid-cols-[190px_minmax(0,1fr)]">
+    <div className={`grid gap-10 lg:grid-cols-[190px_minmax(0,1fr)] ${independentScroll ? "min-h-0 flex-1 overflow-hidden" : ""}`}>
       {toc.length > 1 && (
         <nav
           aria-label="contents"
-          className="hidden self-start lg:sticky lg:top-6 lg:block"
+          className={`hidden self-start lg:block ${independentScroll ? "max-h-full overflow-y-auto overscroll-contain" : "lg:sticky lg:top-6"}`}
         >
           <ul className="flex flex-col gap-2 text-[15px] leading-tight">
             {toc.map(([id, label], k) => (
@@ -1163,9 +1169,17 @@ function CaseStudy({
                   href={`#${id}`}
                   onClick={(e) => {
                     e.preventDefault()
-                    document
-                      .getElementById(id)
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" })
+                    const content = contentRef.current
+                    const section = content?.querySelector<HTMLElement>(`#${id}`)
+                    if (!section) return
+                    if (independentScroll && content) {
+                      content.scrollTo({
+                        top: content.scrollTop + section.getBoundingClientRect().top - content.getBoundingClientRect().top - 24,
+                        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+                      })
+                    } else {
+                      section.scrollIntoView({ behavior: "smooth", block: "start" })
+                    }
                   }}
                   className={`transition-colors hover:text-[color:var(--hl-link)] ${
                     active === k
@@ -1180,7 +1194,13 @@ function CaseStudy({
           </ul>
         </nav>
       )}
-      <div className="flex max-w-[44rem] flex-col gap-4">
+      <div
+        ref={contentRef}
+        role={independentScroll ? "region" : undefined}
+        aria-label={independentScroll ? "Case study content" : undefined}
+        tabIndex={independentScroll ? 0 : undefined}
+        className={`flex min-w-0 max-w-[44rem] flex-col gap-4 ${independentScroll ? "min-h-0 overflow-y-auto overscroll-contain pr-3 pb-6" : ""}`}
+      >
         {header}
         {meta && (
           <div className="mb-4 flex flex-col gap-6">
@@ -1228,8 +1248,8 @@ function CasesPage({ mode }: { mode: Mode }) {
   if (open !== null) {
     const [name, sub, domain] = cases[open]
     return (
-      <div data-essay className="flex flex-col gap-6">
-        <div className="flex flex-wrap items-center gap-4 max-lg:hidden">
+      <div data-essay className="flex min-h-0 flex-1 flex-col gap-6 overflow-hidden">
+        <div className="flex shrink-0 flex-wrap items-center gap-4 max-lg:hidden">
           <button
             type="button"
             onClick={() => setOpen(null)}
@@ -1241,6 +1261,7 @@ function CasesPage({ mode }: { mode: Mode }) {
         </div>
         {caseContent[name] ? (
           <CaseStudy
+            independentScroll
             md={caseContent[name]}
             header={<CaseHeader name={name} sub={sub} domain={domain} />}
             meta={{
@@ -1263,7 +1284,7 @@ function CasesPage({ mode }: { mode: Mode }) {
     )
   }
   return (
-    <div className="-mx-6 mt-4 lg:-mx-10 lg:mt-6">
+    <div className="-mx-6 mt-4 min-h-0 overflow-y-auto overscroll-contain lg:-mx-10 lg:mt-6">
       <ul className="border-y border-[#1A1A1A]/15">
         {cases.map(([name, sub, domain], i) => (
           <li
@@ -1322,6 +1343,7 @@ export default function App() {
   const [mode, setMode] = useState<Mode>(() => readHash().mode ?? "growth")
   const [copied, setCopied] = useState(false)
   const [page, setPage] = useState<PageKey | null>(() => readHash().page)
+  const casePage = page === "moodboard" && mode === "growth"
   const content = modeCopy[mode]
   const accent = mode === "growth" ? SAPPHIRE : "#E88D6D"
   const tint = (k: PageKey) => content.tints[k] ?? CREAM
@@ -1421,7 +1443,7 @@ export default function App() {
 
   return (
     <main
-      className="relative bg-[#FAF9F6] text-base text-[#1A1A1A] max-lg:overflow-x-clip lg:h-svh lg:min-h-[640px] lg:overflow-hidden"
+      className={`relative bg-[#FAF9F6] text-base text-[#1A1A1A] max-lg:overflow-x-clip lg:h-svh lg:overflow-hidden ${casePage ? "h-svh overflow-hidden" : "lg:min-h-[640px]"}`}
       style={
         {
           "--accent": accent,
@@ -1450,7 +1472,7 @@ export default function App() {
         aria-label="Portfolio"
         className={`${
           mode === "growth" && !page ? "fade-others " : ""
-        }grid grid-cols-1 lg:h-full lg:grid-cols-[20%_repeat(3,minmax(0,1fr))] lg:grid-rows-2`}
+        }${casePage ? "h-full min-h-0 " : ""}grid grid-cols-1 lg:h-full lg:grid-cols-[20%_repeat(3,minmax(0,1fr))] lg:grid-rows-2`}
       >
         <Card
           ariaLabel="Portrait and portfolio focus"
@@ -1519,13 +1541,13 @@ export default function App() {
         {page ? (
           <article
             aria-label={pageTitle(page, mode)}
-            className={`portfolio-card page-article flex min-h-[60svh] max-lg:break-words min-w-0 flex-col gap-6 p-6 lg:overflow-y-auto ${
+            className={`portfolio-card page-article flex ${casePage ? "h-full min-h-0 overflow-hidden" : "min-h-[60svh] lg:overflow-y-auto"} max-lg:break-words min-w-0 flex-col gap-6 p-6 ${
               page === "moodboard" && mode === "brand"
                 ? "lg:overflow-hidden"
                 : ""
             } lg:col-span-3 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:min-h-0 lg:p-10`}
           >
-            <div className="sticky top-0 z-30 -mx-6 -mt-6 flex items-center justify-between gap-3 border-b border-[var(--grid-line)] bg-[#FAF9F6] px-4 lg:hidden">
+            <div className="sticky top-0 z-30 -mx-6 -mt-6 flex shrink-0 items-center justify-between gap-3 border-b border-[var(--grid-line)] bg-[#FAF9F6] px-4 lg:hidden">
               <button
                 type="button"
                 onClick={mobileBack}
@@ -1553,7 +1575,7 @@ export default function App() {
                 </svg>
               </button>
             </div>
-            <header className="-mx-6 flex items-baseline justify-between gap-4 px-6 lg:-mx-10 lg:px-10">
+            <header className="-mx-6 flex shrink-0 items-baseline justify-between gap-4 px-6 lg:-mx-10 lg:px-10">
               <div>
                 <h1 className="font-heading text-[clamp(30px,3.4vw,48px)] leading-none tracking-[-0.03em]">
                   <button
