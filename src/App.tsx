@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react"
 import { wisprCase } from "@/wisprCase"
+import { cursorCase, revolutCase, heyclickyCase } from "@/portfolioCases"
 import { statePlateCase } from "@/TSPCase"
 import liq1 from "@/imports/liquide/l1.jpg"
 import liq2 from "@/imports/liquide/l2.jpg"
@@ -802,6 +803,13 @@ function MoodTitles() {
   )
 }
 
+const caseContent: Record<string, string> = {
+  cursor: cursorCase,
+  revolut: revolutCase,
+  "wispr flow": wisprCase,
+  heyclicky: heyclickyCase,
+}
+
 const cases = [
   ["cursor", "product growth & creator campaigns", "cursor.com"],
   ["revolut", "india growth plan", "revolut.com"],
@@ -879,11 +887,23 @@ function CaseList() {
 }
 
 function Inline({ text }: { text: string }) {
-  const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`|\*[^*]+\*)/g)
+  const parts = text.split(
+    /(\*\*[^*]+\*\*|`[^`]+`|\*[^*]+\*|https?:\/\/[^\s]+)/g,
+  )
   return (
     <>
       {parts.map((p, i) =>
-        p.startsWith("**") ? (
+        /^https?:\/\//.test(p) ? (
+          <a
+            key={i}
+            href={p}
+            target="_blank"
+            rel="noreferrer"
+            className="break-all underline underline-offset-2 hover:text-[color:var(--hl-link)]"
+          >
+            {p}
+          </a>
+        ) : p.startsWith("**") ? (
           <strong key={i} className="font-semibold">
             {p.slice(2, -2)}
           </strong>
@@ -1182,7 +1202,9 @@ function CaseStudy({
             <p className="mb-1 font-semibold">sources</p>
             <ul className="flex flex-col gap-0.5">
               {sources.map((x) => (
-                <li key={x}>{x}</li>
+                <li key={x}>
+                  <Inline text={x} />
+                </li>
               ))}
             </ul>
           </footer>
@@ -1217,11 +1239,17 @@ function CasesPage({ mode }: { mode: Mode }) {
             all case studies
           </button>
         </div>
-        {name === "wispr flow" ? (
+        {caseContent[name] ? (
           <CaseStudy
-            md={wisprCase}
+            md={caseContent[name]}
             header={<CaseHeader name={name} sub={sub} domain={domain} />}
-            meta={{ kicker: "case study", facts: [["focus", sub]] }}
+            meta={{
+              kicker:
+                name === "wispr flow"
+                  ? "case study"
+                  : "independent conceptual proposal",
+              facts: [["focus", sub]],
+            }}
           />
         ) : (
           <div className="flex flex-col gap-6">
