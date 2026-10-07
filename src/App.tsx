@@ -345,6 +345,7 @@ function Card({
   bg = CREAM,
   onOpen,
   onClick,
+  homeKey,
 }: {
   children: ReactNode
   onClick?: (e: MouseEvent<HTMLElement>) => void
@@ -353,6 +354,7 @@ function Card({
   padded?: boolean
   bg?: string
   onOpen?: (e: MouseEvent<HTMLButtonElement>) => void
+  homeKey?: PageKey
 }) {
   const cls = `portfolio-card flex min-w-0 flex-col overflow-hidden lg:min-h-0 ${
     padded ? "p-6 lg:p-5 xl:p-6" : ""
@@ -362,6 +364,7 @@ function Card({
       <button
         type="button"
         aria-label={`Open ${ariaLabel}`}
+        data-home-card={homeKey}
         onClick={onOpen}
         style={{ background: bg }}
         className={`${cls} card-link w-full cursor-pointer text-left`}
@@ -1199,36 +1202,38 @@ function CaseStudy({
         role={independentScroll ? "region" : undefined}
         aria-label={independentScroll ? "Case study content" : undefined}
         tabIndex={independentScroll ? 0 : undefined}
-        className={`flex min-w-0 max-w-[44rem] flex-col gap-4 ${independentScroll ? "min-h-0 overflow-y-auto overscroll-contain pr-3 pb-6" : ""}`}
+        className={`min-w-0 ${independentScroll ? "min-h-0 overflow-y-auto overscroll-contain" : ""}`}
       >
-        {header}
-        {meta && (
-          <div className="mb-4 flex flex-col gap-6">
-            <p className="text-[#1A1A1A]/55">{meta.kicker}</p>
-            <dl className="flex flex-wrap gap-x-12 gap-y-4">
-              {meta.facts.map(([k, v]) => (
-                <div key={k}>
-                  <dt className="text-[#1A1A1A]/55">{k}</dt>
-                  <dd className="mt-0.5">{v}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        )}
-        {out}
-        {footer}
-        {sources.length > 0 && (
-          <footer className="mt-10 border-t border-[#1A1A1A]/15 pt-4 text-sm text-[#1A1A1A]/55">
-            <p className="mb-1 font-semibold">sources</p>
-            <ul className="flex flex-col gap-0.5">
-              {sources.map((x) => (
-                <li key={x}>
-                  <Inline text={x} />
-                </li>
-              ))}
-            </ul>
-          </footer>
-        )}
+        <div className={`flex max-w-[44rem] flex-col gap-4 ${independentScroll ? "mr-6 pb-6 pr-3 lg:mr-10" : ""}`}>
+          {header}
+          {meta && (
+            <div className="mb-4 flex flex-col gap-6">
+              <p className="text-[#1A1A1A]/55">{meta.kicker}</p>
+              <dl className="flex flex-wrap gap-x-12 gap-y-4">
+                {meta.facts.map(([k, v]) => (
+                  <div key={k}>
+                    <dt className="text-[#1A1A1A]/55">{k}</dt>
+                    <dd className="mt-0.5">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
+          {out}
+          {footer}
+          {sources.length > 0 && (
+            <footer className="mt-10 border-t border-[#1A1A1A]/15 pt-4 text-sm text-[#1A1A1A]/55">
+              <p className="mb-1 font-semibold">sources</p>
+              <ul className="flex flex-col gap-0.5">
+                {sources.map((x) => (
+                  <li key={x}>
+                    <Inline text={x} />
+                  </li>
+                ))}
+              </ul>
+            </footer>
+          )}
+        </div>
       </div>
     </div>
   )
@@ -1248,7 +1253,7 @@ function CasesPage({ mode }: { mode: Mode }) {
   if (open !== null) {
     const [name, sub, domain] = cases[open]
     return (
-      <div data-essay className="flex min-h-0 flex-1 flex-col gap-6 overflow-hidden">
+      <div data-essay className="-mr-6 flex min-h-0 flex-1 flex-col gap-6 overflow-hidden lg:-mr-10">
         <div className="flex shrink-0 flex-wrap items-center gap-4 max-lg:hidden">
           <button
             type="button"
@@ -1343,6 +1348,8 @@ export default function App() {
   const [mode, setMode] = useState<Mode>(() => readHash().mode ?? "growth")
   const [copied, setCopied] = useState(false)
   const [page, setPage] = useState<PageKey | null>(() => readHash().page)
+  const mobileHomePosition = useRef<{ page: PageKey; y: number } | null>(null)
+  const previousPageRef = useRef(page)
   const casePage = page === "moodboard" && mode === "growth"
   const content = modeCopy[mode]
   const accent = mode === "growth" ? SAPPHIRE : "#E88D6D"
@@ -1359,8 +1366,24 @@ export default function App() {
   }, [])
 
   const open = (k: PageKey) => {
+    if (!window.matchMedia("(min-width: 1024px)").matches) {
+      mobileHomePosition.current = { page: k, y: window.scrollY }
+    }
     window.location.hash = `${mode}/${slugOf(k, mode)}`
   }
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)")
+    const previous = history.scrollRestoration
+    const update = () => {
+      history.scrollRestoration = desktop.matches ? previous : "manual"
+    }
+    update()
+    desktop.addEventListener("change", update)
+    return () => {
+      desktop.removeEventListener("change", update)
+      history.scrollRestoration = previous
+    }
+  }, [])
   const [, bump] = useState(0)
   useEffect(() => {
     const f = () => bump((n) => n + 1)
@@ -1379,6 +1402,7 @@ export default function App() {
   const originRef = useRef<DOMRect | null>(null)
   const homeBtn = useRef<HTMLButtonElement>(null)
   const openProps = (k: PageKey) => ({
+    homeKey: k,
     onOpen: (e: MouseEvent<HTMLButtonElement>) => {
       originRef.current = e.currentTarget.getBoundingClientRect()
       open(k)
@@ -1387,11 +1411,24 @@ export default function App() {
   })
 
   useLayoutEffect(() => {
+    const previousPage = previousPageRef.current
+    previousPageRef.current = page
     const from = originRef.current
     originRef.current = null
     const btn = homeBtn.current
-    if (page && !window.matchMedia("(min-width: 1024px)").matches) {
-      window.scrollTo(0, 0)
+    if (!window.matchMedia("(min-width: 1024px)").matches) {
+      if (page) {
+        window.scrollTo({ top: 0, behavior: "instant" })
+      } else if (previousPage) {
+        const card = document.querySelector<HTMLButtonElement>(`[data-home-card="${previousPage}"]`)
+        const saved = mobileHomePosition.current
+        if (saved?.page === previousPage) {
+          window.scrollTo({ top: saved.y, behavior: "instant" })
+        } else {
+          card?.scrollIntoView({ block: "start", behavior: "instant" })
+        }
+        card?.focus({ preventScroll: true })
+      }
       return
     }
     if (!page || !from || !btn) return
