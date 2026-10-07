@@ -2,7 +2,7 @@ export const wisprCase = String.raw`## 01. The Brief
 
 **Problem:** Voice notes are everywhere in India, but they create friction for the receiver. You need a quiet space; you have to listen fully, re-listen sometimes, and only then reply.
 
-**Constraints:** 1-2 engineers. No large paid marketing budget. Distribution, not branding.
+**Constraints:** 1–2 engineers. No large paid marketing budget. Distribution, not branding.
 
 **Questions to answer**
 1. What to do on Day 1, Week 1, and Month 1
@@ -32,7 +32,7 @@ export const wisprCase = String.raw`## 01. The Brief
 
 **What this means for the plan**
 1. **Transcription alone is not a wedge.** The wedge is zero-setup forwarding, Hinglish accuracy, and summaries for long notes.
-2. **The bot is a free top of funnel for Wispr Flow.** The bot serves the receiving side of a voice note. Wispr Flow serves the sending side (speak, get clean text). Every transcript ends with a hand-off to Wispr Flow.
+2. **The bot is a free entry point for Wispr Flow.** The bot serves the receiving side of a voice note. Wispr Flow serves the sending side (speak, get clean text). Every transcript ends with a hand-off to Wispr Flow.
 3. **Stay single-purpose.** No open-ended chat, so the bot stays inside Meta's rules.
 4. **Free needs a cap.** At 3 notes a day, one active user costs about ₹10 a month in Meta fees alone (90 replies × ₹0.115, my estimate, excluding transcription and provider fees). One reply per note, and a free-tier limit.
 
@@ -54,12 +54,12 @@ export const wisprCase = String.raw`## 01. The Brief
 - Review every failed transcription and log Hinglish errors
 - Fix Day 1 bugs
 - Publish a Hinglish accuracy test on X: WhatsApp's native transcript vs this bot vs two competitors
-- Expand to 50-100 users via WhatsApp Status, startup and community groups, and X
+- Expand to 50–100 users via WhatsApp Status, startup and community groups, and X
 - Start commenting on Reddit and Grapevine (first posts in Week 2)
 - **Gate to scale:** at least 50% of Day 1 testers send a second note within 48 hours, and Hinglish complaints stay under 30% (targets)
 
 **Month 1: Scale**
-- Reach 500-1K users through word of mouth and organic posts
+- Reach 500–1K users through word of mouth and organic posts
 - Track activation, DAU, notes per user, 7-day retention, and viral coefficient
 - Interview 10 power users (10+ notes a day)
 - Reply to "voice note frustration" posts on X, Reddit, and Grapevine
@@ -67,7 +67,7 @@ export const wisprCase = String.raw`## 01. The Brief
 ---
 
 ## 04. First 100 Users
-*Answers question 2. Timeline: 7-10 days. Targets are planning assumptions.*
+*Answers question 2. Timeline: 7–10 days. Targets are planning assumptions.*
 
 | Channel | Play | Target |
 |---|---|---|
@@ -94,13 +94,13 @@ export const wisprCase = String.raw`## 01. The Brief
 
 ## 06. Distribution Channels
 
-**Fast (Week 1-2)**
+**Fast (Week 1–2)**
 - Personal network and WhatsApp groups
 - Startup communities (GrowthX, YC India, Surge alumni). GrowthX is a private, invite-only community of founders and growth leaders, so it is small but dense.
 - **Grapevine:** 400K+ Indian professionals use it weekly, and members join private groups for their company. Good for sales and tech teams.
 - **X:** founder-style demo video and the accuracy test. Wispr's own India launch was led by a founder video.
 
-**Medium (Week 3-4)**
+**Medium (Week 3–4)**
 - **Reddit story posts.** Sizes vary by tracker:
 - r/developersIndia: 1M+ members. Angle: "I tested 5 tools on 50 Hinglish voice notes."
 - r/StartUpIndia: about 444K members. Angle: voice-note pain for founders and sales teams.
@@ -123,7 +123,7 @@ export const wisprCase = String.raw`## 01. The Brief
 |---|---|
 | **WhatsApp's native transcripts** | Win on Hinglish, zero setup, and summaries. Run the public accuracy test as proof. |
 | **Hinglish accuracy** | Ship Hinglish in v1 using Wispr's existing model. Label it beta. Pause acquisition pushes if complaints exceed 30%. |
-| **Privacy concerns** | "We don't store audio. Transcription is instant and deleted." Make this claim true in the build, and repeat it everywhere. |
+| **Privacy concerns** | "We don't store audio. Audio is deleted after transcription." Make this claim true in the build, and repeat it everywhere. |
 | **WhatsApp blocks the number or limits the bot** | Official Business API from Day 1. Single-purpose scope. Rate-limit usage. |
 | **Rising message costs** | One reply per note. Cap the free tier. Add the weekly "time saved" line to the next reply instead of sending a paid template. |
 | **Users drop off** | Weekly "You saved X minutes" line, plus a prompt to try the Wispr Flow reply hand-off. |
@@ -138,13 +138,13 @@ export const wisprCase = String.raw`## 01. The Brief
 
 **Input metrics:** Activation (second note within 48 hours), notes per active user, viral coefficient, cost per active user, bot-to-Wispr Flow conversion
 
-**Benchmark:** For consumer products, a viral coefficient of 0.15-0.25 is considered good, 0.4 great, and about 0.7 outstanding. Sustained values above 1 are rare.
+**Benchmark:** For consumer products, a viral coefficient of 0.15–0.25 is considered good, 0.4 great, and about 0.7 outstanding. Sustained values above 1 are rare.
 
 | Milestone | Goal | Targets |
 |---|---|---|
 | **Week 1: Early traction** | **100 users** | 20% daily active, 3+ notes per active user, 50% activation |
 | **Month 1: Loops working** | **1K users** | Viral coefficient ≥ 0.25, 30% 7-day retention |
-| **Month 3: Scale and monetize** | **10K users** | Viral coefficient ≥ 0.4, 40% 30-day retention (stretch). Find the top 3 use cases (sales teams, founders, parents). Convert bot users to Wispr Flow as the monetisation path. |
+| **Month 3: Scale and monetise** | **10K users** | Viral coefficient ≥ 0.4, 40% 30-day retention (stretch). Find the top 3 use cases (sales teams, founders, parents). Convert bot users to Wispr Flow as the monetisation path. |
 
 ---
 
@@ -152,7 +152,7 @@ export const wisprCase = String.raw`## 01. The Brief
 - TechCrunch, "Voice AI in India is hard — Wispr Flow is betting on it anyway" (May 2026)
 - Dealroom and NewsBytes coverage of Wispr Flow's India launch (2026)
 - TechCrunch, WhatsApp bars general-purpose chatbots (Oct 2025); dig.watch on the Business API terms
-- Business-standard and TechCrunch coverage of WhatsApp voice transcripts (2024-2025)
+- Business Standard and TechCrunch coverage of WhatsApp voice transcripts (2024–2025)
 - Flowcall and AiSensy, WhatsApp Business API India pricing (Oct 2026)
 - Subreddit trackers: reddapi, GitHub (developersIndia), and an Indian-startup Reddit guide (May 2026)
 - Grapevine and GrowthX company pages

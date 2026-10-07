@@ -48,7 +48,7 @@ const SAPPHIRE = "#0F3A8A"
 const timeline = [
   ["freelance marketer", "apr 2025 – present"],
   ["the state plate", "jan 2024 – mar 2025"],
-  ["hopstack", "jun 2023 – sept 2023"],
+  ["hopstack", "jun 2023 – sep 2023"],
   ["liquide", "mar 2022 – jul 2022"],
 ]
 
@@ -65,7 +65,7 @@ const moodText =
 const modeCopy = {
   growth: {
     intro:
-      "I'm rutuja, i build thoughtful growth systems that turn product insight into durable demand.",
+      "I'm Rutuja. I build thoughtful growth systems that turn product insight into durable demand.",
     project: "wispr flow",
     projectDescription:
       "A lifecycle reset for a climate-tech platform: onboarding, activation loops, and a sharper path from interest to habit.",
@@ -128,7 +128,7 @@ const skillSets: Record<Mode, {
     tags: [
       "Shopify",
       "Clay",
-      "Posthog",
+      "PostHog",
       "Mailchimp",
       "Google Analytics",
       "Supabase",
@@ -145,11 +145,11 @@ const skillSets: Record<Mode, {
     tags: [
       "Figma",
       "Notion",
-      "Meta ads manager",
+      "Meta Ads Manager",
       "Canva",
       "Claude",
       "ElevenLabs",
-      "buffer",
+      "Buffer",
     ],
     line: "Voice, story and taste. The tools change; clear thinking doesn’t.",
     sections: [
@@ -445,8 +445,8 @@ const liquideImages = [
 const liquideDid = [
   "Built the Instagram strategy and content calendar",
   "Defined content formats (posts, carousels, reels, explainers)",
-  "Wrote scripts and copy by translating finance concepts into simple concepts",
-  "Managed designers, content writers, and creators end-to-end",
+  "Wrote scripts and copy that explained finance concepts in plain language",
+  "Managed designers, content writers, and creators end to end",
 ]
 
 const stints = [
@@ -455,8 +455,8 @@ const stints = [
       "Running content, copy and growth strategy for early-stage founders and small teams.",
     body: [
       "Independent since 2025: I work with founders on positioning, content systems and community experiments.",
-      "Also spending the time learning:",
-      "- Advanced PMM frameworks- positioning, GTM, pricing, adoption loops",
+      "Also spending time learning:",
+      "- Advanced PMM frameworks: positioning, GTM, pricing and adoption loops",
       "- Deeper paid media analytics & experimentation",
       "- Marketing automation & lifecycle strategy at scale",
       "- Using AI for faster ideation, testing, and execution",
@@ -490,7 +490,7 @@ const stints = [
   {
     summary: "Marketing generalist intern at a warehouse-tech startup.",
     body: [
-      "A summer spent across content, SEO and SaaS 101: writing social media posts, maanging the website cms and supporting SEO efforts.",
+      "A summer spent across content, SEO and SaaS 101: writing social media posts, managing the website CMS and supporting SEO efforts.",
       "First real taste of B2B marketing and the discipline of tying content to pipeline.",
     ],
     points: [
@@ -779,7 +779,7 @@ function PageBody({ page, mode }: { page: PageKey; mode: Mode }) {
       return (
         <div className="max-w-xl">
           <Rows
-            items={[...uptoRows[mode], ["Availability", "Open for work"]]}
+            items={[...uptoRows[mode], ["Availability", "Open to work"]]}
           />
         </div>
       )
@@ -816,7 +816,7 @@ const caseContent: Record<string, string> = {
 const cases = [
   ["cursor", "product growth & creator campaigns", "cursor.com"],
   ["revolut", "india growth plan", "revolut.com"],
-  ["wispr flow", "early product growth/adoption", "wisprflow.ai"],
+  ["wispr flow", "early product growth & adoption", "wisprflow.ai"],
   ["heyclicky", "ads & creator partnerships", "heyclicky.com"],
 ]
 
@@ -1273,10 +1273,7 @@ function CasesPage({ mode }: { mode: Mode }) {
             md={caseContent[name]}
             header={<CaseHeader name={name} sub={sub} domain={domain} />}
             meta={{
-              kicker:
-                name === "wispr flow"
-                  ? "case study"
-                  : "independent conceptual proposal",
+              kicker: "independent conceptual proposal",
               facts: [["focus", sub]],
             }}
           />
@@ -1677,7 +1674,7 @@ export default function App() {
                 </p>
                 <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
-                    ? "aspiring product [marketing] / growth manager"
+                    ? "aspiring product marketing / growth manager"
                     : "brand narrative & product comms."}
                 </p>
               </div>
@@ -1738,7 +1735,7 @@ export default function App() {
           ariaLabel="Contact"
           className={`order-8 lg:order-none ${page ? "max-lg:hidden" : ""}`}
         >
-          <CardHeading detail="Open for work">Contact</CardHeading>
+          <CardHeading detail="Open to work">Contact</CardHeading>
           <div className="mt-6 lg:mt-auto">
             <div className="flex flex-col items-start gap-1">
               <a className="contact-link" href="/resume.pdf" download>
@@ -1757,12 +1754,12 @@ export default function App() {
               </button>
               {[
                 ["LinkedIn", "https://www.linkedin.com/in/rutuja-rochkari"],
-                ["X (twitter)", "https://x.com/rutzpective"],
+                ["X (Twitter)", "https://x.com/rutzpective"],
                 mode === "brand"
                   ? ["Are.na", "https://www.are.na/rutzine"]
                   : ["Cursor", "https://cursor.com/@rutuja"],
                 mode === "brand"
-                  ? ["macos site", "https://rutujarochkari.vercel.app/"]
+                  ? ["macOS site", "https://rutujarochkari.vercel.app/"]
                   : ["GitHub", "https://github.com/rutzonline"],
                 ["Cal.com", "https://cal.com/rutujarochkari"],
               ].map(([label, href]) => (

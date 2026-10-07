@@ -1,6 +1,6 @@
 export const cursorCase = String.raw`# Cursor: Built on Campus
 
-These are independent, conceptual proposals: Cursor community growth in India, Revolut India partnerships around football and F1, and a global performance campaign for Heyclicky. No client engagement, partner agreement, interviews or campaign outcomes are claimed. Budgets and test thresholds below are planning assumptions. References identify the evidence behind product and market claims.
+This is an independent conceptual proposal. No client engagement, partner agreement, interviews or campaign outcomes are claimed. Budgets and test thresholds below are planning assumptions. References identify the evidence behind product and market claims.
 
 **Proposed scope:** A 90-day India campus pilot, with recruitment through student organisations and educational creators.
 
@@ -79,7 +79,7 @@ Sources checked 7 October 2026. Company statements are attributed to the company
 
 export const revolutCase = String.raw`# Revolut: From Watch Parties to Race Trips
 
-These are independent, conceptual proposals: Cursor community growth in India, Revolut India partnerships around football and F1, and a global performance campaign for Heyclicky. No client engagement, partner agreement, interviews or campaign outcomes are claimed. Budgets and test thresholds below are planning assumptions. References identify the evidence behind product and market claims.
+This is an independent conceptual proposal. No client engagement, partner agreement, interviews or campaign outcomes are claimed. Budgets and test thresholds below are planning assumptions. References identify the evidence behind product and market claims.
 
 **Proposed scope:** An India pilot with separate travel and domestic-payment cohorts, using relevant F1 and Manchester City communities.
 
@@ -161,7 +161,7 @@ Sources checked 7 October 2026. Company statements are attributed to the company
 
 export const heyclickyCase = String.raw`# Heyclicky: Help on Your Screen
 
-These are independent, conceptual proposals: Cursor community growth in India, Revolut India partnerships around football and F1, and a global performance campaign for Heyclicky. No client engagement, partner agreement, interviews or campaign outcomes are claimed. Budgets and test thresholds below are planning assumptions. References identify the evidence behind product and market claims.
+This is an independent conceptual proposal. No client engagement, partner agreement, interviews or campaign outcomes are claimed. Budgets and test thresholds below are planning assumptions. References identify the evidence behind product and market claims.
 
 **Proposed scope:** A global English-language performance campaign, beginning with a US test among Mac users learning After Effects. Replicate in another market only after the install and repeat-use journey works.
 
