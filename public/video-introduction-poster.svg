@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#FAF9F6"/>
+  <g fill="#1A1A1A" font-family="Inter, Arial, sans-serif">
+    <text x="112" y="385" font-size="72" font-weight="500" letter-spacing="-2">video introduction</text>
+    <text x="116" y="465" font-size="32" fill-opacity=".7">rutuja rochkari</text>
+  </g>
+  <circle cx="1420" cy="730" r="58" fill="none" stroke="#1A1A1A" stroke-opacity=".25" stroke-width="2"/>
+  <path d="M1405 705v50l40-25z" fill="#1A1A1A" fill-opacity=".7"/>
+</svg>

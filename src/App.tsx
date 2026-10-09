@@ -814,9 +814,10 @@ function AboutPage({ mode }: { mode: Mode }) {
             </div>
             <figure className="flex flex-col gap-2">
               <video controls playsInline preload="metadata" aria-label="Video introduction, about two minutes"
+                poster="/video-introduction-poster.svg"
               src="https://mzelpafnpdcchykekdux.supabase.co/storage/v1/object/public/photos/video%20introduction.mp4"
               className="block h-auto w-full rounded-md border border-[color:var(--grid-line)]" />
-              <figcaption className="text-sm text-[#1A1A1A]/70">2 min, sound on</figcaption>
+              <figcaption className="text-sm text-[#1A1A1A]/70">2 min, best with sound</figcaption>
             </figure>
           </section>
           <AboutExtras mode={mode} />
