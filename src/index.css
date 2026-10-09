@@ -280,7 +280,7 @@ a[href],
   }
 }
 
-/* Align the About heading and body on the same reading column. */
+/* Keep the About title aligned with its menu and the divider edge to edge. */
 .about-page-header { align-items: center; }
 @media (min-width: 1024px) {
   .page-article:has(.about-layout) {
@@ -297,10 +297,6 @@ a[href],
     padding-right: 20px;
   }
   .about-page-header {
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: calc(var(--about-menu-width) + var(--about-column-gap));
-    padding-right: 0;
     padding-bottom: 20px;
     border-bottom: 1px solid var(--grid-line);
   }

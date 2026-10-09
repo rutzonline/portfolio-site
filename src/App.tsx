@@ -68,7 +68,7 @@ const moodText =
 const modeCopy = {
   growth: {
     intro:
-      "i try things to get people to use a product, i.e., run experiments across the funnel to optimize user acquisition, activation, and retention.",
+      "i try things to get people to use a product. i.e., run experiments across the funnel to optimize user acquisition, activation, and retention.",
     project: "wispr flow",
     projectDescription:
       "A lifecycle reset for a climate-tech platform: onboarding, activation loops, and a sharper path from interest to habit.",
@@ -814,7 +814,7 @@ function AboutPage({ mode }: { mode: Mode }) {
             </div>
             <figure className="flex flex-col gap-2">
               <video controls playsInline preload="metadata" aria-label="Video introduction, about two minutes"
-                poster="/video-introduction-poster.svg"
+                poster="/video-introduction-poster.png"
               src="https://mzelpafnpdcchykekdux.supabase.co/storage/v1/object/public/photos/video%20introduction.mp4"
               className="block h-auto w-full rounded-md border border-[color:var(--grid-line)]" />
               <figcaption className="text-sm text-[#1A1A1A]/70">2 min, best with sound</figcaption>
@@ -1756,7 +1756,7 @@ export default function App() {
               <div className="mt-6 lg:mt-auto">
                 <p className="about-intro font-semibold text-[24px] leading-[1.14] tracking-[-0.02em] xl:text-[26px]">
                   {aboutIntro.main}
-                  {aboutIntro.explanation && <> <strong className="font-bold">{aboutIntro.explanation}</strong></>}
+                  {aboutIntro.explanation && <span className="block">{aboutIntro.explanation}</span>}
                 </p>
                 <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
@@ -1821,7 +1821,7 @@ export default function App() {
           ariaLabel="Contact"
           className={`order-8 lg:order-none ${page ? "max-lg:hidden" : ""}`}
         >
-          <CardHeading detail={<span className="inline-flex items-center gap-2"><span className="size-2 rounded-full bg-[#2E9E5B]" aria-hidden="true" />Open to work</span>}>Contact</CardHeading>
+          <CardHeading detail={"Open to work"}>Contact</CardHeading>
           <div className="mt-6 lg:mt-auto">
             <div className="flex flex-col items-start gap-1">
               <a className="contact-link" href="/resume.pdf" download>
