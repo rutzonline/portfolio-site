@@ -747,14 +747,15 @@ function PageBody({ page, mode }: { page: PageKey; mode: Mode }) {
     case "about":
       return (
         <>
-          <div className="flex max-w-3xl flex-col gap-3">
-            <p className="font-body-serif text-[clamp(26px,3.2vw,44px)] leading-[1.1] tracking-[-0.025em]">
+          {mode === "growth" ? (
+            <p className="max-w-3xl text-[16px] font-medium leading-snug text-[#0F3A8A]">
+              {intro.explanation ?? intro.main}
+            </p>
+          ) : (
+            <p className="max-w-3xl font-body-serif text-[clamp(26px,3.2vw,44px)] leading-[1.1] tracking-[-0.025em]">
               {intro.main}
             </p>
-            {intro.explanation && (
-              <p className="leading-snug text-[#0F3A8A]">{intro.explanation}</p>
-            )}
-          </div>
+          )}
           <video
             controls
             playsInline
@@ -1689,13 +1690,6 @@ export default function App() {
                 <p className="about-intro font-heading text-[24px] leading-[1.14] tracking-[-0.02em] xl:text-[26px]">
                   {aboutIntro.main}
                 </p>
-                {aboutIntro.explanation && (
-                  <div className="about-explanation-reveal">
-                    <div>
-                      <p className="pt-3 leading-snug text-[#0F3A8A]">{aboutIntro.explanation}</p>
-                    </div>
-                  </div>
-                )}
                 <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
                     ? "email, paid, creators, and campaigns."

@@ -279,35 +279,3 @@ a[href],
     animation: none;
   }
 }
-
-/* The bottom-aligned About text moves upward as the explanation opens. */
-.about-explanation-reveal {
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-  visibility: hidden;
-  transition: grid-template-rows 280ms ease, opacity 180ms ease;
-}
-
-.about-explanation-reveal > div {
-  min-height: 0;
-  overflow: hidden;
-}
-
-.card-link:focus-visible .about-explanation-reveal {
-  grid-template-rows: 1fr;
-  opacity: 1;
-  visibility: visible;
-}
-
-@media (hover: hover) {
-  .card-link:hover .about-explanation-reveal {
-    grid-template-rows: 1fr;
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .about-explanation-reveal { transition: none; }
-}
