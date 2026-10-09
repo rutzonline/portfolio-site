@@ -739,7 +739,12 @@ function PageBody({ page, mode }: { page: PageKey; mode: Mode }) {
       return (
         <>
           <p className="max-w-3xl font-body-serif text-[clamp(26px,3.2vw,44px)] leading-[1.1] tracking-[-0.025em]">
-            {brand.intro}
+            {mode === "growth" ? (
+              <>
+                {brand.intro.slice(0, brand.intro.indexOf("i.e.,"))}
+                <span className="font-accent">{brand.intro.slice(brand.intro.indexOf("i.e.,"))}</span>
+              </>
+            ) : brand.intro}
           </p>
           <video
             controls
