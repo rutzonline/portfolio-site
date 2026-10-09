@@ -98,7 +98,7 @@ export default function PhotoSlideshow({ active, portrait }: { active: boolean; 
       image.src = photos[next]
     }
     advance()
-    const timer = !reducedMotion && photos.length > 1 ? window.setInterval(advance, 5000) : undefined
+    const timer = !reducedMotion && photos.length > 1 ? window.setInterval(advance, 3000) : undefined
     const resume = () => { if (!current) advance() }
     document.addEventListener("visibilitychange", resume)
     return () => {
@@ -121,8 +121,11 @@ export default function PhotoSlideshow({ active, portrait }: { active: boolean; 
           {photos.length > 1 && !reducedMotion && (
             <button type="button" onClick={() => setPaused((value) => !value)}
               aria-label={paused ? "Play photo slideshow" : "Pause photo slideshow"}
-              className="absolute bottom-4 right-4 rounded-md bg-black/55 px-3 py-1.5 text-sm text-white hover:bg-black/70">
-              {paused ? "play" : "pause"}
+              title={paused ? "Play slideshow" : "Pause slideshow"}
+              className="absolute bottom-4 right-4 flex size-8 cursor-pointer items-center justify-center rounded-full bg-black/55 text-white hover:bg-black/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+              <svg viewBox="0 0 24 24" aria-hidden="true" className="size-4" fill="currentColor">
+                {paused ? <path d="M8 5v14l11-7z" /> : <path d="M7 5h4v14H7zm6 0h4v14h-4z" />}
+              </svg>
             </button>
           )}
         </>

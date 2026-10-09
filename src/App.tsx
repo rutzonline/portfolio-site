@@ -25,6 +25,7 @@ import freelanceLogo from "@/imports/freelance___1_.png"
 import Moodboard from "@/Moodboard"
 import { aboutContent } from "@/aboutContent"
 import PhotoSlideshow from "@/PhotoSlideshow"
+import { Analytics } from "@vercel/analytics/react"
 import ImagePreview from "@/ImagePreview"
 import growthPortrait from "@/imports/figma_growth_new.png"
 import contentPortrait from "@/imports/Untitled_design__20_.png"
@@ -1486,6 +1487,9 @@ export default function App() {
     return () => anim.cancel()
   }, [page])
 
+  // Hash navigation needs explicit paths so each portfolio page gets its own view.
+  const analyticsPath = `/${mode}${page ? `/${slugOf(page, mode)}` : ""}`
+
   return (
     <main
       className={`relative bg-[#FAF9F6] text-base text-[#1A1A1A] max-lg:overflow-x-clip lg:h-svh lg:overflow-hidden ${casePage ? "h-svh overflow-hidden" : "lg:min-h-[640px]"}`}
@@ -1562,7 +1566,7 @@ export default function App() {
                       `#${option}${page ? `/${slugOf(page, option)}` : ""}`,
                     )
                   }}
-                  className={`mode-button relative min-h-8 rounded-[3px] px-3 text-base font-medium capitalize ${
+                  className={`mode-button relative min-h-8 cursor-pointer rounded-[3px] px-3 text-base font-medium capitalize ${
                     mode === option ? "active" : ""
                   }`}
                 >
@@ -1844,6 +1848,7 @@ export default function App() {
           </>
         )}
       </section>
+      <Analytics route={analyticsPath} path={analyticsPath} />
     </main>
   )
 }
