@@ -1562,7 +1562,7 @@ export default function App() {
               <div className="mt-6 lg:mt-auto">
                 <p className="about-intro font-semibold text-[24px] leading-[1.14] tracking-[-0.02em] xl:text-[26px]">
                   {aboutIntro.main}
-                  {aboutIntro.explanation && <span className="block opacity-50">{aboutIntro.explanation}</span>}
+                  {aboutIntro.explanation && <span className="block text-[22px] font-semibold opacity-50 xl:text-[24px]">{aboutIntro.explanation}</span>}
                 </p>
                 <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
