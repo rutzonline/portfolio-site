@@ -391,9 +391,11 @@ function Card({
 function CardHeading({
   children,
   detail,
+  detailClassName,
 }: {
   children: ReactNode
   detail?: string
+  detailClassName?: string
 }) {
   return (
     <header className="flex shrink-0 items-baseline justify-between gap-3">
@@ -401,7 +403,7 @@ function CardHeading({
         {children}
       </h2>
       {detail && (
-        <span className="text-right text-base text-[#1A1A1A]/55">{detail}</span>
+        <span className={`text-right text-base ${detailClassName ?? "text-[#1A1A1A]/55"}`}>{detail}</span>
       )}
     </header>
   )
@@ -706,7 +708,7 @@ function AboutExtras({ mode }: { mode: Mode }) {
         </ul>
       </section>
       <section id="about-faq">
-        <h3 className="mb-3 font-heading text-xl tracking-[-0.02em]">faq</h3>
+        <h3 className="mb-3 font-heading text-xl tracking-[-0.02em]">frequently asked questions</h3>
         <div className="divide-y divide-[#1A1A1A]/15 border-y border-[#1A1A1A]/15">
           {c.faqs.map(([q, a]) => (
             <details key={q} className="group py-3">
@@ -743,7 +745,7 @@ const ABOUT_SECTIONS = [
   ["about-introduction", "introduction"],
   ["about-languages", "languages"],
   ["about-interests", "interests"],
-  ["about-faq", "faq"],
+  ["about-faq", "frequently asked questions"],
 ] as const
 
 function AboutPage({ mode }: { mode: Mode }) {
@@ -775,7 +777,7 @@ function AboutPage({ mode }: { mode: Mode }) {
   return (
     <div className="about-layout -mr-6 grid min-h-0 flex-1 grid-rows-[auto_minmax(0,1fr)] gap-4 overflow-hidden lg:-mr-10 lg:grid-rows-1">
       <nav aria-label="About contents" className="about-menu mr-6 min-w-0 lg:mr-0">
-        <ul className="flex gap-4 overflow-x-auto text-[15px] leading-tight lg:flex-col lg:gap-2">
+        <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-[15px] leading-tight lg:flex lg:flex-col lg:gap-2">
           {ABOUT_SECTIONS.map(([id, label]) => (
             <li key={id} className="shrink-0">
               <a href={`#${id}`} aria-current={active === id ? "location" : undefined}
@@ -801,7 +803,7 @@ function AboutPage({ mode }: { mode: Mode }) {
         <div className="about-reading-column mr-6 flex flex-col gap-10 pb-10 pr-3 lg:mr-10 lg:gap-12">
           <section id="about-introduction" className="flex flex-col gap-6">
             <div className="flex max-w-[42rem] flex-col gap-3">
-              <p className={`text-[clamp(22px,2vw,26px)] leading-[1.4] tracking-[-0.01em] ${mode === "growth" ? "font-bold text-[#0F3A8A]" : "font-medium text-[#1A1A1A]"}`}>
+              <p className={`text-[clamp(22px,2vw,26px)] leading-[1.4] tracking-[-0.01em] ${mode === "growth" ? "font-normal text-[#0F3A8A]" : "font-normal text-[#1A1A1A]"}`}>
                 {mode === "growth" ? intro.explanation ?? intro.main : intro.main}
               </p>
               <p className="text-base leading-relaxed text-[#1A1A1A]/65">
@@ -1744,7 +1746,7 @@ export default function App() {
               className="order-2 lg:order-none"
               {...openProps("about")}
             >
-              <CardHeading detail="Rutuja Rochkari">About</CardHeading>
+              <CardHeading detail="Rutuja Rochkari" detailClassName="font-semibold text-[color:var(--accent)]">About</CardHeading>
               <div className="mt-6 lg:mt-auto">
                 <p className="about-intro font-heading text-[24px] leading-[1.14] tracking-[-0.02em] xl:text-[26px]">
                   {aboutIntro.main}
