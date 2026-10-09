@@ -394,7 +394,7 @@ function CardHeading({
   detailClassName,
 }: {
   children: ReactNode
-  detail?: string
+  detail?: ReactNode
   detailClassName?: string
 }) {
   return (
@@ -403,7 +403,7 @@ function CardHeading({
         {children}
       </h2>
       {detail && (
-        <span className={`text-right text-base ${detailClassName ?? "text-[#1A1A1A]/55"}`}>{detail}</span>
+        <span className={`text-right text-base ${detailClassName ?? "text-[#1A1A1A]/65"}`}>{detail}</span>
       )}
     </header>
   )
@@ -793,7 +793,7 @@ function AboutPage({ mode }: { mode: Mode }) {
                     behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
                   })
                 }}
-                className={`transition-colors hover:text-[color:var(--hl-link)] ${active === id ? "font-medium text-[color:var(--hl-link)]" : "text-[#1A1A1A]/50"}`}>
+                className={`transition-colors hover:text-[color:var(--hl-link)] ${active === id ? "font-medium text-[color:var(--hl-link)]" : "text-[#1A1A1A]/70"}`}>
                 {label}
               </a>
             </li>
@@ -802,19 +802,22 @@ function AboutPage({ mode }: { mode: Mode }) {
       </nav>
       <div ref={contentRef} data-about-content role="region" aria-label="About content" tabIndex={0}
         className="min-h-0 min-w-0 overflow-y-auto overscroll-contain">
-        <div className="about-reading-column mr-6 flex flex-col gap-10 pb-10 pr-3 lg:mr-10 lg:gap-12">
+        <div className="about-reading-column max-w-[48rem] mr-6 flex flex-col gap-10 pb-10 pr-3 lg:mr-10 lg:gap-12">
           <section id="about-introduction" className="flex flex-col gap-6">
             <div className="flex min-w-0 flex-col gap-3">
               <p className={`text-[clamp(22px,2vw,26px)] leading-[1.4] tracking-[-0.01em] font-semibold ${mode === "growth" ? "text-[#0F3A8A]" : "text-[#1A1A1A]"}`}>
                 {intro}
               </p>
-              <p className="text-base leading-relaxed text-[#1A1A1A]/65">
+              <p className="max-w-[65ch] text-base leading-relaxed text-[#1A1A1A]/75">
                 {aboutContent[mode].bio}
               </p>
             </div>
-            <video controls playsInline preload="metadata"
+            <figure className="flex flex-col gap-2">
+              <video controls playsInline preload="metadata" aria-label="Video introduction, about two minutes"
               src="https://mzelpafnpdcchykekdux.supabase.co/storage/v1/object/public/photos/video%20introduction.mp4"
-              className="block h-auto w-full max-w-[48rem] rounded-md" />
+              className="block h-auto w-full rounded-md border border-[color:var(--grid-line)]" />
+              <figcaption className="text-sm text-[#1A1A1A]/70">2 min, sound on</figcaption>
+            </figure>
           </section>
           <AboutExtras mode={mode} />
         </div>
@@ -1817,7 +1820,7 @@ export default function App() {
           ariaLabel="Contact"
           className={`order-8 lg:order-none ${page ? "max-lg:hidden" : ""}`}
         >
-          <CardHeading detail="Open to work">Contact</CardHeading>
+          <CardHeading detail={<span className="inline-flex items-center gap-2"><span className="size-2 rounded-full bg-[#2E9E5B]" aria-hidden="true" />Open to work</span>}>Contact</CardHeading>
           <div className="mt-6 lg:mt-auto">
             <div className="flex flex-col items-start gap-1">
               <a className="contact-link" href="/resume.pdf" download>
