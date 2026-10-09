@@ -68,34 +68,41 @@ export default function PhotoSlideshow({ active, portrait }: { active: boolean; 
     if (!photos.length) return
     let cancelled = false
     let pending = false
-    let index = -1
+    let remaining: string[] = []
     let current: string | null = null
     const failed = new Set<string>()
     const advance = () => {
       if (cancelled || pending || document.hidden || pausedRef.current) return
-      let next = (index + 1) % photos.length
-      while (failed.has(photos[next])) {
-        next = (next + 1) % photos.length
-        if (next === (index + 1) % photos.length) return
+      if (!remaining.length) {
+        remaining = photos.filter((photo) => !failed.has(photo))
+        for (let i = remaining.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1))
+          ;[remaining[i], remaining[j]] = [remaining[j], remaining[i]]
+        }
+        // Avoid repeating the last photo at the start of a new shuffled cycle.
+        const last = remaining.length - 1
+        if (last > 0 && remaining[last] === current) {
+          ;[remaining[0], remaining[last]] = [remaining[last], remaining[0]]
+        }
       }
-      index = next
-      if (photos[next] === current) return
+      const next = remaining.pop()
+      if (!next || next === current) return
       pending = true
       const image = new Image()
       image.onload = () => {
         if (cancelled) return
         pending = false
         setPrevious(current)
-        current = photos[next]
+        current = next
         setShown(current)
       }
       image.onerror = () => {
         if (cancelled) return
         pending = false
-        failed.add(photos[next])
+        failed.add(next)
         if (failed.size < photos.length) advance()
       }
-      image.src = photos[next]
+      image.src = next
     }
     advance()
     const timer = !reducedMotion && photos.length > 1 ? window.setInterval(advance, 3000) : undefined
