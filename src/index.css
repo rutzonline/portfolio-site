@@ -282,10 +282,6 @@ a[href],
 
 /* Align the About heading and body on the same reading column. */
 .about-page-header { align-items: center; }
-.about-page-header h1 {
-  font-size: clamp(32px, 2.6vw, 40px);
-  line-height: 1.1;
-}
 @media (min-width: 1024px) {
   .page-article:has(.about-layout) {
     --about-menu-width: 160px;

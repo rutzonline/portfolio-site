@@ -736,7 +736,7 @@ function AboutExtras({ mode }: { mode: Mode }) {
 function splitAboutIntro(intro: string, mode: Mode) {
   const start = mode === "growth" ? intro.indexOf("i.e.,") : -1
   return {
-    main: start < 0 ? intro : intro.slice(0, start).trimEnd().replace(/,$/, "."),
+    main: start < 0 ? intro : intro.slice(0, start).trimEnd(),
     explanation: start < 0 ? null : intro.slice(start),
   }
 }
@@ -1051,7 +1051,7 @@ function CaseHeader({
     <div className="flex items-center gap-4">
       <Logo domain={domain} src={src} name={name} size="size-12" />
       <div>
-        <h2 className="font-heading text-[clamp(26px,3vw,40px)] leading-none tracking-[-0.03em]">
+        <h2 className="case-title font-medium text-[clamp(24px,2.2vw,30px)] leading-[1.15] tracking-[-0.02em]">
           {name}
         </h2>
         <p className="mt-1 text-[#1A1A1A]/60">{sub}</p>
@@ -1695,7 +1695,7 @@ export default function App() {
             </div>
             <header className={`-mx-6 flex shrink-0 items-baseline justify-between gap-4 px-6 lg:-mx-10 lg:px-10 ${page === "about" ? "about-page-header" : ""}`}>
               <div>
-                <h1 className="font-heading text-[clamp(30px,3.4vw,48px)] leading-none tracking-[-0.03em]">
+                <h1 className="page-title font-medium text-[clamp(26px,2.4vw,34px)] leading-[1.15] tracking-[-0.02em]">
                   <button
                     type="button"
                     onClick={close}
@@ -1752,6 +1752,7 @@ export default function App() {
               <div className="mt-6 lg:mt-auto">
                 <p className="about-intro font-semibold text-[24px] leading-[1.14] tracking-[-0.02em] xl:text-[26px]">
                   {aboutIntro.main}
+                  {aboutIntro.explanation && <> <strong className="font-bold">{aboutIntro.explanation}</strong></>}
                 </p>
                 <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
