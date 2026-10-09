@@ -64,7 +64,7 @@ function AboutExtras({ mode }: { mode: Mode }) {
 }
 
 export function splitAboutIntro(intro: string, mode: Mode) {
-  const start = mode === "growth" ? intro.indexOf("i.e.,") : -1
+  const start = intro.indexOf(mode === "growth" ? "i.e.," : "from the first ad")
   return {
     main: start < 0 ? intro : intro.slice(0, start).trimEnd(),
     explanation: start < 0 ? null : intro.slice(start),

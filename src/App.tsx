@@ -77,7 +77,7 @@ const modeCopy = {
   },
   brand: {
     intro:
-      "i write product and lifecycle content, from the first ad someone sees to the email that brings them back.",
+      "i write product and lifecycle content. from the first ad someone sees to the email that brings them back.",
     project: "Cardboard",
     projectDescription:
       "Feature storytelling for an AI video tool: product essays, social adaptations, and UX-driven copy.",
@@ -1562,7 +1562,7 @@ export default function App() {
               <div className="mt-6 lg:mt-auto">
                 <p className="about-intro font-semibold text-[20px] leading-[1.14] tracking-[-0.02em] xl:text-[22px]">
                   {aboutIntro.main}
-                  {aboutIntro.explanation && <span className="block text-[20px] font-semibold opacity-50 xl:text-[22px]">{aboutIntro.explanation}</span>}
+                  {aboutIntro.explanation && <span className="mt-2 block text-[20px] font-semibold opacity-50 xl:text-[22px]">{aboutIntro.explanation}</span>}
                 </p>
                 <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
