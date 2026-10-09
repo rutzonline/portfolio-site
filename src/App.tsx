@@ -68,7 +68,7 @@ const moodText =
 const modeCopy = {
   growth: {
     intro:
-      "i try things to get people to use a product, check what worked, and do more of that.",
+      "i try things to get people to use a product, i.e., run experiments across the funnel to optimize user acquisition, activation, and retention.",
     project: "wispr flow",
     projectDescription:
       "A lifecycle reset for a climate-tech platform: onboarding, activation loops, and a sharper path from interest to habit.",
@@ -750,7 +750,7 @@ const ABOUT_SECTIONS = [
 
 function AboutPage({ mode }: { mode: Mode }) {
   const intro = mode === "growth"
-    ? "i.e., run experiments across the funnel to optimize user acquisition, activation, and retention."
+    ? "hi, i'm rutuja, a growth marketer"
     : modeCopy[mode].intro
   const contentRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState<string>("about-introduction")
