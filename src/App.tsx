@@ -68,7 +68,7 @@ const moodText =
 const modeCopy = {
   growth: {
     intro:
-      "i try things to get people to use a product, check what worked, and do more of that.",
+      "i try things to get people to use a product, check what worked, and do more of that, i.e., run experiments across the funnel to optimize user acquisition, activation, and retention.",
     project: "wispr flow",
     projectDescription:
       "A lifecycle reset for a climate-tech platform: onboarding, activation loops, and a sharper path from interest to habit.",
@@ -1676,7 +1676,7 @@ export default function App() {
                 </p>
                 <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
-                    ? "email, paid, creators, and offline."
+                    ? "email, paid, creators, and campaigns."
                     : "copy, content, social, and brand comms."}
                 </p>
               </div>
