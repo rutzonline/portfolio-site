@@ -19,7 +19,7 @@ export type AboutExtra = {
 
 export const aboutContent: Record<"growth" | "brand", AboutExtra> = {
   growth: {
-    bio: "also a pop culture enthusiast, an avid sports fan, and a daily puzzle solver who's very selectively chronically online.",
+    bio: "also a pop culture enthusiast, an avid sports fan, and a daily puzzle solver who's very selectively chronically online. here's a (slightly long) video summary (a real attention span test)",
     languages: [
       ["english", "fluent"],
       ["hindi", "native"],
@@ -28,7 +28,7 @@ export const aboutContent: Record<"growth" | "brand", AboutExtra> = {
     interests: [
       "cooking (for 1)",
       "nyt games <3",
-      "watching my goat max neverstappen make a comeback @ the 'bahrain' gp",
+      "listening to the dutch national anthem",
       "watching futbol",
       "crushing it in fpl",
     ],
