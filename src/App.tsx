@@ -68,7 +68,7 @@ const moodText =
 const modeCopy = {
   growth: {
     intro:
-      "I'm Rutuja. I build thoughtful growth systems that turn product insight into durable demand.",
+      "i try things to get people to use a product, check what worked, and do more of that.",
     project: "wispr flow",
     projectDescription:
       "A lifecycle reset for a climate-tech platform: onboarding, activation loops, and a sharper path from interest to habit.",
@@ -77,7 +77,7 @@ const modeCopy = {
   },
   brand: {
     intro:
-      "I write product and lifecycle content that makes people understand, care, and act.",
+      "i write product and lifecycle content, from the first ad someone sees to the email that brings them back.",
     project: "Cardboard",
     projectDescription:
       "Feature storytelling for an AI video tool: product essays, social adaptations, and UX-driven copy.",
@@ -1676,8 +1676,8 @@ export default function App() {
                 </p>
                 <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
-                    ? "aspiring product marketing / growth manager"
-                    : "brand narrative & product comms."}
+                    ? "email, paid, creators, and offline."
+                    : "copy, content, social, and brand comms."}
                 </p>
               </div>
             </Card>
