@@ -680,7 +680,7 @@ function AboutExtras({ mode }: { mode: Mode }) {
   const [expanded, setExpanded] = useState<{ src: string; alt: string } | null>(null)
   useEffect(() => setExpanded(null), [mode])
   return (
-    <div className="flex max-w-4xl flex-col gap-10 lg:gap-12">
+    <div className="flex min-w-0 flex-col gap-10 lg:gap-12">
       <section id="about-languages">
         <h3 className="mb-3 font-heading text-xl tracking-[-0.02em]">
           languages
@@ -749,7 +749,9 @@ const ABOUT_SECTIONS = [
 ] as const
 
 function AboutPage({ mode }: { mode: Mode }) {
-  const intro = splitAboutIntro(modeCopy[mode].intro, mode)
+  const intro = mode === "growth"
+    ? "i.e., run experiments across the funnel to optimize user acquisition, activation, and retention."
+    : modeCopy[mode].intro
   const contentRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState<string>("about-introduction")
 
@@ -802,9 +804,9 @@ function AboutPage({ mode }: { mode: Mode }) {
         className="min-h-0 min-w-0 overflow-y-auto overscroll-contain">
         <div className="about-reading-column mr-6 flex flex-col gap-10 pb-10 pr-3 lg:mr-10 lg:gap-12">
           <section id="about-introduction" className="flex flex-col gap-6">
-            <div className="flex max-w-[42rem] flex-col gap-3">
-              <p className={`text-[clamp(22px,2vw,26px)] leading-[1.4] tracking-[-0.01em] ${mode === "growth" ? "font-normal text-[#0F3A8A]" : "font-normal text-[#1A1A1A]"}`}>
-                {mode === "growth" ? intro.explanation ?? intro.main : intro.main}
+            <div className="flex min-w-0 flex-col gap-3">
+              <p className={`text-[clamp(22px,2vw,26px)] leading-[1.4] tracking-[-0.01em] font-semibold ${mode === "growth" ? "text-[#0F3A8A]" : "text-[#1A1A1A]"}`}>
+                {intro}
               </p>
               <p className="text-base leading-relaxed text-[#1A1A1A]/65">
                 {aboutContent[mode].bio}
@@ -812,7 +814,7 @@ function AboutPage({ mode }: { mode: Mode }) {
             </div>
             <video controls playsInline preload="metadata"
               src="https://mzelpafnpdcchykekdux.supabase.co/storage/v1/object/public/photos/video%20introduction.mp4"
-              className="aspect-video w-full rounded-md border border-[#E5E1DA] bg-[#1A1A1A]" />
+              className="block h-auto w-full max-w-[48rem] rounded-md" />
           </section>
           <AboutExtras mode={mode} />
         </div>
@@ -1748,7 +1750,7 @@ export default function App() {
             >
               <CardHeading detail="Rutuja Rochkari" detailClassName="font-semibold text-[color:var(--accent)]">About</CardHeading>
               <div className="mt-6 lg:mt-auto">
-                <p className="about-intro font-heading text-[24px] leading-[1.14] tracking-[-0.02em] xl:text-[26px]">
+                <p className="about-intro font-semibold text-[24px] leading-[1.14] tracking-[-0.02em] xl:text-[26px]">
                   {aboutIntro.main}
                 </p>
                 <p className="mt-3 leading-snug text-[#1A1A1A]/65">

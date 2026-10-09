@@ -281,7 +281,6 @@ a[href],
 }
 
 /* Align the About heading and body on the same reading column. */
-.about-reading-column { max-width: 50rem; }
 .about-page-header { align-items: center; }
 .about-page-header h1 {
   font-size: clamp(32px, 2.6vw, 40px);
