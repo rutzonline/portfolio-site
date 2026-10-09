@@ -53,8 +53,11 @@ button {
 
 .font-accent {
   font-family: var(--font-accent);
+  font-size: 0.82em;
   font-weight: 400;
-  letter-spacing: normal;
+  line-height: 1.25;
+  letter-spacing: 0.035em;
+  color: #727272;
 }
 
 .font-body-serif {

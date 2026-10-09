@@ -732,6 +732,17 @@ function AboutExtras({ mode }: { mode: Mode }) {
   )
 }
 
+function AboutIntro({ intro, mode }: { intro: string; mode: Mode }) {
+  const accentStart = mode === "growth" ? intro.indexOf("i.e.,") : -1
+  if (accentStart < 0) return <>{intro}</>
+  return (
+    <>
+      {intro.slice(0, accentStart)}
+      <span className="font-accent">{intro.slice(accentStart)}</span>
+    </>
+  )
+}
+
 function PageBody({ page, mode }: { page: PageKey; mode: Mode }) {
   const brand = modeCopy[mode]
   switch (page) {
@@ -739,12 +750,7 @@ function PageBody({ page, mode }: { page: PageKey; mode: Mode }) {
       return (
         <>
           <p className="max-w-3xl font-body-serif text-[clamp(26px,3.2vw,44px)] leading-[1.1] tracking-[-0.025em]">
-            {mode === "growth" ? (
-              <>
-                {brand.intro.slice(0, brand.intro.indexOf("i.e.,"))}
-                <span className="font-accent">{brand.intro.slice(brand.intro.indexOf("i.e.,"))}</span>
-              </>
-            ) : brand.intro}
+            <AboutIntro intro={brand.intro} mode={mode} />
           </p>
           <video
             controls
@@ -1677,7 +1683,7 @@ export default function App() {
               <CardHeading detail="Rutuja Rochkari">About</CardHeading>
               <div className="mt-6 lg:mt-auto">
                 <p className="about-intro font-heading text-[24px] leading-[1.14] tracking-[-0.02em] xl:text-[26px]">
-                  {content.intro}
+                  <AboutIntro intro={content.intro} mode={mode} />
                 </p>
                 <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
