@@ -775,8 +775,7 @@ function AboutPage({ mode }: { mode: Mode }) {
   return (
     <div className="about-layout -mr-6 grid min-h-0 flex-1 grid-rows-[auto_minmax(0,1fr)] gap-4 overflow-hidden lg:-mr-10 lg:grid-rows-1">
       <nav aria-label="About contents" className="about-menu mr-6 min-w-0 lg:mr-0">
-        <p className="mb-4 hidden text-xs font-medium tracking-[0.08em] text-[#1A1A1A]/45 lg:block">on this page</p>
-        <ul className="flex gap-1 overflow-x-auto text-sm leading-snug lg:flex-col lg:gap-1">
+        <ul className="flex gap-4 overflow-x-auto text-[15px] leading-tight lg:flex-col lg:gap-2">
           {ABOUT_SECTIONS.map(([id, label]) => (
             <li key={id} className="shrink-0">
               <a href={`#${id}`} aria-current={active === id ? "location" : undefined}
@@ -790,7 +789,7 @@ function AboutPage({ mode }: { mode: Mode }) {
                     behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
                   })
                 }}
-                className={`about-menu-link block rounded-sm px-3 py-2.5 transition-colors hover:bg-[#0F3A8A]/5 hover:text-[color:var(--hl-link)] ${active === id ? "bg-[#0F3A8A]/5 font-medium text-[color:var(--hl-link)]" : "text-[#1A1A1A]/60"}`}>
+                className={`transition-colors hover:text-[color:var(--hl-link)] ${active === id ? "font-medium text-[color:var(--hl-link)]" : "text-[#1A1A1A]/50"}`}>
                 {label}
               </a>
             </li>
@@ -802,10 +801,10 @@ function AboutPage({ mode }: { mode: Mode }) {
         <div className="about-reading-column mr-6 flex flex-col gap-10 pb-10 pr-3 lg:mr-10 lg:gap-12">
           <section id="about-introduction" className="flex flex-col gap-6">
             <div className="flex max-w-[42rem] flex-col gap-3">
-              <p className={`text-[clamp(22px,2vw,26px)] font-medium leading-[1.4] tracking-[-0.01em] ${mode === "growth" ? "text-[#0F3A8A]" : "text-[#1A1A1A]"}`}>
+              <p className={`text-[clamp(22px,2vw,26px)] leading-[1.4] tracking-[-0.01em] ${mode === "growth" ? "font-bold text-[#0F3A8A]" : "font-medium text-[#1A1A1A]"}`}>
                 {mode === "growth" ? intro.explanation ?? intro.main : intro.main}
               </p>
-              <p className="text-base italic [font-synthesis:style] leading-relaxed text-[#1A1A1A]/65">
+              <p className="text-base leading-relaxed text-[#1A1A1A]/65">
                 {aboutContent[mode].bio}
               </p>
             </div>

@@ -105,7 +105,7 @@ export default function PhotoSlideshow({ active, portrait }: { active: boolean; 
       image.src = next
     }
     advance()
-    const timer = !reducedMotion && photos.length > 1 ? window.setInterval(advance, 3000) : undefined
+    const timer = !reducedMotion && photos.length > 1 ? window.setInterval(advance, 15000) : undefined
     const resume = () => { if (!current) advance() }
     document.addEventListener("visibilitychange", resume)
     return () => {

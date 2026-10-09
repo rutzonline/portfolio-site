@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -287,9 +287,6 @@ a[href],
   font-size: clamp(32px, 2.6vw, 40px);
   line-height: 1.1;
 }
-.about-menu-link[aria-current="location"] {
-  box-shadow: inset 2px 0 0 var(--hl-link);
-}
 @media (min-width: 1024px) {
   .page-article:has(.about-layout) {
     --about-menu-width: 160px;
@@ -300,8 +297,8 @@ a[href],
     column-gap: var(--about-column-gap);
   }
   .about-menu {
+    padding-top: 24px;
     padding-right: 20px;
-    border-right: 1px solid var(--grid-line);
   }
   .about-page-header {
     margin-left: 0;
