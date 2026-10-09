@@ -68,7 +68,7 @@ const moodText =
 const modeCopy = {
   growth: {
     intro:
-      "i try things to get people to use a product. i.e., run experiments across the funnel to optimize user acquisition, activation, and retention.",
+      "i get people to use products. i.e., run experiments across the funnel to optimize user acquisition, activation, and retention.",
     project: "wispr flow",
     projectDescription:
       "A lifecycle reset for a climate-tech platform: onboarding, activation loops, and a sharper path from interest to habit.",
@@ -1562,7 +1562,7 @@ export default function App() {
               <div className="mt-6 lg:mt-auto">
                 <p className="about-intro font-semibold text-[24px] leading-[1.14] tracking-[-0.02em] xl:text-[26px]">
                   {aboutIntro.main}
-                  {aboutIntro.explanation && <span className="block">{aboutIntro.explanation}</span>}
+                  {aboutIntro.explanation && <span className="block opacity-50">{aboutIntro.explanation}</span>}
                 </p>
                 <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
