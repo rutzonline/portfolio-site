@@ -732,26 +732,29 @@ function AboutExtras({ mode }: { mode: Mode }) {
   )
 }
 
-function AboutIntro({ intro, mode }: { intro: string; mode: Mode }) {
-  const accentStart = mode === "growth" ? intro.indexOf("i.e.,") : -1
-  if (accentStart < 0) return <>{intro}</>
-  return (
-    <>
-      {intro.slice(0, accentStart)}
-      <span className="font-accent">{intro.slice(accentStart)}</span>
-    </>
-  )
+function splitAboutIntro(intro: string, mode: Mode) {
+  const start = mode === "growth" ? intro.indexOf("i.e.,") : -1
+  return {
+    main: start < 0 ? intro : intro.slice(0, start).trimEnd().replace(/,$/, "."),
+    explanation: start < 0 ? null : intro.slice(start),
+  }
 }
 
 function PageBody({ page, mode }: { page: PageKey; mode: Mode }) {
   const brand = modeCopy[mode]
+  const intro = splitAboutIntro(brand.intro, mode)
   switch (page) {
     case "about":
       return (
         <>
-          <p className="max-w-3xl font-body-serif text-[clamp(26px,3.2vw,44px)] leading-[1.1] tracking-[-0.025em]">
-            <AboutIntro intro={brand.intro} mode={mode} />
-          </p>
+          <div className="flex max-w-3xl flex-col gap-3">
+            <p className="font-body-serif text-[clamp(26px,3.2vw,44px)] leading-[1.1] tracking-[-0.025em]">
+              {intro.main}
+            </p>
+            {intro.explanation && (
+              <p className="leading-snug text-[#0F3A8A]">{intro.explanation}</p>
+            )}
+          </div>
           <video
             controls
             playsInline
@@ -1372,6 +1375,7 @@ export default function App() {
   const previousPageRef = useRef(page)
   const casePage = page === "moodboard" && mode === "growth"
   const content = modeCopy[mode]
+  const aboutIntro = splitAboutIntro(content.intro, mode)
   const accent = mode === "growth" ? SAPPHIRE : "#E88D6D"
   const tint = (k: PageKey) => content.tints[k] ?? CREAM
 
@@ -1683,8 +1687,15 @@ export default function App() {
               <CardHeading detail="Rutuja Rochkari">About</CardHeading>
               <div className="mt-6 lg:mt-auto">
                 <p className="about-intro font-heading text-[24px] leading-[1.14] tracking-[-0.02em] xl:text-[26px]">
-                  <AboutIntro intro={content.intro} mode={mode} />
+                  {aboutIntro.main}
                 </p>
+                {aboutIntro.explanation && (
+                  <div className="about-explanation-reveal">
+                    <div>
+                      <p className="pt-3 leading-snug text-[#0F3A8A]">{aboutIntro.explanation}</p>
+                    </div>
+                  </div>
+                )}
                 <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
                     ? "email, paid, creators, and campaigns."

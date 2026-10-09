@@ -1,8 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Patrick+Hand&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
 :root {
-  --font-accent: "Patrick Hand", cursive;
   font-family: "Inter", sans-serif;
   color: #1a1a1a;
   background: #faf9f6;
@@ -49,15 +48,6 @@ button {
 .font-heading {
   font-family: "Inter", sans-serif;
   font-weight: 900;
-}
-
-.font-accent {
-  font-family: var(--font-accent);
-  font-size: 0.82em;
-  font-weight: 400;
-  line-height: 1.25;
-  letter-spacing: 0.035em;
-  color: #727272;
 }
 
 .font-body-serif {
@@ -288,4 +278,36 @@ a[href],
   .wave-dot {
     animation: none;
   }
+}
+
+/* The bottom-aligned About text moves upward as the explanation opens. */
+.about-explanation-reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition: grid-template-rows 280ms ease, opacity 180ms ease;
+}
+
+.about-explanation-reveal > div {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.card-link:focus-visible .about-explanation-reveal {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (hover: hover) {
+  .card-link:hover .about-explanation-reveal {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-explanation-reveal { transition: none; }
 }
