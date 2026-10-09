@@ -68,7 +68,7 @@ const moodText =
 const modeCopy = {
   growth: {
     intro:
-      "i try things to get people to use a product, check what worked, and do more of that, i.e., run experiments across the funnel to optimize user acquisition, activation, and retention.",
+      "i try things to get people to use a product, check what worked, and do more of that.",
     project: "wispr flow",
     projectDescription:
       "A lifecycle reset for a climate-tech platform: onboarding, activation loops, and a sharper path from interest to habit.",
