@@ -679,14 +679,14 @@ function AboutExtras({ mode }: { mode: Mode }) {
   useEffect(() => setExpanded(null), [mode])
   return (
     <div className="flex max-w-4xl flex-col gap-10">
-      <p className="w-full text-lg leading-snug text-[#1A1A1A]/80">{c.bio}</p>
-      <section>
+      <p className="w-full text-base italic [font-synthesis:style] leading-snug text-[#1A1A1A]/80">{c.bio}</p>
+      <section id="about-languages">
         <h3 className="mb-3 font-heading text-xl tracking-[-0.02em]">
           languages
         </h3>
         <Rows items={c.languages} />
       </section>
-      <section>
+      <section id="about-interests">
         <h3 className="mb-3 font-heading text-xl tracking-[-0.02em]">
           interests
         </h3>
@@ -706,7 +706,7 @@ function AboutExtras({ mode }: { mode: Mode }) {
           ))}
         </ul>
       </section>
-      <section>
+      <section id="about-faq">
         <h3 className="mb-3 font-heading text-xl tracking-[-0.02em]">faq</h3>
         <div className="divide-y divide-[#1A1A1A]/15 border-y border-[#1A1A1A]/15">
           {c.faqs.map(([q, a]) => (
@@ -740,32 +740,92 @@ function splitAboutIntro(intro: string, mode: Mode) {
   }
 }
 
+const ABOUT_SECTIONS = [
+  ["about-introduction", "introduction"],
+  ["about-languages", "languages"],
+  ["about-interests", "interests"],
+  ["about-faq", "faq"],
+] as const
+
+function AboutPage({ mode }: { mode: Mode }) {
+  const intro = splitAboutIntro(modeCopy[mode].intro, mode)
+  const contentRef = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState<string>("about-introduction")
+
+  useEffect(() => {
+    const content = contentRef.current
+    if (!content) return
+    content.scrollTo({ top: 0, behavior: "instant" })
+    const update = () => {
+      const top = content.getBoundingClientRect().top
+      let current: string = "about-introduction"
+      for (const [id] of ABOUT_SECTIONS) {
+        const section = content.querySelector<HTMLElement>(`#${id}`)
+        if (section && section.getBoundingClientRect().top <= top + 80) current = id
+      }
+      if (content.scrollTop > 0 && content.scrollTop + content.clientHeight >= content.scrollHeight - 2) {
+        current = "about-faq"
+      }
+      setActive(current)
+    }
+    update()
+    content.addEventListener("scroll", update, { passive: true })
+    return () => content.removeEventListener("scroll", update)
+  }, [mode])
+
+  return (
+    <div className="-mr-6 grid min-h-0 flex-1 grid-rows-[auto_minmax(0,1fr)] gap-4 overflow-hidden lg:-mr-10 lg:grid-cols-[190px_minmax(0,1fr)] lg:grid-rows-1 lg:gap-10">
+      <nav aria-label="About contents" className="mr-6 min-w-0 lg:mr-0">
+        <ul className="flex gap-4 overflow-x-auto text-[15px] leading-tight lg:flex-col lg:gap-2">
+          {ABOUT_SECTIONS.map(([id, label]) => (
+            <li key={id} className="shrink-0">
+              <a href={`#${id}`} aria-current={active === id ? "location" : undefined}
+                onClick={(event) => {
+                  event.preventDefault()
+                  const content = contentRef.current
+                  const section = content?.querySelector<HTMLElement>(`#${id}`)
+                  if (!content || !section) return
+                  content.scrollTo({
+                    top: content.scrollTop + section.getBoundingClientRect().top - content.getBoundingClientRect().top,
+                    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+                  })
+                }}
+                className={`transition-colors hover:text-[color:var(--hl-link)] ${active === id ? "font-medium text-[color:var(--hl-link)]" : "text-[#1A1A1A]/50"}`}>
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <div ref={contentRef} data-about-content role="region" aria-label="About content" tabIndex={0}
+        className="min-h-0 min-w-0 overflow-y-auto overscroll-contain">
+        <div className="mr-6 flex max-w-[44rem] flex-col gap-6 pb-6 pr-3 lg:mr-10">
+          <section id="about-introduction" className="flex flex-col gap-6">
+            {mode === "growth" ? (
+              <p className="text-[clamp(20px,2vw,24px)] font-medium leading-snug text-[#0F3A8A]">
+                {intro.explanation ?? intro.main}
+              </p>
+            ) : (
+              <p className="font-body-serif text-[clamp(26px,3.2vw,44px)] leading-[1.1] tracking-[-0.025em]">
+                {intro.main}
+              </p>
+            )}
+            <video controls playsInline preload="metadata"
+              src="https://mzelpafnpdcchykekdux.supabase.co/storage/v1/object/public/photos/video%20introduction.mp4"
+              className="aspect-video w-full rounded-md border border-[#E5E1DA] bg-[#1A1A1A]" />
+          </section>
+          <AboutExtras mode={mode} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function PageBody({ page, mode }: { page: PageKey; mode: Mode }) {
   const brand = modeCopy[mode]
-  const intro = splitAboutIntro(brand.intro, mode)
   switch (page) {
     case "about":
-      return (
-        <>
-          {mode === "growth" ? (
-            <p className="max-w-3xl text-[16px] font-medium leading-snug text-[#0F3A8A]">
-              {intro.explanation ?? intro.main}
-            </p>
-          ) : (
-            <p className="max-w-3xl font-body-serif text-[clamp(26px,3.2vw,44px)] leading-[1.1] tracking-[-0.025em]">
-              {intro.main}
-            </p>
-          )}
-          <video
-            controls
-            playsInline
-            preload="metadata"
-            src="https://mzelpafnpdcchykekdux.supabase.co/storage/v1/object/public/photos/video%20introduction.mp4"
-            className="aspect-video w-full max-w-4xl rounded-md border border-[#E5E1DA] bg-[#1A1A1A]"
-          />
-          <AboutExtras mode={mode} />
-        </>
-      )
+      return <AboutPage mode={mode} />
     case "work":
       return (
         <>
@@ -1375,6 +1435,7 @@ export default function App() {
   const mobileHomePosition = useRef<{ page: PageKey; y: number } | null>(null)
   const previousPageRef = useRef(page)
   const casePage = page === "moodboard" && mode === "growth"
+  const independentPage = casePage || page === "about"
   const content = modeCopy[mode]
   const aboutIntro = splitAboutIntro(content.intro, mode)
   const accent = mode === "growth" ? SAPPHIRE : "#E88D6D"
@@ -1508,7 +1569,7 @@ export default function App() {
 
   return (
     <main
-      className={`relative bg-[#FAF9F6] text-base text-[#1A1A1A] max-lg:overflow-x-clip lg:h-svh lg:overflow-hidden ${casePage ? "h-svh overflow-hidden" : "lg:min-h-[640px]"}`}
+      className={`relative bg-[#FAF9F6] text-base text-[#1A1A1A] max-lg:overflow-x-clip lg:h-svh lg:overflow-hidden ${independentPage ? "h-svh overflow-hidden" : "lg:min-h-[640px]"}`}
       style={
         {
           "--accent": accent,
@@ -1537,7 +1598,7 @@ export default function App() {
         aria-label="Portfolio"
         className={`${
           mode === "growth" && !page ? "fade-others " : ""
-        }${casePage ? "h-full min-h-0 " : ""}grid grid-cols-1 lg:h-full lg:grid-cols-[20%_repeat(3,minmax(0,1fr))] lg:grid-rows-2`}
+        }${independentPage ? "h-full min-h-0 " : ""}grid grid-cols-1 lg:h-full lg:grid-cols-[20%_repeat(3,minmax(0,1fr))] lg:grid-rows-2`}
       >
         <Card
           ariaLabel="Portrait and portfolio focus"
@@ -1596,7 +1657,7 @@ export default function App() {
         {page ? (
           <article
             aria-label={pageTitle(page, mode)}
-            className={`portfolio-card page-article flex ${casePage ? "h-full min-h-0 overflow-hidden" : "min-h-[60svh] lg:overflow-y-auto"} max-lg:break-words min-w-0 flex-col gap-6 p-6 ${
+            className={`portfolio-card page-article flex ${independentPage ? "h-full min-h-0 overflow-hidden" : "min-h-[60svh] lg:overflow-y-auto"} max-lg:break-words min-w-0 flex-col gap-6 p-6 ${
               page === "moodboard" && mode === "brand"
                 ? "lg:overflow-hidden"
                 : ""

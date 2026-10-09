@@ -10,7 +10,7 @@ export default function ImagePreview({ src, alt, onClose }: {
     const dialog = dialogRef.current
     if (!dialog) return
     const bodyOverflow = document.body.style.overflow
-    const article = dialog.closest<HTMLElement>(".page-article")
+    const article = dialog.closest<HTMLElement>("[data-about-content], .page-article")
     const articleOverflow = article?.style.overflowY ?? ""
     document.body.style.overflow = "hidden"
     if (article) article.style.overflowY = "hidden"
