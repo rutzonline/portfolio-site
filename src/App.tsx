@@ -24,6 +24,8 @@ import stateplateLogo from "@/imports/Report_Card.png"
 import freelanceLogo from "@/imports/freelance___1_.png"
 import Moodboard from "@/Moodboard"
 import { aboutContent } from "@/aboutContent"
+import PhotoSlideshow from "@/PhotoSlideshow"
+import ImagePreview from "@/ImagePreview"
 import growthPortrait from "@/imports/figma_growth_new.png"
 import contentPortrait from "@/imports/Untitled_design__20_.png"
 
@@ -672,6 +674,8 @@ const uptoRows: Record<Mode, [string, string][]> = {
 
 function AboutExtras({ mode }: { mode: Mode }) {
   const c = aboutContent[mode]
+  const [expanded, setExpanded] = useState<{ src: string; alt: string } | null>(null)
+  useEffect(() => setExpanded(null), [mode])
   return (
     <div className="flex max-w-4xl flex-col gap-10">
       <p className="w-full text-lg leading-snug text-[#1A1A1A]/80">{c.bio}</p>
@@ -685,14 +689,17 @@ function AboutExtras({ mode }: { mode: Mode }) {
         <h3 className="mb-3 font-heading text-xl tracking-[-0.02em]">
           interests
         </h3>
-        <ul className="flex flex-wrap gap-x-8 gap-y-6">
+        <ul className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-5">
           {c.interests.map((t, i) => (
-            <li key={t} className="flex w-36 flex-col gap-2">
-              <ImageSlot
-                alt={t}
-                src={c.interestImages?.[i]}
-                className="aspect-[4/3]"
-              />
+            <li key={t} className="flex min-w-0 flex-col gap-2">
+              <button type="button" aria-label={`Expand image: ${t}`} aria-haspopup="dialog"
+                onClick={() => {
+                  const src = c.interestImages?.[i]
+                  if (src) setExpanded({ src, alt: t })
+                }}
+                className="block w-full cursor-zoom-in rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]">
+                <ImageSlot alt={t} src={c.interestImages?.[i]} className="aspect-[4/3]" />
+              </button>
               <span className="leading-snug">{t}</span>
             </li>
           ))}
@@ -719,6 +726,7 @@ function AboutExtras({ mode }: { mode: Mode }) {
           ))}
         </div>
       </section>
+      {expanded && <ImagePreview src={expanded.src} alt={expanded.alt} onClose={() => setExpanded(null)} />}
     </div>
   )
 }
@@ -1527,17 +1535,7 @@ export default function App() {
               : undefined
           }
         >
-          {(["growth", "brand"] as const).map((m) => (
-            <img
-              key={m}
-              src={modeCopy[m].portrait}
-              alt={m === mode ? "Portrait" : ""}
-              aria-hidden={m !== mode}
-              className={`absolute inset-0 h-full w-full border-0 object-cover object-[center_35%] ${
-                m === mode ? "visible" : "invisible"
-              }`}
-            />
-          ))}
+          <PhotoSlideshow active={page !== null} portrait={content.portrait} />
           <div className="absolute left-5 top-5">
             <div
               className="toggle-group relative grid grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"
