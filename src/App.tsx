@@ -1560,7 +1560,7 @@ export default function App() {
             >
               <CardHeading detail="Rutuja Rochkari" detailClassName="font-semibold text-[color:var(--accent)]">About</CardHeading>
               <div className="mt-6 lg:mt-auto">
-                <p className="about-intro font-semibold text-[24px] leading-[1.14] tracking-[-0.02em] xl:text-[26px]">
+                <p className="about-intro font-semibold text-[20px] leading-[1.14] tracking-[-0.02em] xl:text-[22px]">
                   {aboutIntro.main}
                   {aboutIntro.explanation && <span className="block text-[20px] font-semibold opacity-50 xl:text-[22px]">{aboutIntro.explanation}</span>}
                 </p>
