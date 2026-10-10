@@ -1,4 +1,3 @@
-import TapDeck from "@/TapDeck"
 import { useState, type CSSProperties, type ReactNode } from "react"
 import { useMoodboard } from "@/useMoodboard"
 
@@ -42,12 +41,6 @@ const Link = ({
   ) : (
     <div className={className}>{children}</div>
   )
-
-const catColors = ["#E8741C", "#E8567F", "#9AAE1E", "#2F6FD0", "#C9A227"]
-const catColor = (c: string) =>
-  catColors[
-    [...c].reduce((a, ch) => a + ch.charCodeAt(0), 0) % catColors.length
-  ]
 
 const card = "overflow-hidden rounded-xl border border-[#E5E1DA] bg-white"
 const siteCard = card.replace("border-[#E5E1DA]", "border-[#B8B3AA]")
@@ -115,7 +108,7 @@ function Brands() {
     <>
       <Intro>why i probably won&rsquo;t skip them on my feed</Intro>
       <State status={status} count={rows.length} />
-      <ul className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+      <ul className="grid gap-3 md:grid-cols-2">
         {rows.map((brand) => (
           <li key={brand.name}>
             <article className={`${card} h-full p-4 text-sm leading-snug`}>
@@ -123,7 +116,10 @@ function Brands() {
                 <div className="size-12 shrink-0 overflow-hidden rounded-lg border border-[#E5E1DA] bg-[#F0EEEA]">
                   <Img src={brand.logo_url} alt="" className="aspect-square" />
                 </div>
-                <h3 className="text-base font-semibold">{brand.name}</h3>
+                <div>
+                  <h3 className="text-base font-semibold">{brand.name}</h3>
+                  <span className="mt-1 inline-block rounded-md bg-[#DDF080] px-2 py-0.5 text-xs font-semibold text-[#1A1A1A]">{brand.group}</span>
+                </div>
               </header>
               <p className="mt-3 whitespace-pre-line text-[#1A1A1A]/60">{brand.description}</p>
             </article>
@@ -138,23 +134,39 @@ function Campaigns() {
   const { rows, status } = useMoodboard("campaigns")
   const [index, setIndex] = useState(0)
   const campaign = rows[index]
+  const arrow = "flex size-9 items-center justify-center rounded-full border border-[#B8B3AA] transition-colors hover:border-[#1A1A1A] disabled:cursor-default disabled:opacity-30"
   return (
-    <>
+    <section className="flex flex-col lg:min-h-full">
       <Intro>my content marketing hall of fame</Intro>
       <State status={status} count={rows.length} />
-      {campaign && <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-8">
-        <TapDeck label="campaign" index={index} count={rows.length} onChange={setIndex}>
-          <div className="aspect-[2/1] overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-[#F0EEEA] p-3 shadow-sm">
-            <Img src={campaign.image_url} alt={campaign.brand} className="h-full rounded-xl object-contain" />
+      {campaign && <div className="flex flex-1 items-center py-6 lg:py-8">
+        <div className="mx-auto grid w-full max-w-[64rem] items-center gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
+          <div className="min-w-0" tabIndex={0} aria-label="Campaign navigation"
+            onKeyDown={(event) => {
+              if (event.key === "ArrowLeft") { event.preventDefault(); setIndex(Math.max(0, index - 1)) }
+              if (event.key === "ArrowRight") { event.preventDefault(); setIndex(Math.min(rows.length - 1, index + 1)) }
+            }}>
+            <div className="aspect-[16/9] overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-[#F0EEEA] shadow-sm">
+              <Img src={campaign.image_url} alt={campaign.brand} className="h-full object-cover" />
+            </div>
+            <div className="mt-3 flex items-center justify-center gap-4">
+              <button type="button" aria-label="Previous campaign" disabled={index === 0} onClick={() => setIndex(index - 1)} className={arrow}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m13 7-5 5 5 5M8 12h10" /></svg>
+              </button>
+              <p className="text-sm tabular-nums text-[#1A1A1A]/55">{index + 1} / {rows.length}</p>
+              <button type="button" aria-label="Next campaign" disabled={index === rows.length - 1} onClick={() => setIndex(index + 1)} className={arrow}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m11 7 5 5-5 5M6 12h10" /></svg>
+              </button>
+            </div>
           </div>
-        </TapDeck>
-        <article className="min-w-0 px-12 lg:px-0 lg:py-3" aria-live="polite" aria-atomic="true">
-          <p className="mb-1 text-sm text-[#1A1A1A]/55">{campaign.kicker}</p>
-          <h3 className="mb-3 text-lg font-semibold">{campaign.brand}</h3>
-          <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#1A1A1A]/75">{campaign.description}</p>
-        </article>
+          <article className="min-w-0 lg:pb-12" aria-live="polite" aria-atomic="true">
+            <p className="mb-1 text-sm text-[#1A1A1A]/55">{campaign.kicker}</p>
+            <h3 className="mb-3 text-lg font-semibold">{campaign.brand}</h3>
+            <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#1A1A1A]/75">{campaign.description}</p>
+          </article>
+        </div>
       </div>}
-    </>
+    </section>
   )
 }
 
@@ -173,8 +185,7 @@ function Newsletters() {
             >
               <p className="text-base font-semibold">{r.title}</p>
               <p
-                className="mt-1 text-sm font-semibold"
-                style={{ color: catColor(r.category) }}
+                className="mt-1 inline-block rounded-md bg-[#E88D6D] px-2 py-0.5 text-xs font-semibold text-[#1A1A1A]"
               >
                 {r.category}
               </p>
