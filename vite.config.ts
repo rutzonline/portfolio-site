@@ -13,6 +13,15 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: process.env.FIGMA_PUBLIC_URL ? `${process.env.FIGMA_PUBLIC_URL}/` : '/',
+    // The React SDK reads CRA-style process.env values. Expose Vercel's
+    // public client configuration explicitly for this Vite app.
+    define: {
+      'import.meta.env.VITE_VERCEL_OBSERVABILITY_CLIENT_CONFIG': JSON.stringify(
+        process.env.VERCEL_OBSERVABILITY_CLIENT_CONFIG ??
+        process.env.VITE_VERCEL_OBSERVABILITY_CLIENT_CONFIG ??
+        process.env.REACT_APP_VERCEL_OBSERVABILITY_CLIENT_CONFIG ?? '',
+      ),
+    },
     build: {
       sourcemap: emitSourcemaps ? 'inline' : false,
       minify: !emitSourcemaps,

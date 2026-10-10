@@ -1732,7 +1732,10 @@ export default function App() {
         )}
       </section>
       <Analytics route={analyticsPath} path={analyticsPath} />
-      <SpeedInsights route={analyticsPath} />
+      <SpeedInsights
+        route={analyticsPath}
+        configString={import.meta.env.VITE_VERCEL_OBSERVABILITY_CLIENT_CONFIG}
+      />
     </main>
   )
 }
