@@ -8,7 +8,7 @@ export default function BrandSplit({ brands, index, onChange }: {
   const selected = brands[index]
   if (!selected) return null
   const go = (next: number, focus = false) => {
-    const target = Math.max(0, Math.min(brands.length - 1, next))
+    const target = (next + brands.length) % brands.length
     onChange(target)
     if (focus) logos.current[target]?.focus()
   }
@@ -23,9 +23,9 @@ export default function BrandSplit({ brands, index, onChange }: {
         if (event.key === "Home") { event.preventDefault(); go(0, true) }
         if (event.key === "End") { event.preventDefault(); go(brands.length - 1, true) }
       }}
-      className="grid gap-8 pb-10 lg:grid-cols-[18rem_minmax(0,1fr)]"
+      className="grid gap-8 pb-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]"
     >
-      <ul aria-label="Choose a brand" className="grid grid-cols-4 content-start gap-x-3 gap-y-4">
+      <ul aria-label="Choose a brand" className="grid grid-cols-6 content-start gap-x-3 gap-y-4">
         {brands.map((brand, i) => (
           <li key={brand.name}>
             <button
@@ -58,24 +58,25 @@ export default function BrandSplit({ brands, index, onChange }: {
         ))}
       </ul>
 
-      <div className="min-w-0 max-w-[40rem] lg:sticky lg:top-0 lg:self-start">
-        <div className="mb-3 flex items-center justify-between">
-          <p className="text-sm tabular-nums text-[#1A1A1A]/70" aria-live="polite" aria-atomic="true">
+      <div className="min-w-0 lg:sticky lg:top-0 lg:self-start">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <p className="shrink-0 text-sm tabular-nums text-[#1A1A1A]/70" aria-live="polite" aria-atomic="true">
             <span className="sr-only">{selected.name}, brand </span>{index + 1} / {brands.length}
           </p>
-          <div className="flex gap-2">
-            <button type="button" aria-label="Previous brand" disabled={index === 0} onClick={() => go(index - 1)} className={arrow}>←</button>
-            <button type="button" aria-label="Next brand" disabled={index === brands.length - 1} onClick={() => go(index + 1)} className={arrow}>→</button>
+          <p className="text-center text-sm leading-snug text-[#1A1A1A]/70">why i probably won&rsquo;t skip them on my feed</p>
+          <div className="flex shrink-0 gap-2">
+            <button type="button" aria-label="Previous brand" disabled={brands.length < 2} onClick={() => go(index - 1)} className={arrow}>←</button>
+            <button type="button" aria-label="Next brand" disabled={brands.length < 2} onClick={() => go(index + 1)} className={arrow}>→</button>
           </div>
         </div>
         <article className="overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-white shadow-sm">
-          <header className="flex items-center gap-4 bg-[#F0EEEA] px-6 py-5">
+          <header className="flex items-center gap-4 bg-[#F0EEEA] px-6 py-4">
             <div className="size-16 shrink-0 overflow-hidden rounded-xl border border-[#E5E1DA] bg-white">
               {selected.logo_url && <img src={selected.logo_url} alt="" className="size-full object-cover" />}
             </div>
             <h3 className="min-w-0 text-xl font-semibold leading-tight">{selected.name}</h3>
           </header>
-          <p className="max-w-[65ch] whitespace-pre-line p-6 text-[15px] leading-relaxed text-[#1A1A1A]/80">
+          <p className="whitespace-pre-line px-6 py-5 text-[15px] leading-relaxed text-[#1A1A1A]/80">
             {selected.description}
           </p>
         </article>

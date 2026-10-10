@@ -117,12 +117,12 @@ function Brands() {
   const selected = rows[index]
   return (
     <>
-      <Intro>why i probably won&rsquo;t skip them on my feed</Intro>
+      <div className="lg:hidden"><Intro>why i probably won&rsquo;t skip them on my feed</Intro></div>
       <State status={status} count={rows.length} />
       {selected && <>
         <div className="max-lg:hidden"><BrandSplit brands={rows} index={index} onChange={setIndex} /></div>
         <div className="lg:hidden">
-        <TapDeck label="brand" index={index} count={rows.length} onChange={setIndex}>
+        <TapDeck label="brand" index={index} count={rows.length} onChange={setIndex} loop>
           <article className="overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-white shadow-sm">
             <div className="flex flex-col items-center gap-4 bg-[#F0EEEA] px-5 py-6">
               <div className="size-24 overflow-hidden rounded-2xl border border-[#E5E1DA]"><Img src={selected.logo_url} alt={selected.name} className="aspect-square" /></div>
