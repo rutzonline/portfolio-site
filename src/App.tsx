@@ -1,3 +1,5 @@
+import { growthNotes } from "@/growthNotes"
+import { brandNotes } from "@/brandNotes"
 import { routePanelWheel } from "@/panelScroll"
 import AboutPage, { splitAboutIntro } from "@/AboutPage"
 import { Rows, ImageSlot } from "@/contentComponents"
@@ -91,37 +93,7 @@ const modeCopy = {
   },
 }
 
-const noteList = [
-  {
-    title: "the tale of three is now an ai tell?",
-    blurb:
-      "why every list of three suddenly reads like a language model wrote it.",
-    body: [
-      "Somewhere in the last two years, the rule of three flipped from a rhetorical flourish into a tell. Fast, clean and scalable. Bold, brave and brilliant. Once you see it, you cannot unsee it.",
-      "The pattern is not wrong. It is just cheap. A list of three lets a writer skip the harder question of which one idea actually matters.",
-      "My fix is boring: pick one, then earn the second with a specific detail. If a third item survives, it should surprise you.",
-    ],
-  },
-  {
-    title: "simple things to live by",
-    blurb: "a short, slightly opinionated list of rules i keep coming back to.",
-    body: [
-      "Write it down the same day. Ask the obvious question first. Leave the room a little better than you found it.",
-      "None of these are original. They are just the ones that survived contact with real deadlines, real teams and real mistakes.",
-      "I revisit the list every few months and cut whatever I have stopped following.",
-    ],
-  },
-  {
-    title: "the friend recommendation algorithm",
-    blurb: "how word of mouth quietly beats most performance channels.",
-    body: [
-      "The best marketing channel I have ever used is a friend saying, you should try this. It converts, it retains and it cannot be bought.",
-      "Treating it like an algorithm helps: who is the trusted node, what is the trigger moment, and what makes the recommendation easy to pass on?",
-      "Most growth loops are just this, with better instrumentation.",
-    ],
-  },
-]
-const notes = noteList.map((n) => n.title)
+const notesByMode = { growth: growthNotes, brand: brandNotes }
 
 const skillSets: Record<Mode, {
   tags: string[]
@@ -191,7 +163,22 @@ const skillDomains: Record<string, string> = {
 
 const stintDomains = ["", "thestateplate.com", "hopstack.io", "liquide.life"]
 
-function NotesPage() {
+function NoteBody({ body }: { body: string }) {
+  const inline = (text: string) => text.split(/(\*[^*]+\*)/g).map((part, index) =>
+    part.startsWith("*") && part.endsWith("*") ? <em key={index}>{part.slice(1, -1)}</em> : part,
+  )
+  return <>{body.split(/\n\n+/).map((block, index) => {
+    const lines = block.split("\n")
+    return lines.every((line) => line.startsWith("- ")) ? (
+      <ul key={index} className="list-disc space-y-2 pl-6 text-lg leading-relaxed text-[#1A1A1A]/85">
+        {lines.map((line, item) => <li key={item}>{inline(line.slice(2))}</li>)}
+      </ul>
+    ) : <p key={index} className="whitespace-pre-line text-lg leading-relaxed text-[#1A1A1A]/85">{inline(block)}</p>
+  })}</>
+}
+
+function NotesPage({ mode }: { mode: Mode }) {
+  const noteList = notesByMode[mode]
   const [sel, setSel] = useState<number | null>(null)
   useBack(
     sel !== null
@@ -217,12 +204,7 @@ function NotesPage() {
         <h2 className="font-body-serif text-[clamp(28px,3.4vw,46px)] leading-[1.05] tracking-[-0.025em]">
           {n.title}
         </h2>
-        <p className="text-[#1A1A1A]/60">{n.blurb}</p>
-        {n.body.map((p) => (
-          <p key={p} className="text-lg leading-relaxed text-[#1A1A1A]/85">
-            {p}
-          </p>
-        ))}
+        <NoteBody body={n.body} />
         <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-[#1A1A1A]/15 pt-6">
           <button
             type="button"
@@ -270,8 +252,8 @@ function NotesPage() {
                 <span className="block text-[17px] font-semibold leading-tight transition-colors group-hover:text-[color:var(--hl-link)]">
                   {n.title}
                 </span>
-                <span className="mt-0.5 block text-[#1A1A1A]/60">
-                  {n.blurb}
+                <span className="mt-0.5 line-clamp-2 text-[#1A1A1A]/60">
+                  {n.body.split("\n")[0]}
                 </span>
               </span>
               <span
@@ -693,7 +675,7 @@ function PageBody({ page, mode }: { page: PageKey; mode: Mode }) {
         </>
       )
     case "notes":
-      return <NotesPage />
+      return <NotesPage key={mode} mode={mode} />
     case "projects":
       return <Experience mode={mode} />
     case "moodboard":
@@ -1204,7 +1186,7 @@ function CasesPage({ mode }: { mode: Mode }) {
                 <span className="block text-[17px] font-semibold leading-tight transition-colors group-hover:text-[color:var(--hl-link)]">
                   {name}
                 </span>
-                <span className="mt-0.5 block text-[#1A1A1A]/60">{sub}</span>
+                <span className="mt-0.5 line-clamp-2 text-[#1A1A1A]/60">{sub}</span>
               </span>
               <span
                 aria-hidden="true"
@@ -1620,7 +1602,7 @@ export default function App() {
             >
               <CardHeading detail="Writing">Notes</CardHeading>
               <ul className="mt-6 divide-y divide-[#1A1A1A]/15 lg:mt-auto">
-                {notes.map((t) => (
+                {notesByMode[mode].map(({ title: t }) => (
                   <li
                     key={t}
                     className="py-2.5 leading-snug first:pt-0 last:pb-0"
