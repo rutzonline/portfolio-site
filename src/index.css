@@ -292,8 +292,8 @@ a[href],
     column-gap: var(--about-column-gap);
   }
   .about-menu {
-    /* Align line centers: half the intro line height minus half the 15px × 1.25 nav line. */
-    padding-top: calc(clamp(22px, 2vw, 26px) * 0.7 - 9.4px);
+    /* Align line centers: half the intro line height minus half the 15px × 1.5 nav line. */
+    padding-top: calc(clamp(22px, 2vw, 26px) * 0.7 - 11.25px);
     padding-right: 20px;
   }
   .about-page-header {
@@ -319,4 +319,10 @@ a[href],
 .about-greeting {
   font-size: clamp(22px, 2vw, 26px);
   font-weight: 600;
+}
+
+/* Shared left-panel menu typography, matching the moodboard. */
+.panel-menu {
+  font-size: 15px;
+  line-height: 1.5;
 }

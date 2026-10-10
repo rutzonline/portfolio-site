@@ -287,7 +287,7 @@ export default function Moodboard() {
       <div className="grid gap-8 text-[15px] lg:min-h-0 lg:flex-1 lg:grid-cols-[230px_minmax(0,1fr)]">
         <nav
           aria-label="moodboard sections"
-          className="lg:sticky lg:top-6 lg:self-start"
+          className="panel-menu lg:sticky lg:top-6 lg:self-start"
         >
           <div className="flex flex-wrap gap-x-6 gap-y-3 lg:flex-col lg:gap-5">
             {groups.map((g) => (

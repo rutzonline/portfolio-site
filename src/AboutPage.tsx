@@ -106,8 +106,8 @@ export default function AboutPage({ mode }: { mode: Mode }) {
 
   return (
     <div className="about-layout -mr-6 grid min-h-0 flex-1 grid-rows-[auto_minmax(0,1fr)] gap-4 overflow-hidden lg:-mr-10 lg:grid-rows-1">
-      <nav aria-label="About contents" className="about-menu mr-6 min-w-0 lg:mr-0">
-        <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-[15px] leading-tight lg:flex lg:flex-col lg:gap-2">
+      <nav aria-label="About contents" className="panel-menu about-menu mr-6 min-w-0 lg:mr-0">
+        <ul className="grid grid-cols-2 gap-x-4 gap-y-2 lg:flex lg:flex-col lg:gap-2">
           {ABOUT_SECTIONS.map(([id, label]) => (
             <li key={id} className="shrink-0">
               <a href={`#${id}`} aria-current={active === id ? "location" : undefined}

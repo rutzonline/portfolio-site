@@ -1061,10 +1061,10 @@ function CaseStudy({
       {toc.length > 1 && (
         <nav
           aria-label="contents"
-          className={`hidden self-start lg:block ${independentScroll ? "max-h-full overflow-y-auto overscroll-contain pt-6" : "lg:sticky lg:top-6"}`}
+          className={`panel-menu hidden self-start lg:block ${independentScroll ? "max-h-full overflow-y-auto overscroll-contain pt-6" : "lg:sticky lg:top-6"}`}
         >
           {backControl && <div className="mb-6">{backControl}</div>}
-          <ul className="flex flex-col gap-2 text-[15px] leading-tight">
+          <ul className="flex flex-col gap-2">
             {toc.map(([id, label], k) => (
               <li key={id}>
                 <a
