@@ -1,4 +1,5 @@
-import Carousel from "@/Carousel"
+import TapDeck from "@/TapDeck"
+import BrandLogoStrip from "@/BrandLogoStrip"
 import { useState, type CSSProperties, type ReactNode } from "react"
 import { useMoodboard } from "@/useMoodboard"
 
@@ -111,48 +112,48 @@ function Sites() {
 
 function Brands() {
   const { rows, status } = useMoodboard("brands")
-  const pairs = Array.from({ length: Math.ceil(rows.length / 2) }, (_, i) => rows.slice(i * 2, i * 2 + 2))
+  const [index, setIndex] = useState(0)
+  const selected = rows[index]
   return (
     <>
       <Intro>why i probably won&rsquo;t skip them on my feed</Intro>
       <State status={status} count={rows.length} />
-      <Carousel label="brands" slides={pairs.map((pair) => (
-        <div className={`${card} grid divide-y divide-[#E5E1DA] sm:grid-cols-2 sm:divide-x sm:divide-y-0`}>
-          {pair.map((brand) => (
-            <article key={brand.name} className="min-w-0 p-5 sm:p-6">
-              <div className="mb-5 flex items-center gap-4">
-                <div className="size-16 shrink-0"><Img src={brand.logo_url} alt={brand.name} className="aspect-square rounded-xl border border-[#E5E1DA]" /></div>
-                <h3 className="text-lg font-semibold">{brand.name}</h3>
-              </div>
-              <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#1A1A1A]/75">{brand.description}</p>
-              {brand.url && <a href={brand.url} target="_blank" rel="noreferrer" className="mt-5 inline-block text-sm underline underline-offset-4">visit {brand.name} ↗</a>}
-            </article>
-          ))}
-        </div>
-      ))} />
+      {selected && <>
+        <TapDeck label="brand" index={index} count={rows.length} onChange={setIndex}>
+          <article className="overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-white shadow-sm">
+            <div className="flex flex-col items-center gap-4 bg-[#F0EEEA] px-5 py-6">
+              <div className="size-24 overflow-hidden rounded-2xl border border-[#E5E1DA]"><Img src={selected.logo_url} alt={selected.name} className="aspect-square" /></div>
+              <h3 className="text-center text-lg font-semibold">{selected.name}</h3>
+            </div>
+            <p className="whitespace-pre-line p-5 text-[15px] leading-relaxed text-[#1A1A1A]/75 sm:p-6">{selected.description}</p>
+          </article>
+        </TapDeck>
+        <BrandLogoStrip brands={rows} index={index} onChange={setIndex} />
+      </>}
     </>
   )
 }
 
 function Campaigns() {
   const { rows, status } = useMoodboard("campaigns")
+  const [index, setIndex] = useState(0)
+  const campaign = rows[index]
   return (
     <>
       <Intro>my content marketing hall of fame</Intro>
       <State status={status} count={rows.length} />
-      <Carousel label="campaigns" slides={rows.map((campaign) => (
-        <article className={`${card} grid md:grid-cols-2`}>
+      {campaign && <TapDeck label="campaign" index={index} count={rows.length} onChange={setIndex}>
+        <article className="overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-white shadow-sm">
           <div className="flex items-center justify-center bg-[#F0EEEA] p-4">
-            <Img src={campaign.image_url} alt={campaign.brand} className="aspect-[16/9] max-h-64 rounded-lg object-contain" />
+            <Img src={campaign.image_url} alt={campaign.brand} className="aspect-[16/9] max-h-56 rounded-lg object-contain" />
           </div>
-          <div className="min-w-0 p-5 sm:p-6">
+          <div className="p-5 sm:p-6">
             <p className="mb-2 text-sm text-[#1A1A1A]/55">{campaign.kicker}</p>
             <h3 className="mb-4 text-lg font-semibold">{campaign.brand}</h3>
             <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#1A1A1A]/75">{campaign.description}</p>
-            {campaign.url && <a href={campaign.url} target="_blank" rel="noreferrer" className="mt-5 inline-block text-sm underline underline-offset-4">view campaign ↗</a>}
           </div>
         </article>
-      ))} />
+      </TapDeck>}
     </>
   )
 }
