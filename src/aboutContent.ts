@@ -20,7 +20,7 @@ export type AboutExtra = {
 
 export const aboutContent: Record<"growth" | "brand", AboutExtra> = {
   growth: {
-    intro: "hi, i'm rutuja, a full-stack growth marketer",
+    intro: "hello! i'm rutuja, a full-stack growth marketer",
     bio: "i love working on strategy, positioning, customer journeys, and using data to curate thoughtful campaigns. here's a (slightly long) video summarizing my work (so far)",
     languages: [
       ["english", "fluent"],
@@ -45,8 +45,8 @@ export const aboutContent: Record<"growth" | "brand", AboutExtra> = {
     ],
   },
   brand: {
-    intro: "i write product and lifecycle content. from the first ad someone sees to the email that brings them back.",
-    bio: "i love writing for socials, email, ads, blogs, changelogs, websites, OOH and ultimatums (if necessary). i'm also an active pop culture consumer (read: critic), an avid sports fan, and a daily puzzle solver who's very selectively chronically online.",
+    intro: "hello again!",
+    bio: "i love writing for socials, email, ads, blogs, changelogs, descriptions, and OOH. and ultimatums (if necessary). i'm also an active pop culture consumer (read: critic), an avid sports fan, and a daily puzzle solver who's very selectively chronically online.",
     languages: [
       ["english", "writes in it daily"],
       ["hindi", "native"],
