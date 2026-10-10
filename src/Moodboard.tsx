@@ -49,7 +49,8 @@ const catColor = (c: string) =>
   ]
 
 const card = "overflow-hidden rounded-xl border border-[#E5E1DA] bg-white"
-const grid4 = "grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
+const campaignGrid = "grid gap-3 sm:grid-cols-2 xl:grid-cols-3"
+const siteCard = card.replace("border-[#E5E1DA]", "border-[#B8B3AA]")
 
 const dotColors = ["#FF9FC0", "#DDF080", "#E88D6D", "#9EC5F4", "#0F3A8A"]
 
@@ -97,7 +98,7 @@ function Sites() {
       <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {rows.map((r) => (
           <li key={r.name}>
-            <Link href={r.url} className={`${card} block`}>
+            <Link href={r.url} className={`${siteCard} block`}>
               <Img src={r.image_url} alt={r.name} className="aspect-[16/9]" />
               <p className="px-3 py-2 text-sm font-medium">{r.name}</p>
             </Link>
@@ -110,73 +111,53 @@ function Sites() {
 
 function Brands() {
   const { rows, status } = useMoodboard("brands")
-  const groups = [...new Set(rows.map((r) => r.group))]
-  const [sel, setSel] = useState<Record<string, string>>({})
+  const [selectedName, setSelectedName] = useState<string | null>(null)
+  const selected = rows.find((brand) => brand.name === selectedName)
   return (
     <>
       <Intro>
         click to see why i probably won&rsquo;t skip them on my feed
       </Intro>
       <State status={status} count={rows.length} />
-      <div className="flex flex-col gap-8">
-        {groups.map((g) => {
-          const items = rows.filter((r) => r.group === g)
-          const cur = items.find((r) => r.name === sel[g])
-          return (
-            <section key={g}>
-              <h3 className="mb-4 flex items-center gap-3 font-heading text-lg tracking-[-0.02em]">
-                {g}
-                <span className="h-px flex-1 bg-[#E5E1DA]" />
-              </h3>
-              <ul className="flex gap-2 lg:flex-wrap lg:gap-3">
-                {items.map((b) => (
-                  <li
-                    key={b.name}
-                    className="min-w-0 flex-1 basis-0 lg:w-28 lg:flex-none"
-                  >
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setSel({
-                          ...sel,
-                          [g]: cur?.name === b.name ? "" : b.name,
-                        })
-                      }
-                      className="flex w-full flex-col items-center gap-2"
-                    >
-                      <span
-                        className={`block aspect-square w-full overflow-hidden rounded-xl border-2 ${
-                          cur?.name === b.name
-                            ? "border-[#1A1A1A]"
-                            : "border-transparent"
-                        }`}
-                        style={{ background: "#F0EEEA" }}
-                      >
-                        {b.logo_url ? (
-                          <img
-                            src={b.logo_url}
-                            alt={b.name}
-                            loading="lazy"
-                            decoding="async"
-                            className="size-full object-cover"
-                          />
-                        ) : null}
-                      </span>
-                      <span className="max-w-full break-words text-center text-[10px] font-medium lg:text-xs">
-                        {b.name}
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-              {cur && (
-                <p className="mt-4 max-w-3xl leading-snug text-[#1A1A1A]/70">
-                  {cur.description}
-                </p>
-              )}
-            </section>
-          )
-        })}
+      <ul className="grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4 xl:grid-cols-6">
+        {rows.map((brand) => (
+          <li key={brand.name} className="min-w-0">
+            <button
+              type="button"
+              aria-expanded={selected?.name === brand.name}
+              aria-controls="brand-description"
+              onClick={() => setSelectedName(selected?.name === brand.name ? null : brand.name)}
+              className="flex w-full flex-col items-center gap-2"
+            >
+              <span
+                className={`block aspect-square w-full max-w-28 overflow-hidden rounded-xl border-2 ${
+                  selected?.name === brand.name ? "border-[#1A1A1A]" : "border-transparent"
+                }`}
+                style={{ background: "#F0EEEA" }}
+              >
+                {brand.logo_url && (
+                  <img
+                    src={brand.logo_url}
+                    alt={brand.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="size-full object-cover"
+                  />
+                )}
+              </span>
+              <span className="max-w-full break-words text-center text-[10px] font-medium lg:text-xs">
+                {brand.name}
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div id="brand-description" aria-live="polite">
+        {selected && (
+          <p className="mt-6 max-w-3xl whitespace-pre-line leading-snug text-[#1A1A1A]/70">
+            {selected.description}
+          </p>
+        )}
       </div>
     </>
   )
@@ -188,7 +169,7 @@ function Campaigns() {
     <>
       <Intro>my content marketing hall of fame</Intro>
       <State status={status} count={rows.length} />
-      <ul className={grid4}>
+      <ul className={campaignGrid}>
         {rows.map((r) => (
           <li key={r.brand + r.kicker}>
             <Link href={r.url} className={`${card} block h-full`}>
