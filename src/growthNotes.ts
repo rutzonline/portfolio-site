@@ -89,7 +89,7 @@ when the product isn't the differentiator yet, the voice is. posthog proved it w
 the rest of the category is still busy writing *"unlock the power of ai for your workflow"* and you know who you remember :)`,
   },
   {
-    title: "the friend recommendation is the last honest algorithm",
+    title: "the friend recommendation algorithm",
     body: `the best restaurant i went to this year, i went to because a friend said "you'll like this one" and that’s it. no rating. no review. and no eighteen photos of the plating. one text, from someone who knows me. that was the entire pitch and it was better than any algorithm i own.
 
 i've started to think that sentence is the rarest thing left on the internet.
