@@ -43,19 +43,12 @@ const Link = ({
   )
 
 const platformColors: Record<string, string> = {
-  linkedin: "#2F6FD0", x: "#7B8D19", instagram: "#C84E79", youtube: "#C36648",
+  linkedin: "#9EC5F4", x: "#DDF080", instagram: "#FF9FC0", youtube: "#E88D6D",
 }
-const categoryColors = ["#C84E79", "#7B8D19", "#C36648", "#2F6FD0"]
+const categoryColors = ["#FF9FC0", "#DDF080", "#E88D6D", "#9EC5F4"]
 const categoryColor = (category: string) => categoryColors[
   [...category].reduce((total, letter) => total + letter.charCodeAt(0), 0) % categoryColors.length
 ]
-const platformsFor = (brand: { description: string; url?: string; platforms?: string[] }) => {
-  const source = `${brand.platforms?.join(" ") ?? ""} ${brand.description} ${brand.url ?? ""}`
-  return Object.keys(platformColors).filter((platform) =>
-    platform === "x" ? /\b(?:x|twitter)\b|x\.com/i.test(source) : new RegExp(`\\b${platform}\\b`, "i").test(source)
-  )
-}
-
 const card = "overflow-hidden rounded-xl border border-[#E5E1DA] bg-white"
 const siteCard = card.replace("border-[#E5E1DA]", "border-[#B8B3AA]")
 
@@ -133,8 +126,8 @@ function Brands() {
                 <div>
                   <h3 className="text-base font-semibold">{brand.name}</h3>
                   <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
-                    {platformsFor(brand).map((platform) => (
-                      <span key={platform} className="text-sm font-semibold" style={{ color: platformColors[platform] }}>{platform}</span>
+                    {(brand.platforms ?? []).map((platform) => (
+                      <span key={platform} className="text-sm font-semibold" style={{ color: platformColors[platform] ?? categoryColor(platform) }}>{platform}</span>
                     ))}
                   </div>
                 </div>

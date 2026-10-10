@@ -37,6 +37,12 @@ const href = (u?: string | null) => {
   return clean ? (/^https?:\/\//.test(clean) ? clean : `https://${clean}`) : undefined
 }
 
+const platformTags = (value: unknown): string[] => {
+  const entries = Array.isArray(value) ? value : typeof value === "string" ? value.split(/[,;|]/) : []
+  return [...new Set(entries.filter((entry): entry is string => typeof entry === "string")
+    .map((entry) => entry.trim().toLowerCase()).filter(Boolean))]
+}
+
 // Column mapping: Supabase table -> UI shape. Rename columns here if the schema changes.
 const sources = {
   sites: {
@@ -45,7 +51,7 @@ const sources = {
   },
   brands: {
     table: "brands",
-    map: (r: any): Brand => ({ name: proofread(r.name), group: r.subsection || r.category || "more", platforms: Array.isArray(r.platforms) ? r.platforms : typeof r.platforms === "string" ? r.platforms.split(/[,;|]/).map((platform: string) => platform.trim()) : [], logo_url: r.image_url || undefined, description: proofread(r.description ?? ""), url: href(r.url) }),
+    map: (r: any): Brand => ({ name: proofread(r.name), group: r.subsection || r.category || "more", platforms: platformTags(r.platform), logo_url: r.image_url || undefined, description: proofread(r.description ?? ""), url: href(r.url) }),
   },
   campaigns: {
     table: "campaigns",
