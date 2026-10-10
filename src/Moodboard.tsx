@@ -134,12 +134,12 @@ function Brands() {
                   <h3 className="text-base font-semibold">{brand.name}</h3>
                   <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
                     {platformsFor(brand).map((platform) => (
-                      <span key={platform} className="text-xs font-semibold" style={{ color: platformColors[platform] }}>{platform}</span>
+                      <span key={platform} className="text-sm font-semibold" style={{ color: platformColors[platform] }}>{platform}</span>
                     ))}
                   </div>
                 </div>
               </header>
-              <p className="mt-3 whitespace-pre-line text-[#1A1A1A]/60">{brand.description}</p>
+              <p className="mt-2 whitespace-pre-line text-sm leading-snug text-[#1A1A1A]/60">{brand.description}</p>
             </article>
           </li>
         ))}
@@ -169,11 +169,11 @@ function Campaigns() {
             </div>
             <div className="mt-3 flex items-center justify-center gap-4">
               <button type="button" aria-label="Previous campaign" disabled={index === 0} onClick={() => setIndex(index - 1)} className={arrow}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m13 7-5 5 5 5M8 12h10" /></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m13 7-5 5 5 5M8 12h10" /></svg>
               </button>
               <p className="text-sm tabular-nums text-[#1A1A1A]/55">{index + 1} / {rows.length}</p>
               <button type="button" aria-label="Next campaign" disabled={index === rows.length - 1} onClick={() => setIndex(index + 1)} className={arrow}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m11 7 5 5-5 5M6 12h10" /></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m11 7 5 5-5 5M6 12h10" /></svg>
               </button>
             </div>
           </div>
@@ -208,7 +208,7 @@ function Newsletters() {
               >
                 {r.category}
               </p>
-              <p className="mt-2 text-[#1A1A1A]/60">{r.description}</p>
+              <p className="mt-2 whitespace-pre-line text-sm leading-snug text-[#1A1A1A]/60">{r.description}</p>
             </Link>
           </li>
         ))}
