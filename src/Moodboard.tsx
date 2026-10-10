@@ -131,18 +131,18 @@ function Campaigns() {
     <>
       <Intro>my content marketing hall of fame</Intro>
       <State status={status} count={rows.length} />
-      {campaign && <TapDeck label="campaign" index={index} count={rows.length} onChange={setIndex} wide>
-        <article className="overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-white shadow-sm">
-          <div className="flex items-center justify-center bg-[#F0EEEA] p-3">
-            <Img src={campaign.image_url} alt={campaign.brand} className="aspect-[16/9] max-h-28 rounded-lg object-contain" />
+      {campaign && <>
+        <TapDeck label="campaign" index={index} count={rows.length} onChange={setIndex}>
+          <div className="aspect-[2/1] overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-[#F0EEEA] p-3 shadow-sm">
+            <Img src={campaign.image_url} alt={campaign.brand} className="h-full rounded-xl object-contain" />
           </div>
-          <div className="p-4 sm:px-5">
-            <p className="mb-1 text-sm text-[#1A1A1A]/55">{campaign.kicker}</p>
-            <h3 className="mb-2 text-lg font-semibold">{campaign.brand}</h3>
-            <p className="whitespace-pre-line text-[14px] leading-snug text-[#1A1A1A]/75">{campaign.description}</p>
-          </div>
+        </TapDeck>
+        <article className="mx-auto mt-4 w-[calc(100%-6rem)] max-w-[37rem] sm:w-[calc(100%-7rem)]">
+          <p className="mb-1 text-sm text-[#1A1A1A]/55">{campaign.kicker}</p>
+          <h3 className="mb-2 text-lg font-semibold">{campaign.brand}</h3>
+          <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#1A1A1A]/75">{campaign.description}</p>
         </article>
-      </TapDeck>}
+      </>}
     </>
   )
 }
