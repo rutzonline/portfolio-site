@@ -1,5 +1,4 @@
 import TapDeck from "@/TapDeck"
-import BrandSplit from "@/BrandSplit"
 import { useState, type CSSProperties, type ReactNode } from "react"
 import { useMoodboard } from "@/useMoodboard"
 
@@ -112,13 +111,25 @@ function Sites() {
 
 function Brands() {
   const { rows, status } = useMoodboard("brands")
-  const [index, setIndex] = useState(0)
-  const selected = rows[index]
   return (
     <>
       <Intro>why i probably won&rsquo;t skip them on my feed</Intro>
       <State status={status} count={rows.length} />
-      {selected && <BrandSplit brands={rows} index={index} onChange={setIndex} />}
+      <ul className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+        {rows.map((brand) => (
+          <li key={brand.name}>
+            <article className={`${card} h-full p-4 text-sm leading-snug`}>
+              <header className="flex items-center gap-3">
+                <div className="size-12 shrink-0 overflow-hidden rounded-lg border border-[#E5E1DA] bg-[#F0EEEA]">
+                  <Img src={brand.logo_url} alt="" className="aspect-square" />
+                </div>
+                <h3 className="text-base font-semibold">{brand.name}</h3>
+              </header>
+              <p className="mt-3 whitespace-pre-line text-[#1A1A1A]/60">{brand.description}</p>
+            </article>
+          </li>
+        ))}
+      </ul>
     </>
   )
 }
@@ -131,18 +142,18 @@ function Campaigns() {
     <>
       <Intro>my content marketing hall of fame</Intro>
       <State status={status} count={rows.length} />
-      {campaign && <>
+      {campaign && <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-8">
         <TapDeck label="campaign" index={index} count={rows.length} onChange={setIndex}>
           <div className="aspect-[2/1] overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-[#F0EEEA] p-3 shadow-sm">
             <Img src={campaign.image_url} alt={campaign.brand} className="h-full rounded-xl object-contain" />
           </div>
         </TapDeck>
-        <article className="mx-auto mt-4 w-[calc(100%-6rem)] max-w-[37rem] sm:w-[calc(100%-7rem)]">
+        <article className="min-w-0 px-12 lg:px-0 lg:py-3" aria-live="polite" aria-atomic="true">
           <p className="mb-1 text-sm text-[#1A1A1A]/55">{campaign.kicker}</p>
-          <h3 className="mb-2 text-lg font-semibold">{campaign.brand}</h3>
+          <h3 className="mb-3 text-lg font-semibold">{campaign.brand}</h3>
           <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#1A1A1A]/75">{campaign.description}</p>
         </article>
-      </>}
+      </div>}
     </>
   )
 }
