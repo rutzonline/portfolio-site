@@ -30,6 +30,7 @@ import freelanceLogo from "@/imports/freelance___1_.png"
 import Moodboard from "@/Moodboard"
 import PhotoSlideshow from "@/PhotoSlideshow"
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import growthPortrait from "@/imports/figma_growth_new.png"
 import contentPortrait from "@/imports/Untitled_design__20_.png"
 
@@ -1731,6 +1732,7 @@ export default function App() {
         )}
       </section>
       <Analytics route={analyticsPath} path={analyticsPath} />
+      <SpeedInsights route={analyticsPath} />
     </main>
   )
 }
