@@ -128,7 +128,7 @@ export default function AboutPage({ mode }: { mode: Mode }) {
           ))}
         </ul>
       </nav>
-      <div ref={contentRef} data-about-content role="region" aria-label="About content" tabIndex={0}
+      <div ref={contentRef} data-about-content data-panel-content role="region" aria-label="About content" tabIndex={0}
         className="min-h-0 min-w-0 overflow-y-auto overscroll-contain">
         <div className="about-reading-column max-w-[48rem] mr-6 flex flex-col gap-16 pb-16 pr-3 lg:mr-10 lg:gap-20">
           <section id="about-introduction" className="flex flex-col gap-8 lg:gap-10">

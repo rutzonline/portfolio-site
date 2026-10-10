@@ -119,7 +119,7 @@ function Brands() {
         click to see why i probably won&rsquo;t skip them on my feed
       </Intro>
       <State status={status} count={rows.length} />
-      <ul className="grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4 xl:grid-cols-6">
+      <ul className="grid grid-cols-4 gap-x-3 gap-y-5 sm:grid-cols-6 xl:grid-cols-8">
         {rows.map((brand) => (
           <li key={brand.name} className="min-w-0">
             <button
@@ -130,7 +130,7 @@ function Brands() {
               className="flex w-full flex-col items-center gap-2"
             >
               <span
-                className={`block aspect-square w-full max-w-28 overflow-hidden rounded-xl border-2 ${
+                className={`block aspect-square w-full max-w-20 overflow-hidden rounded-xl border-2 ${
                   selected?.name === brand.name ? "border-[#1A1A1A]" : "border-transparent"
                 }`}
                 style={{ background: "#F0EEEA" }}
@@ -173,7 +173,7 @@ function Campaigns() {
         {rows.map((r) => (
           <li key={r.brand + r.kicker}>
             <Link href={r.url} className={`${card} block h-full`}>
-              <Img src={r.image_url} alt={r.brand} className="aspect-[4/3]" />
+              <Img src={r.image_url} alt={r.brand} className="aspect-[16/9]" />
               <div className="px-3 py-2 leading-snug">
                 <p className="text-sm text-[#1A1A1A]/55">{r.kicker}</p>
                 <p className="font-semibold">{r.brand}</p>
@@ -274,7 +274,7 @@ export default function Moodboard() {
             {groups.map((g) => (
               <div
                 key={g}
-                className="flex flex-wrap gap-x-5 gap-y-3 lg:flex-col lg:gap-3"
+                className="flex flex-wrap gap-x-5 gap-y-3 lg:flex-col lg:gap-2"
               >
                 <p className="hidden text-sm text-[#1A1A1A]/50 lg:block">{g}</p>
                 {sections
@@ -303,6 +303,7 @@ export default function Moodboard() {
         <div className="relative max-lg:min-h-[50svh] lg:min-h-0">
           <div
             key={cur}
+            data-panel-content
             onScroll={(e) => {
               const t = e.currentTarget
               setProgress(

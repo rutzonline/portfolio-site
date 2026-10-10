@@ -1,3 +1,4 @@
+import { routePanelWheel } from "@/panelScroll"
 import AboutPage, { splitAboutIntro } from "@/AboutPage"
 import { Rows, ImageSlot } from "@/contentComponents"
 import {
@@ -1098,6 +1099,7 @@ function CaseStudy({
       )}
       <div
         ref={contentRef}
+        data-panel-content={independentScroll ? "" : undefined}
         role={independentScroll ? "region" : undefined}
         aria-label={independentScroll ? "Case study content" : undefined}
         tabIndex={independentScroll ? 0 : undefined}
@@ -1262,6 +1264,14 @@ export default function App() {
     window.addEventListener("hashchange", onHash)
     return () => window.removeEventListener("hashchange", onHash)
   }, [])
+
+  useEffect(() => {
+    const article = document.querySelector<HTMLElement>(".page-article")
+    if (!article) return
+    const onWheel = (event: WheelEvent) => routePanelWheel(event, article)
+    article.addEventListener("wheel", onWheel, { passive: false })
+    return () => article.removeEventListener("wheel", onWheel)
+  }, [page, mode])
 
   const open = (k: PageKey) => {
     if (!window.matchMedia("(min-width: 1024px)").matches) {
