@@ -861,7 +861,7 @@ function CaseHeader({
     <div className="flex items-center gap-4">
       <Logo domain={domain} src={src} name={name} size="size-12" />
       <div>
-        <h2 className="case-title font-medium text-[clamp(24px,2.2vw,30px)] leading-[1.15] tracking-[-0.02em]">
+        <h2 className="case-title leading-[1.15] tracking-[-0.02em]">
           {name}
         </h2>
         <p className="mt-1 text-[#1A1A1A]/60">{sub}</p>
@@ -1505,7 +1505,7 @@ export default function App() {
             </div>
             <header className={`-mx-6 flex shrink-0 items-baseline justify-between gap-4 px-6 lg:-mx-10 lg:px-10 ${page === "about" ? "about-page-header" : ""}`}>
               <div>
-                <h1 className="page-title font-medium text-[clamp(26px,2.4vw,34px)] leading-[1.15] tracking-[-0.02em]">
+                <h1 className="page-title leading-[1.15] tracking-[-0.02em]">
                   <button
                     type="button"
                     onClick={close}

@@ -10,7 +10,7 @@ function AboutExtras({ mode }: { mode: Mode }) {
   const [expanded, setExpanded] = useState<{ src: string; alt: string } | null>(null)
   useEffect(() => setExpanded(null), [mode])
   return (
-    <div className="flex min-w-0 flex-col gap-10 lg:gap-12">
+    <div className="flex min-w-0 flex-col gap-16 lg:gap-20">
       <section id="about-languages">
         <h3 className="mb-3 font-heading text-xl tracking-[-0.02em]">
           languages
@@ -130,13 +130,13 @@ export default function AboutPage({ mode }: { mode: Mode }) {
       </nav>
       <div ref={contentRef} data-about-content role="region" aria-label="About content" tabIndex={0}
         className="min-h-0 min-w-0 overflow-y-auto overscroll-contain">
-        <div className="about-reading-column max-w-[48rem] mr-6 flex flex-col gap-10 pb-10 pr-3 lg:mr-10 lg:gap-12">
-          <section id="about-introduction" className="flex flex-col gap-6">
-            <div className="flex min-w-0 flex-col gap-3">
-              <p className={`text-[clamp(22px,2vw,26px)] leading-[1.4] tracking-[-0.01em] font-semibold ${mode === "growth" ? "text-[#0F3A8A]" : "text-[#1A1A1A]"}`}>
+        <div className="about-reading-column max-w-[48rem] mr-6 flex flex-col gap-16 pb-16 pr-3 lg:mr-10 lg:gap-20">
+          <section id="about-introduction" className="flex flex-col gap-8 lg:gap-10">
+            <div className="flex min-w-0 flex-col gap-4">
+              <p className="about-greeting leading-[1.4] tracking-[-0.01em] text-[#1A1A1A]">
                 {intro}
               </p>
-              <p className="max-w-[65ch] text-base leading-relaxed text-[#1A1A1A]/75">
+              <p className="max-w-[65ch] whitespace-pre-line text-base leading-relaxed text-[#1A1A1A]/75">
                 {aboutContent[mode].bio}
               </p>
             </div>
