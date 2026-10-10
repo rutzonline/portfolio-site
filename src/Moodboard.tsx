@@ -1,5 +1,6 @@
 import TapDeck from "@/TapDeck"
 import BrandLogoStrip from "@/BrandLogoStrip"
+import BrandSplit from "@/BrandSplit"
 import { useState, type CSSProperties, type ReactNode } from "react"
 import { useMoodboard } from "@/useMoodboard"
 
@@ -87,7 +88,7 @@ function State({ status, count }: { status: string; count: number }) {
 }
 
 function Intro({ children }: { children: ReactNode }) {
-  return <p className="mb-5 text-[#1A1A1A]/60">{children}</p>
+  return <p className="mb-5 text-[#1A1A1A]/70">{children}</p>
 }
 
 function Sites() {
@@ -119,6 +120,8 @@ function Brands() {
       <Intro>why i probably won&rsquo;t skip them on my feed</Intro>
       <State status={status} count={rows.length} />
       {selected && <>
+        <div className="max-lg:hidden"><BrandSplit brands={rows} index={index} onChange={setIndex} /></div>
+        <div className="lg:hidden">
         <TapDeck label="brand" index={index} count={rows.length} onChange={setIndex}>
           <article className="overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-white shadow-sm">
             <div className="flex flex-col items-center gap-4 bg-[#F0EEEA] px-5 py-6">
@@ -129,6 +132,7 @@ function Brands() {
           </article>
         </TapDeck>
         <BrandLogoStrip brands={rows} index={index} onChange={setIndex} />
+        </div>
       </>}
     </>
   )
