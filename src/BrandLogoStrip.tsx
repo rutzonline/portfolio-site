@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react"
 import type { Brand } from "@/useMoodboard"
 
-export default function BrandLogoStrip({ brands, index, onChange }: {
-  brands: Brand[]; index: number; onChange: (index: number) => void
+export default function BrandLogoStrip({ brands, index, onChange, fullWidth = false }: {
+  brands: Brand[]; index: number; onChange: (index: number) => void; fullWidth?: boolean
 }) {
   const listRef = useRef<HTMLUListElement>(null)
   const [edges, setEdges] = useState({ start: true, end: true })
@@ -33,7 +33,7 @@ export default function BrandLogoStrip({ brands, index, onChange }: {
     list?.scrollBy({ left: direction * list.clientWidth * 0.75, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" })
   }
   return (
-    <nav aria-label="Choose a brand" className="mx-auto mt-6 flex w-full max-w-[44rem] items-center gap-2 sm:gap-4">
+    <nav aria-label="Choose a brand" className={`mx-auto flex w-full items-center gap-2 sm:gap-4 ${fullWidth ? "" : "mt-6 max-w-[44rem]"}`}>
       <button type="button" aria-label="Scroll brand logos left" disabled={edges.start} onClick={() => scroll(-1)} className="flex size-10 shrink-0 items-center justify-center rounded-full border border-[#B8B3AA] text-lg disabled:cursor-default disabled:opacity-30">←</button>
       <ul ref={listRef} onScroll={update} className="relative flex min-w-0 flex-1 gap-3 overflow-x-auto py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {brands.map((brand, i) => (

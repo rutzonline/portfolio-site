@@ -1,5 +1,4 @@
 import TapDeck from "@/TapDeck"
-import BrandLogoStrip from "@/BrandLogoStrip"
 import BrandSplit from "@/BrandSplit"
 import { useState, type CSSProperties, type ReactNode } from "react"
 import { useMoodboard } from "@/useMoodboard"
@@ -117,23 +116,9 @@ function Brands() {
   const selected = rows[index]
   return (
     <>
-      <div className="lg:hidden"><Intro>why i probably won&rsquo;t skip them on my feed</Intro></div>
+      <Intro>why i probably won&rsquo;t skip them on my feed</Intro>
       <State status={status} count={rows.length} />
-      {selected && <>
-        <div className="max-lg:hidden"><BrandSplit brands={rows} index={index} onChange={setIndex} /></div>
-        <div className="lg:hidden">
-        <TapDeck label="brand" index={index} count={rows.length} onChange={setIndex} loop>
-          <article className="overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-white shadow-sm">
-            <div className="flex flex-col items-center gap-4 bg-[#F0EEEA] px-5 py-6">
-              <div className="size-24 overflow-hidden rounded-2xl border border-[#E5E1DA]"><Img src={selected.logo_url} alt={selected.name} className="aspect-square" /></div>
-              <h3 className="text-center text-lg font-semibold">{selected.name}</h3>
-            </div>
-            <p className="whitespace-pre-line p-5 text-[15px] leading-relaxed text-[#1A1A1A]/75 sm:p-6">{selected.description}</p>
-          </article>
-        </TapDeck>
-        <BrandLogoStrip brands={rows} index={index} onChange={setIndex} />
-        </div>
-      </>}
+      {selected && <BrandSplit brands={rows} index={index} onChange={setIndex} />}
     </>
   )
 }
@@ -146,15 +131,15 @@ function Campaigns() {
     <>
       <Intro>my content marketing hall of fame</Intro>
       <State status={status} count={rows.length} />
-      {campaign && <TapDeck label="campaign" index={index} count={rows.length} onChange={setIndex}>
+      {campaign && <TapDeck label="campaign" index={index} count={rows.length} onChange={setIndex} wide>
         <article className="overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-white shadow-sm">
-          <div className="flex items-center justify-center bg-[#F0EEEA] p-4">
-            <Img src={campaign.image_url} alt={campaign.brand} className="aspect-[16/9] max-h-56 rounded-lg object-contain" />
+          <div className="flex items-center justify-center bg-[#F0EEEA] p-3">
+            <Img src={campaign.image_url} alt={campaign.brand} className="aspect-[16/9] max-h-28 rounded-lg object-contain" />
           </div>
-          <div className="p-5 sm:p-6">
-            <p className="mb-2 text-sm text-[#1A1A1A]/55">{campaign.kicker}</p>
-            <h3 className="mb-4 text-lg font-semibold">{campaign.brand}</h3>
-            <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#1A1A1A]/75">{campaign.description}</p>
+          <div className="p-4 sm:px-5">
+            <p className="mb-1 text-sm text-[#1A1A1A]/55">{campaign.kicker}</p>
+            <h3 className="mb-2 text-lg font-semibold">{campaign.brand}</h3>
+            <p className="whitespace-pre-line text-[14px] leading-snug text-[#1A1A1A]/75">{campaign.description}</p>
           </div>
         </article>
       </TapDeck>}
