@@ -663,7 +663,7 @@ function PageBody({ page, mode }: { page: PageKey; mode: Mode }) {
   const brand = modeCopy[mode]
   switch (page) {
     case "about":
-      return <AboutPage mode={mode} intro={mode === "growth" ? "hi, i'm rutuja, a full-stack growth marketer" : modeCopy[mode].intro} />
+      return <AboutPage mode={mode} />
     case "work":
       return (
         <>

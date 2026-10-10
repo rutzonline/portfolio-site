@@ -78,7 +78,8 @@ const ABOUT_SECTIONS = [
   ["about-faq", "frequently asked questions"],
 ] as const
 
-export default function AboutPage({ mode, intro }: { mode: Mode; intro: string }) {
+export default function AboutPage({ mode }: { mode: Mode }) {
+  const intro = aboutContent[mode].intro
   const contentRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState<string>("about-introduction")
 
