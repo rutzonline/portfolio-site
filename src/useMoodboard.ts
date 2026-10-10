@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { fetchTable } from "@/lib/supabase"
 
 export type Site = { name: string; image_url?: string; url?: string }
-export type Brand = { name: string; group: string; logo_url?: string; description: string; url?: string }
+export type Brand = { name: string; group: string; platforms?: string[]; logo_url?: string; description: string; url?: string }
 export type Campaign = { kicker: string; brand: string; description: string; image_url?: string; url?: string }
 export type Newsletter = { title: string; category: string; description: string; url?: string }
 
@@ -45,7 +45,7 @@ const sources = {
   },
   brands: {
     table: "brands",
-    map: (r: any): Brand => ({ name: proofread(r.name), group: r.subsection || r.category || "more", logo_url: r.image_url || undefined, description: proofread(r.description ?? ""), url: href(r.url) }),
+    map: (r: any): Brand => ({ name: proofread(r.name), group: r.subsection || r.category || "more", platforms: Array.isArray(r.platforms) ? r.platforms : typeof r.platforms === "string" ? r.platforms.split(/[,;|]/).map((platform: string) => platform.trim()) : [], logo_url: r.image_url || undefined, description: proofread(r.description ?? ""), url: href(r.url) }),
   },
   campaigns: {
     table: "campaigns",

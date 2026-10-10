@@ -42,10 +42,24 @@ const Link = ({
     <div className={className}>{children}</div>
   )
 
+const platformColors: Record<string, string> = {
+  linkedin: "#2F6FD0", x: "#7B8D19", instagram: "#C84E79", youtube: "#C36648",
+}
+const categoryColors = ["#C84E79", "#7B8D19", "#C36648", "#2F6FD0"]
+const categoryColor = (category: string) => categoryColors[
+  [...category].reduce((total, letter) => total + letter.charCodeAt(0), 0) % categoryColors.length
+]
+const platformsFor = (brand: { description: string; url?: string; platforms?: string[] }) => {
+  const source = `${brand.platforms?.join(" ") ?? ""} ${brand.description} ${brand.url ?? ""}`
+  return Object.keys(platformColors).filter((platform) =>
+    platform === "x" ? /\b(?:x|twitter)\b|x\.com/i.test(source) : new RegExp(`\\b${platform}\\b`, "i").test(source)
+  )
+}
+
 const card = "overflow-hidden rounded-xl border border-[#E5E1DA] bg-white"
 const siteCard = card.replace("border-[#E5E1DA]", "border-[#B8B3AA]")
 
-const dotColors = ["#FF9FC0", "#DDF080", "#E88D6D", "#9EC5F4", "#0F3A8A"]
+const dotColors = ["#FF9FC0", "#DDF080", "#E88D6D", "#9EC5F4"]
 
 function Loading() {
   return (
@@ -118,7 +132,11 @@ function Brands() {
                 </div>
                 <div>
                   <h3 className="text-base font-semibold">{brand.name}</h3>
-                  <span className="mt-1 inline-block rounded-md bg-[#DDF080] px-2 py-0.5 text-xs font-semibold text-[#1A1A1A]">{brand.group}</span>
+                  <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
+                    {platformsFor(brand).map((platform) => (
+                      <span key={platform} className="text-xs font-semibold" style={{ color: platformColors[platform] }}>{platform}</span>
+                    ))}
+                  </div>
                 </div>
               </header>
               <p className="mt-3 whitespace-pre-line text-[#1A1A1A]/60">{brand.description}</p>
@@ -140,7 +158,7 @@ function Campaigns() {
       <Intro>my content marketing hall of fame</Intro>
       <State status={status} count={rows.length} />
       {campaign && <div className="flex flex-1 items-center py-6 lg:py-8">
-        <div className="mx-auto grid w-full max-w-[64rem] items-center gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
+        <div className="grid w-full max-w-[64rem] items-center gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
           <div className="min-w-0" tabIndex={0} aria-label="Campaign navigation"
             onKeyDown={(event) => {
               if (event.key === "ArrowLeft") { event.preventDefault(); setIndex(Math.max(0, index - 1)) }
@@ -185,7 +203,8 @@ function Newsletters() {
             >
               <p className="text-base font-semibold">{r.title}</p>
               <p
-                className="mt-1 inline-block rounded-md bg-[#E88D6D] px-2 py-0.5 text-xs font-semibold text-[#1A1A1A]"
+                className="mt-1 text-sm font-semibold"
+                style={{ color: categoryColor(r.category) }}
               >
                 {r.category}
               </p>
