@@ -1,3 +1,4 @@
+import Carousel from "@/Carousel"
 import { useState, type CSSProperties, type ReactNode } from "react"
 import { useMoodboard } from "@/useMoodboard"
 
@@ -21,7 +22,7 @@ const Img = ({
     alt={alt}
     loading="lazy"
     decoding="async"
-    className={`w-full object-cover ${className}`}
+    className={`w-full ${className.includes("object-contain") ? "object-contain" : "object-cover"} ${className}`}
   />
 )
 
@@ -49,7 +50,6 @@ const catColor = (c: string) =>
   ]
 
 const card = "overflow-hidden rounded-xl border border-[#E5E1DA] bg-white"
-const campaignGrid = "grid gap-3 sm:grid-cols-2 xl:grid-cols-3"
 const siteCard = card.replace("border-[#E5E1DA]", "border-[#B8B3AA]")
 
 const dotColors = ["#FF9FC0", "#DDF080", "#E88D6D", "#9EC5F4", "#0F3A8A"]
@@ -111,54 +111,25 @@ function Sites() {
 
 function Brands() {
   const { rows, status } = useMoodboard("brands")
-  const [selectedName, setSelectedName] = useState<string | null>(null)
-  const selected = rows.find((brand) => brand.name === selectedName)
+  const pairs = Array.from({ length: Math.ceil(rows.length / 2) }, (_, i) => rows.slice(i * 2, i * 2 + 2))
   return (
     <>
-      <Intro>
-        click to see why i probably won&rsquo;t skip them on my feed
-      </Intro>
+      <Intro>why i probably won&rsquo;t skip them on my feed</Intro>
       <State status={status} count={rows.length} />
-      <ul className="grid grid-cols-4 gap-x-3 gap-y-5 sm:grid-cols-6 xl:grid-cols-8">
-        {rows.map((brand) => (
-          <li key={brand.name} className="min-w-0">
-            <button
-              type="button"
-              aria-expanded={selected?.name === brand.name}
-              aria-controls="brand-description"
-              onClick={() => setSelectedName(selected?.name === brand.name ? null : brand.name)}
-              className="flex w-full flex-col items-center gap-2"
-            >
-              <span
-                className={`block aspect-square w-full max-w-20 overflow-hidden rounded-xl border-2 ${
-                  selected?.name === brand.name ? "border-[#1A1A1A]" : "border-transparent"
-                }`}
-                style={{ background: "#F0EEEA" }}
-              >
-                {brand.logo_url && (
-                  <img
-                    src={brand.logo_url}
-                    alt={brand.name}
-                    loading="lazy"
-                    decoding="async"
-                    className="size-full object-cover"
-                  />
-                )}
-              </span>
-              <span className="max-w-full break-words text-center text-[10px] font-medium lg:text-xs">
-                {brand.name}
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
-      <div id="brand-description" aria-live="polite">
-        {selected && (
-          <p className="mt-6 max-w-3xl whitespace-pre-line leading-snug text-[#1A1A1A]/70">
-            {selected.description}
-          </p>
-        )}
-      </div>
+      <Carousel label="brands" slides={pairs.map((pair) => (
+        <div className={`${card} grid divide-y divide-[#E5E1DA] sm:grid-cols-2 sm:divide-x sm:divide-y-0`}>
+          {pair.map((brand) => (
+            <article key={brand.name} className="min-w-0 p-5 sm:p-6">
+              <div className="mb-5 flex items-center gap-4">
+                <div className="size-16 shrink-0"><Img src={brand.logo_url} alt={brand.name} className="aspect-square rounded-xl border border-[#E5E1DA]" /></div>
+                <h3 className="text-lg font-semibold">{brand.name}</h3>
+              </div>
+              <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#1A1A1A]/75">{brand.description}</p>
+              {brand.url && <a href={brand.url} target="_blank" rel="noreferrer" className="mt-5 inline-block text-sm underline underline-offset-4">visit {brand.name} ↗</a>}
+            </article>
+          ))}
+        </div>
+      ))} />
     </>
   )
 }
@@ -169,20 +140,19 @@ function Campaigns() {
     <>
       <Intro>my content marketing hall of fame</Intro>
       <State status={status} count={rows.length} />
-      <ul className={campaignGrid}>
-        {rows.map((r) => (
-          <li key={r.brand + r.kicker}>
-            <Link href={r.url} className={`${card} block h-full`}>
-              <Img src={r.image_url} alt={r.brand} className="aspect-[16/9]" />
-              <div className="px-3 py-2 leading-snug">
-                <p className="text-sm text-[#1A1A1A]/55">{r.kicker}</p>
-                <p className="font-semibold">{r.brand}</p>
-                <p className="text-xs text-[#1A1A1A]/60">{r.description}</p>
-              </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <Carousel label="campaigns" slides={rows.map((campaign) => (
+        <article className={`${card} grid md:grid-cols-2`}>
+          <div className="flex items-center justify-center bg-[#F0EEEA] p-4">
+            <Img src={campaign.image_url} alt={campaign.brand} className="aspect-[16/9] max-h-64 rounded-lg object-contain" />
+          </div>
+          <div className="min-w-0 p-5 sm:p-6">
+            <p className="mb-2 text-sm text-[#1A1A1A]/55">{campaign.kicker}</p>
+            <h3 className="mb-4 text-lg font-semibold">{campaign.brand}</h3>
+            <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#1A1A1A]/75">{campaign.description}</p>
+            {campaign.url && <a href={campaign.url} target="_blank" rel="noreferrer" className="mt-5 inline-block text-sm underline underline-offset-4">view campaign ↗</a>}
+          </div>
+        </article>
+      ))} />
     </>
   )
 }
