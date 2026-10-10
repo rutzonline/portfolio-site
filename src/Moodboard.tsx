@@ -219,35 +219,30 @@ function Newsletters() {
 const sections: {
   id: string
   label: string
-  group: string
   color: string
   view: () => ReactNode
 }[] = [
   {
     id: "sites",
     label: "internet prime 11",
-    group: "library",
     color: "#FF9FC0",
     view: Sites,
   },
   {
     id: "brands",
     label: "brands getting it right",
-    group: "library",
     color: "#DDF080",
     view: Brands,
   },
   {
     id: "campaigns",
     label: "campaigns & content",
-    group: "library",
     color: "#9EC5F4",
     view: Campaigns,
   },
   {
     id: "newsletters",
     label: "newsletters & blogs",
-    group: "library",
     color: "#E88D6D",
     view: Newsletters,
   },
@@ -258,52 +253,53 @@ export default function Moodboard() {
   const [progress, setProgress] = useState(0)
   const color = sections.find((s) => s.id === cur)!.color
   const View = sections.find((s) => s.id === cur)!.view
-  const groups = [...new Set(sections.map((s) => s.group))]
   return (
     <div className="flex flex-col lg:min-h-0 lg:flex-1">
       <p className="mb-8 max-w-xl leading-snug text-[#1A1A1A]/75">
         a running list of the campaigns, brands, products, and corners of the
         internet that have shaped my marketing instincts.
       </p>
-      <div className="grid gap-8 text-[15px] lg:min-h-0 lg:flex-1 lg:grid-cols-[230px_minmax(0,1fr)]">
-        <nav
-          aria-label="moodboard sections"
-          className="panel-menu lg:sticky lg:top-6 lg:self-start"
-        >
-          <div className="flex flex-wrap gap-x-6 gap-y-3 lg:flex-col lg:gap-5">
-            {groups.map((g) => (
-              <div
-                key={g}
-                className="flex flex-wrap gap-x-5 gap-y-3 lg:flex-col lg:gap-2"
+      <div className="flex min-w-0 flex-col gap-6 text-[15px] lg:min-h-0 lg:flex-1">
+        <nav aria-label="moodboard sections" className="panel-menu shrink-0 border-b border-[#D6D1C9]">
+          <div role="tablist" aria-label="Moodboard categories" className="flex gap-6 overflow-x-auto sm:gap-8">
+            {sections.map((section, index) => (
+              <button
+                key={section.id}
+                id={`moodboard-tab-${section.id}`}
+                type="button"
+                role="tab"
+                aria-selected={cur === section.id}
+                aria-controls={`moodboard-panel-${section.id}`}
+                tabIndex={cur === section.id ? 0 : -1}
+                onClick={() => { setCur(section.id); setProgress(0) }}
+                onKeyDown={(event) => {
+                  let next = index
+                  if (event.key === "ArrowRight") next = (index + 1) % sections.length
+                  else if (event.key === "ArrowLeft") next = (index - 1 + sections.length) % sections.length
+                  else if (event.key === "Home") next = 0
+                  else if (event.key === "End") next = sections.length - 1
+                  else return
+                  event.preventDefault()
+                  setCur(sections[next].id)
+                  setProgress(0)
+                  document.getElementById(`moodboard-tab-${sections[next].id}`)?.focus()
+                }}
+                style={{ borderColor: cur === section.id ? section.color : "transparent" }}
+                className={`shrink-0 whitespace-nowrap border-b-2 pb-3 pt-1 text-left transition-colors hover:text-[#1A1A1A] ${cur === section.id ? "font-medium text-[#1A1A1A]" : "text-[#1A1A1A]/65"}`}
               >
-                <p className="hidden text-sm text-[#1A1A1A]/50 lg:block">{g}</p>
-                {sections
-                  .filter((s) => s.group === g)
-                  .map((s) => (
-                    <button
-                      key={s.id}
-                      type="button"
-                      aria-current={cur === s.id}
-                      onClick={() => {
-                        setCur(s.id)
-                        setProgress(0)
-                      }}
-                      style={{ "--c": s.color } as CSSProperties}
-                      className={`w-fit bg-[linear-gradient(var(--c),var(--c))] bg-[length:0%_2px] bg-[position:0_100%] bg-no-repeat pb-[5px] text-left transition-[background-size] duration-300 ease-out hover:bg-[length:100%_2px] ${
-                        cur === s.id ? "bg-[length:100%_2px]" : ""
-                      }`}
-                    >
-                      {s.label}
-                    </button>
-                  ))}
-              </div>
+                {section.label}
+              </button>
             ))}
           </div>
         </nav>
-        <div className="relative max-lg:min-h-[50svh] lg:min-h-0">
+        <div className="relative min-w-0 max-lg:min-h-[50svh] lg:min-h-0 lg:flex-1">
           <div
             key={cur}
             data-panel-content
+            role="tabpanel"
+            id={`moodboard-panel-${cur}`}
+            aria-labelledby={`moodboard-tab-${cur}`}
+            tabIndex={0}
             onScroll={(e) => {
               const t = e.currentTarget
               setProgress(
@@ -312,7 +308,7 @@ export default function Moodboard() {
                   : 0,
               )
             }}
-            className="max-w-5xl lg:h-full lg:overflow-y-auto lg:pr-4 lg:[scrollbar-width:none] lg:[&::-webkit-scrollbar]:hidden"
+            className="w-full lg:h-full lg:overflow-y-auto lg:pr-4 lg:[scrollbar-width:none] lg:[&::-webkit-scrollbar]:hidden"
           >
             <View />
           </div>
