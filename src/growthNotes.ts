@@ -1,7 +1,7 @@
 // Growth-view notes. Edit independently of brandNotes.ts.
 export const growthNotes = [
   {
-    title: "the tyranny of 'optimal'",
+    title: "the tyranny of optimal",
     body: `my wordle starter is "grief." it is a bad starter. i know it's a bad starter. crate, adieu, slate, all the reddit-approved vowel factories, i know them, and i start with "grief" anyway because it's funny to me and it's mine.
 
 somehow, at the start of the 2020s, we decided every small thing has a correct way to do it, and that not knowing it is a moral failing. the whole internet is a tutorial now, and the subtext of every tutorial is: you were doing this wrong.
