@@ -73,11 +73,22 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
     if (!photos.length) return
     let cancelled = false
     let pending = false
+    let timer: number | undefined
     let remaining: string[] = []
     let current: string | null = null
     const failed = new Set<string>()
+    const autoPlay = !reducedMotion && photos.length > 1
+    const schedule = () => {
+      window.clearTimeout(timer)
+      timer = window.setTimeout(advance, 15000)
+    }
     const advance = () => {
-      if (cancelled || pending || document.hidden || pausedRef.current) return
+      if (cancelled || pending) return
+      window.clearTimeout(timer)
+      if (document.hidden || pausedRef.current) {
+        schedule()
+        return
+      }
       if (!remaining.length) {
         remaining = photos.filter((photo) => !failed.has(photo))
         for (let i = remaining.length - 1; i > 0; i--) {
@@ -94,13 +105,17 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
       if (!next || next === current) return
       pending = true
       const image = new Image()
-      image.onload = () => {
+      image.onload = async () => {
+        // Decode before swapping layers so a cached or large image never
+        // leaves a blank frame during the crossfade.
+        try { await image.decode() } catch {}
         if (cancelled) return
         pending = false
         setPrevious(current)
         current = next
         setShownPortrait(portrait)
         setShown(current)
+        if (autoPlay) schedule()
       }
       image.onerror = () => {
         if (cancelled) return
@@ -114,16 +129,13 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
     // Give the initial cover, and each newly selected view's cover, a full
     // dwell before starting photos. Returning home does not restart this effect.
     const firstPhotoAt = Date.now() + 15000
-    const autoPlay = !reducedMotion && photos.length > 1
-    const firstPhoto = !autoPlay ? window.setTimeout(advance, 15000) : undefined
-    const timer = autoPlay ? window.setInterval(advance, 15000) : undefined
+    schedule()
     const resume = () => { if (!current && Date.now() >= firstPhotoAt) advance() }
     document.addEventListener("visibilitychange", resume)
     return () => {
       cancelled = true
       startIfNeeded.current = () => {}
-      window.clearTimeout(firstPhoto)
-      window.clearInterval(timer)
+      window.clearTimeout(timer)
       document.removeEventListener("visibilitychange", resume)
     }
   }, [enabled, photos, reducedMotion, portrait])
@@ -150,7 +162,7 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
         style={{ WebkitTouchCallout: "none" }} />}
       {showPhoto && (
         <>
-          {previous && <img src={previous} alt="" className="absolute inset-0 h-full w-full object-cover" />}
+          {previous && <img key={previous} src={previous} alt="" className="absolute inset-0 h-full w-full object-cover" />}
           <img key={shown} src={shown} alt="" className="photo-fade-in absolute inset-0 h-full w-full object-cover" />
         </>
       )}
