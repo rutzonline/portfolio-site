@@ -1421,7 +1421,7 @@ export default function App() {
               : undefined
           }
         >
-          <PhotoSlideshow active={page !== null} portrait={content.portrait} />
+          <PhotoSlideshow portrait={content.portrait} />
           <div className="absolute left-5 top-5">
             <div
               className="toggle-group relative grid grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"

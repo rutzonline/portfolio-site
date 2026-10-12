@@ -24,7 +24,7 @@ function getPhotos() {
   return photoRequest
 }
 
-export default function PhotoSlideshow({ active, portrait }: { active: boolean; portrait: string }) {
+export default function PhotoSlideshow({ portrait }: { portrait: string }) {
   const [desktop, setDesktop] = useState(() => window.matchMedia("(min-width: 1024px)").matches)
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)
   const [photos, setPhotos] = useState<string[]>([])
@@ -34,12 +34,7 @@ export default function PhotoSlideshow({ active, portrait }: { active: boolean; 
   const [paused, setPaused] = useState(false)
   const pausedRef = useRef(paused)
   pausedRef.current = paused
-  const [started, setStarted] = useState(active)
-  const enabled = (active || started) && desktop
-
-  useEffect(() => {
-    if (active) setStarted(true)
-  }, [active])
+  const enabled = desktop
 
   useEffect(() => {
     const screen = window.matchMedia("(min-width: 1024px)")
