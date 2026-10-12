@@ -29,11 +29,17 @@ export default function PhotoSlideshow({ active, portrait }: { active: boolean; 
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)
   const [photos, setPhotos] = useState<string[]>([])
   const [shown, setShown] = useState<string | null>(null)
+  const [shownPortrait, setShownPortrait] = useState(portrait)
   const [previous, setPrevious] = useState<string | null>(null)
   const [paused, setPaused] = useState(false)
   const pausedRef = useRef(paused)
   pausedRef.current = paused
-  const enabled = active && desktop
+  const [started, setStarted] = useState(active)
+  const enabled = (active || started) && desktop
+
+  useEffect(() => {
+    if (active) setStarted(true)
+  }, [active])
 
   useEffect(() => {
     const screen = window.matchMedia("(min-width: 1024px)")
@@ -60,9 +66,9 @@ export default function PhotoSlideshow({ active, portrait }: { active: boolean; 
   useEffect(() => {
     pausedRef.current = false
     setPaused(false)
+    setShown(null)
+    setPrevious(null)
     if (!enabled) {
-      setShown(null)
-      setPrevious(null)
       return
     }
     if (!photos.length) return
@@ -94,6 +100,7 @@ export default function PhotoSlideshow({ active, portrait }: { active: boolean; 
         pending = false
         setPrevious(current)
         current = next
+        setShownPortrait(portrait)
         setShown(current)
       }
       image.onerror = () => {
@@ -104,23 +111,36 @@ export default function PhotoSlideshow({ active, portrait }: { active: boolean; 
       }
       image.src = next
     }
-    advance()
-    const timer = !reducedMotion && photos.length > 1 ? window.setInterval(advance, 15000) : undefined
-    const resume = () => { if (!current) advance() }
+    // Give the initial cover, and each newly selected view's cover, a full
+    // dwell before starting photos. Returning home does not restart this effect.
+    const firstPhotoAt = Date.now() + 15000
+    const autoPlay = !reducedMotion && photos.length > 1
+    const firstPhoto = !autoPlay ? window.setTimeout(advance, 15000) : undefined
+    const timer = autoPlay ? window.setInterval(advance, 15000) : undefined
+    const resume = () => { if (!current && Date.now() >= firstPhotoAt) advance() }
     document.addEventListener("visibilitychange", resume)
     return () => {
       cancelled = true
+      window.clearTimeout(firstPhoto)
       window.clearInterval(timer)
       document.removeEventListener("visibilitychange", resume)
     }
-  }, [enabled, photos, reducedMotion])
+  }, [enabled, photos, reducedMotion, portrait])
 
-  const showPhoto = enabled && shown
+  const showPhoto = enabled && shown && shownPortrait === portrait
   return (
     <div className="absolute inset-0">
       <img src={portrait} alt={showPhoto ? "" : "Portrait of Rutuja Rochkari"}
         aria-hidden={Boolean(showPhoto)}
-        className="absolute inset-0 h-full w-full border-0 object-cover object-[center_35%]" />
+        draggable={false}
+        onContextMenu={(event) => event.preventDefault()}
+        onDragStart={(event) => event.preventDefault()}
+        style={{ WebkitTouchCallout: "none" }}
+        className="pointer-events-none absolute inset-0 h-full w-full select-none border-0 object-cover object-[center_35%]" />
+      {!showPhoto && <div aria-hidden="true" className="absolute inset-0 select-none"
+        onContextMenu={(event) => event.preventDefault()}
+        onDragStart={(event) => event.preventDefault()}
+        style={{ WebkitTouchCallout: "none" }} />}
       {showPhoto && (
         <>
           {previous && <img src={previous} alt="" className="absolute inset-0 h-full w-full object-cover" />}
