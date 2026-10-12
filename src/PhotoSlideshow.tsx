@@ -24,7 +24,9 @@ function getPhotos() {
   return photoRequest
 }
 
-export default function PhotoSlideshow({ portrait }: { portrait: string }) {
+export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
+  active: boolean; portrait: string; onReturnHome?: () => void
+}) {
   const [desktop, setDesktop] = useState(() => window.matchMedia("(min-width: 1024px)").matches)
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)
   const [photos, setPhotos] = useState<string[]>([])
@@ -35,6 +37,7 @@ export default function PhotoSlideshow({ portrait }: { portrait: string }) {
   const pausedRef = useRef(paused)
   pausedRef.current = paused
   const enabled = desktop
+  const startIfNeeded = useRef<() => void>(() => {})
 
   useEffect(() => {
     const screen = window.matchMedia("(min-width: 1024px)")
@@ -63,6 +66,7 @@ export default function PhotoSlideshow({ portrait }: { portrait: string }) {
     setPaused(false)
     setShown(null)
     setPrevious(null)
+    startIfNeeded.current = () => {}
     if (!enabled) {
       return
     }
@@ -106,6 +110,7 @@ export default function PhotoSlideshow({ portrait }: { portrait: string }) {
       }
       image.src = next
     }
+    startIfNeeded.current = () => { if (!current) advance() }
     // Give the initial cover, and each newly selected view's cover, a full
     // dwell before starting photos. Returning home does not restart this effect.
     const firstPhotoAt = Date.now() + 15000
@@ -116,11 +121,18 @@ export default function PhotoSlideshow({ portrait }: { portrait: string }) {
     document.addEventListener("visibilitychange", resume)
     return () => {
       cancelled = true
+      startIfNeeded.current = () => {}
       window.clearTimeout(firstPhoto)
       window.clearInterval(timer)
       document.removeEventListener("visibilitychange", resume)
     }
   }, [enabled, photos, reducedMotion, portrait])
+
+  // Opening a page starts photos immediately. Page navigation never resets
+  // the running slideshow; a view toggle still gets its own cover dwell.
+  useEffect(() => {
+    if (active) startIfNeeded.current()
+  }, [active, photos.length, enabled])
 
   const showPhoto = enabled && shown && shownPortrait === portrait
   return (
@@ -140,7 +152,13 @@ export default function PhotoSlideshow({ portrait }: { portrait: string }) {
         <>
           {previous && <img src={previous} alt="" className="absolute inset-0 h-full w-full object-cover" />}
           <img key={shown} src={shown} alt="" className="photo-fade-in absolute inset-0 h-full w-full object-cover" />
-          {photos.length > 1 && !reducedMotion && (
+        </>
+      )}
+      {onReturnHome && <button type="button" aria-label="Return to homepage"
+        onClick={onReturnHome}
+        onContextMenu={(event) => { if (!showPhoto) event.preventDefault() }}
+        className="absolute inset-0 cursor-pointer bg-transparent focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-white" />}
+      {showPhoto && photos.length > 1 && !reducedMotion && (
             <button type="button" onClick={() => setPaused((value) => !value)}
               aria-label={paused ? "Play photo slideshow" : "Pause photo slideshow"}
               title={paused ? "Play slideshow" : "Pause slideshow"}
@@ -150,8 +168,6 @@ export default function PhotoSlideshow({ portrait }: { portrait: string }) {
               </svg>
             </button>
           )}
-        </>
-      )}
     </div>
   )
 }

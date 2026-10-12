@@ -1415,13 +1415,13 @@ export default function App() {
             page
               ? (e) => {
                   if ((e.target as HTMLElement).closest("button, a")) return
-                  if (backHandler?.()) return
                   close()
                 }
               : undefined
           }
         >
-          <PhotoSlideshow portrait={content.portrait} />
+          <PhotoSlideshow active={page !== null} portrait={content.portrait}
+            onReturnHome={page ? close : undefined} />
           <div className="absolute left-5 top-5">
             <div
               className="toggle-group relative grid grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"
