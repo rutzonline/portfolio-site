@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { fetchTable } from "@/lib/supabase"
 
 type PhotoRow = { url?: string }
@@ -32,12 +32,25 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
   const [photos, setPhotos] = useState<string[]>([])
   const [shown, setShown] = useState<string | null>(null)
   const [shownPortrait, setShownPortrait] = useState(portrait)
+  const [coverCycle, setCoverCycle] = useState(portrait)
+  const visited = useRef(new Set([portrait]))
   const [previous, setPrevious] = useState<string | null>(null)
   const [paused, setPaused] = useState(false)
   const pausedRef = useRef(paused)
   pausedRef.current = paused
   const enabled = desktop
   const startIfNeeded = useRef<() => void>(() => {})
+
+  // Only a view's first visit shows its cover. Apply this before painting so
+  // returning to a visited view cannot flash its portrait for a frame.
+  useLayoutEffect(() => {
+    if (!visited.current.has(portrait)) {
+      visited.current.add(portrait)
+      setCoverCycle(portrait)
+    } else {
+      setShownPortrait(coverCycle)
+    }
+  }, [portrait])
 
   useEffect(() => {
     const screen = window.matchMedia("(min-width: 1024px)")
@@ -64,10 +77,10 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
   useEffect(() => {
     pausedRef.current = false
     setPaused(false)
-    setShown(null)
-    setPrevious(null)
     startIfNeeded.current = () => {}
     if (!enabled) {
+      setShown(null)
+      setPrevious(null)
       return
     }
     if (!photos.length) return
@@ -113,7 +126,7 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
         pending = false
         setPrevious(current)
         current = next
-        setShownPortrait(portrait)
+        setShownPortrait(coverCycle)
         setShown(current)
         if (autoPlay) schedule()
       }
@@ -138,7 +151,7 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
       window.clearTimeout(timer)
       document.removeEventListener("visibilitychange", resume)
     }
-  }, [enabled, photos, reducedMotion, portrait])
+  }, [enabled, photos, reducedMotion, coverCycle])
 
   // Opening a page starts photos immediately. Page navigation never resets
   // the running slideshow; a view toggle still gets its own cover dwell.
@@ -146,10 +159,10 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
     if (active) startIfNeeded.current()
   }, [active, photos.length, enabled])
 
-  const showPhoto = enabled && shown && shownPortrait === portrait
+  const showPhoto = enabled && shown && visited.current.has(portrait) && shownPortrait === coverCycle
   return (
     <div className="absolute inset-0">
-      <img src={portrait} alt={showPhoto ? "" : "Portrait of Rutuja Rochkari"}
+      <img key={coverCycle} src={coverCycle} alt={showPhoto ? "" : "Portrait of Rutuja Rochkari"}
         aria-hidden={Boolean(showPhoto)}
         draggable={false}
         onContextMenu={(event) => event.preventDefault()}

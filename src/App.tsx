@@ -1226,6 +1226,14 @@ function readHash(): { mode: Mode | null; page: PageKey | null } {
 }
 
 export default function App() {
+  useEffect(() => {
+    // Have both covers decoded before the first focus toggle.
+    for (const src of [growthPortrait, contentPortrait]) {
+      const image = new Image()
+      image.src = src
+      image.decode().catch(() => {})
+    }
+  }, [])
   const [mode, setMode] = useState<Mode>(() => readHash().mode ?? "growth")
   const [copied, setCopied] = useState(false)
   const [page, setPage] = useState<PageKey | null>(() => readHash().page)
