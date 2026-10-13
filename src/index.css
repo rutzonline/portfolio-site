@@ -419,3 +419,9 @@ a[href],
   .mobile-brand-copy .about-intro { color: #0f3a8a; }
   .mobile-brand-copy .about-intro span { margin-top: 20px; color: #1a1a1a; }
 }
+@media (max-width: 1023px) {
+  .gallery-close, .gallery-close:focus, .gallery-close:focus-visible {
+    outline: none; border: 0; box-shadow: none;
+  }
+  .gallery-close:focus-visible svg { color: #0f3a8a; }
+}

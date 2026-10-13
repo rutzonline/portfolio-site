@@ -373,6 +373,32 @@ function Card({
   )
 }
 
+function Typewriter({ text }: { text: string }) {
+  const [count, setCount] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches ? text.length : 0)
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setCount(text.length)
+      return
+    }
+    setCount(0)
+    let interval: number | undefined
+    const delay = window.setTimeout(() => {
+      let next = 0
+      interval = window.setInterval(() => {
+        next += 1
+        setCount(next)
+        if (next >= text.length) window.clearInterval(interval)
+      }, 32)
+    }, 150)
+    return () => { window.clearTimeout(delay); window.clearInterval(interval) }
+  }, [text])
+  return <span className="inline-grid">
+    <span className="sr-only">{text}</span>
+    <span aria-hidden="true" className="invisible col-start-1 row-start-1">{text}</span>
+    <span aria-hidden="true" data-typewriter className="col-start-1 row-start-1">{text.slice(0, count)}</span>
+  </span>
+}
+
 function CardHeading({
   children,
   detail,
@@ -1243,9 +1269,7 @@ export default function App() {
     }
   }, [])
   const [mode, setMode] = useState<Mode>(() => readHash().mode ?? "growth")
-  const [visitorName, setVisitorName] = useState(() => {
-    try { const saved = sessionStorage.getItem("portfolio-visitor-name"); return saved === null ? "first name" : saved.slice(0, 11) } catch { return "first name" }
-  })
+  const [visitorName, setVisitorName] = useState("first name")
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const [page, setPage] = useState<PageKey | null>(() => readHash().page)
@@ -1496,7 +1520,6 @@ export default function App() {
                   onChange={(event) => {
                     const name = event.target.value.slice(0, 11)
                     setVisitorName(name)
-                    try { sessionStorage.setItem("portfolio-visitor-name", name) } catch {}
                   }}
                 /><span className="greeting-cursor" aria-hidden="true" />
               </span>{" }}!"}</div>
@@ -1598,9 +1621,9 @@ export default function App() {
                   <p className="mobile-growth-lead mb-5 text-base font-normal leading-snug text-[#1A1A1A]/65">
                     {aboutIntro.explanation?.replace(/^i\.e\., run/, "i run")}
                   </p>
-                  <p className="about-intro">i.e., {aboutIntro.main}</p>
+                  <p className="about-intro"><Typewriter key={mode} text={`i.e., ${aboutIntro.main}`} /></p>
                 </> : <p className="about-intro font-semibold text-[20px] leading-[1.14] tracking-[-0.02em] xl:text-[22px]">
-                  {aboutIntro.main}
+                  {isMobile ? <Typewriter key={mode} text={aboutIntro.main} /> : aboutIntro.main}
                   {aboutIntro.explanation && <span className="mt-2 block text-[20px] font-semibold opacity-50 xl:text-[22px]">{aboutIntro.explanation}</span>}
                 </p>}
                 <p className="mobile-specialties mt-3 leading-snug text-[#1A1A1A]/65">
