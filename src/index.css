@@ -494,3 +494,8 @@ a[href],
 }
 
 @media (prefers-reduced-motion: reduce) { .fade-others .card-link > :not(.absolute) { transition: none; } }
+@media (min-width: 1024px) {
+  .fade-others .portfolio-card { transition: border-color 160ms ease; }
+  .fade-others:has(.card-link:hover) .portfolio-card { border-color: rgb(185 178 170 / .35); }
+}
+@media (prefers-reduced-motion: reduce) { .fade-others .portfolio-card { transition: none; } }
