@@ -453,3 +453,13 @@ a[href],
   .desktop-about-card .mobile-specialties { color: rgb(26 26 26 / .45); }
 }
 @media (min-width: 1024px) and (prefers-reduced-motion: reduce) { .desktop-about-card .greeting-cursor { animation: none; } }
+
+@media (min-width: 1024px) {
+  .desktop-about-card .desktop-about-identity { margin-top: auto; margin-bottom: 12px; }
+  .desktop-about-card .mobile-name { font-size: clamp(42px, 4vw, 60px); margin-top: 16px; }
+  .desktop-about-card .mobile-growth-lead { margin-bottom: 12px; }
+  .desktop-about-card .about-explanation { margin-top: 12px; }
+  .desktop-about-card .mobile-specialties { margin-top: 8px; }
+  .desktop-about-card .greeting-name:focus { caret-color: #1a1a1a; }
+  .desktop-about-card .greeting-name:focus + .greeting-cursor { visibility: hidden; }
+}

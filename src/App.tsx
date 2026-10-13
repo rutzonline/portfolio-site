@@ -373,17 +373,21 @@ function Card({
   )
 }
 
-function Greeting({ visitorName, onChange }: { visitorName: string; onChange: (name: string) => void }) {
+function Greeting({ visitorName, onChange, desktop = false }: { visitorName: string; onChange: (name: string) => void; desktop?: boolean }) {
   return (
 <div className="mobile-greeting">hello {"{{ "}<span className="greeting-name-wrap">
                 <span className="greeting-name-measure" aria-hidden="true">{visitorName || "\u200b"}</span>
                 <input aria-label="Your first name" maxLength={11}
                   autoComplete="off" autoCapitalize="words" spellCheck={false}
                   value={visitorName} className="greeting-name"
-                  onFocus={(event) => event.currentTarget.setSelectionRange(visitorName.length, visitorName.length)}
+                  onFocus={(event) => {
+                    if (desktop) event.currentTarget.select()
+                    else event.currentTarget.setSelectionRange(visitorName.length, visitorName.length)
+                  }}
+                  onClick={(event) => { if (desktop && visitorName === "first name") event.currentTarget.select() }}
                   onSelect={(event) => {
                     const input = event.currentTarget
-                    if (input.selectionStart !== input.value.length || input.selectionEnd !== input.value.length)
+                    if (!desktop && (input.selectionStart !== input.value.length || input.selectionEnd !== input.value.length))
                       input.setSelectionRange(input.value.length, input.value.length)
                   }}
                   onChange={(event) => {
@@ -1629,7 +1633,7 @@ export default function App() {
                 <button type="button" aria-label="Open About" data-home-card="about"
                   className="absolute inset-0 z-[1] cursor-pointer" onClick={() => open("about")} />
                 <div className="desktop-about-identity">
-                  <Greeting visitorName={visitorName} onChange={setVisitorName} />
+                  <Greeting visitorName={visitorName} onChange={setVisitorName} desktop />
                   <h2 className="mobile-name">i’m rutuja</h2>
                 </div>
               </>}
