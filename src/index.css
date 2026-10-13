@@ -497,6 +497,6 @@ main[data-mode="brand"] .mode-button.active { color: #7d2e4b; }
 @media (min-width: 1024px) {
   main[data-mode="brand"] .portfolio-card { border-color: #E9E5DF; }
   main[data-mode="growth"] .card-link:hover {
-    background-color: color-mix(in srgb, #0B2D6E 3%, #FFFFFF) !important;
+    background-color: color-mix(in srgb, #0B2D6E 5%, #FFFFFF) !important;
   }
 }
