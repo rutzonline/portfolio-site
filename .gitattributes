@@ -147,3 +147,6 @@
 
 # Keep the video poster directly available to static builds.
 public/video-introduction-poster.png -filter -diff -merge
+
+# Keep sourced portfolio images directly available to static builds.
+public/case-images/* -filter -diff -merge

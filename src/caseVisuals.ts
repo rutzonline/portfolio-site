@@ -1,171 +1,204 @@
 import liquideWork from "@/imports/liquide/l1.jpg"
 
-type CaseVisual = { src: string; alt: string; caption: string }
+type CaseVisual = { src: string; alt: string; caption: string; source?: string }
 const visuals: Record<string, CaseVisual> = {
   "wispr|the brief": {
-    "src": "/case-visuals/wispr-the-brief.svg",
-    "alt": "From voice note to readable reply. An India-first receiving-side workflow, with a hand-off to Wispr Flow.",
-    "caption": "Conceptual campaign visual · from voice note to readable reply"
+    "src": "/case-images/wispr-workspace.webp",
+    "alt": "Wispr Flow in a workspace",
+    "caption": "Wispr Flow · official desktop product demonstration",
+    "source": "https://wisprflow.ai/india"
   },
   "wispr|market and product reality": {
-    "src": "/case-visuals/wispr-market-and-product-reality.svg",
-    "alt": "A useful wedge, not another transcript. Focus on the situations where a generic transcript falls short.",
-    "caption": "Conceptual campaign visual · a useful wedge, not another transcript"
+    "src": "/case-images/wispr-india.webp",
+    "alt": "Official Wispr Flow India campaign artwork",
+    "caption": "Official Wispr Flow India campaign artwork",
+    "source": "https://wisprflow.ai/india"
   },
   "wispr|launch plan": {
-    "src": "/case-visuals/wispr-launch-plan.svg",
-    "alt": "Launch, learn, then distribute. The rollout follows the proposed day-one, week-one and month-one sequence.",
-    "caption": "Conceptual campaign visual · launch, learn, then distribute"
+    "src": "/case-images/wispr-product.webp",
+    "alt": "Wispr Flow · official campaign photography",
+    "caption": "Wispr Flow · official campaign photography",
+    "source": "https://wisprflow.ai/india"
   },
   "wispr|first 100 users": {
-    "src": "/case-visuals/wispr-first-100-users.svg",
-    "alt": "The first 100, channel by channel. Proposed acquisition targets for the first 7–10 days.",
-    "caption": "Conceptual campaign visual · the first 100, channel by channel"
+    "src": "/case-images/wispr-mobile.webp",
+    "alt": "Wispr Flow · official mobile dictation demonstration",
+    "caption": "Wispr Flow · official mobile dictation demonstration",
+    "source": "https://wisprflow.ai/india"
   },
   "wispr|growth loops": {
-    "src": "/case-visuals/wispr-growth-loops.svg",
-    "alt": "A transcript that travels. Referral mechanisms to test after users experience the core value.",
-    "caption": "Conceptual campaign visual · a transcript that travels"
+    "src": "/case-images/wispr-ideas.webp",
+    "alt": "Wispr Flow mobile product demonstration",
+    "caption": "Wispr Flow · official mobile product demonstration",
+    "source": "https://wisprflow.ai/india"
   },
   "wispr|distribution channels": {
-    "src": "/case-visuals/wispr-distribution-channels.svg",
-    "alt": "Different channels, different horizons. Sequence distribution around learning speed and repeatable demand.",
-    "caption": "Conceptual campaign visual · different channels, different horizons"
+    "src": "/case-images/wispr-india.webp",
+    "alt": "Official Wispr Flow India campaign artwork",
+    "caption": "Official Wispr Flow India campaign artwork",
+    "source": "https://wisprflow.ai/india"
   },
   "wispr|risks and mitigations": {
-    "src": "/case-visuals/wispr-risks-and-mitigations.svg",
-    "alt": "Keep the bot useful and sustainable. Guardrails belong in the product and acquisition plan together.",
-    "caption": "Conceptual campaign visual · keep the bot useful and sustainable"
+    "src": "/case-images/wispr-workspace.webp",
+    "alt": "Wispr Flow in a workspace",
+    "caption": "Wispr Flow · official desktop product demonstration",
+    "source": "https://wisprflow.ai/india"
   },
   "wispr|success metrics": {
-    "src": "/case-visuals/wispr-success-metrics.svg",
-    "alt": "Measure notes, not just downloads. Milestones are proposed targets, rather than observed campaign results.",
-    "caption": "Conceptual campaign visual · measure notes, not just downloads"
+    "src": "/case-images/wispr-mobile.webp",
+    "alt": "Wispr Flow · official mobile dictation demonstration",
+    "caption": "Wispr Flow · official mobile dictation demonstration",
+    "source": "https://wisprflow.ai/india"
   },
   "cursor|the growth problem": {
-    "src": "/case-visuals/cursor-the-growth-problem.svg",
-    "alt": "Beyond the first prototype. The campus proposal tests support that helps students return to a real project.",
-    "caption": "Conceptual campaign visual · beyond the first prototype"
+    "src": "/case-images/cursor-product.webp",
+    "source": "https://cursor.com/",
+    "caption": "Cursor · official website product demonstration",
+    "alt": "Cursor · official website product demonstration"
   },
   "cursor|evidence and audience": {
-    "src": "/case-visuals/cursor-evidence-and-audience.svg",
-    "alt": "Recruit for a project, not a certificate. The proposed audience combines basic coding skills with a reason to build.",
-    "caption": "Conceptual campaign visual · recruit for a project, not a certificate"
+    "src": "/case-images/cursor-students.webp",
+    "source": "https://cursor.com/students",
+    "caption": "Cursor · official student-programme page",
+    "alt": "Cursor · official student-programme page"
   },
   "cursor|partners and the work they would do": {
-    "src": "/case-visuals/cursor-partners-and-the-work-they-would-do.svg",
-    "alt": "Give each partner a concrete job. Prospective roles in a campus cohort; no partnership is implied.",
-    "caption": "Conceptual campaign visual · give each partner a concrete job"
+    "src": "/case-images/cursor-workshop.webp",
+    "alt": "Campus workshop photo from Cursor",
+    "caption": "Campus workshop photo from Cursor",
+    "source": "https://cursor.com/campus-leads"
   },
   "cursor|pilot mechanics": {
-    "src": "/case-visuals/cursor-pilot-mechanics.svg",
-    "alt": "A build that survives the workshop. A proposed campus cohort organised around feedback and repeat use.",
-    "caption": "Conceptual campaign visual · a build that survives the workshop"
+    "src": "/case-images/cursor-build-night.webp",
+    "alt": "Student build event photo from Cursor",
+    "caption": "Student build event photo from Cursor",
+    "source": "https://cursor.com/campus-leads"
   },
   "cursor|economics and decisions": {
-    "src": "/case-visuals/cursor-economics-and-decisions.svg",
-    "alt": "A ₹3 lakh learning pilot. Budget allocations to quote against before committing to a cohort.",
-    "caption": "Conceptual campaign visual · a ₹3 lakh learning pilot"
+    "src": "/case-images/cursor-demo.webp",
+    "alt": "Campus teaching session photo from Cursor",
+    "caption": "Campus teaching session photo from Cursor",
+    "source": "https://cursor.com/campus-leads"
   },
   "revolut|the growth problem": {
-    "src": "/case-visuals/revolut-the-growth-problem.svg",
-    "alt": "Fan attention needs a payment task. The proposal separates two different reasons to use the product.",
-    "caption": "Conceptual campaign visual · fan attention needs a payment task"
+    "src": "/case-images/revolut-audi.webp",
+    "alt": "Official Revolut Audi F1 partnership artwork",
+    "caption": "Revolut · official Audi F1 partnership artwork",
+    "source": "https://www.revolut.com/en-IN/news/revolut_becomes_title_partner_of_the_future_audi_f1_team/"
   },
   "revolut|choose audiences by payment task": {
-    "src": "/case-visuals/revolut-choose-audiences-by-payment-task.svg",
-    "alt": "Qualify the journey before the fan. Audience selection depends on an upcoming task and supported product access.",
-    "caption": "Conceptual campaign visual · qualify the journey before the fan"
+    "src": "/case-images/revolut-ui-1.webp",
+    "source": "https://www.revolut.com/en-IN/",
+    "caption": "Revolut · official overseas-payment product artwork",
+    "alt": "Revolut · official overseas-payment product artwork"
   },
   "revolut|partnership briefs": {
-    "src": "/case-visuals/revolut-partnership-briefs.svg",
-    "alt": "A brief built around the host’s work. Prospective partners supply useful context rather than an implied endorsement.",
-    "caption": "Conceptual campaign visual · a brief built around the host’s work"
+    "src": "/case-images/revolut-city.webp",
+    "alt": "Official Revolut and Manchester City partnership photograph",
+    "caption": "Official Revolut and Manchester City partnership photograph",
+    "source": "https://www.revolut.com/en-IN/news/revolut_becomes_a_global_partner_and_official_back_of_shirt_partner_of_manchester_city_men_s_and_women_s_first_teams/"
   },
   "revolut|journey, measurement and constraints": {
-    "src": "/case-visuals/revolut-journey-measurement-and-constraints.svg",
-    "alt": "From relevant intent to repeat use. Measure each stage against its eligible cohort, not total impressions.",
-    "caption": "Conceptual campaign visual · from relevant intent to repeat use"
+    "src": "/case-images/revolut-ui-3.webp",
+    "source": "https://www.revolut.com/en-IN/",
+    "caption": "Revolut · official product artwork",
+    "alt": "Revolut · official product artwork"
   },
   "revolut|pilot budget and stop rules": {
-    "src": "/case-visuals/revolut-pilot-budget-and-stop-rules.svg",
-    "alt": "A ₹5 lakh pilot ceiling. Planning allocations; rights and travel need separate quotes.",
-    "caption": "Conceptual campaign visual · a ₹5 lakh pilot ceiling"
+    "src": "/case-images/revolut-audi.webp",
+    "alt": "Official Revolut Audi F1 partnership artwork",
+    "caption": "Revolut · official Audi F1 partnership artwork",
+    "source": "https://www.revolut.com/en-IN/news/revolut_becomes_title_partner_of_the_future_audi_f1_team/"
   },
   "heyclicky|the product and acquisition problem": {
-    "src": "/case-visuals/heyclicky-the-product-and-acquisition-problem.svg",
-    "alt": "Make the help understandable. The first test centres on one beginner editing task, then repeat use.",
-    "caption": "Conceptual campaign visual · make the help understandable"
+    "src": "/case-images/heyclicky-site.webp",
+    "source": "https://www.heyclicky.com/",
+    "caption": "Heyclicky · official website screenshot",
+    "alt": "Heyclicky · official website screenshot"
   },
   "heyclicky|creative direction": {
-    "src": "/case-visuals/heyclicky-creative-direction.svg",
-    "alt": "One editing task, shown clearly. A proposed 30-second production storyboard, not a product screenshot.",
-    "caption": "Conceptual campaign visual · one editing task, shown clearly"
+    "src": "/case-images/heyclicky-help.webp",
+    "alt": "HeyClicky living in the Mac notch",
+    "caption": "HeyClicky living in the Mac notch",
+    "source": "https://www.heyclicky.com/changelog"
   },
   "heyclicky|creator and distribution choices": {
-    "src": "/case-visuals/heyclicky-creator-and-distribution-choices.svg",
-    "alt": "Teaching is the creative brief. Select task-relevant educators and separate production from distribution.",
-    "caption": "Conceptual campaign visual · teaching is the creative brief"
+    "src": "/case-images/heyclicky-referrals.webp",
+    "alt": "The Invite & earn page: a heyclicky.com/@username link with Copy link and Copy code buttons, the 25% terms, and the people you've invited",
+    "caption": "The Invite & earn page: a heyclicky.com/@username link with Copy link and Copy code buttons, the 25% terms, and the people you've invited",
+    "source": "https://www.heyclicky.com/changelog"
   },
   "heyclicky|landing page and first use": {
-    "src": "/case-visuals/heyclicky-landing-page-and-first-use.svg",
-    "alt": "Keep the promise through install. Match the ad task to the page, permissions and first-use experience.",
-    "caption": "Conceptual campaign visual · keep the promise through install"
+    "src": "/case-images/heyclicky-onboarding.webp",
+    "alt": "The hands-on onboarding tutorial guiding a new user through their first interactions",
+    "caption": "The hands-on onboarding tutorial guiding a new user through their first interactions",
+    "source": "https://www.heyclicky.com/changelog"
   },
   "heyclicky|experiment and economics": {
-    "src": "/case-visuals/heyclicky-experiment-and-economics.svg",
-    "alt": "A $12,000 test, before scale. Proposed 60-day allocations; use retention and contribution to set the ceiling.",
-    "caption": "Conceptual campaign visual · a $12,000 test, before scale"
+    "src": "/case-images/heyclicky-plans.webp",
+    "alt": "The upgrade paywall with a yearly toggle showing 20% off Pro and Max",
+    "caption": "The upgrade paywall with a yearly toggle showing 20% off Pro and Max",
+    "source": "https://www.heyclicky.com/changelog"
   },
   "stateplate|case study": {
-    "src": "/case-visuals/stateplate-case-study.svg",
-    "alt": "Regional food, connected channels. A visual summary of the reported app, email and offline growth work.",
-    "caption": "Reported work · regional food, connected channels"
+    "src": "/case-images/stateplate-brand.webp",
+    "alt": "Official The State Plate storefront banner",
+    "caption": "Official The State Plate storefront banner",
+    "source": "https://thestateplate.com/"
   },
   "stateplate|results at a glance": {
-    "src": "/case-visuals/stateplate-results-at-a-glance.svg",
-    "alt": "The reported growth outcomes. Figures summarised from the case study, rather than a fabricated dashboard.",
-    "caption": "Reported work · the reported growth outcomes"
+    "src": "/case-images/stateplate-products.webp",
+    "alt": "Regional food selection from The State Plate",
+    "caption": "Regional food selection from The State Plate",
+    "source": "https://thestateplate.com/"
   },
   "stateplate|challenge": {
-    "src": "/case-visuals/stateplate-challenge.svg",
-    "alt": "Growth blockers across the journey. App adoption, email health and at-risk stock needed a coordinated response.",
-    "caption": "Reported work · growth blockers across the journey"
+    "src": "/case-images/stateplate-food.webp",
+    "alt": "Congress Kadlekayi product image from The State Plate",
+    "caption": "Congress Kadlekayi product image from The State Plate",
+    "source": "https://thestateplate.com/"
   },
   "stateplate|approach": {
-    "src": "/case-visuals/stateplate-approach.svg",
-    "alt": "Fix the experience before scaling. Turn an operational constraint into a discovery and owned-channel opportunity.",
-    "caption": "Reported work · fix the experience before scaling"
+    "src": "/case-images/stateplate-products.webp",
+    "alt": "Regional food selection from The State Plate",
+    "caption": "Regional food selection from The State Plate",
+    "source": "https://thestateplate.com/"
   },
   "stateplate|what i did": {
-    "src": "/case-visuals/stateplate-what-i-did.svg",
-    "alt": "Sampling became a growth entry point. The reported inventory-to-customer journey connects offline and digital work.",
-    "caption": "Reported work · sampling became a growth entry point"
+    "src": "/case-images/stateplate-brand.webp",
+    "alt": "Official The State Plate storefront banner",
+    "caption": "Official The State Plate storefront banner",
+    "source": "https://thestateplate.com/"
   },
   "stateplate|results": {
-    "src": "/case-visuals/stateplate-results.svg",
-    "alt": "Better adoption and purchase value. Selected before-and-after figures reported in the case study.",
-    "caption": "Reported work · better adoption and purchase value"
+    "src": "/case-images/stateplate-products.webp",
+    "alt": "Regional food selection from The State Plate",
+    "caption": "Regional food selection from The State Plate",
+    "source": "https://thestateplate.com/"
   },
   "freelance|overview": {
-    "src": "/case-visuals/freelance-overview.svg",
-    "alt": "From positioning to a content system. Independent work with early-stage founders and small teams.",
-    "caption": "Reported work · from positioning to a content system"
+    "src": "/case-images/freelance-marketing-plan.webp",
+    "source": "https://www.shopify.com/blog/marketing-plan",
+    "caption": "Reference · Shopify marketing-plan worksheet",
+    "alt": "Reference · Shopify marketing-plan worksheet"
   },
   "freelance|what i worked on": {
-    "src": "/case-visuals/freelance-what-i-worked-on.svg",
-    "alt": "Campaigns with a practical output. A scope summary of the freelance marketing work described here.",
-    "caption": "Reported work · campaigns with a practical output"
+    "src": "/case-images/freelance-marketing-plan.webp",
+    "source": "https://www.shopify.com/blog/marketing-plan",
+    "caption": "Reference · Shopify marketing-plan worksheet",
+    "alt": "Reference · Shopify marketing-plan worksheet"
   },
   "hopstack|overview": {
-    "src": "/case-visuals/hopstack-overview.svg",
-    "alt": "Explain the warehouse product clearly. A visual summary of the B2B content, CMS and SEO internship.",
-    "caption": "Reported work · explain the warehouse product clearly"
+    "src": "/case-images/hopstack-product.webp",
+    "alt": "Hopstack saas platform desktop",
+    "caption": "Hopstack saas platform desktop",
+    "source": "https://www.hopstack.io/"
   },
   "hopstack|what i worked on": {
-    "src": "/case-visuals/hopstack-what-i-worked-on.svg",
-    "alt": "Content across the B2B journey. The work combined explainers, organic discovery and event support.",
-    "caption": "Reported work · content across the b2b journey"
+    "src": "/case-images/hopstack-product.webp",
+    "alt": "Hopstack saas platform desktop",
+    "caption": "Hopstack saas platform desktop",
+    "source": "https://www.hopstack.io/"
   }
 }
 

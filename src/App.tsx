@@ -1071,7 +1071,7 @@ function CaseStudy({
           <figure key={`img-${i}`} className="my-2">
             <ImageSlot src={visual.src} alt={visual.alt} fit="contain" className="aspect-[16/9]" />
             <figcaption className="mt-1.5 text-sm text-[#1A1A1A]/50">
-              {visual.caption}
+              {visual.source ? <a href={visual.source} target="_blank" rel="noreferrer" className="contact-link">{visual.caption} ↗</a> : visual.caption}
             </figcaption>
           </figure>,
         )
