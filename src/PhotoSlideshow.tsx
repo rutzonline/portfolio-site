@@ -4,7 +4,7 @@ import { fetchTable } from "@/lib/supabase"
 type PhotoRow = { url?: string }
 let photoRequest: Promise<string[]> | null = null
 
-function getPhotos() {
+export function getPhotos() {
   if (!photoRequest) {
     photoRequest = fetchTable<PhotoRow>("photos")
       .then((rows) => [...new Set(rows.flatMap((row) => {

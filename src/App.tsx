@@ -1,3 +1,4 @@
+import PhotoGallery from "@/PhotoGallery"
 import { growthNotes } from "@/growthNotes"
 import { brandNotes } from "@/brandNotes"
 import { routePanelWheel } from "@/panelScroll"
@@ -1242,6 +1243,7 @@ export default function App() {
     }
   }, [])
   const [mode, setMode] = useState<Mode>(() => readHash().mode ?? "growth")
+  const [galleryOpen, setGalleryOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const [page, setPage] = useState<PageKey | null>(() => readHash().page)
   const mobileHomePosition = useRef<{ page: PageKey; y: number } | null>(null)
@@ -1406,6 +1408,7 @@ export default function App() {
         } as CSSProperties
       }
     >
+      {galleryOpen && <PhotoGallery onClose={() => setGalleryOpen(false)} />}
       {page && (
         <span
           key={page}
@@ -1437,13 +1440,9 @@ export default function App() {
         >
           {!isMobile && <PhotoSlideshow active={page !== null} portrait={content.portrait}
             onReturnHome={page ? close : undefined} />}
-          <div className="mobile-identity px-6 pt-7 lg:hidden">
-            <h1 className="text-[34px] font-semibold leading-[1.08] tracking-[-0.045em]">rutuja rochkari</h1>
-            <p className="mt-2 text-sm text-[#1A1A1A]/60">marketing · growth & brand</p>
-          </div>
-          <div className="px-6 pb-6 pt-5 lg:absolute lg:left-5 lg:top-5 lg:p-0">
+          <div className="focus-controls px-6 pt-6 lg:absolute lg:left-5 lg:top-5 lg:p-0">
             <div
-              className="toggle-group relative grid max-lg:max-w-[280px] grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"
+              className="toggle-group relative grid grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"
               role="group"
               aria-label="Choose portfolio focus"
             >
@@ -1475,6 +1474,19 @@ export default function App() {
                 </button>
               ))}
             </div>
+          </div>
+          <div className="mobile-identity px-6 pb-7 pt-7 lg:hidden">
+            <div className="mb-1 flex items-center justify-between gap-3">
+              <p className="mobile-greeting font-semibold">hello {"{{ first name"}<span className="greeting-cursor" aria-hidden="true" />{" }}!"}</p>
+              <button type="button" onClick={() => setGalleryOpen(true)}
+                aria-label="Open photo gallery" aria-haspopup="dialog" className="photo-folder-button shrink-0">
+                <img src="/photo-folder.png" alt="" className="h-full w-full object-contain" />
+              </button>
+            </div>
+            <h1 className="mobile-name">i’m rutuja</h1>
+            <p className="mt-3 leading-snug text-[#1A1A1A]/65">{mode === "growth"
+              ? "email, paid, creators, and campaigns."
+              : "copy, content, social, and brand comms."}</p>
           </div>
         </Card>
 
@@ -1557,20 +1569,20 @@ export default function App() {
           <>
             <Card
               ariaLabel="About"
-              className="order-2 lg:order-none"
+              className="mobile-about-card order-2 lg:order-none"
               {...(isMobile ? { bg: tint("about") } : openProps("about"))}
             >
-              <CardHeading detail={isMobile ? undefined : "Rutuja Rochkari"} detailClassName="font-semibold text-[color:var(--accent)]">About</CardHeading>
-              <div className="mt-6 lg:mt-auto">
+              {!isMobile && <CardHeading detail="Rutuja Rochkari" detailClassName="font-semibold text-[color:var(--accent)]">About</CardHeading>}
+              <div className="mobile-about-copy mt-6 lg:mt-auto">
                 <p className="about-intro font-semibold text-[20px] leading-[1.14] tracking-[-0.02em] xl:text-[22px]">
                   {aboutIntro.main}
                   {aboutIntro.explanation && <span className="mt-2 block text-[20px] font-semibold opacity-50 xl:text-[22px]">{aboutIntro.explanation}</span>}
                 </p>
-                <p className="mt-3 leading-snug text-[#1A1A1A]/65">
+                {!isMobile && <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
                     ? "email, paid, creators, and campaigns."
                     : "copy, content, social, and brand comms."}
-                </p>
+                </p>}
               </div>
             </Card>
 
