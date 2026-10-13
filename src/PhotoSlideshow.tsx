@@ -35,9 +35,6 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
   const [coverCycle, setCoverCycle] = useState(portrait)
   const visited = useRef(new Set([portrait]))
   const [previous, setPrevious] = useState<string | null>(null)
-  const [paused, setPaused] = useState(false)
-  const pausedRef = useRef(paused)
-  pausedRef.current = paused
   const enabled = desktop
   const startIfNeeded = useRef<() => void>(() => {})
 
@@ -75,8 +72,6 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
   }, [enabled, photos.length])
 
   useEffect(() => {
-    pausedRef.current = false
-    setPaused(false)
     startIfNeeded.current = () => {}
     if (!enabled) {
       setShown(null)
@@ -98,7 +93,7 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
     const advance = () => {
       if (cancelled || pending) return
       window.clearTimeout(timer)
-      if (document.hidden || pausedRef.current) {
+      if (document.hidden) {
         schedule()
         return
       }
@@ -183,16 +178,7 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
         onClick={onReturnHome}
         onContextMenu={(event) => { if (!showPhoto) event.preventDefault() }}
         className="absolute inset-0 cursor-pointer bg-transparent focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-white" />}
-      {showPhoto && photos.length > 1 && !reducedMotion && (
-            <button type="button" onClick={() => setPaused((value) => !value)}
-              aria-label={paused ? "Play photo slideshow" : "Pause photo slideshow"}
-              title={paused ? "Play slideshow" : "Pause slideshow"}
-              className="absolute bottom-4 right-4 flex size-8 cursor-pointer items-center justify-center rounded-full bg-black/55 text-white hover:bg-black/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-              <svg viewBox="0 0 24 24" aria-hidden="true" className="size-4" fill="currentColor">
-                {paused ? <path d="M8 5v14l11-7z" /> : <path d="M7 5h4v14H7zm6 0h4v14h-4z" />}
-              </svg>
-            </button>
-          )}
+
     </div>
   )
 }
