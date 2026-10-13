@@ -378,3 +378,21 @@ a[href],
   .mobile-about-copy .about-intro span { opacity: .65; }
 }
 @media (prefers-reduced-motion: reduce) { .greeting-cursor { animation: none; } }
+
+.slice-of-life { font-family: "Chillink", cursive; font-size: 36px; font-weight: 400; line-height: 1.2; color: #1b3e8c; }
+.photo-skeleton { background: #eeece7; box-shadow: inset 0 0 0 1px rgb(26 26 26 / .04), 0 2px 5px rgb(26 26 26 / .05); animation: photo-loading 1.8s ease-in-out infinite; }
+@keyframes photo-loading { 50% { background: #e4e1db; } }
+@media (max-width: 1023px) {
+  .photo-folder-button { width: 76px; height: 80px; }
+  .focus-controls .mode-button:not(.active) { color: rgb(26 26 26 / .48); border-color: rgb(26 26 26 / .25); }
+  .mobile-about-copy .about-intro { font-weight: 600; }
+  .mobile-about-copy .about-intro span { font-weight: 400; }
+  .greeting-name-wrap { display: inline-flex; align-items: baseline; }
+  .greeting-name { min-width: 0; border: 0; padding: 0; background: transparent; color: inherit; font: inherit; letter-spacing: inherit; caret-color: #1a1a1a; border-radius: 0; }
+  .greeting-name::placeholder { color: inherit; opacity: 1; }
+  .greeting-name:focus { outline: none; }
+  .greeting-name:focus-visible { box-shadow: 0 1px 0 rgb(26 26 26 / .25); }
+  .greeting-name:focus + .greeting-cursor { display: none; }
+  .mobile-greeting { font-size: clamp(15px, 4.3vw, 21px); }
+}
+@media (prefers-reduced-motion: reduce) { .photo-skeleton { animation: none; } }

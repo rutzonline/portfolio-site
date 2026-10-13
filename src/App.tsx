@@ -1243,6 +1243,9 @@ export default function App() {
     }
   }, [])
   const [mode, setMode] = useState<Mode>(() => readHash().mode ?? "growth")
+  const [visitorName, setVisitorName] = useState(() => {
+    try { return (sessionStorage.getItem("portfolio-visitor-name") ?? "").slice(0, 8) } catch { return "" }
+  })
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const [page, setPage] = useState<PageKey | null>(() => readHash().page)
@@ -1253,7 +1256,9 @@ export default function App() {
   const content = modeCopy[mode]
   const aboutIntro = splitAboutIntro(content.intro, mode)
   const accent = mode === "growth" ? SAPPHIRE : "#E88D6D"
-  const tint = (k: PageKey) => content.tints[k] ?? CREAM
+  const tint = (k: PageKey) => isMobile && mode === "brand"
+    ? ({ projects: PINK, work: LIME, upto: BLUE } as Partial<Record<PageKey, string>>)[k] ?? CREAM
+    : content.tints[k] ?? CREAM
 
   useEffect(() => {
     const onHash = () => {
@@ -1400,8 +1405,8 @@ export default function App() {
           "--line": mode === "growth" ? SAPPHIRE : PINK,
           "--accent-text": mode === "growth" ? accent : "#1A1A1A",
           "--toggle-bg": CREAM,
-          "--toggle-active": mode === "growth" ? accent : PINK,
-          "--toggle-active-text": mode === "growth" ? "#fff" : "#1A1A1A",
+          "--toggle-active": isMobile ? SAPPHIRE : mode === "growth" ? accent : PINK,
+          "--toggle-active-text": isMobile || mode === "growth" ? "#fff" : "#1A1A1A",
           "--hl-link": mode === "growth" ? SAPPHIRE : "#2F6FD0",
           "--hl": mode === "growth" ? SAPPHIRE : BLUE,
           "--hl-text": mode === "growth" ? "#fff" : "#1A1A1A",
@@ -1426,7 +1431,7 @@ export default function App() {
         <Card
           ariaLabel="Portfolio focus"
           padded={false}
-          className={`portrait-card relative order-1 lg:min-h-[420px] lg:order-none ${
+          className={`portrait-card relative order-1 lg:order-none ${
             page ? "cursor-pointer max-lg:hidden" : ""
           }`}
           onClick={
@@ -1477,16 +1482,24 @@ export default function App() {
           </div>
           <div className="mobile-identity px-6 pb-7 pt-7 lg:hidden">
             <div className="mb-1 flex items-center justify-between gap-3">
-              <p className="mobile-greeting font-semibold">hello {"{{ first name"}<span className="greeting-cursor" aria-hidden="true" />{" }}!"}</p>
+              <div className="mobile-greeting font-semibold">hello {"{{ "}<span className="greeting-name-wrap"><input
+                aria-label="Your first name" placeholder="first name" maxLength={8}
+                autoComplete="off" autoCapitalize="words" spellCheck={false}
+                value={visitorName} className="greeting-name"
+                onChange={(event) => {
+                  const name = event.target.value.slice(0, 8)
+                  setVisitorName(name)
+                  try { sessionStorage.setItem("portfolio-visitor-name", name) } catch {}
+                }}
+                style={{ width: `${Math.max(1, visitorName ? visitorName.length : 9)}ch` }}
+              /><span className="greeting-cursor" aria-hidden="true" /></span>{" }}!"}</div>
               <button type="button" onClick={() => setGalleryOpen(true)}
                 aria-label="Open photo gallery" aria-haspopup="dialog" className="photo-folder-button shrink-0">
                 <img src="/photo-folder.png" alt="" className="h-full w-full object-contain" />
               </button>
             </div>
             <h1 className="mobile-name">i’m rutuja</h1>
-            <p className="mt-3 leading-snug text-[#1A1A1A]/65">{mode === "growth"
-              ? "email, paid, creators, and campaigns."
-              : "copy, content, social, and brand comms."}</p>
+
           </div>
         </Card>
 
@@ -1578,11 +1591,11 @@ export default function App() {
                   {aboutIntro.main}
                   {aboutIntro.explanation && <span className="mt-2 block text-[20px] font-semibold opacity-50 xl:text-[22px]">{aboutIntro.explanation}</span>}
                 </p>
-                {!isMobile && <p className="mt-3 leading-snug text-[#1A1A1A]/65">
+                <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
-                    ? "email, paid, creators, and campaigns."
-                    : "copy, content, social, and brand comms."}
-                </p>}
+                    ? (isMobile ? "email, paid, creators, and campaigns" : "email, paid, creators, and campaigns.")
+                    : (isMobile ? "copy, content, social, and brand comms" : "copy, content, social, and brand comms.")}
+                </p>
               </div>
             </Card>
 
