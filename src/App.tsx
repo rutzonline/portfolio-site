@@ -259,7 +259,7 @@ function NotesPage({ mode }: { mode: Mode }) {
               </span>
               <span
                 aria-hidden="true"
-                className="text-2xl leading-none text-[color:var(--hl-link)] opacity-0 transition-opacity group-hover:opacity-100"
+                className="text-2xl leading-none text-[color:var(--hl-link)] max-lg:opacity-100 opacity-0 transition-opacity group-hover:opacity-100"
               >
                 ↗
               </span>
@@ -541,7 +541,7 @@ function Experience({ mode }: { mode: Mode }) {
                 style={
                   active ? { background: colorFor(i), color: fg } : undefined
                 }
-                className="flex w-full items-center justify-between gap-4 px-6 py-3 text-left transition-colors duration-200 hover:bg-[#1A1A1A]/[0.03] lg:px-10"
+                className="experience-option flex w-full items-center justify-between gap-4 px-6 py-3 text-left transition-colors duration-200 hover:bg-[#1A1A1A]/[0.03] lg:px-10"
               >
                 <Logo
                   domain={stintDomains[i]}
@@ -937,8 +937,8 @@ function CaseStudy({
         i++
       }
       out.push(
-        <div key={i} className="lg:overflow-x-auto">
-          <table className="w-full border-collapse text-left max-lg:text-sm lg:min-w-[520px]">
+        <div key={i} className="overflow-x-auto">
+          <table className="w-full border-collapse text-left max-lg:text-sm min-w-[520px]">
             <thead>
               <tr>
                 {rows[0].map((h) => (
@@ -1191,7 +1191,7 @@ function CasesPage({ mode }: { mode: Mode }) {
               </span>
               <span
                 aria-hidden="true"
-                className="text-2xl leading-none text-[color:var(--hl-link)] opacity-0 transition-opacity group-hover:opacity-100"
+                className="text-2xl leading-none text-[color:var(--hl-link)] max-lg:opacity-100 opacity-0 transition-opacity group-hover:opacity-100"
               >
                 ↗
               </span>
@@ -1226,6 +1226,13 @@ function readHash(): { mode: Mode | null; page: PageKey | null } {
 }
 
 export default function App() {
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 1023px)").matches)
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 1023px)")
+    const update = () => setIsMobile(query.matches)
+    query.addEventListener("change", update)
+    return () => query.removeEventListener("change", update)
+  }, [])
   useEffect(() => {
     // Have both covers decoded before the first focus toggle.
     for (const src of [growthPortrait, contentPortrait]) {
@@ -1414,9 +1421,9 @@ export default function App() {
         }${independentPage ? "h-full min-h-0 " : ""}grid grid-cols-1 lg:h-full lg:grid-cols-[20%_repeat(3,minmax(0,1fr))] lg:grid-rows-2`}
       >
         <Card
-          ariaLabel="Portrait and portfolio focus"
+          ariaLabel="Portfolio focus"
           padded={false}
-          className={`portrait-card relative order-1 min-h-[420px] lg:order-none ${
+          className={`portrait-card relative order-1 lg:min-h-[420px] lg:order-none ${
             page ? "cursor-pointer max-lg:hidden" : ""
           }`}
           onClick={
@@ -1428,11 +1435,15 @@ export default function App() {
               : undefined
           }
         >
-          <PhotoSlideshow active={page !== null} portrait={content.portrait}
-            onReturnHome={page ? close : undefined} />
-          <div className="absolute left-5 top-5">
+          {!isMobile && <PhotoSlideshow active={page !== null} portrait={content.portrait}
+            onReturnHome={page ? close : undefined} />}
+          <div className="mobile-identity px-6 pt-7 lg:hidden">
+            <h1 className="text-[34px] font-semibold leading-[1.08] tracking-[-0.045em]">rutuja rochkari</h1>
+            <p className="mt-2 text-sm text-[#1A1A1A]/60">marketing · growth & brand</p>
+          </div>
+          <div className="px-6 pb-6 pt-5 lg:absolute lg:left-5 lg:top-5 lg:p-0">
             <div
-              className="toggle-group relative grid grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"
+              className="toggle-group relative grid max-lg:max-w-[280px] grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"
               role="group"
               aria-label="Choose portfolio focus"
             >
@@ -1456,7 +1467,7 @@ export default function App() {
                       `#${option}${page ? `/${slugOf(page, option)}` : ""}`,
                     )
                   }}
-                  className={`mode-button relative min-h-8 cursor-pointer rounded-[3px] px-3 text-base font-medium capitalize ${
+                  className={`mode-button relative min-h-11 lg:min-h-8 cursor-pointer rounded-[3px] px-3 text-base font-medium capitalize ${
                     mode === option ? "active" : ""
                   }`}
                 >
@@ -1476,45 +1487,35 @@ export default function App() {
                 : ""
             } lg:col-span-3 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:min-h-0 lg:p-10`}
           >
-            <div className="sticky top-0 z-30 -mx-6 -mt-6 flex shrink-0 items-center justify-between gap-3 border-b border-[var(--grid-line)] bg-[#FAF9F6] px-4 lg:hidden">
+            <div className="mobile-page-nav sticky top-0 z-30 -mx-6 -mt-6 flex shrink-0 items-center justify-between gap-3 border-b border-[var(--grid-line)] bg-[#FAF9F6] px-6 py-2 lg:hidden">
               <button
                 type="button"
                 onClick={mobileBack}
-                className="back-btn min-w-0 truncate"
+                className="back-btn min-h-11 min-w-0 truncate"
               >
                 <Chev />
                 {backLabel || "homepage"}
               </button>
-              <button
+              {backLabel && <button
                 type="button"
                 onClick={close}
-                aria-label="Close and return to homepage"
-                className="flex size-10 shrink-0 items-center justify-center"
+                aria-label="Return to homepage"
+                className="min-h-11 shrink-0 rounded-md border border-[var(--grid-line)] px-3 text-sm font-medium"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="size-5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                >
-                  <path d="M6 6l12 12M18 6L6 18" />
-                </svg>
-              </button>
+                home
+              </button>}
             </div>
             <header className={`-mx-6 flex shrink-0 items-baseline justify-between gap-4 px-6 lg:-mx-10 lg:px-10 ${page === "about" ? "about-page-header" : ""}`}>
               <div>
                 <h1 className="page-title leading-[1.15] tracking-[-0.02em]">
-                  <button
+                  {isMobile ? pageTitle(page, mode) : <button
                     type="button"
                     onClick={close}
                     title="Back to homepage"
                     className="text-left"
                   >
                     {pageTitle(page, mode)}
-                  </button>
+                  </button>}
                 </h1>
                 {page === "work" && (
                   <p className="mt-3 text-[#1A1A1A]/60">
@@ -1557,9 +1558,9 @@ export default function App() {
             <Card
               ariaLabel="About"
               className="order-2 lg:order-none"
-              {...openProps("about")}
+              {...(isMobile ? { bg: tint("about") } : openProps("about"))}
             >
-              <CardHeading detail="Rutuja Rochkari" detailClassName="font-semibold text-[color:var(--accent)]">About</CardHeading>
+              <CardHeading detail={isMobile ? undefined : "Rutuja Rochkari"} detailClassName="font-semibold text-[color:var(--accent)]">About</CardHeading>
               <div className="mt-6 lg:mt-auto">
                 <p className="about-intro font-semibold text-[20px] leading-[1.14] tracking-[-0.02em] xl:text-[22px]">
                   {aboutIntro.main}

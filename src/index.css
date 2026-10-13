@@ -326,3 +326,20 @@ a[href],
   font-size: 15px;
   line-height: 1.5;
 }
+
+/* Mobile keeps the work in a single reading column. Moodboard tabs select
+   distinct content, so retain them while hiding duplicate contents menus. */
+@media (max-width: 1023px) {
+  .panel-menu:not([aria-label="moodboard sections"]) { display: none; }
+  .about-layout { grid-template-rows: minmax(0, 1fr); }
+  .page-article > header { align-items: flex-start; }
+  .page-article .page-title { font-size: 28px; line-height: 1.15; }
+  .page-article .case-title { font-size: 24px; }
+  .back-btn { min-height: 44px; }
+  .experience-option { flex-wrap: wrap; gap: 10px 12px; }
+  .experience-option > span:last-child {
+    flex-basis: 100%; padding-left: 52px; font-size: 13px;
+  }
+  .panel-menu[aria-label="moodboard sections"] button { min-height: 44px; }
+  .mood-item { opacity: .55; transform: none; }
+}
