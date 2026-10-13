@@ -443,6 +443,10 @@ function CardHeading({
     <header className="card-heading flex shrink-0 items-baseline justify-between gap-3">
       <h2 className="card-title font-heading text-[22px] leading-none tracking-[-0.02em]">
         {children}
+        <svg className="pencil-underline" viewBox="0 0 200 8" preserveAspectRatio="none" aria-hidden="true" focusable="false" fill="none">
+          <path pathLength="1" d="M1 4.6 C24 3.1 41 5.2 64 4.1 S105 3.4 129 4.2 S171 3.1 199 3.7" />
+          <path pathLength="1" d="M2 5.6 C29 4.9 44 5.9 68 5 S110 4.5 133 5.1 S176 4.4 198 4.8" />
+        </svg>
       </h2>
       {detail && (
         <span className={`text-right text-base ${detailClassName ?? "text-[#1A1A1A]/65"}`}>{detail}</span>
@@ -741,7 +745,7 @@ function PageBody({ page, mode }: { page: PageKey; mode: Mode }) {
       return mode === "growth" ? <CasesPage mode={mode} /> : <Moodboard />
     case "upto":
       return (
-        <div className="max-w-xl">
+        <div className="upto-page w-full pt-2">
           <Rows
             items={[...uptoRows[mode], ["Availability", "Open to work"]]}
           />
