@@ -383,7 +383,7 @@ function CardHeading({
   detailClassName?: string
 }) {
   return (
-    <header className="flex shrink-0 items-baseline justify-between gap-3">
+    <header className="card-heading flex shrink-0 items-baseline justify-between gap-3">
       <h2 className="card-title font-heading text-[22px] leading-none tracking-[-0.02em]">
         {children}
       </h2>
@@ -1257,7 +1257,7 @@ export default function App() {
   const aboutIntro = splitAboutIntro(content.intro, mode)
   const accent = mode === "growth" ? SAPPHIRE : "#E88D6D"
   const tint = (k: PageKey) => isMobile && mode === "brand"
-    ? ({ projects: PINK, work: LIME, upto: BLUE } as Partial<Record<PageKey, string>>)[k] ?? CREAM
+    ? ({ projects: BLUE, work: LIME, upto: PINK } as Partial<Record<PageKey, string>>)[k] ?? CREAM
     : content.tints[k] ?? CREAM
 
   useEffect(() => {
@@ -1481,8 +1481,8 @@ export default function App() {
             </div>
           </div>
           <div className="mobile-identity px-6 pb-7 pt-7 lg:hidden">
-            <div className="mb-1 flex items-center justify-between gap-3">
-              <div className="mobile-greeting font-semibold">hello {"{{ "}<span className="greeting-name-wrap">
+            <div className="mobile-greeting-row mb-1 flex items-center justify-between gap-3">
+              <div className="mobile-greeting">hello {"{{ "}<span className="greeting-name-wrap">
                 <span className="greeting-name-measure" aria-hidden="true">{visitorName || "\u200b"}</span>
                 <input aria-label="Your first name" maxLength={9}
                   autoComplete="off" autoCapitalize="words" spellCheck={false}
@@ -1603,7 +1603,7 @@ export default function App() {
                   {aboutIntro.main}
                   {aboutIntro.explanation && <span className="mt-2 block text-[20px] font-semibold opacity-50 xl:text-[22px]">{aboutIntro.explanation}</span>}
                 </p>}
-                <p className="mt-3 leading-snug text-[#1A1A1A]/65">
+                <p className="mobile-specialties mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
                     ? (isMobile ? "email, paid, creators, and campaigns" : "email, paid, creators, and campaigns.")
                     : (isMobile ? "copy, content, social, and brand comms" : "copy, content, social, and brand comms.")}
@@ -1766,7 +1766,7 @@ export default function App() {
 
             <Card
               ariaLabel="What I'm up to"
-              className="order-7 lg:order-none"
+              className="upto-card order-7 lg:order-none"
               {...openProps("upto")}
             >
               <CardHeading detail="Now">What I&rsquo;m up to</CardHeading>

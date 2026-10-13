@@ -3,8 +3,8 @@ import { getPhotos } from "@/PhotoSlideshow"
 
 function CloseButton({ onClick, label }: { onClick: () => void; label: string }) {
   return <button type="button" onClick={onClick} aria-label={label}
-    className="flex size-11 shrink-0 items-center justify-center rounded-full hover:bg-black/5">
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-2.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    className="gallery-close flex size-11 shrink-0 items-center justify-center rounded-full hover:bg-black/5">
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-3" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
   </button>
 }
 
@@ -92,7 +92,7 @@ export default function PhotoGallery({ onClose }: { onClose: () => void }) {
     <div aria-busy={loading} className="grid grid-cols-3 gap-2 sm:grid-cols-4">
       {loading ? Array.from({ length: 18 }, (_, index) => <div key={index} aria-hidden="true" className="photo-skeleton aspect-square rounded-lg" />)
         : photos.map((src, index) => <button key={src} type="button" aria-label={`View photo ${index + 1}`} aria-haspopup="dialog"
-          onClick={() => setSelected(index)} className="rounded-lg shadow-sm">
+          onClick={() => setSelected(index)} className="rounded-lg">
           <LoadingPhoto src={src} alt="" />
         </button>)}
     </div>
