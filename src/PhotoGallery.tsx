@@ -21,6 +21,7 @@ function LoadingPhoto({ src, alt, full = false }: { src: string; alt: string; fu
 
 function PhotoViewer({ photos, initial, onClose }: { photos: string[]; initial: number; onClose: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null)
+  const [mobile] = useState(() => window.matchMedia("(max-width: 1023px)").matches)
   const [current, setCurrent] = useState(initial)
   const [showSwipeHint, setShowSwipeHint] = useState(true)
   useEffect(() => {
@@ -41,8 +42,9 @@ function PhotoViewer({ photos, initial, onClose }: { photos: string[]; initial: 
       if (event.key === "ArrowLeft") { event.preventDefault(); step(-1) }
       if (event.key === "ArrowRight") { event.preventDefault(); step(1) }
     }}
-    className="photo-viewer m-auto overflow-hidden rounded-xl bg-[#FAF9F6] p-2 text-[#1A1A1A] backdrop:bg-black/80">
-    <div className="flex justify-end"><CloseButton onClick={onClose} label="Close selected photo" /></div>
+    className={mobile ? "mobile-selected-photo text-[#1A1A1A] backdrop:bg-black/80" : "photo-viewer m-auto overflow-hidden rounded-xl bg-[#FAF9F6] p-2 text-[#1A1A1A] backdrop:bg-black/80"}>
+    <div className={mobile ? "selected-photo-close flex justify-end" : "flex justify-end"}><CloseButton onClick={onClose} label="Close selected photo" /></div>
+    <div className={mobile ? "selected-photo-frame" : ""}>
     <div className="relative" style={{ touchAction: "pan-y" }}
       onTouchStart={(event) => { const t = event.touches[0]; touch.current = { x: t.clientX, y: t.clientY } }}
       onTouchCancel={() => { touch.current = null }}
@@ -58,6 +60,7 @@ function PhotoViewer({ photos, initial, onClose }: { photos: string[]; initial: 
         <LoadingPhoto key={photos[current]} src={photos[current]} alt={`Photo ${current + 1} from Rutuja’s collection`} full />
       </div>
     </div>
+    </div>
   </dialog>
 }
 
@@ -68,15 +71,15 @@ export default function PhotoGallery({ onClose, origin }: { onClose: () => void;
   const [opening, setOpening] = useState(() => mobile && Boolean(origin) && !window.matchMedia("(prefers-reduced-motion: reduce)").matches)
   useEffect(() => {
     if (!opening) return
-    const timer = window.setTimeout(() => setOpening(false), 2000)
+    const timer = window.setTimeout(() => setOpening(false), 1700)
     return () => window.clearTimeout(timer)
   }, [opening])
   const flightStyle = origin ? {
     "--folder-x": `${origin.x + origin.width / 2 - window.innerWidth / 2}px`,
     "--folder-y": `${origin.y + origin.height / 2 - window.innerHeight / 2}px`,
     "--folder-scale": origin.width / 240,
-    "--photo-scale-x": (window.innerWidth - 24) / 62,
-    "--photo-scale-y": (window.innerHeight - 88) / 88,
+    "--photo-scale-x": window.innerWidth / 62,
+    "--photo-scale-y": window.innerHeight / 76,
   } as CSSProperties : undefined
   const dialog = useRef<HTMLDialogElement>(null)
   const [photos, setPhotos] = useState<string[]>([])
@@ -105,18 +108,19 @@ export default function PhotoGallery({ onClose, origin }: { onClose: () => void;
   }, [attempt])
   return <dialog ref={dialog} aria-label="Photo gallery" onCancel={onClose}
     onClick={(event) => { if (event.target === event.currentTarget) onClose() }}
-    className={mobile ? "mobile-photo-dialog text-[#1A1A1A] backdrop:bg-black/65" : "m-auto h-[calc(100svh-32px)] w-[calc(100%-24px)] max-w-3xl overflow-y-auto rounded-xl border border-[#E5E1DA] bg-[#FAF9F6] p-4 text-[#1A1A1A] backdrop:bg-black/65"}>
-    {mobile && <div className="gallery-external-close"><CloseButton onClick={onClose} label="Close photo gallery" /></div>}
+    className={mobile ? `mobile-photo-dialog ${opening ? "photo-page-opening" : "photo-page-ready"} text-[#1A1A1A] backdrop:bg-black/65` : "m-auto h-[calc(100svh-32px)] w-[calc(100%-24px)] max-w-3xl overflow-y-auto rounded-xl border border-[#E5E1DA] bg-[#FAF9F6] p-4 text-[#1A1A1A] backdrop:bg-black/65"}>
+    {mobile && <header className={`photo-page-nav ${opening ? "photo-page-nav-opening" : ""}`}>
+      <button type="button" className="back-btn" onClick={onClose}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg>
+        back to home
+      </button>
+    </header>}
     {opening && <div className="gallery-opening" style={flightStyle} aria-hidden="true">
       <div className="folder-flight">
         <img src="/photo-folder.png" alt="" />
-        <svg className="folder-white-photos" viewBox="0 0 1122 1077" fill="white">
-          <path d="M184 243 L392 207 L394 456 L216 475 Z" />
-          <path d="M690 188 L942 212 L912 475 L665 457 Z" />
-          <path d="M408 139 Q408 121 426 121 H651 Q669 121 669 139 V456 H408 Z" />
-        </svg>
+
       </div>
-      <div className="middle-photo-flight" />
+      <div className="middle-photo-flight"><div className="middle-photo-front" /><div className="middle-photo-back" /></div>
     </div>}
     <div className={mobile ? `photo-gallery-window ${opening ? "gallery-window-opening" : ""}` : ""} inert={opening} aria-hidden={opening || undefined}>
     {!mobile && <div className="mb-3 flex justify-end">

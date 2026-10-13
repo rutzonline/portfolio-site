@@ -1305,7 +1305,7 @@ export default function App() {
   }, [])
   const [mode, setMode] = useState<Mode>(() => readHash().mode ?? "growth")
   const [visitorName, setVisitorName] = useState("first name")
-  const [galleryOpen, setGalleryOpen] = useState(false)
+  const [galleryOpen, setGalleryOpen] = useState(() => window.matchMedia("(max-width: 1023px)").matches && window.location.hash.endsWith("/photos"))
   const [galleryOrigin, setGalleryOrigin] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
   const [copied, setCopied] = useState(false)
   const [page, setPage] = useState<PageKey | null>(() => readHash().page)
@@ -1325,6 +1325,7 @@ export default function App() {
       const h = readHash()
       if (h.mode) setMode(h.mode)
       setPage(h.page)
+      setGalleryOpen(window.matchMedia("(max-width: 1023px)").matches && window.location.hash.endsWith("/photos"))
     }
     window.addEventListener("hashchange", onHash)
     return () => window.removeEventListener("hashchange", onHash)
@@ -1474,7 +1475,7 @@ export default function App() {
         } as CSSProperties
       }
     >
-      {galleryOpen && <PhotoGallery origin={galleryOrigin} onClose={() => setGalleryOpen(false)} />}
+      {galleryOpen && <PhotoGallery origin={galleryOrigin} onClose={() => { setGalleryOpen(false); history.replaceState(null, "", `#${mode}`) }} />}
       {page && (
         <span
           key={page}
@@ -1548,6 +1549,7 @@ export default function App() {
                 const rect = event.currentTarget.getBoundingClientRect()
                 setGalleryOrigin({ x: rect.x, y: rect.y, width: rect.width, height: rect.height })
                 setGalleryOpen(true)
+                history.pushState(null, "", `#${mode}/photos`)
               }}
                 aria-label="Open photo gallery" aria-haspopup="dialog" className="photo-folder-button shrink-0">
                 <img src="/photo-folder.png" alt="" className={`h-full w-full object-contain ${galleryOpen ? "opacity-0" : ""}`} />
