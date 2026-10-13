@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type CSSProperties } from "react"
 import { getPhotos } from "@/PhotoSlideshow"
 
 function CloseButton({ onClick, label }: { onClick: () => void; label: string }) {
@@ -61,7 +61,23 @@ function PhotoViewer({ photos, initial, onClose }: { photos: string[]; initial: 
   </dialog>
 }
 
-export default function PhotoGallery({ onClose }: { onClose: () => void }) {
+type GalleryOrigin = { x: number; y: number; width: number; height: number }
+
+export default function PhotoGallery({ onClose, origin }: { onClose: () => void; origin?: GalleryOrigin | null }) {
+  const [mobile] = useState(() => window.matchMedia("(max-width: 1023px)").matches)
+  const [opening, setOpening] = useState(() => mobile && Boolean(origin) && !window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+  useEffect(() => {
+    if (!opening) return
+    const timer = window.setTimeout(() => setOpening(false), 2000)
+    return () => window.clearTimeout(timer)
+  }, [opening])
+  const flightStyle = origin ? {
+    "--folder-x": `${origin.x + origin.width / 2 - window.innerWidth / 2}px`,
+    "--folder-y": `${origin.y + origin.height / 2 - window.innerHeight / 2}px`,
+    "--folder-scale": origin.width / 240,
+    "--photo-scale-x": (window.innerWidth - 24) / 62,
+    "--photo-scale-y": (window.innerHeight - 88) / 88,
+  } as CSSProperties : undefined
   const dialog = useRef<HTMLDialogElement>(null)
   const [photos, setPhotos] = useState<string[]>([])
   const [selected, setSelected] = useState<number | null>(null)
@@ -89,10 +105,23 @@ export default function PhotoGallery({ onClose }: { onClose: () => void }) {
   }, [attempt])
   return <dialog ref={dialog} aria-label="Photo gallery" onCancel={onClose}
     onClick={(event) => { if (event.target === event.currentTarget) onClose() }}
-    className="m-auto h-[calc(100svh-32px)] w-[calc(100%-24px)] max-w-3xl overflow-y-auto rounded-xl border border-[#E5E1DA] bg-[#FAF9F6] p-4 text-[#1A1A1A] backdrop:bg-black/65">
-    <div className="mb-3 flex justify-end">
+    className={mobile ? "mobile-photo-dialog text-[#1A1A1A] backdrop:bg-black/65" : "m-auto h-[calc(100svh-32px)] w-[calc(100%-24px)] max-w-3xl overflow-y-auto rounded-xl border border-[#E5E1DA] bg-[#FAF9F6] p-4 text-[#1A1A1A] backdrop:bg-black/65"}>
+    {mobile && <div className="gallery-external-close"><CloseButton onClick={onClose} label="Close photo gallery" /></div>}
+    {opening && <div className="gallery-opening" style={flightStyle} aria-hidden="true">
+      <div className="folder-flight">
+        <img src="/photo-folder.png" alt="" />
+        <svg className="folder-white-photos" viewBox="0 0 1122 1077" fill="white">
+          <path d="M184 243 L392 207 L394 456 L216 475 Z" />
+          <path d="M690 188 L942 212 L912 475 L665 457 Z" />
+          <path d="M408 139 Q408 121 426 121 H651 Q669 121 669 139 V456 H408 Z" />
+        </svg>
+      </div>
+      <div className="middle-photo-flight" />
+    </div>}
+    <div className={mobile ? `photo-gallery-window ${opening ? "gallery-window-opening" : ""}` : ""} inert={opening} aria-hidden={opening || undefined}>
+    {!mobile && <div className="mb-3 flex justify-end">
       <CloseButton onClick={onClose} label="Close photo gallery" />
-    </div>
+    </div>}
     {error && <div role="status" className="py-8"><p>couldn’t load the photos.</p><button type="button" onClick={() => setAttempt((n) => n + 1)} className="back-btn mt-3">try again</button></div>}
     {!loading && !error && !photos.length && <p>no photos to show yet.</p>}
     <div aria-busy={loading} className="grid grid-cols-3 gap-2 sm:grid-cols-4">
@@ -101,6 +130,7 @@ export default function PhotoGallery({ onClose }: { onClose: () => void }) {
           onClick={() => setSelected(index)} className="rounded-lg">
           <LoadingPhoto src={src} alt="" />
         </button>)}
+    </div>
     </div>
     {selected !== null && <PhotoViewer photos={photos} initial={selected} onClose={() => setSelected(null)} />}
   </dialog>

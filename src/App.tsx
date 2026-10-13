@@ -1306,6 +1306,7 @@ export default function App() {
   const [mode, setMode] = useState<Mode>(() => readHash().mode ?? "growth")
   const [visitorName, setVisitorName] = useState("first name")
   const [galleryOpen, setGalleryOpen] = useState(false)
+  const [galleryOrigin, setGalleryOrigin] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
   const [copied, setCopied] = useState(false)
   const [page, setPage] = useState<PageKey | null>(() => readHash().page)
   const mobileHomePosition = useRef<{ page: PageKey; y: number } | null>(null)
@@ -1473,7 +1474,7 @@ export default function App() {
         } as CSSProperties
       }
     >
-      {galleryOpen && <PhotoGallery onClose={() => setGalleryOpen(false)} />}
+      {galleryOpen && <PhotoGallery origin={galleryOrigin} onClose={() => setGalleryOpen(false)} />}
       {page && (
         <span
           key={page}
@@ -1543,9 +1544,13 @@ export default function App() {
           <div className={`mobile-identity px-6 pb-7 pt-7 lg:hidden ${mode === "brand" ? "mobile-brand-identity" : ""}`}>
             <div className="mobile-greeting-row mb-1 flex items-center justify-between gap-3">
               <Greeting visitorName={visitorName} onChange={setVisitorName} />
-              <button type="button" onClick={() => setGalleryOpen(true)}
+              <button type="button" onClick={(event) => {
+                const rect = event.currentTarget.getBoundingClientRect()
+                setGalleryOrigin({ x: rect.x, y: rect.y, width: rect.width, height: rect.height })
+                setGalleryOpen(true)
+              }}
                 aria-label="Open photo gallery" aria-haspopup="dialog" className="photo-folder-button shrink-0">
-                <img src="/photo-folder.png" alt="" className="h-full w-full object-contain" />
+                <img src="/photo-folder.png" alt="" className={`h-full w-full object-contain ${galleryOpen ? "opacity-0" : ""}`} />
               </button>
             </div>
             <h1 className="mobile-name" style={mode === "brand" ? { color: "#5E1F3A" } : undefined}><span className="sr-only">i’m rutuja</span><NameLettering /></h1>

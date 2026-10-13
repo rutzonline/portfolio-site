@@ -525,3 +525,54 @@ main[data-mode="brand"] .pencil-underline {
 main[data-mode="brand"] .card-link:is(:hover, :focus-visible) .pencil-underline path { stroke-dashoffset: 0; }
 main[data-mode="brand"] .card-link:is(:hover, :focus-visible) .pencil-underline { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .pencil-underline path { transition: none; } }
+
+/* Mobile gallery opens from the folder, then unfolds from its middle photo. */
+.mobile-photo-dialog {
+  position: fixed; inset: 0; margin: 0; width: 100%; max-width: none;
+  height: 100svh; max-height: none; padding: 0; border: 0;
+  overflow: hidden; background: transparent;
+}
+.photo-gallery-window {
+  position: absolute; inset: 56px 12px 32px; overflow-y: auto;
+  border: 1px solid #E5E1DA; border-radius: 12px; background: #FAF9F6; padding: 16px;
+}
+.gallery-external-close { position: absolute; top: 6px; right: 12px; z-index: 3; }
+.gallery-external-close .gallery-close svg { width: 20px; height: 20px; color: #9EC5F4; }
+.gallery-opening { position: absolute; inset: 0; pointer-events: none; perspective: 900px; z-index: 2; }
+.folder-flight {
+  position: absolute; left: 50%; top: 50%; width: 240px; height: 240px;
+  margin: -120px; animation: folder-come-forward 1900ms both;
+}
+.folder-flight img, .folder-white-photos { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.folder-white-photos { animation: folder-photos-white 1900ms both; }
+.middle-photo-flight {
+  position: absolute; left: calc(50% - 5px); top: calc(50% - 55px);
+  width: 62px; height: 88px; margin: -44px -31px;
+  border-radius: 5px; background: #fff; transform-style: preserve-3d;
+  animation: middle-photo-unfold 1900ms both;
+}
+.gallery-window-opening { animation: gallery-window-reveal 2000ms both; }
+@keyframes folder-come-forward {
+  0% { transform: translate(var(--folder-x), var(--folder-y)) scale(var(--folder-scale)); opacity: 1; }
+  34%, 56% { transform: translate(0, 0) scale(1); opacity: 1; }
+  72%, 100% { transform: translate(0, 14px) scale(.94); opacity: 0; }
+}
+@keyframes folder-photos-white {
+  0%, 34% { opacity: 0; }
+  51%, 100% { opacity: 1; }
+}
+@keyframes middle-photo-unfold {
+  0%, 50% { opacity: 0; transform: translate(0, 0) rotateY(0) scale(1); }
+  52% { opacity: 1; transform: translate(0, 0) rotateY(0) scale(1); }
+  63% { opacity: 1; transform: translate(0, -42px) rotateY(0) scale(1.12); }
+  78% { opacity: 1; transform: translate(0, -42px) rotateY(180deg) scale(1.12); border-radius: 5px; }
+  100% { opacity: 1; transform: translate(5px, 67px) rotateY(180deg) scale(var(--photo-scale-x), var(--photo-scale-y)); border-radius: .6px; background: #FAF9F6; }
+}
+@keyframes gallery-window-reveal {
+  0%, 90% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery-opening { display: none; }
+  .gallery-window-opening { animation: none; }
+}
