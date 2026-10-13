@@ -1287,7 +1287,7 @@ export default function App() {
   const [nameFontState, setNameFontState] = useState<"loading" | "ready" | "failed">("loading")
   useEffect(() => {
     let cancelled = false
-    document.fonts.load('48px "Chillink"').then((fonts) => {
+    document.fonts.load('400 48px "Chillink"', "i’m rutuja").then((fonts) => {
       if (!cancelled) setNameFontState(fonts.length ? "ready" : "failed")
     }).catch(() => { if (!cancelled) setNameFontState("failed") })
     return () => { cancelled = true }
