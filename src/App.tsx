@@ -373,6 +373,28 @@ function Card({
   )
 }
 
+function Greeting({ visitorName, onChange }: { visitorName: string; onChange: (name: string) => void }) {
+  return (
+<div className="mobile-greeting">hello {"{{ "}<span className="greeting-name-wrap">
+                <span className="greeting-name-measure" aria-hidden="true">{visitorName || "\u200b"}</span>
+                <input aria-label="Your first name" maxLength={11}
+                  autoComplete="off" autoCapitalize="words" spellCheck={false}
+                  value={visitorName} className="greeting-name"
+                  onFocus={(event) => event.currentTarget.setSelectionRange(visitorName.length, visitorName.length)}
+                  onSelect={(event) => {
+                    const input = event.currentTarget
+                    if (input.selectionStart !== input.value.length || input.selectionEnd !== input.value.length)
+                      input.setSelectionRange(input.value.length, input.value.length)
+                  }}
+                  onChange={(event) => {
+                    const name = event.target.value.slice(0, 11)
+                    onChange(name)
+                  }}
+                /><span className="greeting-cursor" aria-hidden="true" />
+              </span>{" }}!"}</div>
+  )
+}
+
 const typedIntros = new Set<string>()
 
 function Typewriter({ text }: { text: string }) {
@@ -1510,23 +1532,7 @@ export default function App() {
           </div>
           <div className={`mobile-identity px-6 pb-7 pt-7 lg:hidden ${mode === "brand" ? "mobile-brand-identity" : ""}`}>
             <div className="mobile-greeting-row mb-1 flex items-center justify-between gap-3">
-              <div className="mobile-greeting">hello {"{{ "}<span className="greeting-name-wrap">
-                <span className="greeting-name-measure" aria-hidden="true">{visitorName || "\u200b"}</span>
-                <input aria-label="Your first name" maxLength={11}
-                  autoComplete="off" autoCapitalize="words" spellCheck={false}
-                  value={visitorName} className="greeting-name"
-                  onFocus={(event) => event.currentTarget.setSelectionRange(visitorName.length, visitorName.length)}
-                  onSelect={(event) => {
-                    const input = event.currentTarget
-                    if (input.selectionStart !== input.value.length || input.selectionEnd !== input.value.length)
-                      input.setSelectionRange(input.value.length, input.value.length)
-                  }}
-                  onChange={(event) => {
-                    const name = event.target.value.slice(0, 11)
-                    setVisitorName(name)
-                  }}
-                /><span className="greeting-cursor" aria-hidden="true" />
-              </span>{" }}!"}</div>
+              <Greeting visitorName={visitorName} onChange={setVisitorName} />
               <button type="button" onClick={() => setGalleryOpen(true)}
                 aria-label="Open photo gallery" aria-haspopup="dialog" className="photo-folder-button shrink-0">
                 <img src="/photo-folder.png" alt="" className="h-full w-full object-contain" />
@@ -1616,24 +1622,31 @@ export default function App() {
           <>
             <Card
               ariaLabel="About"
-              className="mobile-about-card order-2 lg:order-none"
-              {...(isMobile ? { bg: tint("about") } : openProps("about"))}
+              className={`mobile-about-card desktop-about-card relative order-2 lg:order-none ${isMobile ? "" : "card-link"}`}
+              bg={tint("about")}
             >
-              {!isMobile && <CardHeading detail="Rutuja Rochkari" detailClassName="font-semibold text-[color:var(--accent)]">About</CardHeading>}
-              <div className={`mobile-about-copy mt-6 lg:mt-auto ${isMobile && mode === "brand" ? "mobile-brand-copy" : ""}`}>
-                {isMobile && mode === "growth" ? <>
+              {!isMobile && <>
+                <button type="button" aria-label="Open About" data-home-card="about"
+                  className="absolute inset-0 z-[1] cursor-pointer" onClick={() => open("about")} />
+                <div className="desktop-about-identity">
+                  <Greeting visitorName={visitorName} onChange={setVisitorName} />
+                  <h2 className="mobile-name">i’m rutuja</h2>
+                </div>
+              </>}
+              <div className={`mobile-about-copy ${mode === "brand" ? "mobile-brand-copy" : ""}`}>
+                {mode === "growth" ? <>
                   <p className="mobile-growth-lead mb-5 text-base font-normal leading-snug text-[#1A1A1A]/65">
                     {aboutIntro.explanation?.replace(/^i\.e\., run/, "i run")}
                   </p>
                   <p className="about-intro"><Typewriter key={mode} text={`i.e., ${aboutIntro.main}`} /></p>
                 </> : <p className="about-intro font-semibold text-[20px] leading-[1.14] tracking-[-0.02em] xl:text-[22px]">
-                  {isMobile ? <Typewriter key={mode} text={aboutIntro.main} /> : aboutIntro.main}
+                  <Typewriter key={mode} text={aboutIntro.main} />
                   {aboutIntro.explanation && <span className="about-explanation mt-2 block text-[20px] font-semibold opacity-50 xl:text-[22px]">{aboutIntro.explanation}</span>}
                 </p>}
                 <p className="mobile-specialties mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
-                    ? (isMobile ? "email, paid, creators, and campaigns" : "email, paid, creators, and campaigns.")
-                    : (isMobile ? "copy, content, social, and brand comms" : "copy, content, social, and brand comms.")}
+                    ? "email, paid, creators, and campaigns"
+                    : "copy, content, social, and brand comms"}
                 </p>
               </div>
             </Card>

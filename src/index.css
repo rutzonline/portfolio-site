@@ -437,3 +437,19 @@ a[href],
 @media (prefers-reduced-motion: reduce) { .photo-swipe-discovery { animation: none; } }
 
 .photo-viewer { width: min(calc(100% - 24px), calc((100svh - 88px) * .8), 560px); max-height: calc(100svh - 24px); }
+
+/* The desktop About card shares the mobile introduction's visual treatment. */
+@media (min-width: 1024px) {
+  .desktop-about-card .desktop-about-identity { margin-bottom: 16px; }
+  .desktop-about-card .mobile-greeting { font-size: 20px; font-weight: 600; white-space: nowrap; letter-spacing: -.035em; }
+  .desktop-about-card .mobile-name { font-family: "Chillink", cursive; font-size: clamp(46px, 5vw, 72px); font-weight: 400; line-height: 1.15; color: #1b3e8c; margin: 8px 0 0; }
+  .desktop-about-card .greeting-name-wrap { position: relative; z-index: 2; display: inline-block; vertical-align: baseline; padding-right: 4px; }
+  .desktop-about-card .greeting-name-measure { display: inline-block; visibility: hidden; white-space: pre; font: inherit; letter-spacing: inherit; }
+  .desktop-about-card .greeting-name { position: absolute; inset: 0; width: calc(100% - 4px); height: 100%; min-width: 1px; border: 0; padding: 0; background: transparent; color: inherit; font: inherit; letter-spacing: inherit; caret-color: transparent; border-radius: 0; }
+  .desktop-about-card .greeting-name:focus, .desktop-about-card .greeting-name:focus-visible { outline: none; box-shadow: none; }
+  .desktop-about-card .greeting-cursor { position: absolute; right: 0; top: 50%; display: block; width: 1.5px; height: 1em; background: currentColor; transform: translateY(-50%); animation: greeting-blink 1s step-end infinite; }
+  .desktop-about-card .about-intro { font-size: 16px; font-weight: 600; line-height: 1.375; letter-spacing: normal; color: #0f3a8a; }
+  .desktop-about-card .about-explanation { margin-top: 20px; font-size: 16px; font-weight: 400; line-height: 1.375; color: #1a1a1a; opacity: .65; }
+  .desktop-about-card .mobile-specialties { color: rgb(26 26 26 / .45); }
+}
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) { .desktop-about-card .greeting-cursor { animation: none; } }
