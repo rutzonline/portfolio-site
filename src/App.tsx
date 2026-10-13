@@ -1,3 +1,4 @@
+import { getCaseVisual } from "@/caseVisuals"
 import NameLettering from "@/NameLettering"
 import PhotoGallery from "@/PhotoGallery"
 import { growthNotes } from "@/growthNotes"
@@ -1064,12 +1065,13 @@ function CaseStudy({
           <Inline text={l} />
         </p>,
       )
-      if (imgDue) {
+      const visual = imgDue ? getCaseVisual(md, imgDue) : null
+      if (imgDue && visual) {
         out.push(
           <figure key={`img-${i}`} className="my-2">
-            <ImageSlot alt={imgDue} className="aspect-[16/9]" />
+            <ImageSlot src={visual.src} alt={visual.alt} fit="contain" className="aspect-[16/9]" />
             <figcaption className="mt-1.5 text-sm text-[#1A1A1A]/50">
-              {imgDue}
+              {visual.caption}
             </figcaption>
           </figure>,
         )

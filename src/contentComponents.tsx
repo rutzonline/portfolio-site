@@ -24,10 +24,12 @@ export function ImageSlot({
   alt,
   src = placeholderImg,
   className = "",
+  fit = "cover",
 }: {
   alt: string
   src?: string
   className?: string
+  fit?: "cover" | "contain"
 }) {
   return (
     <img
@@ -35,7 +37,7 @@ export function ImageSlot({
       alt={alt}
       loading="lazy"
       decoding="async"
-      className={`w-full rounded-md border border-[#E5E1DA] bg-[#F0EEEA] object-cover ${className}`}
+      className={`w-full rounded-md border border-[#E5E1DA] bg-[#F0EEEA] ${fit === "contain" ? "object-contain" : "object-cover"} ${className}`}
     />
   )
 }
