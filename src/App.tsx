@@ -373,13 +373,13 @@ function Card({
   )
 }
 
-let introTypingStarted = false
+const typedIntros = new Set<string>()
 
 function Typewriter({ text }: { text: string }) {
-  const [animate] = useState(() => !introTypingStarted)
+  const [animate] = useState(() => !typedIntros.has(text))
   const [count, setCount] = useState(() => !animate || window.matchMedia("(prefers-reduced-motion: reduce)").matches ? text.length : 0)
   useEffect(() => {
-    introTypingStarted = true
+    typedIntros.add(text)
     if (!animate || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setCount(text.length)
       return
