@@ -52,6 +52,7 @@ const PINK = "#FF9FC0"
 const LIME = "#DDF080"
 const BLUE = "#9EC5F4"
 const SAPPHIRE = "#0F3A8A"
+const DESKTOP_NAVY = "#0B2D6E"
 
 const timeline = [
   ["freelance marketer", "apr 2025 – present"],
@@ -568,7 +569,7 @@ const stintMd = (i: number) => {
 function Experience({ mode }: { mode: Mode }) {
   const [sel, setSel] = useState(0)
   const palette = [PINK, LIME, "#E88D6D", BLUE]
-  const colorFor = (i: number) => (mode === "growth" ? SAPPHIRE : palette[i])
+  const colorFor = (i: number) => (mode === "growth" ? "var(--hl)" : palette[i])
   const fg = mode === "growth" ? "#fff" : "#1A1A1A"
   const cur = stints[sel]
   const bodyRef = useRef<HTMLDivElement>(null)
@@ -845,7 +846,7 @@ function CaseList() {
           <span className="block text-[16px] font-medium transition-colors group-hover:text-[color:var(--accent-text)]">
             {name}
           </span>
-          <span className="block text-[14px] text-[#1A1A1A]/60">{sub}</span>
+          <span className="case-subtitle block text-[14px] text-[#1A1A1A]/60">{sub}</span>
         </li>
       ))}
     </ul>
@@ -1283,6 +1284,14 @@ function readHash(): { mode: Mode | null; page: PageKey | null } {
 }
 
 export default function App() {
+  const [nameFontState, setNameFontState] = useState<"loading" | "ready" | "failed">("loading")
+  useEffect(() => {
+    let cancelled = false
+    document.fonts.load('48px "Chillink"').then((fonts) => {
+      if (!cancelled) setNameFontState(fonts.length ? "ready" : "failed")
+    }).catch(() => { if (!cancelled) setNameFontState("failed") })
+    return () => { cancelled = true }
+  }, [])
   const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 1023px)").matches)
   useEffect(() => {
     const query = window.matchMedia("(max-width: 1023px)")
@@ -1309,7 +1318,7 @@ export default function App() {
   const independentPage = casePage || page === "about"
   const content = modeCopy[mode]
   const aboutIntro = splitAboutIntro(content.intro, mode)
-  const accent = mode === "growth" ? SAPPHIRE : "#E88D6D"
+  const accent = mode === "growth" ? (isMobile ? SAPPHIRE : DESKTOP_NAVY) : "#E88D6D"
   const tint = (k: PageKey) => isMobile && mode === "brand"
     ? ({ projects: BLUE, work: LIME, upto: PINK } as Partial<Record<PageKey, string>>)[k] ?? CREAM
     : content.tints[k] ?? CREAM
@@ -1450,19 +1459,20 @@ export default function App() {
 
   return (
     <main
-      className={`relative bg-[#FAF9F6] text-base text-[#1A1A1A] max-lg:overflow-x-clip lg:h-svh lg:overflow-hidden ${independentPage ? "h-svh overflow-hidden" : "lg:min-h-[640px]"}`}
+      data-mode={mode}
+      className={`name-font-${nameFontState} relative bg-[#FAF9F6] text-base text-[#1A1A1A] max-lg:overflow-x-clip lg:h-svh lg:overflow-hidden ${independentPage ? "h-svh overflow-hidden" : "lg:min-h-[640px]"}`}
       style={
         {
           "--accent": accent,
           "--wave": mode === "growth" ? SAPPHIRE : BLUE,
           "--grid-line": mode === "growth" ? "#CFCBC4" : "#E5E1DA",
-          "--line": mode === "growth" ? SAPPHIRE : PINK,
+          "--line": mode === "growth" ? accent : PINK,
           "--accent-text": mode === "growth" ? accent : "#1A1A1A",
           "--toggle-bg": CREAM,
           "--toggle-active": mode === "growth" ? accent : PINK,
           "--toggle-active-text": mode === "growth" ? "#fff" : "#1A1A1A",
-          "--hl-link": mode === "growth" ? SAPPHIRE : "#2F6FD0",
-          "--hl": mode === "growth" ? SAPPHIRE : BLUE,
+          "--hl-link": mode === "growth" ? accent : "#2F6FD0",
+          "--hl": mode === "growth" ? accent : BLUE,
           "--hl-text": mode === "growth" ? "#fff" : "#1A1A1A",
         } as CSSProperties
       }
@@ -1542,7 +1552,7 @@ export default function App() {
                 <img src="/photo-folder.png" alt="" className="h-full w-full object-contain" />
               </button>
             </div>
-            <h1 className="mobile-name" style={mode === "brand" ? { color: "#773547" } : undefined}>i’m rutuja</h1>
+            <h1 className="mobile-name" style={mode === "brand" ? { color: "#7d2e4b" } : undefined}>i’m rutuja</h1>
 
           </div>
         </Card>
@@ -1612,7 +1622,7 @@ export default function App() {
                   tint(page) !== CREAM
                     ? { background: tint(page) }
                     : mode === "growth"
-                      ? { background: SAPPHIRE, color: "#fff" }
+                      ? { background: accent, color: "#fff" }
                       : { background: PINK }
                 }
                 className="min-h-10 shrink-0 px-4 font-medium transition-opacity hover:opacity-80 max-lg:hidden"
@@ -1634,7 +1644,7 @@ export default function App() {
                   className="absolute inset-0 z-[1] cursor-pointer" onClick={() => open("about")} />
                 <div className="desktop-about-identity">
                   <Greeting visitorName={visitorName} onChange={setVisitorName} desktop />
-                  <h2 className="mobile-name" style={mode === "brand" ? { color: "#773547" } : undefined}>i’m rutuja</h2>
+                  <h2 className="mobile-name" style={mode === "brand" ? { color: "#7d2e4b" } : undefined}>i’m rutuja</h2>
                 </div>
               </>}
               <div className={`mobile-about-copy ${mode === "brand" ? "mobile-brand-copy" : ""}`}>
@@ -1657,7 +1667,7 @@ export default function App() {
 
             <Card
               ariaLabel="Experience"
-              className="order-3 lg:order-none"
+              className="experience-card order-3 lg:order-none"
               {...openProps("projects")}
             >
               <CardHeading detail="selected work">Experience</CardHeading>
@@ -1708,7 +1718,8 @@ export default function App() {
 
         <Card
           ariaLabel="Contact"
-          className={`order-8 lg:order-none ${page ? "max-lg:hidden" : ""}`}
+          className={`contact-card order-8 lg:order-none ${page ? "max-lg:hidden" : ""}`}
+          bg={!isMobile && mode === "growth" ? DESKTOP_NAVY : CREAM}
         >
           <CardHeading detail={"Open to work"}>Contact</CardHeading>
           <div className="mt-6 lg:mt-auto">
@@ -1756,7 +1767,7 @@ export default function App() {
           <>
             <Card
               ariaLabel="Skills & stack"
-              className={`${
+              className={`skills-card ${
                 mode === "brand" ? "order-5" : "order-4"
               } lg:order-none`}
               {...openProps("work")}

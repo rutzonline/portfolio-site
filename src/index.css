@@ -463,3 +463,37 @@ a[href],
   .desktop-about-card .greeting-name:focus { caret-color: #1a1a1a; }
   .desktop-about-card .greeting-name:focus + .greeting-cursor { visibility: hidden; }
 }
+@media (min-width: 1024px) {
+  .desktop-about-card .desktop-about-identity { display: flex; flex: 1; min-height: 0; flex-direction: column; margin: 0; }
+  .desktop-about-card .desktop-about-identity .mobile-greeting { flex-shrink: 0; }
+  .desktop-about-card .mobile-name { display: flex; flex: 1; min-height: 0; align-items: center; justify-content: center; width: 100%; margin: 0; text-align: center; }
+  .desktop-about-card .mobile-about-copy { flex-shrink: 0; }
+}
+
+.name-font-loading .mobile-name { visibility: hidden; }
+.name-font-failed .mobile-name { font-family: "Inter", sans-serif; }
+@media (min-width: 1024px) {
+  .desktop-about-card .greeting-name:focus { caret-color: transparent; }
+  .desktop-about-card .greeting-name:focus + .greeting-cursor { visibility: visible; }
+  main[data-mode="growth"] .portfolio-card { border-color: #B9B2AA; }
+  main[data-mode="growth"] .card-heading > span,
+  main[data-mode="growth"] .mobile-specialties,
+  main[data-mode="growth"] .mobile-growth-lead,
+  main[data-mode="growth"] .skills-card > div > p,
+  main[data-mode="growth"] .case-subtitle,
+  main[data-mode="growth"] .upto-card dt,
+  main[data-mode="growth"] .experience-card li > span > span:last-child { color: #6B6560; }
+  main[data-mode="growth"] .contact-card { color: #FAF9F6; }
+  main[data-mode="growth"] .contact-card .card-heading > span { color: rgb(250 249 246 / .85); }
+  main[data-mode="growth"] .contact-card .contact-link:hover,
+  main[data-mode="growth"] .contact-card .contact-link:active { color: #FAF9F6; }
+  main[data-mode="growth"] .contact-card :focus-visible { outline-color: #FAF9F6; }
+  main[data-mode="brand"] .skills-card .card-heading > span,
+  main[data-mode="brand"] .skills-card > div > p,
+  main[data-mode="brand"] .upto-card .card-heading > span,
+  main[data-mode="brand"] .upto-card dt { color: rgb(11 45 110 / .8); }
+  main[data-mode="brand"] .experience-card .card-heading > span,
+  main[data-mode="brand"] .experience-card li > span > span:last-child { color: #4A5200; }
+  main[data-mode="brand"] .upto-card dl > div { border-color: #7FA5D8; }
+  main[data-mode="brand"] .desktop-about-card .mobile-specialties { color: #6B6560; }
+}
