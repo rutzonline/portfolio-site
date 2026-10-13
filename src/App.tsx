@@ -377,10 +377,18 @@ function Card({
 }
 
 function Greeting({ visitorName, onChange, desktop = false }: { visitorName: string; onChange: (name: string) => void; desktop?: boolean }) {
+  const nameInput = useRef<HTMLInputElement>(null)
   return (
-<div className="mobile-greeting">hello {"{{\u00a0\u00a0"}<span className="greeting-name-wrap">
+<div className="mobile-greeting">hello {"{{\u00a0\u00a0"}<span className="greeting-name-wrap" onPointerDown={(event) => {
+  if (event.target === nameInput.current) return
+  event.preventDefault()
+  event.stopPropagation()
+  const input = nameInput.current
+  input?.focus({ preventScroll: true })
+  input?.setSelectionRange(input.value.length, input.value.length)
+}}>
                 <span className="greeting-name-measure" aria-hidden="true">{visitorName || "\u200b"}</span>
-                <input aria-label="Your first name" maxLength={11}
+                <input ref={nameInput} aria-label="Your first name" maxLength={11}
                   autoComplete="off" autoCapitalize="words" spellCheck={false} autoFocus={desktop}
                   value={visitorName} className="greeting-name"
                   onFocus={(event) => {
