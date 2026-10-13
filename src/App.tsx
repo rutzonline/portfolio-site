@@ -1244,7 +1244,7 @@ export default function App() {
   }, [])
   const [mode, setMode] = useState<Mode>(() => readHash().mode ?? "growth")
   const [visitorName, setVisitorName] = useState(() => {
-    try { return (sessionStorage.getItem("portfolio-visitor-name") ?? "").slice(0, 8) } catch { return "" }
+    try { const saved = sessionStorage.getItem("portfolio-visitor-name"); return saved === null ? "first name" : saved.slice(0, 9) } catch { return "first name" }
   })
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -1405,8 +1405,8 @@ export default function App() {
           "--line": mode === "growth" ? SAPPHIRE : PINK,
           "--accent-text": mode === "growth" ? accent : "#1A1A1A",
           "--toggle-bg": CREAM,
-          "--toggle-active": isMobile ? SAPPHIRE : mode === "growth" ? accent : PINK,
-          "--toggle-active-text": isMobile || mode === "growth" ? "#fff" : "#1A1A1A",
+          "--toggle-active": mode === "growth" ? accent : PINK,
+          "--toggle-active-text": mode === "growth" ? "#fff" : "#1A1A1A",
           "--hl-link": mode === "growth" ? SAPPHIRE : "#2F6FD0",
           "--hl": mode === "growth" ? SAPPHIRE : BLUE,
           "--hl-text": mode === "growth" ? "#fff" : "#1A1A1A",
@@ -1482,17 +1482,24 @@ export default function App() {
           </div>
           <div className="mobile-identity px-6 pb-7 pt-7 lg:hidden">
             <div className="mb-1 flex items-center justify-between gap-3">
-              <div className="mobile-greeting font-semibold">hello {"{{ "}<span className="greeting-name-wrap"><input
-                aria-label="Your first name" placeholder="first name" maxLength={8}
-                autoComplete="off" autoCapitalize="words" spellCheck={false}
-                value={visitorName} className="greeting-name"
-                onChange={(event) => {
-                  const name = event.target.value.slice(0, 8)
-                  setVisitorName(name)
-                  try { sessionStorage.setItem("portfolio-visitor-name", name) } catch {}
-                }}
-                style={{ width: `${Math.max(1, visitorName ? visitorName.length : 9)}ch` }}
-              /><span className="greeting-cursor" aria-hidden="true" /></span>{" }}!"}</div>
+              <div className="mobile-greeting font-semibold">hello {"{{ "}<span className="greeting-name-wrap">
+                <span className="greeting-name-measure" aria-hidden="true">{visitorName || "\u200b"}</span>
+                <input aria-label="Your first name" maxLength={9}
+                  autoComplete="off" autoCapitalize="words" spellCheck={false}
+                  value={visitorName} className="greeting-name"
+                  onFocus={(event) => event.currentTarget.setSelectionRange(visitorName.length, visitorName.length)}
+                  onSelect={(event) => {
+                    const input = event.currentTarget
+                    if (input.selectionStart !== input.value.length || input.selectionEnd !== input.value.length)
+                      input.setSelectionRange(input.value.length, input.value.length)
+                  }}
+                  onChange={(event) => {
+                    const name = event.target.value.slice(0, 9)
+                    setVisitorName(name)
+                    try { sessionStorage.setItem("portfolio-visitor-name", name) } catch {}
+                  }}
+                /><span className="greeting-cursor" aria-hidden="true" />
+              </span>{" }}!"}</div>
               <button type="button" onClick={() => setGalleryOpen(true)}
                 aria-label="Open photo gallery" aria-haspopup="dialog" className="photo-folder-button shrink-0">
                 <img src="/photo-folder.png" alt="" className="h-full w-full object-contain" />
@@ -1587,10 +1594,15 @@ export default function App() {
             >
               {!isMobile && <CardHeading detail="Rutuja Rochkari" detailClassName="font-semibold text-[color:var(--accent)]">About</CardHeading>}
               <div className="mobile-about-copy mt-6 lg:mt-auto">
-                <p className="about-intro font-semibold text-[20px] leading-[1.14] tracking-[-0.02em] xl:text-[22px]">
+                {isMobile && mode === "growth" ? <>
+                  <p className="mobile-growth-lead mb-5 text-base font-normal leading-snug text-[#1A1A1A]/65">
+                    {aboutIntro.explanation?.replace(/^i\.e\., run/, "i run")}
+                  </p>
+                  <p className="about-intro">i.e., {aboutIntro.main}</p>
+                </> : <p className="about-intro font-semibold text-[20px] leading-[1.14] tracking-[-0.02em] xl:text-[22px]">
                   {aboutIntro.main}
                   {aboutIntro.explanation && <span className="mt-2 block text-[20px] font-semibold opacity-50 xl:text-[22px]">{aboutIntro.explanation}</span>}
-                </p>
+                </p>}
                 <p className="mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
                     ? (isMobile ? "email, paid, creators, and campaigns" : "email, paid, creators, and campaigns.")
