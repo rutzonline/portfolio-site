@@ -397,20 +397,25 @@ a[href],
 }
 @media (prefers-reduced-motion: reduce) { .photo-skeleton { animation: none; } }
 
-.gallery-close { position: relative; isolation: isolate; background: transparent; }
-.gallery-close::before { content: ""; position: absolute; width: 28px; height: 28px; border-radius: 50%; z-index: -1; }
-.gallery-close:hover { background: transparent; }
-.gallery-close:hover::before { background: rgb(0 0 0 / .05); }
+.gallery-close { background: transparent; border: 0; border-radius: 0; box-shadow: none; }
 @media (max-width: 1023px) {
   .card-heading { width: 100%; }
   .card-heading > span { margin-left: auto; text-align: right; }
   .upto-card > div { width: 100%; }
   .mobile-specialties { color: rgb(26 26 26 / .45); }
   .mobile-growth-lead + .about-intro { color: #0f3a8a; }
-  .mobile-greeting { font-size: 22px; font-weight: 400; }
+  .mobile-greeting { font-size: 20px; font-weight: 600; }
 }
 @media (max-width: 359px) {
   .mobile-greeting-row { position: relative; padding-bottom: 8px; }
   .mobile-greeting-row .photo-folder-button { position: absolute; top: 100%; right: 0; width: 66px; height: 70px; }
   .mobile-name { padding-right: 68px; font-size: 46px; }
+}
+
+@media (max-width: 1023px) {
+  .greeting-name-wrap { padding-right: 4px; }
+  .greeting-name { width: calc(100% - 4px); }
+  .greeting-name-wrap .greeting-cursor { right: 0; width: 1.5px; height: 1em; }
+  .mobile-brand-copy .about-intro { color: #0f3a8a; }
+  .mobile-brand-copy .about-intro span { margin-top: 20px; color: #1a1a1a; }
 }

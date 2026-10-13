@@ -1244,7 +1244,7 @@ export default function App() {
   }, [])
   const [mode, setMode] = useState<Mode>(() => readHash().mode ?? "growth")
   const [visitorName, setVisitorName] = useState(() => {
-    try { const saved = sessionStorage.getItem("portfolio-visitor-name"); return saved === null ? "first name" : saved.slice(0, 9) } catch { return "first name" }
+    try { const saved = sessionStorage.getItem("portfolio-visitor-name"); return saved === null ? "first name" : saved.slice(0, 11) } catch { return "first name" }
   })
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -1484,7 +1484,7 @@ export default function App() {
             <div className="mobile-greeting-row mb-1 flex items-center justify-between gap-3">
               <div className="mobile-greeting">hello {"{{ "}<span className="greeting-name-wrap">
                 <span className="greeting-name-measure" aria-hidden="true">{visitorName || "\u200b"}</span>
-                <input aria-label="Your first name" maxLength={9}
+                <input aria-label="Your first name" maxLength={11}
                   autoComplete="off" autoCapitalize="words" spellCheck={false}
                   value={visitorName} className="greeting-name"
                   onFocus={(event) => event.currentTarget.setSelectionRange(visitorName.length, visitorName.length)}
@@ -1494,7 +1494,7 @@ export default function App() {
                       input.setSelectionRange(input.value.length, input.value.length)
                   }}
                   onChange={(event) => {
-                    const name = event.target.value.slice(0, 9)
+                    const name = event.target.value.slice(0, 11)
                     setVisitorName(name)
                     try { sessionStorage.setItem("portfolio-visitor-name", name) } catch {}
                   }}
@@ -1593,7 +1593,7 @@ export default function App() {
               {...(isMobile ? { bg: tint("about") } : openProps("about"))}
             >
               {!isMobile && <CardHeading detail="Rutuja Rochkari" detailClassName="font-semibold text-[color:var(--accent)]">About</CardHeading>}
-              <div className="mobile-about-copy mt-6 lg:mt-auto">
+              <div className={`mobile-about-copy mt-6 lg:mt-auto ${isMobile && mode === "brand" ? "mobile-brand-copy" : ""}`}>
                 {isMobile && mode === "growth" ? <>
                   <p className="mobile-growth-lead mb-5 text-base font-normal leading-snug text-[#1A1A1A]/65">
                     {aboutIntro.explanation?.replace(/^i\.e\., run/, "i run")}

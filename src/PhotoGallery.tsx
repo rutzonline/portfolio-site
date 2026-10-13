@@ -3,8 +3,8 @@ import { getPhotos } from "@/PhotoSlideshow"
 
 function CloseButton({ onClick, label }: { onClick: () => void; label: string }) {
   return <button type="button" onClick={onClick} aria-label={label}
-    className="gallery-close flex size-11 shrink-0 items-center justify-center rounded-full hover:bg-black/5">
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-3" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    className="gallery-close flex size-11 shrink-0 items-center justify-center">
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
   </button>
 }
 
