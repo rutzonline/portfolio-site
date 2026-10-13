@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react"
 import { getPhotos } from "@/PhotoSlideshow"
 
+// Show the swipe discovery motion once per page load.
+let swipeHintSeen = false
+
 function CloseButton({ onClick, label }: { onClick: () => void; label: string }) {
   return <button type="button" onClick={onClick} aria-label={label}
     className="gallery-close flex size-11 shrink-0 items-center justify-center">
@@ -19,15 +22,16 @@ function LoadingPhoto({ src, alt, full = false }: { src: string; alt: string; fu
   </div>
 }
 
-function PhotoViewer({ photos, initial, onClose }: { photos: string[]; initial: number; onClose: () => void }) {
+function PhotoViewer({ photos, initial, hint, onClose }: { photos: string[]; initial: number; hint: boolean; onClose: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null)
   const [mobile] = useState(() => window.matchMedia("(max-width: 1023px)").matches)
   const [current, setCurrent] = useState(initial)
-  const [showSwipeHint, setShowSwipeHint] = useState(true)
+  const [showSwipeHint, setShowSwipeHint] = useState(hint)
   useEffect(() => {
+    if (!hint) return
     const timer = window.setTimeout(() => setShowSwipeHint(false), 2400)
     return () => window.clearTimeout(timer)
-  }, [])
+  }, [hint])
   const touch = useRef<{ x: number; y: number } | null>(null)
   const step = (direction: number) => setCurrent((index) => (index + direction + photos.length) % photos.length)
   useEffect(() => {
@@ -84,6 +88,7 @@ export default function PhotoGallery({ onClose, origin }: { onClose: () => void;
   const dialog = useRef<HTMLDialogElement>(null)
   const [photos, setPhotos] = useState<string[]>([])
   const [selected, setSelected] = useState<number | null>(null)
+  const [hintOnOpen, setHintOnOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [attempt, setAttempt] = useState(0)
@@ -131,11 +136,11 @@ export default function PhotoGallery({ onClose, origin }: { onClose: () => void;
     <div aria-busy={loading} className="grid grid-cols-3 gap-2 sm:grid-cols-4">
       {loading ? Array.from({ length: 18 }, (_, index) => <div key={index} aria-hidden="true" className="photo-skeleton aspect-square rounded-lg" />)
         : photos.map((src, index) => <button key={src} type="button" aria-label={`View photo ${index + 1}`} aria-haspopup="dialog"
-          onClick={() => setSelected(index)} className="rounded-lg">
+          onClick={() => { setHintOnOpen(!swipeHintSeen); swipeHintSeen = true; setSelected(index) }} className="rounded-lg">
           <LoadingPhoto src={src} alt="" />
         </button>)}
     </div>
     </div>
-    {selected !== null && <PhotoViewer photos={photos} initial={selected} onClose={() => setSelected(null)} />}
+    {selected !== null && <PhotoViewer photos={photos} initial={selected} hint={hintOnOpen} onClose={() => setSelected(null)} />}
   </dialog>
 }

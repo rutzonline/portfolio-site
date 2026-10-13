@@ -574,10 +574,14 @@ main[data-mode="brand"] .card-link:is(:hover, :focus-visible) .pencil-underline 
 }
 
 .middle-photo-front, .middle-photo-back { position: absolute; inset: 0; border-radius: inherit; backface-visibility: hidden; }
-.middle-photo-front { background: url("/photo-folder.png") -84px -22px / 240px 230px no-repeat; }
+.middle-photo-front { border: 3px solid #fff; border-bottom-width: 8px; background: #fff url("/photo-folder.png") -87px -26px / 240px 230px no-repeat; background-clip: padding-box; }
 .middle-photo-back { background: #FAF9F6; transform: rotateY(180deg); }
 .mobile-selected-photo { position: fixed; inset: 0; margin: 0; width: 100%; max-width: none; height: 100svh; max-height: none; padding: 12px; border: 0; background: transparent; overflow: hidden; }
 .mobile-selected-photo[open] { display: flex; flex-direction: column; justify-content: center; align-items: center; }
 .selected-photo-close, .selected-photo-frame { width: min(calc(100vw - 24px), calc((100svh - 80px) * .8), 560px); }
 .selected-photo-close .gallery-close svg { width: 20px; height: 20px; color: #9EC5F4; }
 .selected-photo-frame { padding: 8px; border-radius: 12px; background: #FAF9F6; }
+
+.photo-page-nav .back-btn { border: 0; background: transparent; box-shadow: none; }
+.photo-page-nav .back-btn:focus, .photo-page-nav .back-btn:focus-visible { outline: none; box-shadow: none; }
+.photo-page-nav .back-btn:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
