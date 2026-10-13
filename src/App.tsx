@@ -1,3 +1,4 @@
+import NameLettering from "@/NameLettering"
 import PhotoGallery from "@/PhotoGallery"
 import { growthNotes } from "@/growthNotes"
 import { brandNotes } from "@/brandNotes"
@@ -1283,14 +1284,6 @@ function readHash(): { mode: Mode | null; page: PageKey | null } {
 }
 
 export default function App() {
-  const [nameFontState, setNameFontState] = useState<"loading" | "ready" | "failed">("loading")
-  useEffect(() => {
-    let cancelled = false
-    document.fonts.load('400 48px "Chillink"', "i’m rutuja").then((fonts) => {
-      if (!cancelled) setNameFontState(fonts.length ? "ready" : "failed")
-    }).catch(() => { if (!cancelled) setNameFontState("failed") })
-    return () => { cancelled = true }
-  }, [])
   const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 1023px)").matches)
   useEffect(() => {
     const query = window.matchMedia("(max-width: 1023px)")
@@ -1459,7 +1452,7 @@ export default function App() {
   return (
     <main
       data-mode={mode}
-      className={`name-font-${nameFontState} relative bg-[#FAF9F6] text-base text-[#1A1A1A] max-lg:overflow-x-clip lg:h-svh lg:overflow-hidden ${independentPage ? "h-svh overflow-hidden" : "lg:min-h-[640px]"}`}
+      className={`relative bg-[#FAF9F6] text-base text-[#1A1A1A] max-lg:overflow-x-clip lg:h-svh lg:overflow-hidden ${independentPage ? "h-svh overflow-hidden" : "lg:min-h-[640px]"}`}
       style={
         {
           "--accent": accent,
@@ -1551,7 +1544,7 @@ export default function App() {
                 <img src="/photo-folder.png" alt="" className="h-full w-full object-contain" />
               </button>
             </div>
-            <h1 className="mobile-name" style={mode === "brand" ? { color: "#7d2e4b" } : undefined}>i’m rutuja</h1>
+            <h1 className="mobile-name" style={mode === "brand" ? { color: "#7d2e4b" } : undefined}><span className="sr-only">i’m rutuja</span><NameLettering /></h1>
 
           </div>
         </Card>
@@ -1643,7 +1636,7 @@ export default function App() {
                   className="absolute inset-0 z-[1] cursor-pointer" onClick={() => open("about")} />
                 <div className="desktop-about-identity">
                   <Greeting key={mode} visitorName={visitorName} onChange={setVisitorName} desktop />
-                  <h2 className="mobile-name" style={mode === "brand" ? { color: "#7d2e4b" } : undefined}>i’m rutuja</h2>
+                  <h2 className="mobile-name" style={mode === "brand" ? { color: "#7d2e4b" } : undefined}><span className="sr-only">i’m rutuja</span><NameLettering /></h2>
                 </div>
               </>}
               <div className={`mobile-about-copy ${mode === "brand" ? "mobile-brand-copy" : ""}`}>
