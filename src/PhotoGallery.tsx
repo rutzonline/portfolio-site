@@ -11,7 +11,7 @@ function CloseButton({ onClick, label }: { onClick: () => void; label: string })
 function LoadingPhoto({ src, alt, full = false }: { src: string; alt: string; full?: boolean }) {
   const [loaded, setLoaded] = useState(false)
   const [failed, setFailed] = useState(false)
-  return <div className={`relative overflow-hidden rounded-lg ${full ? "h-[75svh]" : "aspect-square"} ${loaded ? "" : "photo-skeleton"}`}>
+  return <div className={`relative overflow-hidden rounded-lg ${full ? "aspect-[4/5] w-full" : "aspect-square"} ${loaded ? "" : "photo-skeleton"}`}>
     <img src={src} alt={alt} loading={full ? "eager" : "lazy"} draggable={false}
       onLoad={() => setLoaded(true)} onError={() => setFailed(true)}
       className={`h-full w-full transition-opacity duration-300 ${full ? "object-contain" : "object-cover"} ${loaded ? "opacity-100" : "opacity-0"}`} />
@@ -41,7 +41,7 @@ function PhotoViewer({ photos, initial, onClose }: { photos: string[]; initial: 
       if (event.key === "ArrowLeft") { event.preventDefault(); step(-1) }
       if (event.key === "ArrowRight") { event.preventDefault(); step(1) }
     }}
-    className="m-auto w-[calc(100%-16px)] max-w-4xl overflow-hidden rounded-xl bg-[#FAF9F6] p-2 text-[#1A1A1A] backdrop:bg-black/80">
+    className="photo-viewer m-auto overflow-hidden rounded-xl bg-[#FAF9F6] p-2 text-[#1A1A1A] backdrop:bg-black/80">
     <div className="flex justify-end"><CloseButton onClick={onClose} label="Close selected photo" /></div>
     <div className="relative" style={{ touchAction: "pan-y" }}
       onTouchStart={(event) => { const t = event.touches[0]; touch.current = { x: t.clientX, y: t.clientY } }}
@@ -57,7 +57,6 @@ function PhotoViewer({ photos, initial, onClose }: { photos: string[]; initial: 
       <div className={showSwipeHint ? "photo-swipe-discovery" : ""}>
         <LoadingPhoto key={photos[current]} src={photos[current]} alt={`Photo ${current + 1} from Rutuja’s collection`} full />
       </div>
-      {showSwipeHint && <span className="photo-swipe-discovery pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/55 px-3 py-1.5 text-xs text-white">swipe to explore</span>}
     </div>
   </dialog>
 }
@@ -88,11 +87,10 @@ export default function PhotoGallery({ onClose }: { onClose: () => void }) {
       .catch(() => { if (!cancelled) { setLoading(false); setError(true) } })
     return () => { cancelled = true }
   }, [attempt])
-  return <dialog ref={dialog} aria-labelledby="photo-gallery-title" onCancel={onClose}
+  return <dialog ref={dialog} aria-label="Photo gallery" onCancel={onClose}
     onClick={(event) => { if (event.target === event.currentTarget) onClose() }}
     className="m-auto h-[calc(100svh-32px)] w-[calc(100%-24px)] max-w-3xl overflow-y-auto rounded-xl border border-[#E5E1DA] bg-[#FAF9F6] p-4 text-[#1A1A1A] backdrop:bg-black/65">
-    <div className="mb-4 flex items-center justify-between gap-3">
-      <h2 id="photo-gallery-title" className="slice-of-life">slice of life</h2>
+    <div className="mb-3 flex justify-end">
       <CloseButton onClick={onClose} label="Close photo gallery" />
     </div>
     {error && <div role="status" className="py-8"><p>couldn’t load the photos.</p><button type="button" onClick={() => setAttempt((n) => n + 1)} className="back-btn mt-3">try again</button></div>}

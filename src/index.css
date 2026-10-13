@@ -435,3 +435,5 @@ a[href],
 .photo-swipe-discovery { animation: photo-swipe-discovery 1.8s ease-in-out; }
 @media (max-width: 1023px) { .mobile-brand-identity { padding-bottom: 8px; } }
 @media (prefers-reduced-motion: reduce) { .photo-swipe-discovery { animation: none; } }
+
+.photo-viewer { width: min(calc(100% - 24px), calc((100svh - 88px) * .8), 560px); max-height: calc(100svh - 24px); }

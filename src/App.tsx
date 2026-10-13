@@ -373,10 +373,14 @@ function Card({
   )
 }
 
+let introTypingStarted = false
+
 function Typewriter({ text }: { text: string }) {
-  const [count, setCount] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches ? text.length : 0)
+  const [animate] = useState(() => !introTypingStarted)
+  const [count, setCount] = useState(() => !animate || window.matchMedia("(prefers-reduced-motion: reduce)").matches ? text.length : 0)
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    introTypingStarted = true
+    if (!animate || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setCount(text.length)
       return
     }
@@ -391,7 +395,7 @@ function Typewriter({ text }: { text: string }) {
       }, 48)
     }, 150)
     return () => { window.clearTimeout(delay); window.clearInterval(interval) }
-  }, [text])
+  }, [text, animate])
   return <span className="inline-grid">
     <span className="sr-only">{text}</span>
     <span aria-hidden="true" className="invisible col-start-1 row-start-1">{text}</span>
