@@ -512,16 +512,16 @@ main[data-mode="brand"] .card-link:hover .card-title { text-decoration: none; }
 .pencil-underline { display: none; }
 main[data-mode="brand"] .card-title { position: relative; }
 main[data-mode="brand"] .pencil-underline {
-  display: block; position: absolute; left: 0; bottom: -8px;
+  display: block; position: absolute; left: 0; bottom: -6px;
   width: 100%; height: 8px; overflow: visible; pointer-events: none;
   stroke: #5E1F3A; opacity: 0;
 }
 .pencil-underline path {
-  stroke-width: 1.2; stroke-linecap: round; vector-effect: non-scaling-stroke;
+  stroke-width: 1.6; stroke-linecap: round; vector-effect: non-scaling-stroke;
   opacity: .85; stroke-dasharray: 1; stroke-dashoffset: 1;
-  transition: stroke-dashoffset 440ms cubic-bezier(.22, .61, .36, 1);
+  transition: stroke-dashoffset 580ms cubic-bezier(.22, .61, .36, 1);
 }
-.pencil-underline path + path { stroke-width: .6; opacity: .4; transition-delay: 35ms; }
+.pencil-underline path + path { stroke-width: .8; opacity: .4; transition-delay: 45ms; }
 main[data-mode="brand"] .card-link:is(:hover, :focus-visible) .pencil-underline path { stroke-dashoffset: 0; }
 main[data-mode="brand"] .card-link:is(:hover, :focus-visible) .pencil-underline { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .pencil-underline path { transition: none; } }
