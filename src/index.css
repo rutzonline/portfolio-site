@@ -493,10 +493,15 @@ a[href],
 
 /* Keep the selected view legible and desktop hover treatment subtle. */
 .mode-button.active { font-weight: 600; }
-main[data-mode="brand"] .mode-button.active { color: #7d2e4b; }
+main[data-mode="brand"] .mode-button.active { color: #5E1F3A; }
 @media (min-width: 1024px) {
   main[data-mode="brand"] .portfolio-card { border-color: #E9E5DF; }
   main[data-mode="growth"] .card-link:hover {
     background-color: color-mix(in srgb, #0B2D6E 5%, #FFFFFF) !important;
   }
 }
+
+main[data-mode="brand"] .card-link:hover .card-title { text-decoration-color: #5E1F3A; }
+.upto-card dl { width: 100%; }
+.upto-card dt { flex-shrink: 0; }
+.upto-card dd { flex: 1; min-width: 0; overflow-wrap: anywhere; }

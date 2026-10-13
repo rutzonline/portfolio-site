@@ -377,7 +377,7 @@ function Card({
 
 function Greeting({ visitorName, onChange, desktop = false }: { visitorName: string; onChange: (name: string) => void; desktop?: boolean }) {
   return (
-<div className="mobile-greeting">hello {"{{\u00a0"}<span className="greeting-name-wrap">
+<div className="mobile-greeting">hello {"{{\u00a0\u00a0"}<span className="greeting-name-wrap">
                 <span className="greeting-name-measure" aria-hidden="true">{visitorName || "\u200b"}</span>
                 <input aria-label="Your first name" maxLength={11}
                   autoComplete="off" autoCapitalize="words" spellCheck={false} autoFocus={desktop}
@@ -396,7 +396,7 @@ function Greeting({ visitorName, onChange, desktop = false }: { visitorName: str
                     onChange(name)
                   }}
                 /><span className="greeting-cursor" aria-hidden="true" />
-              </span>{"\u00a0}}!"}</div>
+              </span>{"\u00a0\u00a0}}!"}</div>
   )
 }
 
@@ -1816,7 +1816,7 @@ export default function App() {
               {...openProps("upto")}
             >
               <CardHeading detail="Now">What I&rsquo;m up to</CardHeading>
-              <div className="mt-6 lg:mt-auto">
+              <div className="mt-8 w-full lg:mt-auto lg:pt-8">
                 <Rows items={uptoRows[mode]} />
               </div>
             </Card>
