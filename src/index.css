@@ -519,7 +519,7 @@ main[data-mode="brand"] .pencil-underline {
 .pencil-underline path {
   stroke-width: 1.6; stroke-linecap: round; vector-effect: non-scaling-stroke;
   opacity: .85; stroke-dasharray: 1; stroke-dashoffset: 1;
-  transition: stroke-dashoffset 1100ms linear;
+  transition: stroke-dashoffset 800ms linear;
 }
 .pencil-underline path + path { stroke-width: .8; opacity: .4; transition-delay: 70ms; }
 main[data-mode="brand"] .card-link:is(:hover, :focus-visible) .pencil-underline path { stroke-dashoffset: 0; }
