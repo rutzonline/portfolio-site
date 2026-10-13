@@ -14,7 +14,7 @@ function LoadingPhoto({ src, alt, full = false }: { src: string; alt: string; fu
   return <div className={`relative overflow-hidden rounded-lg ${full ? "aspect-[4/5] w-full" : "aspect-square"} ${loaded ? "" : "photo-skeleton"}`}>
     <img src={src} alt={alt} loading={full ? "eager" : "lazy"} draggable={false}
       onLoad={() => setLoaded(true)} onError={() => setFailed(true)}
-      className={`h-full w-full transition-opacity duration-300 ${full ? "object-contain" : "object-cover"} ${loaded ? "opacity-100" : "opacity-0"}`} />
+      className={`h-full w-full transition-opacity duration-300 object-cover ${loaded ? "opacity-100" : "opacity-0"}`} />
     {failed && <span className="absolute inset-0 flex items-center justify-center px-2 text-sm text-black/50">photo unavailable</span>}
   </div>
 }
