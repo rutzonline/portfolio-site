@@ -388,7 +388,7 @@ function Typewriter({ text }: { text: string }) {
         next += 1
         setCount(next)
         if (next >= text.length) window.clearInterval(interval)
-      }, 32)
+      }, 48)
     }, 150)
     return () => { window.clearTimeout(delay); window.clearInterval(interval) }
   }, [text])
@@ -1504,7 +1504,7 @@ export default function App() {
               ))}
             </div>
           </div>
-          <div className="mobile-identity px-6 pb-7 pt-7 lg:hidden">
+          <div className={`mobile-identity px-6 pb-7 pt-7 lg:hidden ${mode === "brand" ? "mobile-brand-identity" : ""}`}>
             <div className="mobile-greeting-row mb-1 flex items-center justify-between gap-3">
               <div className="mobile-greeting">hello {"{{ "}<span className="greeting-name-wrap">
                 <span className="greeting-name-measure" aria-hidden="true">{visitorName || "\u200b"}</span>
@@ -1624,7 +1624,7 @@ export default function App() {
                   <p className="about-intro"><Typewriter key={mode} text={`i.e., ${aboutIntro.main}`} /></p>
                 </> : <p className="about-intro font-semibold text-[20px] leading-[1.14] tracking-[-0.02em] xl:text-[22px]">
                   {isMobile ? <Typewriter key={mode} text={aboutIntro.main} /> : aboutIntro.main}
-                  {aboutIntro.explanation && <span className="mt-2 block text-[20px] font-semibold opacity-50 xl:text-[22px]">{aboutIntro.explanation}</span>}
+                  {aboutIntro.explanation && <span className="about-explanation mt-2 block text-[20px] font-semibold opacity-50 xl:text-[22px]">{aboutIntro.explanation}</span>}
                 </p>}
                 <p className="mobile-specialties mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"

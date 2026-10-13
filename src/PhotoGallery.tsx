@@ -22,6 +22,11 @@ function LoadingPhoto({ src, alt, full = false }: { src: string; alt: string; fu
 function PhotoViewer({ photos, initial, onClose }: { photos: string[]; initial: number; onClose: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null)
   const [current, setCurrent] = useState(initial)
+  const [showSwipeHint, setShowSwipeHint] = useState(true)
+  useEffect(() => {
+    const timer = window.setTimeout(() => setShowSwipeHint(false), 2400)
+    return () => window.clearTimeout(timer)
+  }, [])
   const touch = useRef<{ x: number; y: number } | null>(null)
   const step = (direction: number) => setCurrent((index) => (index + direction + photos.length) % photos.length)
   useEffect(() => {
@@ -38,7 +43,7 @@ function PhotoViewer({ photos, initial, onClose }: { photos: string[]; initial: 
     }}
     className="m-auto w-[calc(100%-16px)] max-w-4xl overflow-hidden rounded-xl bg-[#FAF9F6] p-2 text-[#1A1A1A] backdrop:bg-black/80">
     <div className="flex justify-end"><CloseButton onClick={onClose} label="Close selected photo" /></div>
-    <div style={{ touchAction: "pan-y" }}
+    <div className="relative" style={{ touchAction: "pan-y" }}
       onTouchStart={(event) => { const t = event.touches[0]; touch.current = { x: t.clientX, y: t.clientY } }}
       onTouchCancel={() => { touch.current = null }}
       onTouchEnd={(event) => {
@@ -47,9 +52,12 @@ function PhotoViewer({ photos, initial, onClose }: { photos: string[]; initial: 
         if (!start) return
         const t = event.changedTouches[0]
         const dx = t.clientX - start.x, dy = t.clientY - start.y
-        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1)
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { setShowSwipeHint(false); step(dx < 0 ? 1 : -1) }
       }}>
-      <LoadingPhoto key={photos[current]} src={photos[current]} alt={`Photo ${current + 1} from Rutuja’s collection`} full />
+      <div className={showSwipeHint ? "photo-swipe-discovery" : ""}>
+        <LoadingPhoto key={photos[current]} src={photos[current]} alt={`Photo ${current + 1} from Rutuja’s collection`} full />
+      </div>
+      {showSwipeHint && <span className="photo-swipe-discovery pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/55 px-3 py-1.5 text-xs text-white">swipe to explore</span>}
     </div>
   </dialog>
 }
