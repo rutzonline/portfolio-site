@@ -1719,7 +1719,6 @@ export default function App() {
         <Card
           ariaLabel="Contact"
           className={`contact-card order-8 lg:order-none ${page ? "max-lg:hidden" : ""}`}
-          bg={!isMobile && mode === "growth" ? DESKTOP_NAVY : CREAM}
         >
           <CardHeading detail={"Open to work"}>Contact</CardHeading>
           <div className="mt-6 lg:mt-auto">

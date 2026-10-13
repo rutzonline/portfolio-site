@@ -466,7 +466,7 @@ a[href],
 @media (min-width: 1024px) {
   .desktop-about-card .desktop-about-identity { display: flex; flex: 1; min-height: 0; flex-direction: column; margin: 0; }
   .desktop-about-card .desktop-about-identity .mobile-greeting { flex-shrink: 0; }
-  .desktop-about-card .mobile-name { display: flex; flex: 1; min-height: 0; align-items: center; justify-content: center; width: 100%; margin: 0; text-align: center; }
+  .desktop-about-card .mobile-name { display: flex; flex: 1; min-height: 0; align-items: center; justify-content: flex-start; width: 100%; margin: 0; text-align: left; }
   .desktop-about-card .mobile-about-copy { flex-shrink: 0; }
 }
 
@@ -483,11 +483,6 @@ a[href],
   main[data-mode="growth"] .case-subtitle,
   main[data-mode="growth"] .upto-card dt,
   main[data-mode="growth"] .experience-card li > span > span:last-child { color: #6B6560; }
-  main[data-mode="growth"] .contact-card { color: #FAF9F6; }
-  main[data-mode="growth"] .contact-card .card-heading > span { color: rgb(250 249 246 / .85); }
-  main[data-mode="growth"] .contact-card .contact-link:hover,
-  main[data-mode="growth"] .contact-card .contact-link:active { color: #FAF9F6; }
-  main[data-mode="growth"] .contact-card :focus-visible { outline-color: #FAF9F6; }
   main[data-mode="brand"] .skills-card .card-heading > span,
   main[data-mode="brand"] .skills-card > div > p,
   main[data-mode="brand"] .upto-card .card-heading > span,
