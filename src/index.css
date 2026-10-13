@@ -162,12 +162,12 @@ button {
   }
 }
 
-.fade-others .card-link {
+.fade-others .card-link > :not(.absolute) {
   transition: opacity 160ms ease;
 }
 
 @media (min-width: 1024px) {
-  .fade-others:has(.card-link:hover) .card-link:not(:hover) {
+  .fade-others:has(.card-link:hover) .card-link:not(:hover) > :not(.absolute) {
     opacity: 0.35;
   }
 }
@@ -492,3 +492,5 @@ a[href],
   main[data-mode="brand"] .upto-card dl > div { border-color: #7FA5D8; }
   main[data-mode="brand"] .desktop-about-card .mobile-specialties { color: #6B6560; }
 }
+
+@media (prefers-reduced-motion: reduce) { .fade-others .card-link > :not(.absolute) { transition: none; } }
