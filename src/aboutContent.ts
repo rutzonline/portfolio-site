@@ -45,7 +45,7 @@ export const aboutContent: Record<"growth" | "brand", AboutExtra> = {
     ],
   },
   brand: {
-    intro: "hello again!",
+    intro: "hello again! this is your brand marketer speaking",
     bio: "i love writing (and brainstorming ideas) for social, email, ads, blogs, changelogs, descriptions, and OOH. also, ultimatums, if necessary. \n\n i'm also an active pop culture consumer (read: critic), an avid sports fan, and a daily puzzle solver who's very selectively chronically online.",
     languages: [
       ["english", "writes in it daily"],

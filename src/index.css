@@ -475,7 +475,7 @@ a[href],
 @media (min-width: 1024px) {
   .desktop-about-card .greeting-name:focus { caret-color: transparent; }
   .desktop-about-card .greeting-name:focus + .greeting-cursor { visibility: visible; }
-  main[data-mode="growth"] .portfolio-card { border-color: #B9B2AA; }
+  main[data-mode="growth"] .portfolio-card { border-color: #D1CCC5; }
   main[data-mode="growth"] .card-heading > span,
   main[data-mode="growth"] .mobile-specialties,
   main[data-mode="growth"] .mobile-growth-lead,
@@ -496,6 +496,16 @@ a[href],
 @media (prefers-reduced-motion: reduce) { .fade-others .card-link > :not(.absolute) { transition: none; } }
 @media (min-width: 1024px) {
   .fade-others .portfolio-card { transition: border-color 160ms ease; }
-  .fade-others:has(.card-link:hover) .portfolio-card { border-color: rgb(185 178 170 / .35); }
+  .fade-others:has(.card-link:hover) .portfolio-card { border-color: rgb(209 204 197 / .35); }
 }
 @media (prefers-reduced-motion: reduce) { .fade-others .portfolio-card { transition: none; } }
+
+/* Keep the selected view legible and desktop hover treatment subtle. */
+.mode-button.active { font-weight: 600; }
+main[data-mode="brand"] .mode-button.active { color: #7d2e4b; }
+@media (min-width: 1024px) {
+  main[data-mode="brand"] .portfolio-card { border-color: #E9E5DF; }
+  main[data-mode="growth"] .card-link:hover {
+    background-color: color-mix(in srgb, #0B2D6E 3%, #FFFFFF) !important;
+  }
+}

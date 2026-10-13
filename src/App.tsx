@@ -376,14 +376,13 @@ function Card({
 
 function Greeting({ visitorName, onChange, desktop = false }: { visitorName: string; onChange: (name: string) => void; desktop?: boolean }) {
   return (
-<div className="mobile-greeting">hello {"{{ "}<span className="greeting-name-wrap">
+<div className="mobile-greeting">hello {"{{\u00a0"}<span className="greeting-name-wrap">
                 <span className="greeting-name-measure" aria-hidden="true">{visitorName || "\u200b"}</span>
                 <input aria-label="Your first name" maxLength={11}
-                  autoComplete="off" autoCapitalize="words" spellCheck={false}
+                  autoComplete="off" autoCapitalize="words" spellCheck={false} autoFocus={desktop}
                   value={visitorName} className="greeting-name"
                   onFocus={(event) => {
-                    if (desktop) event.currentTarget.select()
-                    else event.currentTarget.setSelectionRange(visitorName.length, visitorName.length)
+                    event.currentTarget.setSelectionRange(visitorName.length, visitorName.length)
                   }}
                   onClick={(event) => { if (desktop && visitorName === "first name") event.currentTarget.select() }}
                   onSelect={(event) => {
@@ -396,7 +395,7 @@ function Greeting({ visitorName, onChange, desktop = false }: { visitorName: str
                     onChange(name)
                   }}
                 /><span className="greeting-cursor" aria-hidden="true" />
-              </span>{" }}!"}</div>
+              </span>{"\u00a0}}!"}</div>
   )
 }
 
@@ -1643,7 +1642,7 @@ export default function App() {
                 <button type="button" aria-label="Open About" data-home-card="about"
                   className="absolute inset-0 z-[1] cursor-pointer" onClick={() => open("about")} />
                 <div className="desktop-about-identity">
-                  <Greeting visitorName={visitorName} onChange={setVisitorName} desktop />
+                  <Greeting key={mode} visitorName={visitorName} onChange={setVisitorName} desktop />
                   <h2 className="mobile-name" style={mode === "brand" ? { color: "#7d2e4b" } : undefined}>i’m rutuja</h2>
                 </div>
               </>}
