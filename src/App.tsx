@@ -1542,7 +1542,7 @@ export default function App() {
                 <img src="/photo-folder.png" alt="" className="h-full w-full object-contain" />
               </button>
             </div>
-            <h1 className="mobile-name">i’m rutuja</h1>
+            <h1 className="mobile-name" style={mode === "brand" ? { color: "#773547" } : undefined}>i’m rutuja</h1>
 
           </div>
         </Card>
@@ -1634,7 +1634,7 @@ export default function App() {
                   className="absolute inset-0 z-[1] cursor-pointer" onClick={() => open("about")} />
                 <div className="desktop-about-identity">
                   <Greeting visitorName={visitorName} onChange={setVisitorName} desktop />
-                  <h2 className="mobile-name">i’m rutuja</h2>
+                  <h2 className="mobile-name" style={mode === "brand" ? { color: "#773547" } : undefined}>i’m rutuja</h2>
                 </div>
               </>}
               <div className={`mobile-about-copy ${mode === "brand" ? "mobile-brand-copy" : ""}`}>
