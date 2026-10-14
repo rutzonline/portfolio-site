@@ -18,11 +18,15 @@ function CloseButton({ onClick, label }: { onClick: () => void; label: string })
 function LoadingPhoto({ src, alt, full = false, eager = false, preview }: { src: string; alt: string; full?: boolean; eager?: boolean; preview?: string }) {
   const [loaded, setLoaded] = useState(false)
   const [failed, setFailed] = useState(false)
-  return <div className={`relative overflow-hidden rounded-lg ${full ? "aspect-[4/5] w-full" : "aspect-square"} ${loaded ? "" : "photo-skeleton"}`}>
-    {full && preview && !loaded && <img src={preview} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />}
+  return <div className={`relative overflow-hidden rounded-lg ${full ? "aspect-[4/5] w-full" : "aspect-square"} ${loaded || (full && preview) ? "" : "photo-skeleton"}`}>
+    {full && preview && <img src={preview} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />}
     <img src={src} alt={alt} loading={full || eager ? "eager" : "lazy"} decoding="async" draggable={false}
-      onLoad={() => setLoaded(true)} onError={() => setFailed(true)}
-      className={`h-full w-full transition-opacity duration-300 object-cover ${loaded ? "opacity-100" : "opacity-0"}`} />
+      onLoad={async (event) => {
+        const image = event.currentTarget
+        try { await image.decode() } catch { /* Loaded images can still render if decode is unavailable. */ }
+        if (image.isConnected) setLoaded(true)
+      }} onError={() => setFailed(true)}
+      className={`relative h-full w-full transition-opacity duration-300 motion-reduce:transition-none object-cover ${loaded ? "opacity-100" : "opacity-0"}`} />
     {failed && <span className="absolute inset-0 flex items-center justify-center px-2 text-sm text-black/50">photo unavailable</span>}
   </div>
 }

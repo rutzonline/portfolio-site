@@ -153,6 +153,7 @@ function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
         }
         if (description) {
           tags.push({ tag: 'meta', attrs: { property: 'og:description', content: description }, injectTo: 'head' })
+          tags.push({ tag: 'meta', attrs: { name: 'twitter:description', content: description }, injectTo: 'head' })
         }
         if (socialImage) {
           tags.push(
