@@ -1487,7 +1487,7 @@ export default function App() {
           "--accent": accent,
           "--wave": mode === "growth" ? SAPPHIRE : BLUE,
           "--grid-line": mode === "growth" ? "#CFCBC4" : "#E5E1DA",
-          "--line": mode === "growth" ? accent : PINK,
+          "--line": mode === "growth" ? accent : "#7d2e4b",
           "--accent-text": mode === "growth" ? accent : "#1A1A1A",
           "--toggle-bg": CREAM,
           "--toggle-active": mode === "growth" ? accent : PINK,
