@@ -114,8 +114,8 @@ const skillSets: Record<Mode, {
       "Shopify",
       "Google Analytics",
       "Supabase",
-      "Cursor"
-      "Clay"
+      "Cursor",
+      "Clay",
       "Webflow",
     ],
     line: "Funnels, experiments and lifecycle.",
@@ -133,8 +133,8 @@ const skillSets: Record<Mode, {
       "Canva",
       "Claude",
       "ElevenLabs",
-      "Buffer"
-      "Mention"
+      "Buffer",
+      "Mention",
       "Perplexity",
     ],
     line: "Voice, story and personality.",
