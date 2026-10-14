@@ -108,15 +108,15 @@ const skillSets: Record<Mode, {
 }> = {
   growth: {
     tags: [
-      "Shopify",
+      "Meta Ads Manager",
       "Clay",
       "PostHog",
-      "Meta Ads Manager",
+      "Shopify",
       "Google Analytics",
       "Supabase",
       "Cursor",
     ],
-    line: "Funnels, experiments and lifecycle. Measure first, then ship.",
+    line: "Funnels, experiments and lifecycle.",
     sections: [
       ["Lifecycle", "Onboarding, activation loops, and retention programmes."],
       ["Analytics", "Funnel analysis, cohorts, and experiment readouts."],
@@ -133,7 +133,7 @@ const skillSets: Record<Mode, {
       "ElevenLabs",
       "Buffer",
     ],
-    line: "Voice, story and taste. The tools change; clear thinking doesn’t.",
+    line: "Voice, story and personality.",
     sections: [
       ["Narrative", "Brand voice, manifestos, and launch storytelling."],
       ["Content", "Essays, newsletters, and social adaptations."],
