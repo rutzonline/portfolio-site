@@ -1,3 +1,4 @@
+import Carousel from "@/Carousel"
 import { getCaseVisual } from "@/caseVisuals"
 import NameLettering from "@/NameLettering"
 import PhotoGallery from "@/PhotoGallery"
@@ -475,7 +476,6 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 
 const experienceSamples: Record<string, { src: string; caption: string; wide?: boolean }[]> = {
   hopstack: [
-    { src: "/work-samples/hopstack-before.webp", caption: "LinkedIn rebrand · before" },
     { src: "/work-samples/hopstack-after.webp", caption: "LinkedIn rebrand · after" },
     { src: "/work-samples/hopstack-ecommerce.webp", caption: "LinkedIn content · e-commerce tools" },
     { src: "/work-samples/hopstack-newsletter.webp", caption: "Proposed newsletter format", wide: true },
@@ -536,6 +536,11 @@ const liquideDid = [
   "Defined content formats (posts, carousels, reels, explainers)",
   "Wrote scripts and copy that explained finance concepts in plain language",
   "Managed designers, content writers, and creators end to end",
+  "Initiated and co-led the rebranding strategy",
+  "Wrote the copy and edited the app-launch video",
+  "Identified and contacted LinkedIn creators for the LiMo chatbot launch",
+  "Secured creator collaborations on minimal spend and created campaign guidelines",
+  "Designed OOH-style visuals to support creator posts and managed the campaign end to end",
 ]
 
 const stints = [
@@ -625,133 +630,85 @@ const stintMd = (i: number) => {
 }
 
 function Experience({ mode }: { mode: Mode }) {
-  const [sel, setSel] = useState(0)
-  const palette = [PINK, LIME, "#E88D6D", BLUE]
-  const colorFor = (i: number) => (mode === "growth" ? "var(--hl)" : palette[i])
-  const fg = mode === "growth" ? "#fff" : "#1A1A1A"
-  const cur = stints[sel]
-  const bodyRef = useRef<HTMLDivElement>(null)
-  return (
-    <div className="-mx-6 lg:-mx-10">
+  const [sel, setSel] = useState<number | null>(null)
+  useBack(sel !== null ? () => { setSel(null); return true } : null, "experience")
+  if (sel === null) return (
+    <div className="-mx-6 mt-4 min-h-0 overflow-y-auto overscroll-contain lg:-mx-10 lg:mt-6">
       <ul className="border-y border-[#1A1A1A]/15">
-        {timeline.map(([company, dates], i) => {
-          const active = sel === i
-          return (
-            <li
-              key={company}
-              className="border-b border-[#1A1A1A]/15 last:border-b-0"
-            >
-              <button
-                type="button"
-                aria-pressed={active}
-                onClick={() => {
-                  setSel(i)
-                  if (!window.matchMedia("(min-width: 1024px)").matches)
-                    requestAnimationFrame(() =>
-                      bodyRef.current?.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                      }),
-                    )
-                }}
-                style={
-                  active ? { background: colorFor(i), color: fg } : undefined
-                }
-                className="experience-option flex w-full items-center justify-between gap-4 px-6 py-3 text-left transition-colors duration-200 hover:bg-[#1A1A1A]/[0.03] lg:px-10"
-              >
-                <Logo
-                  domain={stintDomains[i]}
-                  src={stintLogo(company)}
-                  name={company}
-                  size="size-10"
-                />
-                <span className="min-w-0 flex-1">
-                  <span className="block font-semibold">{company}</span>
-                  <span
-                    className={`block ${
-                      active ? "opacity-80" : "text-[#1A1A1A]/60"
-                    }`}
-                  >
-                    {jobs[i][1]}
-                  </span>
-                </span>
-                <span
-                  className={`shrink-0 ${
-                    active ? "opacity-80" : "text-[#1A1A1A]/60"
-                  }`}
-                >
-                  {dates}
-                </span>
-              </button>
-            </li>
-          )
-        })}
+        {timeline.map(([company, dates], i) => (
+          <li key={company} className="border-b border-[#1A1A1A]/15 last:border-b-0">
+            <button type="button" onClick={() => setSel(i)} className="group flex w-full items-center gap-4 px-6 py-5 text-left lg:px-10">
+              <Logo domain={stintDomains[i]} src={stintLogo(company)} name={company} size="size-10" />
+              <span className="min-w-0 flex-1">
+                <span className="block text-[17px] font-semibold leading-tight group-hover:text-[color:var(--hl-link)]">{company}</span>
+                <span className="mt-0.5 block text-[#1A1A1A]/60">{jobs[i][1]}</span>
+                <span className="mt-1 block text-sm text-[#1A1A1A]/50">{dates}</span>
+              </span>
+              <Chev right />
+            </button>
+          </li>
+        ))}
       </ul>
-      <div key={sel} ref={bodyRef} className="scroll-mt-14 px-6 py-8 lg:px-10">
-        <CaseStudy
-          md={
-            timeline[sel][0] === "the state plate"
-              ? statePlateCase
-              : stintMd(sel)
-          }
-          header={
-            <CaseHeader
-              name={timeline[sel][0]}
-              sub={jobs[sel][1]}
-              domain={stintDomains[sel]}
-              src={stintLogo(timeline[sel][0])}
-            />
-          }
-          meta={{
-            kicker: "experience · case study",
-            facts: [
-              ["timeline", timeline[sel][1]],
-              ["role", jobs[sel][1]],
-            ],
-          }}
-          footer={
-            timeline[sel][0] === "the state plate" ? undefined : (
-              <>
-                {experienceSamples[timeline[sel][0]] && (
-                  <section aria-label="Selected work samples" className="space-y-4">
-                    <h3 className="text-lg font-semibold">selected work samples</h3>
-                    <div className="grid grid-cols-2 gap-3 sm:gap-5">
-                      {experienceSamples[timeline[sel][0]].map((sample) => (
-                        <figure key={sample.src} className={sample.wide ? "col-span-2" : ""}>
-                          <ImageSlot src={sample.src} alt={sample.caption} fit="contain" />
-                        </figure>
-                      ))}
-                    </div>
-                  </section>
-                )}
-                {timeline[sel][0] === "liquide" && (
-                  <section aria-label="Liquide work samples" className="space-y-4">
-                    <h3 className="text-lg font-semibold">selected work samples</h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      {liquideImages.map((src, k) => (
-                        <figure key={src} className={k === 0 ? "col-span-2" : ""}>
-                          <ImageSlot src={src} alt={liquideCaptions[k]} fit="contain" />
-                        </figure>
-                      ))}
-                    </div>
-                  </section>
-                )}
-                <div className="flex flex-wrap gap-x-6 gap-y-1">
-                  {stints[sel].links.map(([label, href]) => (
-                    <a
-                      key={label}
-                      href={href}
-                      className="contact-link min-h-10 font-medium"
-                    >
-                      {label} <span className="text-lg leading-none">↗</span>
-                    </a>
+    </div>
+  )
+  const company = timeline[sel][0]
+  const freelance = company === "freelance marketer"
+  return (
+    <div data-essay className="-mr-6 -mt-6 flex min-h-0 flex-1 flex-col overflow-hidden lg:-mr-10">
+      <CaseStudy
+        independentScroll
+        isExperience
+        backControl={<button type="button" onClick={() => setSel(null)} className="back-btn"><Chev />all experience</button>}
+        md={company === "the state plate" ? statePlateCase : stintMd(sel)}
+        header={<CaseHeader name={company} sub={jobs[sel][1]} domain={stintDomains[sel]} src={stintLogo(company)} />}
+        footer={company === "the state plate" ? undefined : (
+          <div className="mt-10 space-y-12">
+            {experienceSamples[company] && (
+              <section aria-label="Selected work samples" className="space-y-4">
+                <h3 className="text-lg font-semibold">selected work samples</h3>
+                <div className={`grid grid-cols-2 gap-3 sm:gap-5 ${freelance ? "sm:grid-cols-3" : ""}`}>
+                  {experienceSamples[company].map((sample) => (
+                    <figure key={sample.src}>
+                      <ImageSlot src={sample.src} alt={sample.caption} fit="contain" />
+                    </figure>
                   ))}
                 </div>
-              </>
-            )
-          }
-        />
-      </div>
+              </section>
+            )}
+            {freelance && (
+              <section className="space-y-4">
+                <h3 className="text-lg font-semibold">content & social media pitch deck</h3>
+                <Carousel label="Content and social media pitch deck" slides={Array.from({ length: 15 }, (_, i) => (
+                  <ImageSlot key={i} src={`/work-samples/content-sm-deck/${i + 1}.png`} alt={`Content and social media pitch deck — slide ${i + 1}`} fit="contain" />
+                ))} />
+              </section>
+            )}
+            {company === "liquide" && (
+              <section aria-label="Liquide work samples" className="space-y-4">
+                <h3 className="text-lg font-semibold">selected work samples</h3>
+                <div className="grid grid-cols-2 gap-3 sm:gap-5">
+                  {liquideImages.map((src, k) => (
+                    <figure key={src}>
+                      <ImageSlot src={src} alt={liquideCaptions[k]} fit="contain" />
+                      {k === 9 && <figcaption className="mt-2 text-sm text-[#1A1A1A]/60">After →</figcaption>}
+                    </figure>
+                  ))}
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    aria-label="Liquide app launch video — copywriting and editing"
+                    className="w-full rounded-sm bg-black"
+                  >
+                    <source src="/work-samples/liquide/app-launch.mp4" type="video/mp4" />
+                    Your browser does not support embedded video.
+                  </video>
+                </div>
+              </section>
+            )}
+          </div>
+        )}
+      />
     </div>
   )
 }
@@ -980,28 +937,25 @@ function CaseHeader({
   )
 }
 
-type CaseMeta = { kicker: string; facts: [string, string][] }
-
 function CaseStudy({
   md,
-  meta,
   header,
   footer,
   independentScroll = false,
+  isExperience = false,
   backControl,
 }: {
   md: string
-  meta?: CaseMeta
   header?: ReactNode
   footer?: ReactNode
   independentScroll?: boolean
+  isExperience?: boolean
   backControl?: ReactNode
 }) {
   const [active, setActive] = useState(0)
   const contentRef = useRef<HTMLDivElement>(null)
   const toc: [string, string][] = []
   const usedVisuals = new Set<string>()
-  const isExperience = meta?.kicker?.startsWith("experience") ?? false
   let imgDue: string | null = null
   const lines = md.split("\n")
   const out: ReactNode[] = []
@@ -1219,20 +1173,8 @@ function CaseStudy({
         className={`min-w-0 ${independentScroll ? "min-h-0 overflow-y-auto overscroll-contain" : ""}`}
       >
         <div className={`flex max-w-[44rem] flex-col gap-4 ${independentScroll ? "mr-6 pb-6 pr-3 pt-6 lg:mr-10 lg:pt-[88px]" : ""}`}>
+          {backControl && <div className="mb-2 lg:hidden">{backControl}</div>}
           {header}
-          {meta && (
-            <div className="mb-4 flex flex-col gap-6">
-              <p className="text-[#1A1A1A]/55">{meta.kicker}</p>
-              <dl className="flex flex-wrap gap-x-12 gap-y-4">
-                {meta.facts.map(([k, v]) => (
-                  <div key={k}>
-                    <dt className="text-[#1A1A1A]/55">{k}</dt>
-                    <dd className="mt-0.5">{v}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          )}
           {out}
           {footer}
           {sources.length > 0 && (
@@ -1283,10 +1225,6 @@ function CasesPage({ mode }: { mode: Mode }) {
             }
             md={caseContent[name]}
             header={<CaseHeader name={name} sub={sub} domain={domain} />}
-            meta={{
-              kicker: "independent conceptual proposal",
-              facts: [["focus", sub]],
-            }}
           />
         ) : (
           <div className="flex flex-col gap-6">
@@ -1380,7 +1318,7 @@ export default function App() {
   const mobileHomePosition = useRef<{ page: PageKey; y: number } | null>(null)
   const previousPageRef = useRef(page)
   const casePage = page === "moodboard" && mode === "growth"
-  const independentPage = casePage || page === "about"
+  const independentPage = casePage || page === "projects" || page === "about"
   const content = modeCopy[mode]
   const aboutIntro = splitAboutIntro(content.intro, mode)
   const accent = mode === "growth" ? (isMobile ? SAPPHIRE : DESKTOP_NAVY) : "#E88D6D"

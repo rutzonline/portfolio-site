@@ -150,12 +150,6 @@ const visuals: Record<string, CaseVisual> = {
     "caption": "Regional food selection from The State Plate",
     "source": "https://thestateplate.com/"
   },
-  "stateplate|challenge": {
-    "src": "/case-images/stateplate-food.webp",
-    "alt": "Congress Kadlekayi product image from The State Plate",
-    "caption": "Congress Kadlekayi product image from The State Plate",
-    "source": "https://thestateplate.com/"
-  },
   "stateplate|approach": {
     "src": "/case-images/stateplate-products.webp",
     "alt": "Regional food selection from The State Plate",
