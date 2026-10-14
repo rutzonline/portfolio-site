@@ -110,12 +110,12 @@ const skillSets: Record<Mode, {
     tags: [
       "Meta Ads Manager",
       "Ahrefs",
-      "PostHog",
+      "clay",
       "Shopify",
       "Google Analytics",
       "Supabase",
       "Cursor",
-      "Clay",
+      "posthog",
       "Webflow",
       "replit",
     ],
@@ -129,13 +129,13 @@ const skillSets: Record<Mode, {
   brand: {
     tags: [
       "Figma",
-      "Notion",
+      "Mention",
       "Mailchimp",
       "Canva",
       "Claude",
       "ElevenLabs",
       "Buffer",
-      "Mention",
+      "Notion",
     ],
     line: "Voice, story and personality.",
     sections: [
