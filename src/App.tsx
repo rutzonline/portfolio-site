@@ -2,6 +2,7 @@ import Carousel from "@/Carousel"
 import { getCaseVisual } from "@/caseVisuals"
 import NameLettering from "@/NameLettering"
 import PhotoGallery from "@/PhotoGallery"
+import UpToExtras from "@/UpToExtras"
 import { growthNotes } from "@/growthNotes"
 import { brandNotes } from "@/brandNotes"
 import { routePanelWheel } from "@/panelScroll"
@@ -743,7 +744,7 @@ const uptoRows: Record<Mode, [string, string][]> = {
   ],
 }
 
-function PageBody({ page, mode }: { page: PageKey; mode: Mode }) {
+function PageBody({ page, mode, onOpenPhotos, photosOpen }: { page: PageKey; mode: Mode; onOpenPhotos: (element: HTMLButtonElement) => void; photosOpen: boolean }) {
   const brand = modeCopy[mode]
   switch (page) {
     case "about":
@@ -787,6 +788,7 @@ function PageBody({ page, mode }: { page: PageKey; mode: Mode }) {
           <Rows
             items={[...uptoRows[mode], ["Availability", "Open to work"]]}
           />
+          {mode === "brand" && <UpToExtras onOpenPhotos={onOpenPhotos} photosOpen={photosOpen} />}
         </div>
       )
   }
@@ -1328,7 +1330,7 @@ export default function App() {
   }, [])
   const [mode, setMode] = useState<Mode>(() => readHash().mode ?? "growth")
   const [visitorName, setVisitorName] = useState("first name")
-  const [galleryOpen, setGalleryOpen] = useState(() => window.matchMedia("(max-width: 1023px)").matches && window.location.hash.endsWith("/photos"))
+  const [galleryOpen, setGalleryOpen] = useState(() => (window.matchMedia("(max-width: 1023px)").matches || window.location.hash === "#brand/what-im-up-to/photos") && window.location.hash.endsWith("/photos"))
   const [galleryOrigin, setGalleryOrigin] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
   const [copied, setCopied] = useState(false)
   const [page, setPage] = useState<PageKey | null>(() => readHash().page)
@@ -1348,7 +1350,7 @@ export default function App() {
       const h = readHash()
       if (h.mode) setMode(h.mode)
       setPage(h.page)
-      setGalleryOpen(window.matchMedia("(max-width: 1023px)").matches && window.location.hash.endsWith("/photos"))
+      setGalleryOpen((window.matchMedia("(max-width: 1023px)").matches || window.location.hash === "#brand/what-im-up-to/photos") && window.location.hash.endsWith("/photos"))
     }
     window.addEventListener("hashchange", onHash)
     return () => window.removeEventListener("hashchange", onHash)
@@ -1498,7 +1500,7 @@ export default function App() {
         } as CSSProperties
       }
     >
-      {galleryOpen && <PhotoGallery origin={galleryOrigin} onClose={() => { setGalleryOpen(false); history.replaceState(null, "", `#${mode}`) }} />}
+      {galleryOpen && <PhotoGallery origin={galleryOrigin} immersive={page === "upto" && mode === "brand"} onClose={() => { setGalleryOpen(false); history.replaceState(null, "", page === "upto" ? `#${mode}/what-im-up-to` : `#${mode}`) }} />}
       {page && (
         <span
           key={page}
@@ -1657,7 +1659,12 @@ export default function App() {
                 Homepage
               </button>
             </header>
-            <PageBody page={page} mode={mode} />
+            <PageBody page={page} mode={mode} photosOpen={galleryOpen} onOpenPhotos={(element) => {
+              const rect = (element.querySelector("img") ?? element).getBoundingClientRect()
+              setGalleryOrigin({ x: rect.x, y: rect.y, width: rect.width, height: rect.height })
+              setGalleryOpen(true)
+              history.pushState(null, "", "#brand/what-im-up-to/photos")
+            }} />
           </article>
         ) : (
           <>

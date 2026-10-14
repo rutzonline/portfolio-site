@@ -79,20 +79,22 @@ function PhotoViewer({ photos, initial, hint, onClose }: { photos: string[]; ini
 
 type GalleryOrigin = { x: number; y: number; width: number; height: number }
 
-export default function PhotoGallery({ onClose, origin }: { onClose: () => void; origin?: GalleryOrigin | null }) {
+export default function PhotoGallery({ onClose, origin, immersive = false }: { onClose: () => void; origin?: GalleryOrigin | null; immersive?: boolean }) {
   const [mobile] = useState(() => window.matchMedia("(max-width: 1023px)").matches)
-  const [opening, setOpening] = useState(() => mobile && Boolean(origin) && !window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+  const fullPage = mobile || immersive
+  const extraTurn = immersive && !mobile
+  const [opening, setOpening] = useState(() => fullPage && Boolean(origin) && !window.matchMedia("(prefers-reduced-motion: reduce)").matches)
   useEffect(() => {
     if (!opening) return
-    const timer = window.setTimeout(() => setOpening(false), 1700)
+    const timer = window.setTimeout(() => setOpening(false), extraTurn ? 2300 : 1700)
     return () => window.clearTimeout(timer)
-  }, [opening])
+  }, [opening, extraTurn])
   const flightStyle = origin ? {
     "--folder-x": `${origin.x + origin.width / 2 - window.innerWidth / 2}px`,
     "--folder-y": `${origin.y + origin.height / 2 - window.innerHeight / 2}px`,
     "--folder-scale": origin.width / 240,
-    "--photo-scale-x": window.innerWidth / 62,
-    "--photo-scale-y": window.innerHeight / 76,
+    "--photo-scale-x": (extraTurn ? window.innerHeight : window.innerWidth) / 62,
+    "--photo-scale-y": (extraTurn ? window.innerWidth : window.innerHeight) / 76,
   } as CSSProperties : undefined
   const dialog = useRef<HTMLDialogElement>(null)
   const [photos, setPhotos] = useState<string[]>(initialPhotos)
@@ -121,11 +123,11 @@ export default function PhotoGallery({ onClose, origin }: { onClose: () => void;
   }, [attempt])
   return <dialog ref={dialog} aria-label="Photo gallery" onCancel={onClose}
     onClick={(event) => { if (event.target === event.currentTarget) onClose() }}
-    className={mobile ? `mobile-photo-dialog ${opening ? "photo-page-opening" : "photo-page-ready"} text-[#1A1A1A] backdrop:bg-black/65` : "m-auto h-[calc(100svh-32px)] w-[calc(100%-24px)] max-w-3xl overflow-y-auto rounded-xl border border-[#E5E1DA] bg-[#FAF9F6] p-4 text-[#1A1A1A] backdrop:bg-black/65"}>
-    {mobile && <header className={`photo-page-nav ${opening ? "photo-page-nav-opening" : ""}`}>
+    className={fullPage ? `mobile-photo-dialog ${extraTurn ? "photo-landscape-opening" : ""} ${opening ? "photo-page-opening" : "photo-page-ready"} text-[#1A1A1A] backdrop:bg-black/65` : "m-auto h-[calc(100svh-32px)] w-[calc(100%-24px)] max-w-3xl overflow-y-auto rounded-xl border border-[#E5E1DA] bg-[#FAF9F6] p-4 text-[#1A1A1A] backdrop:bg-black/65"}>
+    {fullPage && <header className={`photo-page-nav ${opening ? "photo-page-nav-opening" : ""}`}>
       <button type="button" className="back-btn" onClick={onClose}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg>
-        back to home
+        {immersive ? "back to what i’m up to" : "back to home"}
       </button>
     </header>}
     {opening && <div className="gallery-opening" style={flightStyle} aria-hidden="true">
@@ -135,13 +137,13 @@ export default function PhotoGallery({ onClose, origin }: { onClose: () => void;
       </div>
       <div className="middle-photo-flight"><div className="middle-photo-front" /><div className="middle-photo-back" /></div>
     </div>}
-    <div className={mobile ? `photo-gallery-window ${opening ? "gallery-window-opening" : ""}` : ""} inert={opening} aria-hidden={opening || undefined}>
-    {!mobile && <div className="mb-3 flex justify-end">
+    <div className={fullPage ? `photo-gallery-window ${opening ? "gallery-window-opening" : ""}` : ""} inert={opening} aria-hidden={opening || undefined}>
+    {!fullPage && <div className="mb-3 flex justify-end">
       <CloseButton onClick={onClose} label="Close photo gallery" />
     </div>}
     {error && <div role="status" className="py-8"><p>couldn’t refresh the photos. showing the saved collection.</p><button type="button" onClick={() => setAttempt((n) => n + 1)} className="back-btn mt-3">try again</button></div>}
     {!error && !photos.length && <p>no photos to show yet.</p>}
-    <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+    <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
       {photos.map((src, index) => <button key={src} type="button" aria-label={`View photo ${index + 1}`} aria-haspopup="dialog"
           onClick={() => { setHintOnOpen(!swipeHintSeen); swipeHintSeen = true; setSelected(index) }} className="rounded-lg">
           <LoadingPhoto src={thumbnails[src] ?? src} alt="" eager={index < 12} />
