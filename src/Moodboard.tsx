@@ -145,6 +145,7 @@ function Campaigns() {
   const { rows, status } = useMoodboard("campaigns")
   const [index, setIndex] = useState(0)
   const campaign = rows[index]
+  const step = (direction: number) => setIndex((current) => rows.length ? (current + direction + rows.length) % rows.length : 0)
   const arrow = "flex size-9 items-center justify-center rounded-full border border-[#B8B3AA] transition-colors hover:border-[#1A1A1A] disabled:cursor-default disabled:opacity-30"
   return (
     <section className="flex flex-col lg:min-h-full">
@@ -154,18 +155,18 @@ function Campaigns() {
         <div className="grid w-full max-w-[64rem] items-center gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
           <div className="min-w-0" tabIndex={0} aria-label="Campaign navigation"
             onKeyDown={(event) => {
-              if (event.key === "ArrowLeft") { event.preventDefault(); setIndex(Math.max(0, index - 1)) }
-              if (event.key === "ArrowRight") { event.preventDefault(); setIndex(Math.min(rows.length - 1, index + 1)) }
+              if (event.key === "ArrowLeft") { event.preventDefault(); step(-1) }
+              if (event.key === "ArrowRight") { event.preventDefault(); step(1) }
             }}>
             <div className="aspect-[16/9] overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-[#F0EEEA] shadow-sm">
               <Img src={campaign.image_url} alt={campaign.brand} className="h-full object-cover" />
             </div>
             <div className="mt-3 flex items-center justify-center gap-4">
-              <button type="button" aria-label="Previous campaign" disabled={index === 0} onClick={() => setIndex(index - 1)} className={arrow}>
+              <button type="button" aria-label="Previous campaign" disabled={rows.length < 2} onClick={() => step(-1)} className={arrow}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m13 7-5 5 5 5M8 12h10" /></svg>
               </button>
               <p className="text-sm tabular-nums text-[#1A1A1A]/55">{index + 1} / {rows.length}</p>
-              <button type="button" aria-label="Next campaign" disabled={index === rows.length - 1} onClick={() => setIndex(index + 1)} className={arrow}>
+              <button type="button" aria-label="Next campaign" disabled={rows.length < 2} onClick={() => step(1)} className={arrow}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m11 7 5 5-5 5M6 12h10" /></svg>
               </button>
             </div>

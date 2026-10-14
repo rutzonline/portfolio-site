@@ -23,7 +23,9 @@ export default function ImagePreview({ src, alt, onClose }: {
   }, [])
 
   return (
-    <dialog ref={dialogRef} aria-label={alt} onClose={onClose}
+    <dialog ref={dialogRef} aria-label={alt}
+      onCancel={(event) => { event.preventDefault(); onClose() }}
+      onClose={(event) => { if (!event.currentTarget.open) onClose() }}
       onClick={(event) => {
         if (event.target !== event.currentTarget) return
         const bounds = event.currentTarget.getBoundingClientRect()

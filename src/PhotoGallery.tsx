@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react"
 import { getPhotos } from "@/PhotoSlideshow"
+import photoThumbnails from "@/photoThumbnails.json"
+
+const thumbnails: Record<string, string> = photoThumbnails
+const initialPhotos = Object.keys(thumbnails)
 
 // Show the swipe discovery motion once per page load.
 let swipeHintSeen = false
@@ -11,11 +15,12 @@ function CloseButton({ onClick, label }: { onClick: () => void; label: string })
   </button>
 }
 
-function LoadingPhoto({ src, alt, full = false }: { src: string; alt: string; full?: boolean }) {
+function LoadingPhoto({ src, alt, full = false, eager = false, preview }: { src: string; alt: string; full?: boolean; eager?: boolean; preview?: string }) {
   const [loaded, setLoaded] = useState(false)
   const [failed, setFailed] = useState(false)
   return <div className={`relative overflow-hidden rounded-lg ${full ? "aspect-[4/5] w-full" : "aspect-square"} ${loaded ? "" : "photo-skeleton"}`}>
-    <img src={src} alt={alt} loading={full ? "eager" : "lazy"} draggable={false}
+    {full && preview && !loaded && <img src={preview} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />}
+    <img src={src} alt={alt} loading={full || eager ? "eager" : "lazy"} decoding="async" draggable={false}
       onLoad={() => setLoaded(true)} onError={() => setFailed(true)}
       className={`h-full w-full transition-opacity duration-300 object-cover ${loaded ? "opacity-100" : "opacity-0"}`} />
     {failed && <span className="absolute inset-0 flex items-center justify-center px-2 text-sm text-black/50">photo unavailable</span>}
@@ -61,7 +66,7 @@ function PhotoViewer({ photos, initial, hint, onClose }: { photos: string[]; ini
         if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { setShowSwipeHint(false); step(dx < 0 ? 1 : -1) }
       }}>
       <div className={showSwipeHint ? "photo-swipe-discovery" : ""}>
-        <LoadingPhoto key={photos[current]} src={photos[current]} alt={`Photo ${current + 1} from Rutuja’s collection`} full />
+        <LoadingPhoto key={photos[current]} src={photos[current]} alt={`Photo ${current + 1} from Rutuja’s collection`} preview={thumbnails[photos[current]]} full />
       </div>
     </div>
     </div>
@@ -86,10 +91,9 @@ export default function PhotoGallery({ onClose, origin }: { onClose: () => void;
     "--photo-scale-y": window.innerHeight / 76,
   } as CSSProperties : undefined
   const dialog = useRef<HTMLDialogElement>(null)
-  const [photos, setPhotos] = useState<string[]>([])
+  const [photos, setPhotos] = useState<string[]>(initialPhotos)
   const [selected, setSelected] = useState<number | null>(null)
   const [hintOnOpen, setHintOnOpen] = useState(false)
-  const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [attempt, setAttempt] = useState(0)
   useEffect(() => {
@@ -106,9 +110,9 @@ export default function PhotoGallery({ onClose, origin }: { onClose: () => void;
   }, [])
   useEffect(() => {
     let cancelled = false
-    setLoading(true); setError(false)
-    getPhotos().then((urls) => { if (!cancelled) { setPhotos(urls); setLoading(false) } })
-      .catch(() => { if (!cancelled) { setLoading(false); setError(true) } })
+    setError(false)
+    getPhotos().then((urls) => { if (!cancelled) { setPhotos(urls) } })
+      .catch(() => { if (!cancelled) { setError(true) } })
     return () => { cancelled = true }
   }, [attempt])
   return <dialog ref={dialog} aria-label="Photo gallery" onCancel={onClose}
@@ -131,13 +135,12 @@ export default function PhotoGallery({ onClose, origin }: { onClose: () => void;
     {!mobile && <div className="mb-3 flex justify-end">
       <CloseButton onClick={onClose} label="Close photo gallery" />
     </div>}
-    {error && <div role="status" className="py-8"><p>couldn’t load the photos.</p><button type="button" onClick={() => setAttempt((n) => n + 1)} className="back-btn mt-3">try again</button></div>}
-    {!loading && !error && !photos.length && <p>no photos to show yet.</p>}
-    <div aria-busy={loading} className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-      {loading ? Array.from({ length: 18 }, (_, index) => <div key={index} aria-hidden="true" className="photo-skeleton aspect-square rounded-lg" />)
-        : photos.map((src, index) => <button key={src} type="button" aria-label={`View photo ${index + 1}`} aria-haspopup="dialog"
+    {error && <div role="status" className="py-8"><p>couldn’t refresh the photos. showing the saved collection.</p><button type="button" onClick={() => setAttempt((n) => n + 1)} className="back-btn mt-3">try again</button></div>}
+    {!error && !photos.length && <p>no photos to show yet.</p>}
+    <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+      {photos.map((src, index) => <button key={src} type="button" aria-label={`View photo ${index + 1}`} aria-haspopup="dialog"
           onClick={() => { setHintOnOpen(!swipeHintSeen); swipeHintSeen = true; setSelected(index) }} className="rounded-lg">
-          <LoadingPhoto src={src} alt="" />
+          <LoadingPhoto src={thumbnails[src] ?? src} alt="" eager={index < 12} />
         </button>)}
     </div>
     </div>

@@ -574,7 +574,7 @@ main[data-mode="brand"] .card-link:is(:hover, :focus-visible) .pencil-underline 
 }
 
 .middle-photo-front, .middle-photo-back { position: absolute; inset: 0; border-radius: inherit; backface-visibility: hidden; }
-.middle-photo-front { border: 3px solid #fff; border-bottom-width: 8px; background: #fff url("/photo-folder.png") -87px -26px / 240px 230px no-repeat; background-clip: padding-box; }
+.middle-photo-front { border: 3px solid #fff; border-bottom-width: 3px; background: #fff url("/photo-folder.png") -87px -26px / 240px 230px no-repeat; background-clip: padding-box; }
 .middle-photo-back { background: #FAF9F6; transform: rotateY(180deg); }
 .mobile-selected-photo { position: fixed; inset: 0; margin: 0; width: 100%; max-width: none; height: 100svh; max-height: none; padding: 12px; border: 0; background: transparent; overflow: hidden; }
 .mobile-selected-photo[open] { display: flex; flex-direction: column; justify-content: center; align-items: center; }
@@ -585,3 +585,22 @@ main[data-mode="brand"] .card-link:is(:hover, :focus-visible) .pencil-underline 
 .photo-page-nav .back-btn { border: 0; background: transparent; box-shadow: none; }
 .photo-page-nav .back-btn:focus, .photo-page-nav .back-btn:focus-visible { outline: none; box-shadow: none; }
 .photo-page-nav .back-btn:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Keep the Experience heading evenly spaced between its dividers on mobile. */
+@media (max-width: 1023px) {
+  .page-article[data-page="projects"] { row-gap: 0; }
+  .page-article[data-page="projects"] > .mobile-page-nav { position: relative; top: auto; }
+  .page-article[data-page="projects"] > header {
+    align-items: center;
+    min-height: 76px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--grid-line);
+  }
+  .page-article[data-page="projects"] > header + div { margin-top: 0; }
+  .page-article[data-page="projects"] > header + div > ul { border-top: 0; }
+}
+main[data-mode="brand"] .skills-card,
+main[data-mode="brand"] .skills-card .card-heading > span,
+main[data-mode="brand"] .skills-card > div > p { color: #7d2e4b; }
+.desktop-about-card .mobile-greeting { position: relative; z-index: 2; width: fit-content; }

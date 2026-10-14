@@ -383,6 +383,13 @@ function Card({
 
 function Greeting({ visitorName, onChange, desktop = false }: { visitorName: string; onChange: (name: string) => void; desktop?: boolean }) {
   const nameInput = useRef<HTMLInputElement>(null)
+  const resetName = () => {
+    onChange("first name")
+    requestAnimationFrame(() => {
+      nameInput.current?.focus({ preventScroll: true })
+      nameInput.current?.setSelectionRange(10, 10)
+    })
+  }
   return (
 <div className="mobile-greeting">hello {"{{\u00a0\u00a0"}<span className="greeting-name-wrap" onPointerDown={(event) => {
   if (event.target === nameInput.current) return
@@ -399,7 +406,13 @@ function Greeting({ visitorName, onChange, desktop = false }: { visitorName: str
                   onFocus={(event) => {
                     event.currentTarget.setSelectionRange(visitorName.length, visitorName.length)
                   }}
-                  onClick={(event) => { if (desktop && visitorName === "first name") event.currentTarget.select() }}
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    if (!visitorName.trim()) resetName()
+                  }}
+                  onDoubleClick={(event) => { event.preventDefault(); event.stopPropagation(); resetName() }}
+                  onKeyDown={(event) => { if (event.key === "Escape") { event.preventDefault(); resetName() } }}
+                  onBlur={() => { if (!visitorName.trim()) onChange("first name") }}
                   onSelect={(event) => {
                     const input = event.currentTarget
                     if (!desktop && (input.selectionStart !== input.value.length || input.selectionEnd !== input.value.length))
@@ -673,7 +686,7 @@ function Experience({ mode }: { mode: Mode }) {
                 <div className={`grid grid-cols-2 gap-3 sm:gap-5 ${freelance ? "sm:grid-cols-3" : ""}`}>
                   {experienceSamples[company].map((sample) => (
                     <figure key={sample.src}>
-                      <ImageSlot src={sample.src} alt={sample.caption} fit="contain" />
+                      <ImageSlot expandable src={sample.src} alt={sample.caption} fit="contain" />
                     </figure>
                   ))}
                 </div>
@@ -683,7 +696,7 @@ function Experience({ mode }: { mode: Mode }) {
               <section className="space-y-4">
                 <h3 className="text-lg font-semibold">content & social media pitch deck</h3>
                 <Carousel label="Content and social media pitch deck" slides={Array.from({ length: 15 }, (_, i) => (
-                  <ImageSlot key={i} src={`/work-samples/content-sm-deck/${i + 1}.png`} alt={`Content and social media pitch deck — slide ${i + 1}`} fit="contain" />
+                  <ImageSlot expandable key={i} src={`/work-samples/content-sm-deck/${i + 1}.png`} alt={`Content and social media pitch deck — slide ${i + 1}`} fit="contain" />
                 ))} />
               </section>
             )}
@@ -693,7 +706,7 @@ function Experience({ mode }: { mode: Mode }) {
                 <div className="grid grid-cols-2 gap-3 sm:gap-5">
                   {liquideImages.map((src, k) => (
                     <figure key={src}>
-                      <ImageSlot src={src} alt={liquideCaptions[k]} fit="contain" />
+                      <ImageSlot expandable src={src} alt={liquideCaptions[k]} fit="contain" />
                       {k === 9 && <figcaption className="mt-2 text-sm text-[#1A1A1A]/60">After →</figcaption>}
                     </figure>
                   ))}
@@ -1093,7 +1106,7 @@ function CaseStudy({
         usedVisuals.add(visual.src)
         out.push(
           <figure key={`img-${i}`} className="my-2">
-            <ImageSlot src={visual.src} alt={visual.alt} fit="contain" />
+            <ImageSlot expandable src={visual.src} alt={visual.alt} fit="contain" />
             {!isExperience && <figcaption className="mt-1.5 text-sm text-[#1A1A1A]/50">
               {visual.source ? <a href={visual.source} target="_blank" rel="noreferrer" className="contact-link">{visual.caption} ↗</a> : visual.caption}
             </figcaption>}
@@ -1573,6 +1586,7 @@ export default function App() {
         {page ? (
           <article
             aria-label={pageTitle(page, mode)}
+            data-page={page}
             className={`portfolio-card page-article flex ${independentPage ? "h-full min-h-0 overflow-hidden" : "min-h-[60svh] lg:overflow-y-auto"} max-lg:break-words min-w-0 flex-col gap-6 p-6 ${
               page === "moodboard" && mode === "brand"
                 ? "lg:overflow-hidden"

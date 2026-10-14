@@ -1,3 +1,6 @@
+import { useState } from "react"
+import ImagePreview from "@/ImagePreview"
+
 export function Rows({ items }: { items: [string, string][] }) {
   return (
     <dl className="divide-y divide-[#1A1A1A]/15">
@@ -25,13 +28,16 @@ export function ImageSlot({
   src = placeholderImg,
   className = "",
   fit = "cover",
+  expandable = false,
 }: {
   alt: string
   src?: string
   className?: string
   fit?: "cover" | "contain"
+  expandable?: boolean
 }) {
-  return (
+  const [expanded, setExpanded] = useState(false)
+  const image = (
     <img
       src={src}
       alt={alt}
@@ -40,4 +46,12 @@ export function ImageSlot({
       className={`w-full rounded-md border border-[#E5E1DA] bg-[#F0EEEA] ${fit === "contain" ? "block h-auto" : "object-cover"} ${className}`}
     />
   )
+  if (!expandable) return image
+  return <>
+    <button type="button" aria-label={`Expand image: ${alt}`} aria-haspopup="dialog"
+      onClick={() => setExpanded(true)} className="block w-full cursor-zoom-in rounded-md focus-visible:outline-2 focus-visible:outline-offset-4">
+      {image}
+    </button>
+    {expanded && <ImagePreview src={src} alt={alt} onClose={() => setExpanded(false)} />}
+  </>
 }
