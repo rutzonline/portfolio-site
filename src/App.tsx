@@ -111,7 +111,7 @@ const skillSets: Record<Mode, {
       "Shopify",
       "Clay",
       "PostHog",
-      "Mailchimp",
+      "Meta Ads Manager",
       "Google Analytics",
       "Supabase",
       "Cursor",
@@ -127,7 +127,7 @@ const skillSets: Record<Mode, {
     tags: [
       "Figma",
       "Notion",
-      "Meta Ads Manager",
+      "Mailchimp",
       "Canva",
       "Claude",
       "ElevenLabs",
@@ -1668,7 +1668,7 @@ export default function App() {
                 </p>}
                 <p className="mobile-specialties mt-3 leading-snug text-[#1A1A1A]/65">
                   {mode === "growth"
-                    ? "email, paid, creators, and campaigns"
+                    ? "email, paid, creators, and offline"
                     : "copy, content, social, and brand comms"}
                 </p>
               </div>
