@@ -63,7 +63,7 @@ export const aboutContent: Record<"growth" | "brand", AboutExtra> = {
     faqs: [
       ["what got you into marketing?", "my love for a good coffee <3 oh no, i mean copy"],
       ["what's your biggest achievement?", "does getting the wordle correct on the first try (twice!) count?"],
-      ["how do you explain the <em>gap</em> on your resume?", "i was in my redemption era."],
+      ["how ready are you for your next full-time role?", "thanks to my redemption era, i'm ready to get back like yesterday"],
       ["is there anything you cannot do?", "yes, a backflip (yet!)"],
       ["which writers or brands inspire you?", "anything that sounds like a person wrote it. i keep a running list on the moodboard."],
       ["why should we hire you?", "because you have power vested in you to get super earnest (& fun?) people on board and you should totally use it :)"],
