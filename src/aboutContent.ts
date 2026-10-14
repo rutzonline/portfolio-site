@@ -38,10 +38,10 @@ export const aboutContent: Record<"growth" | "brand", AboutExtra> = {
     faqs: [
       ["what kind of growth work do you do?", "early-stage product growth: activation, lifecycle, paid and creator experiments, plus the reporting that tells you what actually moved."],
       ["what stage of company do you work best with?", "seed to Series A, where one person can still touch positioning, channels and measurement."],
-      ["how do you pick what to test first?", "i score ideas on impact, confidence and effort, then start with the cheapest test that could change the plan."],
-      ["which tools do you rely on?", "PostHog, Google Analytics, Clay, Mailchimp and Shopify, plus whatever lets me ship faster."],
-      ["are you open to full-time roles?", "yes, i'm looking for a product marketing / growth manager role and still take on selected freelance projects."],
-      ["how can we work together?", "book a call or send an email from the contact card. i reply within a couple of days."],
+      ["are you good with strategy?", "i ranked 1721 globally in a gameweek in fpl 24/25. is that proof enough?"],
+      ["how do you work best?", "with some guidance and a lot of autonomy [to do more.]"],
+      ["are you open to full-time roles?", "yes, i'm open to product/growth/brand marketing roles"],
+      ["how soon can you start?", "14 days after 'it's a match!'"],
     ],
   },
   brand: {
@@ -61,12 +61,12 @@ export const aboutContent: Record<"growth" | "brand", AboutExtra> = {
     ],
     interestImages: [window1, boardGames, hotChoc, skincare, fruit],
     faqs: [
-      ["what do you write?", "product narratives, brand voice, lifecycle emails, essays and social copy."],
-      ["do you work with founders directly?", "yes, most of my freelance work is with founders who need a clear voice fast."],
-      ["how do you find a brand's voice?", "i listen first: customer calls, support threads and the founder's rambling voice notes, then draft in that register."],
-      ["what's your editing process?", "outline, rough draft, a cold read the next day, then cut by a third."],
+      ["what got you into marketing?", "my love for a good coffee <3 oh no, i mean copy"],
+      ["what's your biggest achievement?", "does getting the wordle correct on the first try (twice!) count?"],
+      ["how do you explain the 'gap' on your resume?", "i was in my redemption era."],
+      ["is there anything you cannot do?", "yes, a backflip (yet!)"],
       ["which writers or brands inspire you?", "anything that sounds like a person wrote it. i keep a running list on the moodboard."],
-      ["how can we work together?", "book a call or send an email from the contact card. i reply within a couple of days."],
+      ["why should we hire you?", "because you have power vested in you to get super earnest (& fun?) people on board and you should totally use it :)"],
     ],
   },
 }
