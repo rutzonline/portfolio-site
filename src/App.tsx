@@ -1750,7 +1750,7 @@ export default function App() {
                 ["LinkedIn", "https://www.linkedin.com/in/rutuja-rochkari"],
                 ["X (Twitter)", "https://x.com/rutzpective"],
                 mode === "brand"
-                  ? ["Are.na", "https://www.are.na/rutzine"]
+                  ? ["Are.na", "https://www.are.na/rutz-r"]
                   : ["Cursor", "https://cursor.com/@rutuja"],
                 mode === "brand"
                   ? ["macOS site", "https://rutujarochkari.vercel.app/"]
