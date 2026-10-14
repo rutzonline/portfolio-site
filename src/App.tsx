@@ -726,7 +726,7 @@ const uptoRows: Record<Mode, [string, string][]> = {
   brand: [
     ["Based", "Pune, India"],
     ["Reading", "tiny experiments"],
-    ["Writing", "dear diary entries (& cover letters)"],
+    ["Writing", "letterboxd reviews"],
   ],
 }
 
