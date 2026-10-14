@@ -110,14 +110,14 @@ const skillSets: Record<Mode, {
     tags: [
       "Meta Ads Manager",
       "Ahrefs",
-      "clay",
+      "replit",
       "Shopify",
       "Google Analytics",
       "Supabase",
       "Cursor",
       "posthog",
       "Webflow",
-      "replit",
+      "clay",
     ],
     line: "Funnels, experiments and lifecycle.",
     sections: [
