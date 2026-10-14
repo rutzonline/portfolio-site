@@ -37,7 +37,7 @@ export function ImageSlot({
       alt={alt}
       loading="lazy"
       decoding="async"
-      className={`w-full rounded-md border border-[#E5E1DA] bg-[#F0EEEA] ${fit === "contain" ? "object-contain" : "object-cover"} ${className}`}
+      className={`w-full rounded-md border border-[#E5E1DA] bg-[#F0EEEA] ${fit === "contain" ? "block h-auto" : "object-cover"} ${className}`}
     />
   )
 }

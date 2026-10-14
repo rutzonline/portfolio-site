@@ -481,18 +481,28 @@ const experienceSamples: Record<string, { src: string; caption: string; wide?: b
     { src: "/work-samples/hopstack-newsletter.webp", caption: "Proposed newsletter format", wide: true },
   ],
   "freelance marketer": [
-    { src: "/work-samples/freelance-food.webp", caption: "Food storytelling · steak creative" },
-    { src: "/work-samples/freelance-cocktails.webp", caption: "Cocktail storytelling · sugar-free cocktails" },
-    { src: "/work-samples/freelance-jazz.webp", caption: "Cobbler & Crew · live music" },
-    { src: "/work-samples/freelance-monday.webp", caption: "Cobbler & Crew · Mondays" },
-    { src: "/work-samples/freelance-signature.webp", caption: "Signature cocktails · Monday promotion" },
-    { src: "/work-samples/freelance-tuesday.webp", caption: "Cocktail crash course · event creative" },
+    { src: "/work-samples/freelance-food.webp", caption: "Freelance hospitality creative 1" },
+    { src: "/work-samples/freelance-04.webp", caption: "Freelance hospitality creative 2" },
+    { src: "/work-samples/freelance-05.webp", caption: "Freelance hospitality creative 3" },
+    { src: "/work-samples/freelance-cocktails.webp", caption: "Freelance hospitality creative 4" },
+    { src: "/work-samples/freelance-monday.webp", caption: "Freelance hospitality creative 5" },
+    { src: "/work-samples/freelance-08.webp", caption: "Freelance hospitality creative 6" },
+    { src: "/work-samples/freelance-09.webp", caption: "Freelance hospitality creative 7" },
+    { src: "/work-samples/freelance-10.webp", caption: "Freelance hospitality creative 8" },
+    { src: "/work-samples/freelance-11.webp", caption: "Freelance hospitality creative 9" },
+    { src: "/work-samples/freelance-12.webp", caption: "Freelance hospitality creative 10" },
+    { src: "/work-samples/freelance-13.webp", caption: "Freelance hospitality creative 11" },
+    { src: "/work-samples/freelance-14.webp", caption: "Freelance hospitality creative 12" },
+    { src: "/work-samples/freelance-15.webp", caption: "Freelance hospitality creative 13" },
+    { src: "/work-samples/freelance-16.webp", caption: "Freelance hospitality creative 14" },
+    { src: "/work-samples/freelance-jazz.webp", caption: "Freelance hospitality creative 15" },
+    { src: "/work-samples/freelance-18.webp", caption: "Freelance hospitality creative 16" },
+    { src: "/work-samples/freelance-19.webp", caption: "Freelance hospitality creative 17" },
+    { src: "/work-samples/freelance-signature.webp", caption: "Freelance hospitality creative 18" },
+    { src: "/work-samples/freelance-21.webp", caption: "Freelance hospitality creative 19" },
+    { src: "/work-samples/freelance-22.webp", caption: "Freelance hospitality creative 20" },
+    { src: "/work-samples/freelance-tuesday.webp", caption: "Freelance hospitality creative 21" },
   ],
-}
-
-const experienceSampleSources: Record<string, string> = {
-  hopstack: "https://rutujarochkari.notion.site/Hopstack-B2B-SaaS-2de28541872a81d88f0fdbf0057033ff",
-  "freelance marketer": "https://rutujarochkari.notion.site/Freelance-Assignments-2de28541872a81d0920df734ee43acb9",
 }
 
 const liquideCaptions = [
@@ -709,11 +719,9 @@ function Experience({ mode }: { mode: Mode }) {
                       {experienceSamples[timeline[sel][0]].map((sample) => (
                         <figure key={sample.src} className={sample.wide ? "col-span-2" : ""}>
                           <ImageSlot src={sample.src} alt={sample.caption} fit="contain" />
-                          <figcaption className="mt-2 text-sm text-[#6B6560]">{sample.caption}</figcaption>
                         </figure>
                       ))}
                     </div>
-                    <a href={experienceSampleSources[timeline[sel][0]]} target="_blank" rel="noreferrer" className="contact-link text-sm">view full work folder ↗</a>
                   </section>
                 )}
                 {timeline[sel][0] === "liquide" && (
@@ -723,7 +731,6 @@ function Experience({ mode }: { mode: Mode }) {
                       {liquideImages.map((src, k) => (
                         <figure key={src} className={k === 0 ? "col-span-2" : ""}>
                           <ImageSlot src={src} alt={liquideCaptions[k]} fit="contain" />
-                          <figcaption className="mt-2 text-sm text-[#6B6560]">{liquideCaptions[k]}</figcaption>
                         </figure>
                       ))}
                     </div>
@@ -993,6 +1000,8 @@ function CaseStudy({
   const [active, setActive] = useState(0)
   const contentRef = useRef<HTMLDivElement>(null)
   const toc: [string, string][] = []
+  const usedVisuals = new Set<string>()
+  const isExperience = meta?.kicker?.startsWith("experience") ?? false
   let imgDue: string | null = null
   const lines = md.split("\n")
   const out: ReactNode[] = []
@@ -1122,17 +1131,18 @@ function CaseStudy({
         </p>,
       )
       const visual = imgDue ? getCaseVisual(md, imgDue) : null
-      if (imgDue && visual) {
+      if (imgDue && visual && !usedVisuals.has(visual.src)) {
+        usedVisuals.add(visual.src)
         out.push(
           <figure key={`img-${i}`} className="my-2">
-            <ImageSlot src={visual.src} alt={visual.alt} fit="contain" className="aspect-[16/9]" />
-            <figcaption className="mt-1.5 text-sm text-[#1A1A1A]/50">
+            <ImageSlot src={visual.src} alt={visual.alt} fit="contain" />
+            {!isExperience && <figcaption className="mt-1.5 text-sm text-[#1A1A1A]/50">
               {visual.source ? <a href={visual.source} target="_blank" rel="noreferrer" className="contact-link">{visual.caption} ↗</a> : visual.caption}
-            </figcaption>
+            </figcaption>}
           </figure>,
         )
-        imgDue = null
       }
+      if (visual) imgDue = null
       i++
     }
   }
