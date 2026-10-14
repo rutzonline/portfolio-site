@@ -109,12 +109,14 @@ const skillSets: Record<Mode, {
   growth: {
     tags: [
       "Meta Ads Manager",
-      "Clay",
+      "Ahrefs",
       "PostHog",
       "Shopify",
       "Google Analytics",
       "Supabase",
-      "Cursor",
+      "Cursor"
+      "Clay"
+      "Webflow",
     ],
     line: "Funnels, experiments and lifecycle.",
     sections: [
@@ -131,7 +133,9 @@ const skillSets: Record<Mode, {
       "Canva",
       "Claude",
       "ElevenLabs",
-      "Buffer",
+      "Buffer"
+      "Mention"
+      "Perplexity",
     ],
     line: "Voice, story and personality.",
     sections: [
