@@ -51,7 +51,7 @@ const PAGE_KEYS: PageKey[] = [
 ]
 
 const CREAM = "#FAF9F6"
-const PINK = "#FF9FC0"
+const PINK = "#ffa9c8"
 const LIME = "#DDF080"
 const BLUE = "#9EC5F4"
 const SAPPHIRE = "#0F3A8A"
