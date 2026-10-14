@@ -36,8 +36,8 @@ export const aboutContent: Record<"growth" | "brand", AboutExtra> = {
     ],
     interestImages: [cooking, nyt, f1, futbol, fpl],
     faqs: [
-      ["what kind of growth work do you do?", "early-stage product growth: activation, lifecycle, paid and creator experiments, plus the reporting that tells you what actually moved."],
-      ["what stage of company do you work best with?", "seed to Series A, where one person can still touch positioning, channels and measurement."],
+      ["what kind of growth work do you do?", "early-stage product growth: social, email drips, paid and creator experiments"],
+      ["what stage of company do you work best with?", "seed to Series A, but open to the right opportunity/fit at later stages"],
       ["are you good with strategy?", "i ranked 1721 globally in a gameweek in fpl 24/25. is that proof enough?"],
       ["how do you work best?", "with some guidance and a lot of autonomy [to do more.]"],
       ["are you open to full-time roles?", "yes, i'm open to product/growth/brand marketing roles"],
