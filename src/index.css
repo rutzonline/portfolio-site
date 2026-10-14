@@ -600,7 +600,8 @@ main[data-mode="brand"] .card-link:is(:hover, :focus-visible) .pencil-underline 
   .page-article[data-page="projects"] > header + div { margin-top: 0; }
   .page-article[data-page="projects"] > header + div > ul { border-top: 0; }
 }
-main[data-mode="brand"] .skills-card,
 main[data-mode="brand"] .skills-card .card-heading > span,
 main[data-mode="brand"] .skills-card > div > p { color: #7d2e4b; }
 .desktop-about-card .mobile-greeting { position: relative; z-index: 2; width: fit-content; }
+
+main[data-mode="brand"] .upto-card dt { color: rgb(11 45 110 / .95); }

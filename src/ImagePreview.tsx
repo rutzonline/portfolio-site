@@ -6,6 +6,7 @@ export default function ImagePreview({ src, alt, onClose }: {
   onClose: () => void
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const opener = useRef(document.activeElement)
   useEffect(() => {
     const dialog = dialogRef.current
     if (!dialog) return
@@ -19,6 +20,7 @@ export default function ImagePreview({ src, alt, onClose }: {
       dialog.close()
       document.body.style.overflow = bodyOverflow
       if (article) article.style.overflowY = articleOverflow
+      if (opener.current instanceof HTMLElement) opener.current.focus({ preventScroll: true })
     }
   }, [])
 
@@ -26,21 +28,13 @@ export default function ImagePreview({ src, alt, onClose }: {
     <dialog ref={dialogRef} aria-label={alt}
       onCancel={(event) => { event.preventDefault(); onClose() }}
       onClose={(event) => { if (!event.currentTarget.open) onClose() }}
-      onClick={(event) => {
-        if (event.target !== event.currentTarget) return
-        const bounds = event.currentTarget.getBoundingClientRect()
-        if (event.clientX < bounds.left || event.clientX > bounds.right ||
-          event.clientY < bounds.top || event.clientY > bounds.bottom) onClose()
-      }}
-      className="m-auto w-[min(92vw,960px)] max-w-none rounded-xl border-0 bg-[#FAF9F6] p-4 text-[#1A1A1A] shadow-2xl backdrop:bg-black/80">
-      <div className="mb-3 flex items-center justify-between gap-4">
-        <p className="text-sm leading-snug">{alt}</p>
-        <button type="button" onClick={onClose} aria-label="Close expanded image"
-          className="flex size-10 shrink-0 items-center justify-center rounded-md text-2xl hover:bg-black/10">
-          ×
-        </button>
-      </div>
-      <img src={src} alt={alt} className="mx-auto max-h-[75svh] max-w-full object-contain" />
+      onClick={onClose}
+      className="fixed inset-0 m-0 h-[100dvh] max-h-none w-screen max-w-none cursor-zoom-out border-0 bg-transparent p-3 outline-none backdrop:bg-black/80"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); onClose() }
+      }}>
+      <img src={src} alt={alt} className="h-full w-full object-contain" />
     </dialog>
   )
 }

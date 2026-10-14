@@ -1800,13 +1800,13 @@ export default function App() {
             >
               <CardHeading detail="Toolkit">Skills &amp; stack</CardHeading>
               <div className="mt-6 lg:mt-auto">
-                <div className="flex flex-wrap gap-2">
+                <div className="skills-tags relative -left-0.5 -top-1 flex flex-wrap gap-2">
                   {skillSets[mode].tags.map((tool) => (
                     <span
                       key={tool}
                       className={`rounded-full border px-3 py-1.5 text-base ${
                         mode === "brand"
-                          ? "border-[#8A8A8A]"
+                          ? "border-[#7d2e4b]"
                           : "border-[#B3ADA1]"
                       }`}
                     >
