@@ -879,7 +879,7 @@ function Logo({
 
 function CaseList() {
   return (
-    <ul className="divide-y divide-[#1A1A1A]/15">
+    <ul className="case-list divide-y divide-[#1A1A1A]/15">
       {cases.map(([name, sub]) => (
         <li
           key={name}
@@ -1190,7 +1190,7 @@ function CaseStudy({
         className={`min-w-0 ${independentScroll ? "min-h-0 overflow-y-auto overscroll-contain" : ""}`}
       >
         <div className={`flex max-w-[44rem] flex-col gap-4 ${independentScroll ? "mr-6 pb-6 pr-3 pt-6 lg:mr-10 lg:pt-[88px]" : ""}`}>
-          {backControl && <div className="mb-2 lg:hidden">{backControl}</div>}
+          {backControl && !isExperience && <div className="mb-2 lg:hidden">{backControl}</div>}
           {header}
           {out}
           {footer}
@@ -1600,7 +1600,7 @@ export default function App() {
                 className="back-btn min-h-11 min-w-0 truncate"
               >
                 <Chev />
-                {backLabel || "homepage"}
+                {backLabel ? "Back" : "homepage"}
               </button>
               {backLabel && <button
                 type="button"
@@ -1806,7 +1806,7 @@ export default function App() {
                       key={tool}
                       className={`rounded-full border px-3 py-1.5 text-base ${
                         mode === "brand"
-                          ? "border-[#7d2e4b]"
+                          ? "border-[#8A8A8A] lg:border-[#7d2e4b]/45"
                           : "border-[#B3ADA1]"
                       }`}
                     >

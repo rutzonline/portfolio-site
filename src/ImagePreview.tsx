@@ -29,12 +29,12 @@ export default function ImagePreview({ src, alt, onClose }: {
       onCancel={(event) => { event.preventDefault(); onClose() }}
       onClose={(event) => { if (!event.currentTarget.open) onClose() }}
       onClick={onClose}
-      className="fixed inset-0 m-0 h-[100dvh] max-h-none w-screen max-w-none cursor-zoom-out border-0 bg-transparent p-3 outline-none backdrop:bg-black/80"
+      className="fixed inset-0 m-0 h-[100dvh] max-h-none w-screen max-w-none cursor-zoom-out border-0 bg-transparent p-0 outline-none open:grid place-items-center backdrop:bg-black/80"
       tabIndex={0}
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") { event.preventDefault(); onClose() }
       }}>
-      <img src={src} alt={alt} className="h-full w-full object-contain" />
+      <img src={src} alt={alt} className="block h-auto max-h-[76dvh] w-auto max-w-[86vw] object-contain lg:max-w-[min(80vw,1120px)]" />
     </dialog>
   )
 }
