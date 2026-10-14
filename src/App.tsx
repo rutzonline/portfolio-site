@@ -1732,7 +1732,7 @@ export default function App() {
           <CardHeading detail={"Open to work"}>Contact</CardHeading>
           <div className="mt-6 lg:mt-auto">
             <div className="flex flex-col items-start gap-1">
-              <a className="contact-link" href="/resume.pdf" download>
+              <a className="contact-link" href="/https://drive.google.com/file/d/1edRm_hQ7hotqdm_yM19VwC3Hd7HNWjxE/view?usp=sharing" download>
                 Resume
               </a>
               <button
