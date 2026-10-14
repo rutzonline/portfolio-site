@@ -473,6 +473,41 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   )
 }
 
+const experienceSamples: Record<string, { src: string; caption: string; wide?: boolean }[]> = {
+  hopstack: [
+    { src: "/work-samples/hopstack-before.webp", caption: "LinkedIn rebrand · before" },
+    { src: "/work-samples/hopstack-after.webp", caption: "LinkedIn rebrand · after" },
+    { src: "/work-samples/hopstack-ecommerce.webp", caption: "LinkedIn content · e-commerce tools" },
+    { src: "/work-samples/hopstack-newsletter.webp", caption: "Proposed newsletter format", wide: true },
+  ],
+  "freelance marketer": [
+    { src: "/work-samples/freelance-food.webp", caption: "Food storytelling · steak creative" },
+    { src: "/work-samples/freelance-cocktails.webp", caption: "Cocktail storytelling · sugar-free cocktails" },
+    { src: "/work-samples/freelance-jazz.webp", caption: "Cobbler & Crew · live music" },
+    { src: "/work-samples/freelance-monday.webp", caption: "Cobbler & Crew · Mondays" },
+    { src: "/work-samples/freelance-signature.webp", caption: "Signature cocktails · Monday promotion" },
+    { src: "/work-samples/freelance-tuesday.webp", caption: "Cocktail crash course · event creative" },
+  ],
+}
+
+const experienceSampleSources: Record<string, string> = {
+  hopstack: "https://rutujarochkari.notion.site/Hopstack-B2B-SaaS-2de28541872a81d88f0fdbf0057033ff",
+  "freelance marketer": "https://rutujarochkari.notion.site/Freelance-Assignments-2de28541872a81d0920df734ee43acb9",
+}
+
+const liquideCaptions = [
+  "LiMo campaign · investment research",
+  "LiMo campaign · monsoon creative",
+  "LiMo campaign · market volatility",
+  "LiMo campaign · investing today",
+  "Social content · brand identity",
+  "Social content · finance education",
+  "Social content · audience storytelling",
+  "Social content · revised visual identity",
+  "Social content · product and investing",
+  "Instagram rebrand · after",
+]
+
 const liquideImages = [
   liq1,
   liq2,
@@ -667,19 +702,32 @@ function Experience({ mode }: { mode: Mode }) {
           footer={
             timeline[sel][0] === "the state plate" ? undefined : (
               <>
+                {experienceSamples[timeline[sel][0]] && (
+                  <section aria-label="Selected work samples" className="space-y-4">
+                    <h3 className="text-lg font-semibold">selected work samples</h3>
+                    <div className="grid grid-cols-2 gap-3 sm:gap-5">
+                      {experienceSamples[timeline[sel][0]].map((sample) => (
+                        <figure key={sample.src} className={sample.wide ? "col-span-2" : ""}>
+                          <ImageSlot src={sample.src} alt={sample.caption} fit="contain" />
+                          <figcaption className="mt-2 text-sm text-[#6B6560]">{sample.caption}</figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                    <a href={experienceSampleSources[timeline[sel][0]]} target="_blank" rel="noreferrer" className="contact-link text-sm">view full work folder ↗</a>
+                  </section>
+                )}
                 {timeline[sel][0] === "liquide" && (
-                  <div className="grid grid-cols-2 gap-3">
-                    {liquideImages.map((src, k) => (
-                      <ImageSlot
-                        key={k}
-                        src={src}
-                        alt={`liquide ${k + 1}`}
-                        className={
-                          k === 0 ? "col-span-2 aspect-[16/10]" : "aspect-[4/3]"
-                        }
-                      />
-                    ))}
-                  </div>
+                  <section aria-label="Liquide work samples" className="space-y-4">
+                    <h3 className="text-lg font-semibold">selected work samples</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      {liquideImages.map((src, k) => (
+                        <figure key={src} className={k === 0 ? "col-span-2" : ""}>
+                          <ImageSlot src={src} alt={liquideCaptions[k]} fit="contain" />
+                          <figcaption className="mt-2 text-sm text-[#6B6560]">{liquideCaptions[k]}</figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                  </section>
                 )}
                 <div className="flex flex-wrap gap-x-6 gap-y-1">
                   {stints[sel].links.map(([label, href]) => (

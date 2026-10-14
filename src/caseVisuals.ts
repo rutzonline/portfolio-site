@@ -176,30 +176,7 @@ const visuals: Record<string, CaseVisual> = {
     "caption": "Regional food selection from The State Plate",
     "source": "https://thestateplate.com/"
   },
-  "freelance|overview": {
-    "src": "/case-images/freelance-marketing-plan.webp",
-    "source": "https://www.shopify.com/blog/marketing-plan",
-    "caption": "Reference · Shopify marketing-plan worksheet",
-    "alt": "Reference · Shopify marketing-plan worksheet"
-  },
-  "freelance|what i worked on": {
-    "src": "/case-images/freelance-marketing-plan.webp",
-    "source": "https://www.shopify.com/blog/marketing-plan",
-    "caption": "Reference · Shopify marketing-plan worksheet",
-    "alt": "Reference · Shopify marketing-plan worksheet"
-  },
-  "hopstack|overview": {
-    "src": "/case-images/hopstack-product.webp",
-    "alt": "Hopstack saas platform desktop",
-    "caption": "Hopstack saas platform desktop",
-    "source": "https://www.hopstack.io/"
-  },
-  "hopstack|what i worked on": {
-    "src": "/case-images/hopstack-product.webp",
-    "alt": "Hopstack saas platform desktop",
-    "caption": "Hopstack saas platform desktop",
-    "source": "https://www.hopstack.io/"
-  }
+
 }
 
 export function getCaseVisual(md: string, section: string): CaseVisual | null {

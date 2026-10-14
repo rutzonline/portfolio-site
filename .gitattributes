@@ -150,3 +150,6 @@ public/video-introduction-poster.png -filter -diff -merge
 
 # Keep sourced portfolio images directly available to static builds.
 public/case-images/* -filter -diff -merge
+
+# Keep original work samples directly available to static builds.
+public/work-samples/* -filter -diff -merge
