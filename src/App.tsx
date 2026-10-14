@@ -117,6 +117,7 @@ const skillSets: Record<Mode, {
       "Cursor",
       "Clay",
       "Webflow",
+      "replit",
     ],
     line: "Funnels, experiments and lifecycle.",
     sections: [
@@ -135,7 +136,6 @@ const skillSets: Record<Mode, {
       "ElevenLabs",
       "Buffer",
       "Mention",
-      "Perplexity",
     ],
     line: "Voice, story and personality.",
     sections: [
