@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import { categories, loadEntries, type Entry, type Category } from "./data"
+import { categories, loadEntries, type Entry } from "./data"
 import { addDays, addMonths, labelDate, monthDays, todayKey, weekStart } from "./dates"
 import "./consumption.css"
 
@@ -32,8 +32,8 @@ function Month({ date, grouped, today, onSelect, compact = false }: { date: stri
 
 function EntryRow({ entry }: { entry: Entry }) {
   return <li className="consumption-entry">
+    <span className={`consumption-badge category-${entry.category}`}>{titleCase(entry.category)}</span>
     <div className="consumption-entry-title">{entry.url ? <a href={entry.url} target="_blank" rel="noopener noreferrer">{entry.title}<svg aria-hidden="true" viewBox="0 0 16 16" width="12" height="12" className="consumption-external" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M4 12 12 4M4 4h8v8" /></svg><span className="sr-only"> (opens in a new tab)</span></a> : <span>{entry.title}<small> — link unavailable</small></span>}</div>
-    <div className="consumption-entry-meta"><span className={`consumption-badge category-${entry.category}`}><i className="consumption-dot" aria-hidden="true" />{titleCase(entry.category)}</span>{entry.platform && <span>{entry.platform}</span>}</div>
   </li>
 }
 
@@ -82,7 +82,6 @@ export default function ConsumptionLog() {
   const firstWeekDay = weekStart(date)
   const periodLabel = period === "year" ? date.slice(0, 4) : period === "month" ? labelDate(date, { month: "long", year: "numeric" }) : `${labelDate(firstWeekDay, { month: "short", day: "numeric", year: "numeric" })} – ${labelDate(addDays(firstWeekDay, 6), { month: "short", day: "numeric", year: "numeric" })}`
   const move = (direction: number) => setDate((current) => period === "week" ? addDays(current, direction * 7) : addMonths(current, direction * (period === "year" ? 12 : 1)))
-  const visibleEntries = period === "year" ? entries.filter((entry) => entry.consumed_on.startsWith(date.slice(0, 4))) : period === "month" ? entries.filter((entry) => entry.consumed_on.startsWith(date.slice(0, 7))) : entries.filter((entry) => entry.consumed_on >= firstWeekDay && entry.consumed_on <= addDays(firstWeekDay, 6))
 
   return <section className="consumption-page consumption-embedded" aria-labelledby="consumption-title">
     <div className="consumption-content">
@@ -91,7 +90,6 @@ export default function ConsumptionLog() {
         <div className="consumption-segment" role="group" aria-label="Log view">{(["calendar", "list"] as const).map((option) => <button type="button" key={option} aria-pressed={view === option} onClick={() => { setSelected(null); setView(option) }}>{titleCase(option)}</button>)}</div>
         {view === "calendar" && <div className="consumption-segment" role="group" aria-label="Calendar period">{(["month", "week", "year"] as const).map((option) => <button type="button" key={option} aria-pressed={period === option} onClick={() => setPeriod(option)}>{titleCase(option)}</button>)}</div>}
       </div>
-      <ul className="consumption-legend" aria-label="Category color legend">{categories.map((category: Category) => <li key={category}><i className={`consumption-dot category-${category}`} aria-hidden="true" />{titleCase(category)}</li>)}</ul>
       {status === "loading" && <p className="consumption-state" role="status">Loading the consumption log…</p>}
       {status === "error" && <div className="consumption-state" role="alert"><p>Couldn’t load the consumption log. Please try again.</p><button type="button" className="consumption-action" onClick={() => setAttempt((n) => n + 1)}>Try again</button></div>}
       {status === "ready" && <>
@@ -103,7 +101,6 @@ export default function ConsumptionLog() {
           {period === "month" && <Month date={date} grouped={grouped} today={today} onSelect={selectDate} />}
           {period === "year" && <div className="consumption-year">{Array.from({ length: 12 }, (_, month) => <Month key={month} date={`${date.slice(0, 4)}-${String(month + 1).padStart(2, "0")}-01`} grouped={grouped} today={today} onSelect={selectDate} compact />)}</div>}
           {period === "week" && <div className="consumption-week">{Array.from({ length: 7 }, (_, i) => { const day = addDays(firstWeekDay, i), dayEntries = grouped.get(day) ?? []; return <section key={day} className="consumption-week-day"><h3>{dayNames[i]}</h3><Day date={day} entries={dayEntries} today={today} onSelect={selectDate} /><p>{dayEntries.length ? `${dayEntries.length} ${dayEntries.length === 1 ? "entry" : "entries"}` : "No entries"}</p></section> })}</div>}
-          {!visibleEntries.length && <p className="consumption-empty" role="status">{entries.length ? `No entries this ${period}. Browse another ${period} or open List to see all entries.` : "No published entries yet."}</p>}
         </> : <div className="consumption-list">
           {!dates.length && <p className="consumption-state">No published entries yet.</p>}
           {dates.map((day) => <section key={day} ref={(node) => { if (node) groups.current.set(day, node); else groups.current.delete(day) }} tabIndex={-1} aria-labelledby={`date-${day}`} className={`consumption-date-group ${selected === day ? "is-selected" : ""}`}>
