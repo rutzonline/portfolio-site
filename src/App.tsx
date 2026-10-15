@@ -533,6 +533,7 @@ const liquideCaptions = [
   "Social content · audience storytelling",
   "Social content · revised visual identity",
   "Social content · product and investing",
+  "Instagram rebrand · before",
   "Instagram rebrand · after",
 ]
 
@@ -546,6 +547,7 @@ const liquideImages = [
   liq7,
   liq8,
   liq9,
+  "/image.png",
   liq10,
 ]
 
@@ -686,7 +688,7 @@ function Experience({ mode }: { mode: Mode }) {
                 <h3 className="text-lg font-semibold">selected work samples</h3>
                 <div className={`grid grid-cols-2 gap-3 sm:gap-5 ${freelance ? "sm:grid-cols-3" : ""}`}>
                   {experienceSamples[company].map((sample) => (
-                    <figure key={sample.src}>
+                    <figure key={sample.src} className={sample.wide ? "col-span-2" : undefined}>
                       <ImageSlot expandable src={sample.src} alt={sample.caption} fit="contain" />
                     </figure>
                   ))}
@@ -705,10 +707,9 @@ function Experience({ mode }: { mode: Mode }) {
               <section aria-label="Liquide work samples" className="space-y-4">
                 <h3 className="text-lg font-semibold">selected work samples</h3>
                 <div className="grid grid-cols-2 gap-3 sm:gap-5">
-                  {liquideImages.map((src, k) => (
+                  {liquideImages.slice(0, 9).map((src, k) => (
                     <figure key={src}>
                       <ImageSlot expandable src={src} alt={liquideCaptions[k]} fit="contain" />
-                      {k === 9 && <figcaption className="mt-2 text-sm text-[#1A1A1A]/60">After →</figcaption>}
                     </figure>
                   ))}
                   <video
@@ -721,6 +722,12 @@ function Experience({ mode }: { mode: Mode }) {
                     <source src="/work-samples/liquide/app-launch.mp4" type="video/mp4" />
                     Your browser does not support embedded video.
                   </video>
+                </div>
+                <div className="grid grid-cols-2 gap-3 sm:gap-5" aria-label="Instagram rebrand comparison">
+                  {liquideImages.slice(9).map((src, k) => <figure key={src}>
+                    <ImageSlot expandable src={src} alt={liquideCaptions[k + 9]} fit="contain" />
+                    <figcaption className="mt-2 text-sm text-[#1A1A1A]/60">{k === 0 ? "Before →" : "After →"}</figcaption>
+                  </figure>)}
                 </div>
               </section>
             )}

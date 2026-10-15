@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react"
 import { getPhotos } from "@/PhotoSlideshow"
+import CameraOpening, { cameraPhoto } from "@/CameraOpening"
 import photoThumbnails from "@/photoThumbnails.json"
 
 const thumbnails: Record<string, string> = photoThumbnails
@@ -86,7 +87,7 @@ export default function PhotoGallery({ onClose, origin, immersive = false }: { o
   const [opening, setOpening] = useState(() => fullPage && Boolean(origin) && !window.matchMedia("(prefers-reduced-motion: reduce)").matches)
   useEffect(() => {
     if (!opening) return
-    const timer = window.setTimeout(() => setOpening(false), extraTurn ? 2300 : 1700)
+    const timer = window.setTimeout(() => setOpening(false), extraTurn ? 1950 : 1700)
     return () => window.clearTimeout(timer)
   }, [opening, extraTurn])
   const panelLeft = extraTurn ? window.innerWidth * 0.2 : 0
@@ -98,6 +99,7 @@ export default function PhotoGallery({ onClose, origin, immersive = false }: { o
     "--photo-scale-x": (extraTurn ? window.innerHeight : window.innerWidth) / 62,
     "--photo-scale-y": (extraTurn ? panelWidth : window.innerHeight) / 76,
   } as CSSProperties : undefined
+  const cameraTarget = useRef<HTMLButtonElement>(null)
   const dialog = useRef<HTMLDialogElement>(null)
   const [photos, setPhotos] = useState<string[]>(initialPhotos)
   const [selected, setSelected] = useState<number | null>(null)
@@ -117,22 +119,24 @@ export default function PhotoGallery({ onClose, origin, immersive = false }: { o
     }
   }, [])
   useEffect(() => {
+    if (extraTurn && opening) return
     let cancelled = false
     setError(false)
     getPhotos().then((urls) => { if (!cancelled) { setPhotos(urls) } })
       .catch(() => { if (!cancelled) { setError(true) } })
     return () => { cancelled = true }
-  }, [attempt])
+  }, [attempt, extraTurn, opening])
   return <dialog ref={dialog} aria-label="Photo gallery" onCancel={onClose}
     onClick={(event) => { if (event.target === event.currentTarget) onClose() }}
-    className={fullPage ? `mobile-photo-dialog ${extraTurn ? "photo-landscape-opening desktop-panel-gallery" : ""} ${opening ? "photo-page-opening" : "photo-page-ready"} text-[#1A1A1A] backdrop:bg-black/65` : "m-auto h-[calc(100svh-32px)] w-[calc(100%-24px)] max-w-3xl overflow-y-auto rounded-xl border border-[#E5E1DA] bg-[#FAF9F6] p-4 text-[#1A1A1A] backdrop:bg-black/65"}>
+    className={fullPage ? `mobile-photo-dialog ${extraTurn ? "camera-gallery desktop-panel-gallery" : ""} ${opening ? "photo-page-opening" : "photo-page-ready"} text-[#1A1A1A] backdrop:bg-black/65` : "m-auto h-[calc(100svh-32px)] w-[calc(100%-24px)] max-w-3xl overflow-y-auto rounded-xl border border-[#E5E1DA] bg-[#FAF9F6] p-4 text-[#1A1A1A] backdrop:bg-black/65"}>
     {fullPage && <header className={`photo-page-nav ${opening ? "photo-page-nav-opening" : ""}`}>
       <button type="button" className="back-btn" onClick={onClose}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg>
         {immersive ? "back to what i’m up to" : "back to home"}
       </button>
     </header>}
-    {opening && <div className="gallery-opening" style={flightStyle} aria-hidden="true">
+    {opening && extraTurn && origin && <CameraOpening origin={origin} target={cameraTarget} thumbnail={thumbnails[cameraPhoto]} />}
+    {opening && !extraTurn && <div className="gallery-opening" style={flightStyle} aria-hidden="true">
       <div className="folder-flight">
         <img src="/photo-folder.png" alt="" />
 
@@ -146,7 +150,7 @@ export default function PhotoGallery({ onClose, origin, immersive = false }: { o
     {error && <div role="status" className="py-8"><p>couldn’t refresh the photos. showing the saved collection.</p><button type="button" onClick={() => setAttempt((n) => n + 1)} className="back-btn mt-3">try again</button></div>}
     {!error && !photos.length && <p>no photos to show yet.</p>}
     <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
-      {photos.map((src, index) => <button key={src} type="button" aria-label={`View photo ${index + 1}`} aria-haspopup="dialog"
+      {photos.map((src, index) => <button key={src} ref={src === cameraPhoto ? cameraTarget : undefined} style={extraTurn && opening && src === cameraPhoto ? { visibility: "hidden" } : undefined} type="button" aria-label={`View photo ${index + 1}`} aria-haspopup="dialog"
           onClick={() => { setHintOnOpen(!swipeHintSeen); swipeHintSeen = true; setSelected(index) }} className="rounded-lg">
           <LoadingPhoto src={thumbnails[src] ?? src} alt="" eager={index < 12} />
         </button>)}
