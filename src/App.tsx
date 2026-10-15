@@ -795,7 +795,12 @@ function PageBody({ page, mode, onOpenPhotos, photosOpen }: { page: PageKey; mod
           <Rows
             items={uptoRows[mode]}
           />
-          {mode === "brand" && <UpToExtras onOpenPhotos={onOpenPhotos} photosOpen={photosOpen} />}
+          {mode === "brand" ? <UpToExtras onOpenPhotos={onOpenPhotos} photosOpen={photosOpen} /> : (
+            <a href="/consumption" className="mt-8 block border-t border-[#1A1A1A]/15 pt-6 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#315ca4]">
+              <span className="flex items-center justify-between gap-4 font-semibold">consumption log <svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M4 12 12 4M4 4h8v8" /></svg></span>
+              <span className="mt-2 block text-[#1A1A1A]/60">things I’ve read, watched, and listened to</span>
+            </a>
+          )}
         </div>
       )
   }

@@ -1,0 +1,73 @@
+.consumption-page { min-height: 100svh; background: #faf9f6; color: #1a1a1a; border-top: 3px solid #2454a4; }
+.consumption-content { max-width: 1200px; margin: auto; padding: 32px 40px 72px; }
+.consumption-page :is(button, a):focus-visible { outline: 2px solid #2454a4; outline-offset: 4px; }
+.consumption-page button { cursor: pointer; }
+.consumption-page button:disabled { opacity: .4; cursor: default; }
+.consumption-back { color: #234d89; display: inline-flex; align-items: center; min-height: 44px; }
+.consumption-header { padding: 24px 0 32px; border-bottom: 1px solid #d9d5ce; }
+.consumption-header h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 600; line-height: 1.2; letter-spacing: -.03em; }
+.consumption-header p { margin-top: 16px; color: #62615f; max-width: 640px; line-height: 1.6; }
+.consumption-toolbar { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin: 24px 0 20px; }
+.consumption-segment { display: inline-flex; gap: 4px; border: 1px solid #d9d5ce; padding: 3px; border-radius: 6px; }
+.consumption-segment button { min-height: 40px; padding: 6px 16px; border-radius: 3px; }
+.consumption-segment button[aria-pressed=true] { background: #dce7f6; color: #183f79; }
+.consumption-legend { display: flex; flex-wrap: wrap; gap: 12px 22px; font-size: 13px; color: #595956; margin-bottom: 28px; }
+.consumption-legend li { display: flex; gap: 7px; align-items: center; }
+.category-video { --category-color: #a74464; }
+.category-article { --category-color: #315ca4; }
+.category-newsletter { --category-color: #9a671d; }
+.category-post { --category-color: #3f7c64; }
+.category-podcast { --category-color: #79569d; }
+.consumption-dot { display: inline-block; flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--category-color); }
+.consumption-dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; min-height: 6px; max-width: 45px; }
+.consumption-period-nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+.consumption-period-nav h2 { font-size: 22px; font-weight: 500; }
+.consumption-period-nav > div { display: flex; gap: 8px; }
+.consumption-action { min-width: 44px; min-height: 44px; padding: 8px 12px; border: 1px solid #d9d5ce; border-radius: 4px; }
+.consumption-action:hover { background: #eeeae3; }
+.consumption-weekdays, .consumption-month-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.consumption-weekdays { text-align: center; color: #656560; font-size: 13px; margin-bottom: 8px; }
+.consumption-day { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 78px; border-radius: 4px; border: 1px solid transparent; }
+button.consumption-day { background: #f0eee8; font-weight: 500; }
+button.consumption-day:hover { background: #e7e3da; }
+.consumption-day.is-today { border-color: #315ca4; color: #244d8a; }
+.consumption-empty { margin-top: 24px; color: #676661; font-size: 14px; line-height: 1.6; }
+.consumption-state { padding: 40px 0; color: #676661; }
+.consumption-state button { margin-top: 16px; color: #1a1a1a; }
+.consumption-year { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.consumption-mini-month h3 { font-size: 16px; font-weight: 500; margin-bottom: 16px; }
+.consumption-day.compact { min-height: 36px; gap: 4px; font-size: 12px; }
+.consumption-mini-month .consumption-dots { gap: 2px; }
+.consumption-mini-month .consumption-dot { width: 4px; height: 4px; }
+.consumption-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.consumption-week-day h3 { text-align: center; color: #656560; font-size: 14px; margin-bottom: 12px; }
+.consumption-week-day > p { text-align: center; font-size: 12px; color: #676661; margin-top: 12px; }
+.consumption-list { padding-top: 4px; }
+.consumption-date-group { scroll-margin-top: 24px; margin-bottom: 40px; outline: none; }
+.consumption-date-group:focus-visible { outline: 2px solid #315ca4; outline-offset: 8px; }
+.consumption-date-group h2 { font-size: 16px; font-weight: 500; padding-bottom: 12px; border-bottom: 1px solid #d9d5ce; }
+.consumption-date-group.is-selected h2 { color: #244d8a; }
+.consumption-entry { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 1px solid #e9e5de; }
+.consumption-entry-title { min-width: 0; overflow-wrap: anywhere; line-height: 1.6; }
+.consumption-entry-title a:hover { text-decoration: underline; text-underline-offset: 4px; color: #244d8a; }
+.consumption-entry-meta { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 12px; flex-shrink: 0; max-width: 45%; color: #656560; font-size: 12px; }
+.consumption-badge { display: inline-flex; align-items: center; gap: 6px; color: var(--category-color); }
+@media (max-width: 800px) {
+  .consumption-content { padding: 16px 24px 48px; }
+  .consumption-year { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; }
+  .consumption-entry { flex-direction: column; gap: 8px; }
+  .consumption-entry-meta { justify-content: flex-start; max-width: 100%; }
+}
+@media (max-width: 480px) {
+  .consumption-content { padding-right: 16px; padding-left: 16px; }
+  .consumption-header { padding-top: 16px; }
+  .consumption-year { grid-template-columns: minmax(0, 1fr); }
+  .consumption-day { min-height: 58px; gap: 6px; }
+  .consumption-day.compact { min-height: 44px; }
+  .consumption-period-nav h2 { font-size: 19px; }
+  .consumption-week { gap: 3px; }
+  .consumption-week-day > p { font-size: 10px; }
+  .consumption-segment button { padding-right: 12px; padding-left: 12px; }
+}
+.consumption-external { display: inline-block; margin-left: 6px; vertical-align: baseline; }
+.consumption-entry-title, .consumption-entry-meta { text-transform: none; }

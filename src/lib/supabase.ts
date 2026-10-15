@@ -11,3 +11,18 @@ export async function fetchTable<T>(table: string): Promise<T[]> {
   if (!res.ok) throw new Error(`${table}: ${res.status}`)
   return res.json()
 }
+
+// Public GET-only access; reuses the site's anon key (never a service-role key).
+export async function readPublicRows<T>(table: string, query: URLSearchParams, signal: AbortSignal) {
+  const response = await fetch(`${url}/rest/v1/${table}?${query}`, {
+    headers: { apikey: key, Authorization: `Bearer ${key}`, Prefer: "count=exact" }, signal,
+  })
+  if (!response.ok) {
+    const detail = await response.json().catch(() => ({}))
+    throw Object.assign(new Error("Could not load published entries"), { code: detail.code })
+  }
+  const rows: T[] = await response.json()
+  if (!Array.isArray(rows)) throw new Error("Invalid consumption response")
+  const total = response.headers.get("content-range")?.split("/")[1]
+  return { rows, total: total && total !== "*" ? Number(total) : null }
+}
