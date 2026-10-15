@@ -640,3 +640,16 @@ main[data-mode="brand"] .upto-card dt { color: rgb(11 45 110 / .95); }
 }
 @media (max-width: 639px) { .music-trail-card { width: 150px; height: 150px; } }
 @media (prefers-reduced-motion: reduce) { .music-trail-card, .music-trail-card-inner { transition: none; } }
+
+/* Keep the desktop gallery inside the existing right-hand page panel. */
+@media (min-width: 1024px) {
+  .desktop-panel-gallery { left: 20%; width: 80%; border-left: 1px solid #7d2e4b; }
+  .desktop-panel-gallery::backdrop { background: transparent; }
+  .desktop-panel-gallery .middle-photo-flight { background: #fff; box-shadow: 0 3px 14px #0002; }
+  .desktop-panel-gallery .middle-photo-back { background: #fff; }
+  .desktop-panel-gallery .middle-photo-front { animation: desktop-photo-hide-front 2300ms both; }
+}
+@keyframes desktop-photo-hide-front {
+  0%, 58% { visibility: visible; }
+  59%, 100% { visibility: hidden; }
+}

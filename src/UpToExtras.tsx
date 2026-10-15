@@ -1,8 +1,10 @@
+import { useState } from "react"
 import MusicTrail from "@/MusicTrail"
 
 export default function UpToExtras({ onOpenPhotos, photosOpen }: { onOpenPhotos: (element: HTMLButtonElement) => void; photosOpen: boolean }) {
-  return <section aria-label="Music and photos" className="grid min-h-[36vh] grid-cols-2 items-start gap-5 pt-16 sm:gap-12 lg:pt-20">
-    <MusicTrail suspended={photosOpen} />
+  const [mobile] = useState(() => window.matchMedia("(max-width: 1023px)").matches)
+  return <section aria-label={mobile ? "Music and photos" : "Photos"} className="grid min-h-[36vh] grid-cols-2 items-start gap-5 pt-16 sm:gap-12 lg:pt-20">
+    {mobile && <MusicTrail suspended={photosOpen} />}
     <div className="flex flex-col items-center">
       <button type="button" aria-label="Open photo gallery" aria-haspopup="dialog" onClick={(event) => onOpenPhotos(event.currentTarget)}
         className="upto-icon-button flex flex-col items-center gap-3 rounded-xl p-3 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7d2e4b]">

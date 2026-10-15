@@ -89,12 +89,14 @@ export default function PhotoGallery({ onClose, origin, immersive = false }: { o
     const timer = window.setTimeout(() => setOpening(false), extraTurn ? 2300 : 1700)
     return () => window.clearTimeout(timer)
   }, [opening, extraTurn])
+  const panelLeft = extraTurn ? window.innerWidth * 0.2 : 0
+  const panelWidth = window.innerWidth - panelLeft
   const flightStyle = origin ? {
-    "--folder-x": `${origin.x + origin.width / 2 - window.innerWidth / 2}px`,
+    "--folder-x": `${origin.x + origin.width / 2 - panelLeft - panelWidth / 2}px`,
     "--folder-y": `${origin.y + origin.height / 2 - window.innerHeight / 2}px`,
     "--folder-scale": origin.width / 240,
     "--photo-scale-x": (extraTurn ? window.innerHeight : window.innerWidth) / 62,
-    "--photo-scale-y": (extraTurn ? window.innerWidth : window.innerHeight) / 76,
+    "--photo-scale-y": (extraTurn ? panelWidth : window.innerHeight) / 76,
   } as CSSProperties : undefined
   const dialog = useRef<HTMLDialogElement>(null)
   const [photos, setPhotos] = useState<string[]>(initialPhotos)
@@ -123,7 +125,7 @@ export default function PhotoGallery({ onClose, origin, immersive = false }: { o
   }, [attempt])
   return <dialog ref={dialog} aria-label="Photo gallery" onCancel={onClose}
     onClick={(event) => { if (event.target === event.currentTarget) onClose() }}
-    className={fullPage ? `mobile-photo-dialog ${extraTurn ? "photo-landscape-opening" : ""} ${opening ? "photo-page-opening" : "photo-page-ready"} text-[#1A1A1A] backdrop:bg-black/65` : "m-auto h-[calc(100svh-32px)] w-[calc(100%-24px)] max-w-3xl overflow-y-auto rounded-xl border border-[#E5E1DA] bg-[#FAF9F6] p-4 text-[#1A1A1A] backdrop:bg-black/65"}>
+    className={fullPage ? `mobile-photo-dialog ${extraTurn ? "photo-landscape-opening desktop-panel-gallery" : ""} ${opening ? "photo-page-opening" : "photo-page-ready"} text-[#1A1A1A] backdrop:bg-black/65` : "m-auto h-[calc(100svh-32px)] w-[calc(100%-24px)] max-w-3xl overflow-y-auto rounded-xl border border-[#E5E1DA] bg-[#FAF9F6] p-4 text-[#1A1A1A] backdrop:bg-black/65"}>
     {fullPage && <header className={`photo-page-nav ${opening ? "photo-page-nav-opening" : ""}`}>
       <button type="button" className="back-btn" onClick={onClose}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg>
