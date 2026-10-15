@@ -49,12 +49,10 @@ export default function ConsumptionLog() {
   const groups = useRef(new Map<string, HTMLElement>())
 
   useEffect(() => {
-    const previousTitle = document.title
-    document.title = "consumption log · Rutuja Rochkari"
     const refreshToday = () => setToday(todayKey())
     const timer = window.setInterval(refreshToday, 60000)
     window.addEventListener("focus", refreshToday)
-    return () => { document.title = previousTitle; clearInterval(timer); window.removeEventListener("focus", refreshToday) }
+    return () => { clearInterval(timer); window.removeEventListener("focus", refreshToday) }
   }, [])
 
   useEffect(() => {
@@ -86,10 +84,9 @@ export default function ConsumptionLog() {
   const move = (direction: number) => setDate((current) => period === "week" ? addDays(current, direction * 7) : addMonths(current, direction * (period === "year" ? 12 : 1)))
   const visibleEntries = period === "year" ? entries.filter((entry) => entry.consumed_on.startsWith(date.slice(0, 4))) : period === "month" ? entries.filter((entry) => entry.consumed_on.startsWith(date.slice(0, 7))) : entries.filter((entry) => entry.consumed_on >= firstWeekDay && entry.consumed_on <= addDays(firstWeekDay, 6))
 
-  return <main className="consumption-page">
+  return <section className="consumption-page consumption-embedded" aria-labelledby="consumption-title">
     <div className="consumption-content">
-      <nav aria-label="Back to portfolio"><a href="/#growth/what-im-up-to" className="consumption-back">‹ what i’m up to</a></nav>
-      <header className="consumption-header"><h1>consumption log</h1><p>using this space to keep track of things I've read, watched, and listened to.</p></header>
+      <header className="consumption-header"><h2 id="consumption-title">consumption log</h2><p>using this space to keep track of things I've read, watched, and listened to.</p></header>
       <div className="consumption-toolbar">
         <div className="consumption-segment" role="group" aria-label="Log view">{(["calendar", "list"] as const).map((option) => <button type="button" key={option} aria-pressed={view === option} onClick={() => { setSelected(null); setView(option) }}>{titleCase(option)}</button>)}</div>
         {view === "calendar" && <div className="consumption-segment" role="group" aria-label="Calendar period">{(["month", "week", "year"] as const).map((option) => <button type="button" key={option} aria-pressed={period === option} onClick={() => setPeriod(option)}>{titleCase(option)}</button>)}</div>}
@@ -116,5 +113,5 @@ export default function ConsumptionLog() {
         </div>}
       </>}
     </div>
-  </main>
+  </section>
 }

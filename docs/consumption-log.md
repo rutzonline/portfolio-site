@@ -1,6 +1,6 @@
 # Consumption Log
 
-`/consumption` is a public read-only page linked from Growth → What I’m up to. Vercel rewrites the route (including its trailing slash) to the Vite entry point; existing hash routes and API endpoints stay unchanged.
+The public read-only log is embedded directly below the existing rows in Growth → What I’m up to (`/#growth/what-im-up-to`). Calendar and List stay in that page’s scrolling panel, with the desktop image/contact sidebar visible. Old `/consumption` bookmarks (including the trailing slash) resolve to the Vite entry point and are replaced with the Growth page URL; there is no separate log page. Existing API endpoints stay unchanged.
 
 ## Existing database and pending migration
 
