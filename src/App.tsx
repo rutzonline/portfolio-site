@@ -786,7 +786,7 @@ function PageBody({ page, mode, onOpenPhotos, photosOpen }: { page: PageKey; mod
       return (
         <div className="upto-page w-full pt-2">
           <Rows
-            items={[...uptoRows[mode], ["Availability", "Open to work"]]}
+            items={uptoRows[mode]}
           />
           {mode === "brand" && <UpToExtras onOpenPhotos={onOpenPhotos} photosOpen={photosOpen} />}
         </div>
@@ -1337,7 +1337,7 @@ export default function App() {
   const mobileHomePosition = useRef<{ page: PageKey; y: number } | null>(null)
   const previousPageRef = useRef(page)
   const casePage = page === "moodboard" && mode === "growth"
-  const independentPage = casePage || page === "projects" || page === "about"
+  const independentPage = casePage || page === "projects" || page === "about" || page === "upto"
   const content = modeCopy[mode]
   const aboutIntro = splitAboutIntro(content.intro, mode)
   const accent = mode === "growth" ? (isMobile ? SAPPHIRE : DESKTOP_NAVY) : "#E88D6D"

@@ -1,14 +1,16 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import type { Body } from "matter-js"
 
 const charms = [1, 2, 3, 4, 5].map((id) => `/charms/${id}.png`)
-const size = 64
+const size = 80
+const half = size / 2
+const radius = 30
 
 type Charm = { body: Body; element: HTMLImageElement }
 
 // Adapted from MacOS-portfolio's contact-charms-playground, with local assets
 // and a physics loop that only runs while charms are on screen.
-export default function CharmPicker() {
+export default function CharmPicker({ photos }: { photos: ReactNode }) {
   const stage = useRef<HTMLDivElement>(null)
   const layer = useRef<HTMLDivElement>(null)
   const drop = useRef<((src: string) => void) | null>(null)
@@ -43,7 +45,7 @@ export default function CharmPicker() {
         Composite.remove(engine.world, walls)
         const w = block.clientWidth, h = block.clientHeight
         const options = { isStatic: true, friction: 1, restitution: 0.05 }
-        walls = [Bodies.rectangle(w / 2, h + 25, w * 3, 50, options), Bodies.rectangle(-25, h / 2, 50, h * 3, options)]
+        walls = [Bodies.rectangle(w / 2, h + 25 - (half - radius), w * 3, 50, options), Bodies.rectangle(-25, h / 2, 50, h * 3, options)]
         if (!rolling) walls.push(Bodies.rectangle(w + 25, h / 2, 50, h * 3, options))
         Composite.add(engine.world, walls)
       }
@@ -90,8 +92,8 @@ export default function CharmPicker() {
       }
       const spawn = (src: string) => {
         if (entries.length >= 40) remove(entries.shift()!)
-        const x = reducedMotion ? 32 + (entries.length * 48) % Math.max(48, block.clientWidth - 64) : 32 + Math.random() * Math.max(0, block.clientWidth - 64)
-        const body = Bodies.circle(x, reducedMotion ? block.clientHeight - 36 : -40, 24, {
+        const x = reducedMotion ? half + (entries.length * size) % Math.max(size, block.clientWidth - size) : half + Math.random() * Math.max(0, block.clientWidth - size)
+        const body = Bodies.circle(x, reducedMotion ? block.clientHeight - half : -half, radius, {
           restitution: 0.18, friction: 0.65, frictionAir: 0.009, density: 0.003,
           angle: reducedMotion ? 0 : Math.random() * Math.PI * 2,
         })
@@ -113,7 +115,7 @@ export default function CharmPicker() {
       const observer = new ResizeObserver(() => {
         makeWalls()
         entries.forEach((entry) => {
-          Body.setPosition(entry.body, { x: Math.min(block.clientWidth - 32, Math.max(32, entry.body.position.x)), y: Math.min(block.clientHeight - 32, entry.body.position.y) })
+          Body.setPosition(entry.body, { x: Math.min(block.clientWidth - half, Math.max(half, entry.body.position.x)), y: Math.min(block.clientHeight - half, entry.body.position.y) })
           draw(entry)
         })
       })
@@ -136,17 +138,18 @@ export default function CharmPicker() {
     return () => { cancelled = true; dispose() }
   }, [attempt])
 
-  return <div className="charm-picker min-w-0">
-    <p className="mb-4 text-sm text-[#1A1A1A]/65">collect some charms and put my tokenmaxxing to use</p>
-    <div ref={stage} className="charm-stage relative h-[260px] overflow-hidden sm:h-[300px]">
-      <div ref={layer} className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true" />
-      <div className="relative z-10 flex flex-wrap gap-2 py-1 sm:gap-2.5">
+  return <div className="charm-picker">
+    <p className="charm-intro text-base text-[#1A1A1A]/65">collect some charms to put my tokenmaxxing to use</p>
+    <div className="charm-controls">
         {charms.map((src, index) => <button key={src} type="button" disabled={!ready} aria-label={`Drop charm ${index + 1}`}
           onClick={() => { drop.current?.(src); setCount((n) => n + 1) }}
-          className="charm-choice flex size-14 shrink-0 items-center justify-center rounded-xl border border-[#E5E1DA] bg-[#FAF9F6]/90 p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7d2e4b] disabled:opacity-40 sm:size-16">
-          <img src={src} alt="" width="48" height="48" draggable={false} className="h-full w-full object-contain" />
+          className="charm-choice flex shrink-0 items-center justify-center rounded-xl border border-[#E5E1DA] bg-[#FAF9F6]/90 p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7d2e4b] disabled:opacity-40">
+          <img src={src} alt="" width="64" height="64" draggable={false} className="h-full w-full object-contain" />
         </button>)}
-      </div>
+      {photos}
+    </div>
+    <div ref={stage} className="charm-stage">
+      <div ref={layer} className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true" />
     </div>
     <span className="sr-only" role="status">{count ? `${count} charms picked` : "Choose a charm to drop it"}</span>
     {failed && <button type="button" onClick={() => setAttempt((n) => n + 1)} className="text-sm underline">couldn’t load charms. try again</button>}

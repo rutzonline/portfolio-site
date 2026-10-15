@@ -662,3 +662,37 @@ main[data-mode="brand"] .upto-card dt { color: rgb(11 45 110 / .95); }
   .charm-choice { transition: none; }
   .charm-choice:hover, .charm-choice:active { transform: none; }
 }
+
+/* Let the charm floor use the remaining viewport and reach the page edges. */
+.page-article[data-page="upto"] .upto-page { display: flex; flex: 1; min-height: 0; flex-direction: column; }
+.upto-page > dl { flex-shrink: 0; }
+.upto-extras { display: flex; flex: 1; min-height: 0; padding-top: clamp(12px, 3svh, 32px); }
+.charm-picker { display: flex; flex-direction: column; flex: 1; min-width: 0; min-height: 0; }
+.charm-intro { flex-shrink: 0; margin-bottom: 12px; }
+.charm-controls { display: grid; flex-shrink: 0; grid-template-columns: repeat(3, 1fr); align-items: center; justify-items: center; gap: 12px 20px; }
+.charm-choice { width: 68px; height: 68px; }
+.charm-controls .upto-icon-button { width: 76px; height: 76px; padding: 0; }
+.charm-controls .upto-icon-button img { width: 76px; height: 76px; }
+.charm-stage { position: relative; flex: 1; min-height: 0; margin: 12px -24px -24px; overflow: hidden; }
+.dropped-charm { width: 80px; height: 80px; }
+@media (min-width: 1024px) {
+  .charm-controls { grid-template-columns: repeat(5, 80px) minmax(108px, 1fr); gap: 24px; }
+  .charm-choice { width: 80px; height: 80px; }
+  .charm-controls .upto-icon-button { justify-self: end; width: 108px; height: 108px; padding: 6px; }
+  .charm-controls .upto-icon-button img { width: 96px; height: 96px; }
+  .charm-stage { margin: 12px -40px -40px; }
+}
+@media (max-height: 700px) and (max-width: 1023px) {
+  .page-article[data-page="upto"] { gap: 12px; padding-top: 16px; }
+  .page-article[data-page="upto"] .mobile-page-nav { margin-top: -16px; }
+  .upto-extras { padding-top: 8px; }
+  .charm-intro { margin-bottom: 8px; }
+  .charm-controls { row-gap: 8px; }
+}
+@media (max-height: 500px) and (min-width: 600px) and (max-width: 1023px) {
+  .upto-page > dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .upto-page > dl > div { flex-direction: column; gap: 0; padding: 0; border: 0; }
+  .upto-page > dl dd { text-align: left; }
+  .charm-controls { grid-template-columns: repeat(5, 68px) minmax(76px, 1fr); gap: 12px; }
+  .charm-controls .upto-icon-button { justify-self: end; }
+}
