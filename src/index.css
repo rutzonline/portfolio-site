@@ -653,3 +653,12 @@ main[data-mode="brand"] .upto-card dt { color: rgb(11 45 110 / .95); }
   0%, 58% { visibility: visible; }
   59%, 100% { visibility: hidden; }
 }
+
+.dropped-charm { position: absolute; left: 0; top: 0; width: 64px; height: 64px; object-fit: contain; pointer-events: none; user-select: none; }
+.charm-choice { cursor: pointer; transition: transform .18s, border-color .18s; }
+.charm-choice:hover { transform: translateY(-4px) scale(1.05); border-color: #7d2e4b66; }
+.charm-choice:active { transform: translateY(2px) scale(.94); }
+@media (prefers-reduced-motion: reduce) {
+  .charm-choice { transition: none; }
+  .charm-choice:hover, .charm-choice:active { transform: none; }
+}
