@@ -11,7 +11,6 @@ export default function UpToExtras({ onOpenPhotos, photosOpen }: { onOpenPhotos:
         <img src="/photo-folder.png" alt="" className={`h-24 w-24 object-contain ${photosOpen ? "opacity-0" : ""}`} />
         <span className="text-sm">photos</span>
       </button>
-      <p className="mt-2 text-center text-xs text-[#1A1A1A]/55">little things, lately</p>
     </div>
   </section>
 }
