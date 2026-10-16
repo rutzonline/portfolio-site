@@ -82,7 +82,7 @@ const modeCopy = {
       "i get people to use products. i.e., run experiments across the funnel to optimize user acquisition, activation, and retention.",
     project: "wispr flow",
     projectDescription:
-      "A lifecycle reset for a climate-tech platform: onboarding, activation loops, and a sharper path from interest to habit.",
+      "Early growth for voice dictation in India: WhatsApp voice notes, the first 100 users, and product-led distribution.",
     portrait: growthPortrait,
     tints: {} as Partial<Record<PageKey, string>>,
   },
@@ -581,10 +581,6 @@ const stints = [
       "Partnerships and collaborations",
       "Industries: F&B | D2C | apparel | real estate",
     ],
-    links: [
-      ["book a call", "https://cal.com/rutujarochkari"],
-      ["get in touch", "mailto:rutujarochkari7@gmail.com"],
-    ],
   },
   {
     summary: "Business growth and marketing across a food-tech brand.",
@@ -596,10 +592,6 @@ const stints = [
       "Campaign planning and launches",
       "Partnerships and collaborations",
       "Weekly growth reporting",
-    ],
-    links: [
-      ["the state plate", "https://example.com"],
-      ["featured campaign", "https://example.com"],
     ],
   },
   {
@@ -613,10 +605,6 @@ const stints = [
       "SEO and blog refresh",
       "Webinar and event support",
     ],
-    links: [
-      ["hopstack", "https://hopstack.io"],
-      ["sample article", "https://www.hopstack.io/blog/top-ecommerce-tools"],
-    ],
   },
   {
     summary: "Social media intern at an investing platform.",
@@ -628,10 +616,6 @@ const stints = [
       "Daily social content",
       "Plain-language explainers",
       "Engagement analytics",
-    ],
-    links: [
-      ["liquide", "https://liquide.life"],
-      ["sample posts", "https://instagram.com/liquide.life"],
     ],
   },
 ]
@@ -1223,7 +1207,11 @@ function CaseStudy({
 }
 
 function CasesPage({ mode }: { mode: Mode }) {
-  const [open, setOpen] = useState<number | null>(null)
+  const [open, setOpen] = useState<number | null>(() => {
+    const slug = window.location.hash.split("/")[2]
+    const index = cases.findIndex(([name]) => name.replace(/ /g, "-") === slug)
+    return index >= 0 ? index : null
+  })
   useBack(
     open !== null
       ? () => {

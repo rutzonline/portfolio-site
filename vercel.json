@@ -1,6 +1,16 @@
 {
   "rewrites": [
-    { "source": "/consumption", "destination": "/index.html" },
-    { "source": "/consumption/", "destination": "/index.html" }
+    {
+      "source": "/consumption",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/consumption/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/((?!api/|work-samples/|imports/|assets/|fonts/|case-images/|photo-thumbnails/|charms/).*)",
+      "destination": "/index.html"
+    }
   ]
 }

@@ -74,7 +74,7 @@ button {
 }
 
 .mode-button {
-  color: rgb(26 26 26 / 0.55);
+  color: rgb(26 26 26 / .62);
   transition: color 280ms ease;
 }
 
@@ -368,12 +368,12 @@ a[href],
 }
 @media (prefers-reduced-motion: reduce) { .greeting-cursor { animation: none; } }
 
-.slice-of-life { font-family: "Inter", sans-serif; font-size: 18px; font-weight: 500; font-style: italic; line-height: 1.2; color: rgb(26 26 26 / .5); }
+.slice-of-life { font-family: "Inter", sans-serif; font-size: 18px; font-weight: 500; font-style: italic; line-height: 1.2; color: rgb(26 26 26 / .62); }
 .photo-skeleton { background: #eeece7; box-shadow: none; animation: photo-loading 1.8s ease-in-out infinite; }
 @keyframes photo-loading { 50% { background: #e4e1db; } }
 @media (max-width: 1023px) {
   .photo-folder-button { width: 76px; height: 80px; }
-  .focus-controls .mode-button:not(.active) { color: rgb(26 26 26 / .48); border-color: rgb(26 26 26 / .25); }
+  .focus-controls .mode-button:not(.active) { color: rgb(26 26 26 / .62); border-color: rgb(26 26 26 / .25); }
   .mobile-about-copy .about-intro { font-weight: 600; }
   .mobile-about-copy .about-intro .about-explanation { font-weight: 400; }
   .greeting-name-wrap { position: relative; display: inline-block; vertical-align: baseline; }
@@ -391,7 +391,7 @@ a[href],
   .card-heading { width: 100%; }
   .card-heading > span { margin-left: auto; text-align: right; }
   .upto-card > div { width: 100%; }
-  .mobile-specialties { color: rgb(26 26 26 / .45); }
+  .mobile-specialties { color: rgb(26 26 26 / .62); }
   .mobile-growth-lead + .about-intro { color: #0f3a8a; }
   .mobile-greeting { font-size: 20px; font-weight: 600; }
 }
@@ -439,7 +439,7 @@ a[href],
   .desktop-about-card .greeting-cursor { position: absolute; right: 0; top: 50%; display: block; width: 1.5px; height: 1em; background: currentColor; transform: translateY(-50%); animation: greeting-blink 1s step-end infinite; }
   .desktop-about-card .about-intro { font-size: 16px; font-weight: 600; line-height: 1.375; letter-spacing: normal; color: #0f3a8a; }
   .desktop-about-card .about-explanation { margin-top: 20px; font-size: 16px; font-weight: 400; line-height: 1.375; color: #1a1a1a; opacity: .65; }
-  .desktop-about-card .mobile-specialties { color: rgb(26 26 26 / .45); }
+  .desktop-about-card .mobile-specialties { color: rgb(26 26 26 / .62); }
 }
 @media (min-width: 1024px) and (prefers-reduced-motion: reduce) { .desktop-about-card .greeting-cursor { animation: none; } }
 

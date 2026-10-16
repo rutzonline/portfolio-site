@@ -1,12 +1,12 @@
 {
-  "title": "Rutuja Rochkari",
-  "description": "product and brand marketer.",
-  "language": "EN",
+  "title": "Rutuja Rochkari — growth & brand marketer",
+  "description": "i help people discover, use, and love products through growth experiments, lifecycle content, and brand storytelling. explore my work and case studies.",
+  "language": "en",
   "icons": {
     "icon": "/favicon.png"
   },
   "openGraph": {
-    "image": "/.figma/make/social-image.png"
+    "image": "https://www.rutzonline.com/og%20image.png"
   },
   "accessibility": {
     "addBypassLinks": false,
