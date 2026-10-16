@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { categories, loadEntries, type Entry } from "./data"
-import { addDays, addMonths, labelDate, monthDays, todayKey, weekStart } from "./dates"
+import { addMonths, labelDate, monthDays, todayKey } from "./dates"
 import "./consumption.css"
 
-type Period = "month" | "week" | "year"
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 const titleCase = (text: string) => text[0].toUpperCase() + text.slice(1)
 
@@ -39,7 +38,6 @@ function EntryRow({ entry }: { entry: Entry }) {
 
 export default function ConsumptionLog() {
   const [view, setView] = useState<"calendar" | "list">("calendar")
-  const [period, setPeriod] = useState<Period>("month")
   const [today, setToday] = useState(todayKey)
   const [date, setDate] = useState(todayKey)
   const [entries, setEntries] = useState<Entry[]>([])
@@ -79,29 +77,27 @@ export default function ConsumptionLog() {
     group?.scrollIntoView({ block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" })
   }, [view, selected])
 
-  const firstWeekDay = weekStart(date)
-  const periodLabel = period === "year" ? date.slice(0, 4) : period === "month" ? labelDate(date, { month: "long", year: "numeric" }) : `${labelDate(firstWeekDay, { month: "short", day: "numeric", year: "numeric" })} – ${labelDate(addDays(firstWeekDay, 6), { month: "short", day: "numeric", year: "numeric" })}`
-  const move = (direction: number) => setDate((current) => period === "week" ? addDays(current, direction * 7) : addMonths(current, direction * (period === "year" ? 12 : 1)))
+  const periodLabel = labelDate(date, { month: "long", year: "numeric" })
+  const move = (direction: number) => setDate((current) => addMonths(current, direction))
 
   return <section className="consumption-page consumption-embedded" aria-labelledby="consumption-title">
     <div className="consumption-content">
       <header className="consumption-header"><h2 id="consumption-title">consumption log</h2><p>using this space to keep track of things I've read, watched, and listened to.</p></header>
       <div className="consumption-toolbar">
         <div className="consumption-segment" role="group" aria-label="Log view">{(["calendar", "list"] as const).map((option) => <button type="button" key={option} aria-pressed={view === option} onClick={() => { setSelected(null); setView(option) }}>{titleCase(option)}</button>)}</div>
-        {view === "calendar" && <div className="consumption-segment" role="group" aria-label="Calendar period">{(["month", "week", "year"] as const).map((option) => <button type="button" key={option} aria-pressed={period === option} onClick={() => setPeriod(option)}>{titleCase(option)}</button>)}</div>}
+        {view === "calendar" && <>
+          <h3 className="consumption-month-label" aria-live="polite">{periodLabel}</h3>
+          <div className="consumption-month-controls">
+            <button type="button" className="consumption-action" aria-label="Previous month" disabled={Number(date.slice(0, 4)) <= 1} onClick={() => move(-1)}>‹</button>
+            <button type="button" className="consumption-action" onClick={() => { const now = todayKey(); setToday(now); setDate(now) }}>Today</button>
+            <button type="button" className="consumption-action" aria-label="Next month" disabled={Number(date.slice(0, 4)) >= 9999} onClick={() => move(1)}>›</button>
+          </div>
+        </>}
       </div>
       {status === "loading" && <p className="consumption-state" role="status">Loading the consumption log…</p>}
       {status === "error" && <div className="consumption-state" role="alert"><p>Couldn’t load the consumption log. Please try again.</p><button type="button" className="consumption-action" onClick={() => setAttempt((n) => n + 1)}>Try again</button></div>}
       {status === "ready" && <>
-        {view === "calendar" ? <>
-          <div className="consumption-period-nav">
-            <h2 aria-live="polite">{periodLabel}</h2>
-            <div><button type="button" className="consumption-action" aria-label={`Previous ${period}`} disabled={Number(date.slice(0, 4)) <= 1} onClick={() => move(-1)}>‹</button><button type="button" className="consumption-action" onClick={() => { const now = todayKey(); setToday(now); setDate(now) }}>Today</button><button type="button" className="consumption-action" aria-label={`Next ${period}`} disabled={Number(date.slice(0, 4)) >= 9999} onClick={() => move(1)}>›</button></div>
-          </div>
-          {period === "month" && <Month date={date} grouped={grouped} today={today} onSelect={selectDate} />}
-          {period === "year" && <div className="consumption-year">{Array.from({ length: 12 }, (_, month) => <Month key={month} date={`${date.slice(0, 4)}-${String(month + 1).padStart(2, "0")}-01`} grouped={grouped} today={today} onSelect={selectDate} compact />)}</div>}
-          {period === "week" && <div className="consumption-week">{Array.from({ length: 7 }, (_, i) => { const day = addDays(firstWeekDay, i), dayEntries = grouped.get(day) ?? []; return <section key={day} className="consumption-week-day"><h3>{dayNames[i]}</h3><Day date={day} entries={dayEntries} today={today} onSelect={selectDate} /><p>{dayEntries.length ? `${dayEntries.length} ${dayEntries.length === 1 ? "entry" : "entries"}` : "No entries"}</p></section> })}</div>}
-        </> : <div className="consumption-list">
+        {view === "calendar" ? <Month date={date} grouped={grouped} today={today} onSelect={selectDate} /> : <div className="consumption-list">
           {!dates.length && <p className="consumption-state">No published entries yet.</p>}
           {dates.map((day) => <section key={day} ref={(node) => { if (node) groups.current.set(day, node); else groups.current.delete(day) }} tabIndex={-1} aria-labelledby={`date-${day}`} className={`consumption-date-group ${selected === day ? "is-selected" : ""}`}>
             <h2 id={`date-${day}`}><time dateTime={day}>{labelDate(day)}</time></h2>

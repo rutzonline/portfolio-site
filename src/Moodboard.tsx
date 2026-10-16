@@ -303,7 +303,7 @@ export default function Moodboard() {
                   : 0,
               )
             }}
-            className="w-full lg:h-full lg:overflow-y-auto lg:pr-4 lg:[scrollbar-width:none] lg:[&::-webkit-scrollbar]:hidden"
+            className="w-full lg:h-full lg:overflow-y-auto lg:pr-4"
           >
             <View />
           </div>

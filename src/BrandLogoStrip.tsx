@@ -35,7 +35,7 @@ export default function BrandLogoStrip({ brands, index, onChange, fullWidth = fa
   return (
     <nav aria-label="Choose a brand" className={`mx-auto flex w-full items-center gap-2 sm:gap-4 ${fullWidth ? "" : "mt-6 max-w-[44rem]"}`}>
       <button type="button" aria-label="Scroll brand logos left" disabled={edges.start} onClick={() => scroll(-1)} className="flex size-10 shrink-0 items-center justify-center rounded-full border border-[#B8B3AA] text-lg disabled:cursor-default disabled:opacity-30">←</button>
-      <ul ref={listRef} onScroll={update} className="relative flex min-w-0 flex-1 gap-3 overflow-x-auto py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <ul ref={listRef} onScroll={update} className="relative flex min-w-0 flex-1 gap-3 overflow-x-auto py-2">
         {brands.map((brand, i) => (
           <li key={brand.name} className="w-16 shrink-0 sm:w-20">
             <button type="button" aria-label={`Show ${brand.name}`} aria-pressed={index === i} onClick={() => onChange(i)} className="flex w-full flex-col items-center gap-2">

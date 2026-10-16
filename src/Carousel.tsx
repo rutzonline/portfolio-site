@@ -30,7 +30,7 @@ export default function Carousel({ label, slides }: { label: string; slides: Rea
           const track = event.currentTarget
           setIndex(Math.max(0, Math.min(slides.length - 1, Math.round(track.scrollLeft / (track.clientWidth + 16)))))
         }}
-        className="flex min-w-0 snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-3 [scrollbar-width:thin]">
+        className="flex min-w-0 snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-3">
         {slides.map((slide, i) => (
           <li key={i} aria-label={`${i + 1} of ${slides.length}`} aria-roledescription="slide" className="min-w-0 basis-full shrink-0 snap-start snap-always">{slide}</li>
         ))}

@@ -16,7 +16,7 @@ Until then, the UI supports the existing schema by assigning missing sort orders
 
 ## Behavior
 
-Calendar starts at the visitor's current month, with Month, Week and Year views. Weeks start Sunday, matching the original implementation. A populated date opens List and focuses/scrolls its group. List includes every published entry, newest dates first, then ascending `sort_order` and ID. API pagination handles server-imposed page caps and requests an exact count so entries beyond the first page are included.
+Calendar starts at the visitor's current month, with previous/next month and Today controls. Calendar weeks start Sunday, matching the original implementation. A populated date opens List and focuses/scrolls its group. List includes every published entry, newest dates first, then ascending `sort_order` and ID. API pagination handles server-imposed page caps and requests an exact count so entries beyond the first page are included.
 
 Dates remain `YYYY-MM-DD` civil dates; timezone-independent arithmetic and formatting never interpret them as local timestamps. Today uses the visitor's local day. Titles and category badges come from Supabase; platform values remain in the data but are not displayed; valid HTTP(S) links open in a new tab. Invalid URLs retain their title with a “link unavailable” note. No fallback/sample entries, search, filters, or admin interface are included.
 

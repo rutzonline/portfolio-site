@@ -23,15 +23,15 @@ export default function CameraOpening({ origin, target, thumbnail }: { origin: R
         { ...popped, opacity: 1, offset: 0.4 },
         { ...popped, opacity: 1, offset: 0.65 },
         { ...popped, opacity: 0, offset: 1 },
-      ], { duration: 1100, easing: "ease-in-out", fill: "both" }))
+      ], { duration: 1430, easing: "ease-in-out", fill: "both" }))
       // Screen bounds measured in the supplied 1920 × 1440 camera artwork.
       animations.push(photo.current.animate([
         { left: `${x + width * .293}px`, top: `${y + height * .288}px`, width: `${width * .297}px`, height: `${height * .54}px`, borderRadius: "10px", offset: 0 },
         { left: `${x + width * .293}px`, top: `${y + height * .288 - 30}px`, width: `${width * .297}px`, height: `${height * .54}px`, borderRadius: "10px", offset: .2 },
         { left: `${destination.x - panel.x}px`, top: `${destination.y - panel.y}px`, width: `${destination.width}px`, height: `${destination.height}px`, borderRadius: "8px", offset: 1 },
-      ], { delay: 550, duration: 1350, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" }))
-      animations.push(photo.current.animate([{ opacity: 0 }, { opacity: 1 }], { delay: 550, duration: 1, fill: "both" }))
-      animations.push(image.current.animate([{ opacity: 0 }, { opacity: 1 }], { delay: 900, duration: 700, fill: "both" }))
+      ], { delay: 715, duration: 1755, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" }))
+      animations.push(photo.current.animate([{ opacity: 0 }, { opacity: 1 }], { delay: 715, duration: 1, fill: "both" }))
+      animations.push(image.current.animate([{ opacity: 0 }, { opacity: 1 }], { delay: 1170, duration: 910, fill: "both" }))
     })
     return () => { cancelAnimationFrame(frame); animations.forEach((animation) => animation.cancel()) }
   }, [origin, target])

@@ -393,7 +393,7 @@ function Greeting({ visitorName, onChange, desktop = false }: { visitorName: str
     })
   }
   return (
-<div className="mobile-greeting">hello {"{{\u00a0\u00a0"}<span className="greeting-name-wrap" onPointerDown={(event) => {
+<div className="mobile-greeting">hello <span className="greeting-token">{"{{\u00a0"}<span className="greeting-name-wrap" onPointerDown={(event) => {
   if (event.target === nameInput.current) return
   event.preventDefault()
   event.stopPropagation()
@@ -425,7 +425,7 @@ function Greeting({ visitorName, onChange, desktop = false }: { visitorName: str
                     onChange(name)
                   }}
                 /><span className="greeting-cursor" aria-hidden="true" />
-              </span>{"\u00a0\u00a0}}!"}</div>
+              </span>{"\u00a0}}"}</span>!</div>
   )
 }
 

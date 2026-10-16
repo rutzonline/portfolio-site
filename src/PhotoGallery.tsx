@@ -87,7 +87,7 @@ export default function PhotoGallery({ onClose, origin, immersive = false }: { o
   const [opening, setOpening] = useState(() => fullPage && Boolean(origin) && !window.matchMedia("(prefers-reduced-motion: reduce)").matches)
   useEffect(() => {
     if (!opening) return
-    const timer = window.setTimeout(() => setOpening(false), extraTurn ? 1950 : 1700)
+    const timer = window.setTimeout(() => setOpening(false), extraTurn ? 2535 : 1700)
     return () => window.clearTimeout(timer)
   }, [opening, extraTurn])
   const panelLeft = extraTurn ? window.innerWidth * 0.2 : 0
@@ -151,7 +151,7 @@ export default function PhotoGallery({ onClose, origin, immersive = false }: { o
     {!error && !photos.length && <p>no photos to show yet.</p>}
     <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
       {photos.map((src, index) => <button key={src} ref={src === cameraPhoto ? cameraTarget : undefined} style={extraTurn && opening && src === cameraPhoto ? { visibility: "hidden" } : undefined} type="button" aria-label={`View photo ${index + 1}`} aria-haspopup="dialog"
-          onClick={() => { setHintOnOpen(!swipeHintSeen); swipeHintSeen = true; setSelected(index) }} className="rounded-lg">
+          onClick={() => { setHintOnOpen(mobile && !swipeHintSeen); if (mobile) swipeHintSeen = true; setSelected(index) }} className="rounded-lg">
           <LoadingPhoto src={thumbnails[src] ?? src} alt="" eager={index < 12} />
         </button>)}
     </div>
