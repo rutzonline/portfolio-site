@@ -1,7 +1,6 @@
 export const cursorCase = String.raw`# Cursor: Built on Campus
 
-## tl;dr — plan at a glance
-
+tl;dr
 - Run a 90-day India campus pilot that helps students finish projects for real users.
 - Start with 60 students; pair campus mentors with educational creators for build sessions and debugging clinics.
 - Recruit through student organisations, using unfinished projects as the entry point.
@@ -85,8 +84,7 @@ For this small pilot, propose a minimum of 60% of enrolled students completing a
 
 export const revolutCase = String.raw`# Revolut: From Watch Parties to Race Trips
 
-## tl;dr — plan at a glance
-
+tl;dr
 - Turn F1 and Manchester City fan interest into a useful payment journey for eligible Indian users.
 - Separate overseas travellers from domestic screening attendees; give each a relevant payment task.
 - Recruit an initial 40 qualified prospects through fan organisers and practical creator guides.
@@ -173,8 +171,7 @@ For travel, agree on a contribution-based acquisition ceiling before media start
 
 export const heyclickyCase = String.raw`# Heyclicky: Help on Your Screen
 
-## tl;dr — plan at a glance
-
+tl;dr
 - Show Heyclicky solving a recognisable After Effects problem for Mac users, from obstacle to completed edit.
 - Test creator narration against a plain screen recording of the same task.
 - Run a 60-day US pilot with a proposed $12,000 ceiling.
