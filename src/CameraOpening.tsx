@@ -29,8 +29,8 @@ export default function CameraOpening({ origin, target, thumbnail }: { origin: R
         { left: `${x + width * .293}px`, top: `${y + height * .288}px`, width: `${width * .297}px`, height: `${height * .54}px`, borderRadius: "10px", offset: 0 },
         { left: `${x + width * .293}px`, top: `${y + height * .288 - 30}px`, width: `${width * .297}px`, height: `${height * .54}px`, borderRadius: "10px", offset: .2 },
         { left: `${destination.x - panel.x}px`, top: `${destination.y - panel.y}px`, width: `${destination.width}px`, height: `${destination.height}px`, borderRadius: "8px", offset: 1 },
-      ], { delay: 786.5, duration: 1930.5, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" }))
-      animations.push(photo.current.animate([{ opacity: 0 }, { opacity: 1 }], { delay: 786.5, duration: 1, fill: "both" }))
+      ], { delay: 786.5, duration: 1930.5, easing: "cubic-bezier(.4,0,.2,1)", fill: "both" }))
+      animations.push(photo.current.animate([{ opacity: 0 }, { opacity: 1 }], { delay: 786.5, duration: 120, easing: "ease-out", fill: "both" }))
       animations.push(image.current.animate([{ opacity: 0 }, { opacity: 1 }], { delay: 1287, duration: 1001, fill: "both" }))
     })
     return () => { cancelAnimationFrame(frame); animations.forEach((animation) => animation.cancel()) }
