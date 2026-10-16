@@ -1,7 +1,5 @@
 export const statePlateCase = String.raw`
 
-# Business Growth & Marketing Associate for an Indian D2C regional food startup
-
 tl;dr
 
 - grew app downloads to ~7,000
