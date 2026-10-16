@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type ReactNode } from "react"
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react"
 import { useMoodboard } from "@/useMoodboard"
 
 const ph = (label: string) =>
@@ -244,6 +244,19 @@ const sections: {
 ]
 
 export default function Moodboard() {
+  const tabsRef = useRef<HTMLDivElement>(null)
+  const [moreTabsRight, setMoreTabsRight] = useState(false)
+  useEffect(() => {
+    const tabs = tabsRef.current
+    if (!tabs) return
+    const update = () => setMoreTabsRight(tabs.scrollWidth - tabs.clientWidth - tabs.scrollLeft > 1)
+    update()
+    tabs.addEventListener("scroll", update, { passive: true })
+    const observer = new ResizeObserver(update)
+    observer.observe(tabs)
+    for (const tab of tabs.children) observer.observe(tab)
+    return () => { tabs.removeEventListener("scroll", update); observer.disconnect() }
+  }, [])
   const [cur, setCur] = useState(sections[0].id)
   const [progress, setProgress] = useState(0)
   const color = sections.find((s) => s.id === cur)!.color
@@ -255,8 +268,8 @@ export default function Moodboard() {
         internet that have shaped my marketing instincts.
       </p>
       <div className="flex min-w-0 flex-col gap-6 text-[15px] lg:min-h-0 lg:flex-1">
-        <nav aria-label="moodboard sections" className="panel-menu shrink-0 border-b border-[#D6D1C9]">
-          <div role="tablist" aria-label="Moodboard categories" className="flex gap-6 overflow-x-auto sm:gap-8">
+        <nav aria-label="moodboard sections" className="panel-menu relative shrink-0 border-b border-[#D6D1C9]">
+          <div ref={tabsRef} role="tablist" aria-label="Moodboard categories" className="flex gap-6 overflow-x-auto sm:gap-8">
             {sections.map((section, index) => (
               <button
                 key={section.id}
@@ -280,12 +293,13 @@ export default function Moodboard() {
                   document.getElementById(`moodboard-tab-${sections[next].id}`)?.focus()
                 }}
                 style={{ borderColor: cur === section.id ? section.color : "transparent" }}
-                className={`shrink-0 whitespace-nowrap border-b-2 pb-3 pt-1 text-left transition-colors hover:text-[#1A1A1A] ${cur === section.id ? "font-medium text-[#1A1A1A]" : "text-[#1A1A1A]/65"}`}
+                className={`max-lg:min-h-11 shrink-0 whitespace-nowrap border-b-2 pb-3 pt-1 text-left transition-colors hover:text-[#1A1A1A] ${cur === section.id ? "font-medium text-[#1A1A1A]" : "text-[#1A1A1A]/65"}`}
               >
                 {section.label}
               </button>
             ))}
           </div>
+          {moreTabsRight && <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-r from-transparent to-[#FAF9F6] lg:hidden" />}
         </nav>
         <div className="relative min-w-0 max-lg:min-h-[50svh] lg:min-h-0 lg:flex-1">
           <div

@@ -730,3 +730,23 @@ main, main * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) trans
   15%, 45% { background-color: rgb(0 0 0 / .32); }
   85% { background-color: transparent; }
 }
+
+/* Mobile case reading shares one scroll area; the case list keeps its layout. */
+@media (max-width: 1023px) {
+  main[data-mode="brand"] .panel-menu [role="tab"]:focus-visible { outline-offset: -3px; }
+  main[data-mode="growth"] .page-article[data-page="moodboard"]:has([data-essay]) {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  main[data-mode="growth"] .page-article[data-page="moodboard"]:has([data-essay]) > .mobile-page-nav {
+    top: -24px;
+  }
+  main[data-mode="growth"] .page-article[data-page="moodboard"] > [data-essay] {
+    flex: 0 0 auto;
+    overflow: visible;
+  }
+  main[data-mode="growth"] .page-article[data-page="moodboard"] > [data-essay] > .grid,
+  main[data-mode="growth"] .page-article[data-page="moodboard"] [data-panel-content] {
+    overflow: visible;
+  }
+}
