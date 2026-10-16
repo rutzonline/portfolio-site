@@ -966,6 +966,7 @@ function CaseStudy({
   const out: ReactNode[] = []
   const sources: string[] = []
   let inSources = false
+  const hasSummary = !isExperience && /^tl;dr\s*$/im.test(md)
   let i = 0
   while (i < lines.length) {
     const l = lines[i]
@@ -1000,7 +1001,7 @@ function CaseStudy({
           <h3
             key={i}
             id={id}
-            className="mt-10 flex scroll-mt-6 items-baseline gap-3 border-t border-[#1A1A1A]/15 pt-6 font-heading text-[clamp(22px,2.2vw,30px)] tracking-[-0.02em] first:mt-0 first:border-t-0 first:pt-0"
+            className={`${hasSummary && toc.length === 1 ? "mt-0" : "mt-10"} flex scroll-mt-6 items-baseline gap-3 border-t border-[#1A1A1A]/15 pt-6 font-heading text-[clamp(22px,2.2vw,30px)] tracking-[-0.02em] first:mt-0 first:border-t-0 first:pt-0`}
           >
             {m && <span className="text-[#1A1A1A]/45">{m[1]}</span>}
             {m ? m[2] : t}
@@ -1082,7 +1083,7 @@ function CaseStudy({
       out.push(
         <p
           key={i}
-          className={`leading-snug ${
+          className={`leading-snug ${hasSummary && /^tl;dr$/i.test(l.trim()) ? "mt-10" : ""} ${
             em ? "text-[#1A1A1A]/55" : "text-[#1A1A1A]/85"
           }`}
         >

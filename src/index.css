@@ -393,7 +393,7 @@ a[href],
   .upto-card > div { width: 100%; }
   .mobile-specialties { color: rgb(26 26 26 / .62); }
   .mobile-growth-lead + .about-intro { color: #0f3a8a; }
-  .mobile-greeting { font-size: 20px; font-weight: 400; }
+  .mobile-greeting { font-size: 18px; line-height: 22px; font-weight: 400; }
 }
 @media (max-width: 359px) {
   .mobile-greeting-row { position: relative; padding-bottom: 8px; }
@@ -430,7 +430,7 @@ a[href],
 /* The desktop About card shares the mobile introduction's visual treatment. */
 @media (min-width: 1024px) {
   .desktop-about-card .desktop-about-identity { margin-bottom: 16px; }
-  .desktop-about-card .mobile-greeting { font-size: 20px; font-weight: 400; white-space: nowrap; letter-spacing: -.035em; }
+  .desktop-about-card .mobile-greeting { font-size: 18px; line-height: 22px; font-weight: 400; white-space: nowrap; letter-spacing: -.035em; }
   .desktop-about-card .mobile-name { font-family: "Chillink", cursive; font-size: clamp(46px, 5vw, 72px); font-weight: 400; line-height: 1.15; color: #1b3e8c; margin: 8px 0 0; }
   .desktop-about-card .greeting-name-wrap { position: relative; z-index: 2; display: inline-block; vertical-align: baseline; padding-right: 4px; }
   .desktop-about-card .greeting-name-measure { display: inline-block; visibility: hidden; white-space: pre; font: inherit; letter-spacing: inherit; }

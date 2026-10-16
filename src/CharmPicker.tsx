@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
-import type { Body } from "matter-js"
+import Matter, { type Body } from "matter-js"
 
 const charms = [1, 2, 3, 4, 5].map((id) => `/charms/${id}.png`)
 const size = 80
@@ -20,13 +20,11 @@ export default function CharmPicker({ photos }: { photos: ReactNode }) {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    let cancelled = false
     let dispose = () => {}
     setReady(false)
     setFailed(false)
-    import("matter-js").then((module) => {
-      if (cancelled || !stage.current || !layer.current) return
-      const Matter = module.default ?? module
+    try {
+      if (!stage.current || !layer.current) return
       const { Engine, Bodies, Body, Composite } = Matter
       const engine = Engine.create({ gravity: { x: 0, y: 2.2 }, enableSleeping: true })
       const block = stage.current
@@ -134,8 +132,8 @@ export default function CharmPicker({ photos }: { photos: ReactNode }) {
         Composite.clear(engine.world, false)
         Engine.clear(engine)
       }
-    }).catch(() => { if (!cancelled) setFailed(true) })
-    return () => { cancelled = true; dispose() }
+    } catch { setFailed(true) }
+    return () => dispose()
   }, [attempt])
 
   return <div className="charm-picker">
