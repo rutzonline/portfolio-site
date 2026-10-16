@@ -171,8 +171,8 @@ const visuals: Record<string, CaseVisual> = {
 
 }
 
-export function getCaseVisual(md: string, section: string): CaseVisual | null {
-  const key = md.includes("# Cursor:") ? "cursor" : md.includes("# Revolut:") ? "revolut" : md.includes("# Heyclicky:") ? "heyclicky" : md.includes("Market and Product Reality") ? "wispr" : md.includes("Turning Near-Expiry Stock") ? "stateplate" : md.includes("Independent since 2025") ? "freelance" : md.includes("warehouse-tech startup") ? "hopstack" : md.includes("investing platform") ? "liquide" : null
+export function getCaseVisual(md: string, section: string, visualKey?: string): CaseVisual | null {
+  const key = visualKey ?? (md.includes("# Cursor:") ? "cursor" : md.includes("# Revolut:") ? "revolut" : md.includes("# Heyclicky:") ? "heyclicky" : md.includes("Market and Product Reality") ? "wispr" : md.includes("Turning Near-Expiry Stock") ? "stateplate" : md.includes("Independent since 2025") ? "freelance" : md.includes("warehouse-tech startup") ? "hopstack" : md.includes("investing platform") ? "liquide" : null)
   if (key === "liquide") return null
   return key ? visuals[`${key}|${section.toLowerCase()}`] ?? null : null
 }

@@ -944,6 +944,7 @@ function CaseHeader({
 
 function CaseStudy({
   md,
+  visualKey,
   header,
   footer,
   independentScroll = false,
@@ -951,6 +952,7 @@ function CaseStudy({
   backControl,
 }: {
   md: string
+  visualKey?: string
   header?: ReactNode
   footer?: ReactNode
   independentScroll?: boolean
@@ -1090,7 +1092,7 @@ function CaseStudy({
           <Inline text={l} />
         </p>,
       )
-      const visual = imgDue ? getCaseVisual(md, imgDue) : null
+      const visual = imgDue ? getCaseVisual(md, imgDue, visualKey) : null
       if (imgDue && visual && !usedVisuals.has(visual.src)) {
         usedVisuals.add(visual.src)
         out.push(
@@ -1234,6 +1236,7 @@ function CasesPage({ mode }: { mode: Mode }) {
               </button>
             }
             md={caseContent[name]}
+            visualKey={name === "wispr flow" ? "wispr" : name}
             header={<CaseHeader name={name} sub={sub} domain={domain} />}
           />
         ) : (
