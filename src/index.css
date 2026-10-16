@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -716,7 +716,7 @@ main, main * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) trans
   main::-webkit-scrollbar-corner, main *::-webkit-scrollbar-corner { background: transparent; }
 }
 .greeting-token, .greeting-token .greeting-name, .greeting-token .greeting-name-measure {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-family: "Fira Code", ui-monospace, monospace;
 }
 
 /* Spotlight the camera while it pops forward, then clear as the gallery arrives. */
