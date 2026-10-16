@@ -132,7 +132,7 @@ function Brands() {
                   </div>
                 </div>
               </header>
-              <p className="mt-2 whitespace-pre-line text-sm leading-snug text-[#1A1A1A]/60">{brand.description}</p>
+              <p className="mt-4 whitespace-pre-line text-sm leading-snug text-[#1A1A1A]/60">{brand.description}</p>
             </article>
           </li>
         ))}
