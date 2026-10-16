@@ -108,3 +108,11 @@ button.consumption-day:hover { color: #244d8a; }
   main[data-mode="growth"] .page-article[data-page="upto"] > .mobile-page-nav { position: relative; top: auto; }
   .consumption-embedded .consumption-content { padding-left: 0; padding-right: 0; }
 }
+
+/* On phones the title and log share one scroll area, so the title scrolls away. */
+@media (max-width: 1023px) {
+  main[data-mode="growth"] .page-article[data-page="upto"] { overflow-y: auto; overscroll-behavior: contain; }
+  .page-article[data-page="upto"] .upto-page.growth-upto {
+    flex: 0 0 auto; overflow: visible; width: 100%; margin-right: 0; padding-right: 0; scrollbar-gutter: auto;
+  }
+}

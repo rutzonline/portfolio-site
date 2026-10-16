@@ -73,8 +73,12 @@ export default function ConsumptionLog() {
   useEffect(() => {
     if (view !== "list" || !selected) return
     const group = groups.current.get(selected)
-    group?.focus({ preventScroll: true })
-    group?.scrollIntoView({ block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" })
+    const scroller = group?.closest<HTMLElement>(window.matchMedia("(max-width: 1023px)").matches ? ".page-article" : ".growth-upto")
+    if (!group || !scroller) return
+    group.focus({ preventScroll: true })
+    // Scroll only the log panel: scrollIntoView also moves the outer shell and document.
+    const top = scroller.scrollTop + group.getBoundingClientRect().top - scroller.getBoundingClientRect().top - scroller.clientTop - 24
+    scroller.scrollTo({ top: Math.max(0, top), behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" })
   }, [view, selected])
 
   const periodLabel = labelDate(date, { month: "long", year: "numeric" })
