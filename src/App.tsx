@@ -80,18 +80,12 @@ const modeCopy = {
   growth: {
     intro:
       "i get people to use products. i.e., run experiments across the funnel to optimize user acquisition, activation, and retention.",
-    project: "wispr flow",
-    projectDescription:
-      "Early growth for voice dictation in India: WhatsApp voice notes, the first 100 users, and product-led distribution.",
     portrait: growthPortrait,
     tints: {} as Partial<Record<PageKey, string>>,
   },
   brand: {
     intro:
       "i write product and lifecycle content. from the first ad someone sees to the email that brings them back.",
-    project: "Cardboard",
-    projectDescription:
-      "Feature storytelling for an AI video tool: product essays, social adaptations, and UX-driven copy.",
     portrait: contentPortrait,
     tints: {
       work: PINK,
