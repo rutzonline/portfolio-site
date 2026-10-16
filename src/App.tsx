@@ -425,7 +425,7 @@ function Greeting({ visitorName, onChange, desktop = false }: { visitorName: str
                     onChange(name)
                   }}
                 /><span className="greeting-cursor" aria-hidden="true" />
-              </span>{"\u00a0}}"}</span>!</div>
+              </span>{"\u00a0}}"}</span></div>
   )
 }
 

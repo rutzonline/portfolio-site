@@ -1,6 +1,12 @@
 export const cursorCase = String.raw`# Cursor: Built on Campus
 
-This is an independent conceptual proposal. No client engagement, partner agreement, interviews or campaign outcomes are claimed. Budgets and test thresholds below are planning assumptions. References identify the evidence behind product and market claims.
+## tl;dr — plan at a glance
+
+- Run a 90-day India campus pilot that helps students finish projects for real users.
+- Start with 60 students; pair campus mentors with educational creators for build sessions and debugging clinics.
+- Recruit through student organisations, using unfinished projects as the entry point.
+- Turn owner-tested tools into briefs and referrals for the next cohort.
+- Judge the pilot on repeat building and retained paid adoption, then scale only if the economics work.
 
 **Proposed scope:** A 90-day India campus pilot, with recruitment through student organisations and educational creators.
 
@@ -32,7 +38,7 @@ IIT Madras E-Cell's Entrepreneurship Development Drive supports student entrepre
 | Coding club or Campus Lead | Recruit students with basic programming knowledge and run weekly debugging clinics | Paid mentor work and projects members can maintain |
 | ChaiCode educators | Teach a build and a debugging session using the same project, with a repository and readable explanations | A paid teaching brief tied to their existing learning format |
 
-ChaiCode's cohort format and instructors Hitesh Choudhary and Piyush Garg provide a specific educational fit. Before contracting, check current audience location, student share, prior sponsorship conflicts and availability. No reach or conversion estimate is assumed. Use Hindi/Hinglish delivery where it suits the recruited cohort, with English code and captions. [C6]
+ChaiCode's cohort format and instructors Hitesh Choudhary and Piyush Garg provide a specific educational fit. Before contracting, check current audience location, student share, prior sponsorship conflicts and availability. Use Hindi/Hinglish delivery where it suits the recruited cohort, with English code and captions. [C6]
 
 One brief could be a volunteer scheduling tool for a campus festival. The organiser supplies shifts, roles and the rules for conflicts. Students build a usable version, test double-bookings and change it after organiser feedback. Another option is a directory for student founders, with explicit consent and edit permissions. The host selects a brief with an available owner; avoid collecting real personal data during the initial build.
 
@@ -40,7 +46,7 @@ The creator shows how to check generated code and diagnose a broken feature. The
 
 ## 04. Pilot mechanics
 
-Plan for 60 students working in pairs across two hosts. This is a support-capacity assumption, not a demand forecast. Keep the initial project small enough to test within four weeks.
+Plan for 60 students working in pairs across two hosts. Keep the initial project small enough to test within four weeks.
 
 | Period | Work | Evidence collected |
 |---|---|---|
@@ -63,11 +69,11 @@ If the full budget produced 30 retained paying users, all-in acquisition cost wo
 
 Before spending, agree on an acquisition ceiling using net revenue, contribution margin and observed retention. Do not invent that ceiling from subscription price alone. Define retained paid adoption as payment followed by a second paid-month renewal, reporting both the count and the denominator of eligible participants offered the plan.
 
-For this small pilot, propose a minimum of 60% of enrolled students completing an owner-tested project, with at least 40% of completers returning within 30 days to make an accepted change. These are provisional programme gates, not market benchmarks. Pause another cohort if either gate fails; examine mentor capacity, project difficulty and the interview evidence before changing recruitment copy. Commercial expansion additionally requires measured acquisition cost within the agreed ceiling and sufficient renewal follow-up. A descriptive pilot can establish feasibility; a comparable cohort or randomised invitation test would be needed to estimate the programme's incremental effect.
-
-Sources checked 7 October 2026. Company statements are attributed to the company; prospective partner suitability is a strategic interpretation. No audience estimate establishes purchase intent. Pricing, eligibility and live terms may change.
+For this small pilot, propose a minimum of 60% of enrolled students completing an owner-tested project, with at least 40% of completers returning within 30 days to make an accepted change. Pause another cohort if either gate fails; examine mentor capacity, project difficulty and the interview evidence before changing recruitment copy. Commercial expansion additionally requires measured acquisition cost within the agreed ceiling and sufficient renewal follow-up. A descriptive pilot can establish feasibility; a comparable cohort or randomised invitation test would be needed to estimate the programme's incremental effect.
 
 ## Sources
+
+- **Concept note:** Independent proposal; no client engagement, partner agreements, interviews or delivered outcomes are claimed. Budgets, scenarios and test gates are planning assumptions. Sources checked 7 October 2026; company claims are attributed, and live prices and eligibility need rechecking.
 
 - **C1** Cursor, Introducing Cursor Start, 28 July 2026. India user base, local pricing and UPI. https://cursor.com/blog/cursor-start-india
 - **C2** Cursor, Campus Leads. Existing programme and partner activities. https://cursor.com/campus-leads
@@ -79,7 +85,13 @@ Sources checked 7 October 2026. Company statements are attributed to the company
 
 export const revolutCase = String.raw`# Revolut: From Watch Parties to Race Trips
 
-This is an independent conceptual proposal. No client engagement, partner agreement, interviews or campaign outcomes are claimed. Budgets and test thresholds below are planning assumptions. References identify the evidence behind product and market claims.
+## tl;dr — plan at a glance
+
+- Turn F1 and Manchester City fan interest into a useful payment journey for eligible Indian users.
+- Separate overseas travellers from domestic screening attendees; give each a relevant payment task.
+- Recruit an initial 40 qualified prospects through fan organisers and practical creator guides.
+- Set a ₹5 lakh pilot ceiling, with product eligibility and partner permissions checked before launch.
+- Measure funded accounts, successful payments and continued use after the event or trip.
 
 **Proposed scope:** An India pilot with separate travel and domestic-payment cohorts, using relevant F1 and Manchester City communities.
 
@@ -89,7 +101,7 @@ Audi F1 and Manchester City partnerships give Revolut access to fan attention. I
 
 **Problem statement:** Test whether trusted fan organisers and creators can help eligible Indian users adopt Revolut for a specific payment task, then continue using it after the event or trip.
 
-Revolut announced an ambition of 20 million customers in India by 2030. This is a company target. Its India help pages describe a PPI product with domestic payment capabilities and multicurrency availability subject to eligibility, including passport requirements for international use and destination restrictions. International bank transfers are not supported by the India product. Confirm access and exact terms before recruiting each cohort. [R1–R3]
+Revolut announced an ambition of 20 million customers in India by 2030. Its India help pages describe a PPI product with domestic payment capabilities and multicurrency availability subject to eligibility, including passport requirements for international use and destination restrictions. International bank transfers are not supported by the India product. Confirm access and exact terms before recruiting each cohort. [R1–R3]
 
 Revolut announced the future Audi F1 team's title partnership in July 2025, beginning in 2026, and a global partnership with Manchester City's men's and women's first teams in February 2026. The City announcement's virtual cards were for the UK and Europe; the India campaign must not imply local availability without confirmation. Partner assets and benefits require separate permission. [R4–R5]
 
@@ -136,15 +148,15 @@ A possible referral mechanism begins after a traveller has used the product: the
 
 Propose a ₹5 lakh ceiling: ₹1.5 lakh for creator production, ₹1.2 lakh for hosts and event operations, ₹80,000 for distribution, ₹70,000 for support and measurement, and ₹80,000 contingency. Travel, footage licensing and sponsorship rights require separate quotes and could change the scope. Confirm those costs before promising an overseas shoot.
 
-The first gate is feasibility: confirm live product access and recruit at least 40 eligible prospects with a documented payment task. If that cannot be achieved through the chosen hosts, change the audience or route before purchasing broader distribution. The number is a pilot-capacity target, not proof of demand.
+The first gate is feasibility: confirm live product access and recruit at least 40 eligible prospects with a documented payment task. If that cannot be achieved through the chosen hosts, change the audience or route before purchasing broader distribution.
 
 For the domestic cohort, propose stopping expansion if fewer than 30% of funded users transact on two separate days within 30 days, measured after promotional incentives where applicable. This provisional threshold tests whether the event creates continuing use. Report small denominators and uncertainty rather than treating a threshold crossing as conclusive.
 
 For travel, agree on a contribution-based acquisition ceiling before media starts, then wait for the qualified travellers' trips to occur. Expansion requires acquisition cost within that ceiling and a supported onboarding experience. Pause promotion immediately if eligibility or product limitations contradict the advertised task. A sponsorship-impression total cannot resolve those failures.
 
-Sources checked 7 October 2026. Company statements are attributed to the company; prospective partner suitability is a strategic interpretation. No audience estimate establishes purchase intent. Pricing, eligibility and live terms may change.
-
 ## Sources
+
+- **Concept note:** Independent proposal; no client engagement, partner agreements, interviews or delivered outcomes are claimed. Budgets, scenarios and test gates are planning assumptions. Sources checked 7 October 2026; company claims are attributed, and live prices and eligibility need rechecking.
 
 - **R1** Revolut, Revolut Eyes 20 million customers in India by 2030, 8 October 2025. Company ambition. https://www.revolut.com/en-IN/news/revolut_eyes_20_million_customers_in_india_by_2030/
 - **R2** Revolut India Help Centre, Getting started with Revolut. Current PPI capabilities, eligibility and multicurrency availability. https://help.revolut.com/en-IN/help/profile-and-plan/question-getting-started-with-revolut/
@@ -161,7 +173,13 @@ Sources checked 7 October 2026. Company statements are attributed to the company
 
 export const heyclickyCase = String.raw`# Heyclicky: Help on Your Screen
 
-This is an independent conceptual proposal. No client engagement, partner agreement, interviews or campaign outcomes are claimed. Budgets and test thresholds below are planning assumptions. References identify the evidence behind product and market claims.
+## tl;dr — plan at a glance
+
+- Show Heyclicky solving a recognisable After Effects problem for Mac users, from obstacle to completed edit.
+- Test creator narration against a plain screen recording of the same task.
+- Run a 60-day US pilot with a proposed $12,000 ceiling.
+- Match the ad to the landing page, installation flow and first useful session.
+- Choose creative by useful-session cost; expand only when repeat use, paid acquisition and renewals support it.
 
 **Proposed scope:** A global English-language performance campaign, beginning with a US test among Mac users learning After Effects. Replicate in another market only after the install and repeat-use journey works.
 
@@ -200,7 +218,7 @@ Also produce a plain screen-recording control for the same mask task. Comparing 
 
 ## 03. Creator and distribution choices
 
-Jake In Motion's introductory After Effects course makes him a prospective fit for a task-led teaching brief. Ben Marriott's Motion Foundation provides a relevant route to designers adding motion skills. These are suitability assessments based on their educational offerings, with no partnership or audience-performance claim. Request current device mix, geography, sponsorship conflicts and paid usage rights before selecting a creator. [H5–H6]
+Jake In Motion's introductory After Effects course makes him a prospective fit for a task-led teaching brief. Ben Marriott's Motion Foundation provides a relevant route to designers adding motion skills. Request current device mix, geography, sponsorship conflicts and paid usage rights before selecting a creator. [H5–H6]
 
 Pay for the recording and licence separately. The brief must permit accurate product limitations and require approval of the final demonstration. Heyclicky's changelog describes an invite programme; verify current terms and paid-media eligibility before combining fixed fees with referral commissions. [H4]
 
@@ -218,19 +236,19 @@ After an opted-in first session, suggest an adjacent task relevant to that work,
 
 First verify the demonstration and onboarding in a small observed usability check. Then compare creator narration with the plain screen recording, keeping task, offer, audience and page consistent. Use platform experiment allocation where available. Report campaign dates, denominators and assignment limitations.
 
-Propose a $12,000, 60-day ceiling: $2,000 production, $1,000 creator licensing, $6,000 media, $1,500 instrumentation and onboarding, and $1,500 contingency. These are budgeting assumptions, not quoted costs.
+Propose a $12,000, 60-day ceiling: $2,000 production, $1,000 creator licensing, $6,000 media, $1,500 instrumentation and onboarding, and $1,500 contingency.
 
 If $6,000 in media produced 300 useful first sessions and 30 payers, media cost would be $20 per useful session and $200 per payer. All-in acquisition cost at the full budget would be $400 per payer. These are sensitivity inputs, not forecasts. At a hypothetical 70% contribution margin on the $20 plan, four monthly payments would provide $56 before churn, referral commissions and any costs excluded from that assumed margin. The example shows why cheap clicks cannot justify scaling; actual margin and retention must set the ceiling.
 
 Before launch, agree on the allowable acquisition cost and payback period using net revenue, variable service costs, free-user costs, discounts and commissions. Choose creative using cost per useful first session, provided repeat use does not deteriorate. Authorise expansion only when paid acquisition cost fits the agreed ceiling and a renewal cohort has been observed.
 
-As a provisional early stop rule, pause acquisition if fewer than 30% of the first 50 activated users complete a useful second session within seven days. This is a planning gate for investigating task relevance and onboarding, not an industry benchmark. Pause sooner if the advertised demonstration is unreliable or the install journey cannot be measured. Report paid conversion among activated users and second-month renewal among payers eligible to renew; late entrants remain pending.
+As a provisional early stop rule, pause acquisition if fewer than 30% of the first 50 activated users complete a useful second session within seven days. Pause sooner if the advertised demonstration is unreliable or the install journey cannot be measured. Report paid conversion among activated users and second-month renewal among payers eligible to renew; late entrants remain pending.
 
 The first test should identify whether the product demonstration acquires people who use the help again. It cannot establish global demand from a US audience or predict every creator's performance.
 
-Sources checked 7 October 2026. Company statements are attributed to the company; prospective partner suitability is a strategic interpretation. No audience estimate establishes purchase intent. Pricing, eligibility and live terms may change.
-
 ## Sources
+
+- **Concept note:** Independent proposal; no client engagement, partner agreements, interviews or delivered outcomes are claimed. Budgets, scenarios and test gates are planning assumptions. Sources checked 7 October 2026; company claims are attributed, and live prices and eligibility need rechecking.
 
 - **H1** Heyclicky, Official homepage and pricing FAQ. Platform, modes and plans; ambiguity between hero and pricing noted. https://www.heyclicky.com/
 - **H2** Heyclicky, Trust and privacy. Capture trigger, cloud processing and data retention. https://www.heyclicky.com/trust

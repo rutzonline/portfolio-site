@@ -1,4 +1,12 @@
-export const wisprCase = String.raw`## 01. The Brief
+export const wisprCase = String.raw`## tl;dr — plan at a glance
+
+- Launch a single-purpose WhatsApp bot that turns forwarded voice notes into readable text, with Hinglish support and summaries.
+- Target the first 100 users in 7–10 days through personal networks, communities and direct outreach.
+- Make every transcript a distribution surface with a referral footer and a route to try Wispr Flow.
+- Keep the bot free with usage caps; offer Wispr Flow as the way to reply without typing.
+- Track second-note activation, repeat use and bot-to-Flow conversion before expanding acquisition.
+
+## 01. The Brief
 
 **Problem:** Voice notes are everywhere in India, but they create friction for the receiver. You need a quiet space; you have to listen fully, re-listen sometimes, and only then reply.
 
@@ -67,7 +75,7 @@ export const wisprCase = String.raw`## 01. The Brief
 ---
 
 ## 04. First 100 Users
-*Answers question 2. Timeline: 7–10 days. Targets are planning assumptions.*
+*Answers question 2. Timeline: 7–10 days.*
 
 | Channel | Play | Target |
 |---|---|---|
@@ -149,6 +157,7 @@ export const wisprCase = String.raw`## 01. The Brief
 ---
 
 ## Sources
+- **Concept note:** Independent growth proposal, not delivered campaign results. User milestones and performance gates are targets; cost calculations are estimates. Product capabilities, pricing and platform terms should be checked before launch.
 - TechCrunch, "Voice AI in India is hard — Wispr Flow is betting on it anyway" (May 2026)
 - Dealroom and NewsBytes coverage of Wispr Flow's India launch (2026)
 - TechCrunch, WhatsApp bars general-purpose chatbots (Oct 2025); dig.watch on the Business API terms

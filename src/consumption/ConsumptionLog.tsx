@@ -3,6 +3,9 @@ import { categories, loadEntries, type Entry } from "./data"
 import { addMonths, labelDate, monthDays, todayKey } from "./dates"
 import "./consumption.css"
 
+const firstMonth = "2026-08-01"
+const calendarDate = (date: string) => date < firstMonth ? firstMonth : date
+
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 const titleCase = (text: string) => text[0].toUpperCase() + text.slice(1)
 
@@ -15,7 +18,7 @@ function Day({ date, entries, today, onSelect, compact = false }: { date: string
   const label = `${labelDate(date)}${entries.length ? `, ${entries.length} ${entries.length === 1 ? "entry" : "entries"}: ${[...new Set(entries.map((e) => titleCase(e.category)))].join(", ")}` : ", no entries"}`
   const content = <>{entries.length > 0 && <CategoryFill entries={entries} />}<span className="consumption-day-number">{Number(date.slice(8))}</span></>
   const className = `consumption-day ${compact ? "compact" : ""} ${date === today ? "is-today" : ""}`
-  return entries.length ? <button type="button" className={className} aria-label={label} aria-current={date === today ? "date" : undefined} onClick={() => onSelect(date)}>{content}</button>
+  return entries.length ? <button type="button" className={className} title={entries.map((entry) => entry.title).join("\n")} aria-label={`${label}. ${entries.map((entry) => entry.title).join("; ")}`} aria-current={date === today ? "date" : undefined} onClick={() => onSelect(date)}>{content}</button>
     : <div className={className} aria-label={label} aria-current={date === today ? "date" : undefined}>{content}</div>
 }
 
@@ -39,7 +42,7 @@ function EntryRow({ entry }: { entry: Entry }) {
 export default function ConsumptionLog() {
   const [view, setView] = useState<"calendar" | "list">("calendar")
   const [today, setToday] = useState(todayKey)
-  const [date, setDate] = useState(todayKey)
+  const [date, setDate] = useState(() => calendarDate(todayKey()))
   const [entries, setEntries] = useState<Entry[]>([])
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading")
   const [attempt, setAttempt] = useState(0)
@@ -69,7 +72,7 @@ export default function ConsumptionLog() {
     return map
   }, [entries])
   const dates = [...grouped.keys()]
-  const selectDate = (day: string) => { setDate(day); setSelected(day); setView("list") }
+  const selectDate = (day: string) => { setDate(calendarDate(day)); setSelected(day); setView("list") }
   useEffect(() => {
     if (view !== "list" || !selected) return
     const group = groups.current.get(selected)
@@ -83,7 +86,7 @@ export default function ConsumptionLog() {
   }, [view, selected])
 
   const periodLabel = labelDate(date, { month: "long", year: "numeric" })
-  const move = (direction: number) => setDate((current) => addMonths(current, direction))
+  const move = (direction: number) => setDate((current) => calendarDate(addMonths(current, direction)))
 
   return <section className="consumption-page consumption-embedded" aria-labelledby="consumption-title">
     <div className="consumption-content">
@@ -93,8 +96,8 @@ export default function ConsumptionLog() {
         {view === "calendar" && <>
           <h3 className="consumption-month-label" aria-live="polite">{periodLabel}</h3>
           <div className="consumption-month-controls">
-            <button type="button" className="consumption-action" aria-label="Previous month" disabled={Number(date.slice(0, 4)) <= 1} onClick={() => move(-1)}>‹</button>
-            <button type="button" className="consumption-action" onClick={() => { const now = todayKey(); setToday(now); setDate(now) }}>Today</button>
+            <button type="button" className="consumption-action" aria-label="Previous month" disabled={date.slice(0, 7) <= "2026-08"} onClick={() => move(-1)}>‹</button>
+            <button type="button" className="consumption-action" onClick={() => { const now = todayKey(); setToday(now); setDate(calendarDate(now)) }}>Today</button>
             <button type="button" className="consumption-action" aria-label="Next month" disabled={Number(date.slice(0, 4)) >= 9999} onClick={() => move(1)}>›</button>
           </div>
         </>}

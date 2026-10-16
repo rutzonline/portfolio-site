@@ -64,7 +64,7 @@ export default function CharmPicker({ photos }: { photos: ReactNode }) {
             Body.setVelocity(body, { x: 10 + Math.random() * 4, y: 0 })
             Body.setAngularVelocity(body, 0.3 + Math.random() * 0.4)
           })
-        }, 3000)
+        }, 2500)
       }
       const tick = (time: number) => {
         frame = 0
