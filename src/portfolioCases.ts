@@ -1,4 +1,4 @@
-export const cursorCase = String.raw`# Cursor: Built on Campus
+export const cursorCase = String.raw`
 
 tl;dr
 - Run a 90-day India campus pilot that helps students finish projects for real users.
@@ -82,7 +82,7 @@ For this small pilot, propose a minimum of 60% of enrolled students completing a
 - **C6** ChaiCode, Web Development cohort and community reviews. Instructor and learning-format evidence. https://chaicode.com/cohorts/web-dev and https://chaicode.com/reviews
 `
 
-export const revolutCase = String.raw`# Revolut: From Watch Parties to Race Trips
+export const revolutCase = String.raw`
 
 tl;dr
 - Turn F1 and Manchester City fan interest into a useful payment journey for eligible Indian users.
@@ -169,7 +169,7 @@ For travel, agree on a contribution-based acquisition ceiling before media start
 - **R11** Manchester City, Mumbai Official Supporters Club. Official branch listing; a prospective partner, with no agreement implied. https://www.mancity.com/supporters-clubs/mumbai-593?cohort=US_out_
 `
 
-export const heyclickyCase = String.raw`# Heyclicky: Help on Your Screen
+export const heyclickyCase = String.raw`
 
 tl;dr
 - Show Heyclicky solving a recognisable After Effects problem for Mac users, from obstacle to completed edit.
