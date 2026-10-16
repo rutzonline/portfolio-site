@@ -77,7 +77,7 @@ arc was a browser without tabs. vertical sidebar. auto-archiving. custom css inj
 - their tagline: "your home on the internet."
 - they wrote an essay called "optimising for feelings" that attacked OKRs, KPIs, and the growth mindset. "when our software optimises for numbers alone, it appears doomed to lack a certain spirit, and a certain humanity."
 - they called users "members." the discord hit 10,000+ people. a community formed around a browser.
-- but in may 2025, they stopped developing arc. adoption was brutal: 5.52% of daily users used more than one "space." 0.4% used the calendar preview. they realised were building features nobody opened.
+- but in may 2025, they stopped developing arc. adoption was brutal: 5.52% of daily users used more than one "space." 0.4% used the calendar preview. they realised they were building features nobody opened.
 - atlassian acquired the company for $610 million in september 2025.
 
 arc is gone. but ask anyone in tech about it and they'll tell you it was the most interesting browser in a decade. when the team moved to dia, people followed. atlassian paid $610 million for the team, their infrastructure, and a brand that proved these people know how to make something you remember.
