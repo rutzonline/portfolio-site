@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react"
+import { createPortal } from "react-dom"
 import { categories, loadEntries, type Entry } from "./data"
 import { addMonths, labelDate, monthDays, todayKey } from "./dates"
 import "./consumption.css"
@@ -15,10 +16,57 @@ function CategoryFill({ entries }: { entries: Entry[] }) {
 }
 
 function Day({ date, entries, today, onSelect, compact = false }: { date: string; entries: Entry[]; today: string; onSelect: (date: string) => void; compact?: boolean }) {
+  const button = useRef<HTMLButtonElement>(null)
+  const tooltip = useRef<HTMLDivElement>(null)
+  const tooltipId = useId()
+  const [showTitles, setShowTitles] = useState(false)
+  const [position, setPosition] = useState({ left: 0, top: 0 })
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  const closeTitles = useCallback(() => { clearTimeout(leaveTimer.current); setShowTitles(false) }, [])
+  const openTitles = () => {
+    clearTimeout(leaveTimer.current)
+    window.dispatchEvent(new CustomEvent("consumption-tooltip-open", { detail: tooltipId }))
+    setShowTitles(true)
+  }
+  const leaveTitles = () => { leaveTimer.current = setTimeout(closeTitles, 100) }
+  useEffect(() => () => clearTimeout(leaveTimer.current), [])
+  useLayoutEffect(() => {
+    if (!showTitles || !button.current || !tooltip.current) return
+    const anchor = button.current.getBoundingClientRect()
+    const box = tooltip.current.getBoundingClientRect()
+    setPosition({
+      left: Math.max(12, Math.min(anchor.left + (anchor.width - box.width) / 2, window.innerWidth - box.width - 12)),
+      top: anchor.bottom + box.height + 8 <= window.innerHeight ? anchor.bottom + 8 : Math.max(12, anchor.top - box.height - 8),
+    })
+  }, [showTitles])
+  useEffect(() => {
+    if (!showTitles) return
+    const onOtherTooltip = (event: Event) => { if ((event as CustomEvent<string>).detail !== tooltipId) closeTitles() }
+    window.addEventListener("consumption-tooltip-open", onOtherTooltip)
+    const onKey = (event: KeyboardEvent) => { if (event.key === "Escape") closeTitles() }
+    const onScroll = (event: Event) => { if (!(event.target instanceof Node) || !tooltip.current?.contains(event.target)) closeTitles() }
+    window.addEventListener("keydown", onKey)
+    window.addEventListener("scroll", onScroll, true)
+    window.addEventListener("resize", closeTitles)
+    return () => {
+      window.removeEventListener("consumption-tooltip-open", onOtherTooltip)
+      window.removeEventListener("keydown", onKey)
+      window.removeEventListener("scroll", onScroll, true)
+      window.removeEventListener("resize", closeTitles)
+    }
+  }, [showTitles, closeTitles, tooltipId])
   const label = `${labelDate(date)}${entries.length ? `, ${entries.length} ${entries.length === 1 ? "entry" : "entries"}: ${[...new Set(entries.map((e) => titleCase(e.category)))].join(", ")}` : ", no entries"}`
   const content = <>{entries.length > 0 && <CategoryFill entries={entries} />}<span className="consumption-day-number">{Number(date.slice(8))}</span></>
   const className = `consumption-day ${compact ? "compact" : ""} ${date === today ? "is-today" : ""}`
-  return entries.length ? <button type="button" className={className} title={entries.map((entry) => entry.title).join("\n")} aria-label={`${label}. ${entries.map((entry) => entry.title).join("; ")}`} aria-current={date === today ? "date" : undefined} onClick={() => onSelect(date)}>{content}</button>
+  return entries.length ? <><button ref={button} type="button" className={className}
+    aria-label={`${label}. ${entries.map((entry) => entry.title).join("; ")}`} aria-describedby={showTitles ? tooltipId : undefined}
+    onPointerEnter={(event) => { if (event.pointerType === "mouse") openTitles() }} onPointerLeave={leaveTitles}
+    onFocus={(event) => { if (event.currentTarget.matches(":focus-visible")) openTitles() }} onBlur={closeTitles}
+    aria-current={date === today ? "date" : undefined} onClick={() => { closeTitles(); onSelect(date) }}>{content}</button>
+    {showTitles && createPortal(<div ref={tooltip} id={tooltipId} role="tooltip" className="consumption-date-tooltip" style={position}
+      onPointerEnter={openTitles} onPointerLeave={leaveTitles}>
+      {entries.map((entry) => <p key={entry.id}>{entry.title}</p>)}
+    </div>, document.body)}</>
     : <div className={className} aria-label={label} aria-current={date === today ? "date" : undefined}>{content}</div>
 }
 
