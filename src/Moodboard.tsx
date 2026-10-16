@@ -263,7 +263,7 @@ export default function Moodboard() {
   const View = sections.find((s) => s.id === cur)!.view
   return (
     <div className="flex flex-col lg:min-h-0 lg:flex-1">
-      <p className="mb-8 max-w-xl leading-snug text-[#1A1A1A]/75">
+      <p className="mb-8 w-full leading-snug text-[#1A1A1A]/75">
         a running list of the campaigns, brands, products, and corners of the
         internet that have shaped my marketing instincts.
       </p>
