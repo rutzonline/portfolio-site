@@ -20,7 +20,7 @@ Calendar starts at the visitor's current month, with previous/next month and Tod
 
 Dates remain `YYYY-MM-DD` civil dates; timezone-independent arithmetic and formatting never interpret them as local timestamps. Today uses the visitor's local day. Titles and category badges come from Supabase; platform values remain in the data but are not displayed; valid HTTP(S) links open in a new tab. Invalid URLs retain their title with a “link unavailable” note. No fallback/sample entries, search, filters, or admin interface are included.
 
-Loading and retry states are explicit; requests abort on navigation and time out after 20 seconds. Reduced-motion preferences disable smooth list scrolling. Calendar dates have descriptive accessible names and category text in addition to colored left-edge lines.
+Loading and retry states are explicit; requests abort on navigation and time out after 20 seconds. Reduced-motion preferences disable smooth list scrolling. Calendar dates have descriptive accessible names and category text in addition to faded category-colored date fills.
 
 ## Validation
 

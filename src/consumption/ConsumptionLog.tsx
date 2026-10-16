@@ -6,14 +6,14 @@ import "./consumption.css"
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 const titleCase = (text: string) => text[0].toUpperCase() + text.slice(1)
 
-function CategoryLine({ entries }: { entries: Entry[] }) {
+function CategoryFill({ entries }: { entries: Entry[] }) {
   const present = new Set(entries.map((entry) => entry.category))
-  return <span className="consumption-category-line" aria-hidden="true">{categories.filter((category) => present.has(category)).map((category) => <i key={category} className={`consumption-category-segment category-${category}`} />)}</span>
+  return <span className="consumption-category-fill" aria-hidden="true">{categories.filter((category) => present.has(category)).map((category) => <i key={category} className={`consumption-category-segment category-${category}`} />)}</span>
 }
 
 function Day({ date, entries, today, onSelect, compact = false }: { date: string; entries: Entry[]; today: string; onSelect: (date: string) => void; compact?: boolean }) {
   const label = `${labelDate(date)}${entries.length ? `, ${entries.length} ${entries.length === 1 ? "entry" : "entries"}: ${[...new Set(entries.map((e) => titleCase(e.category)))].join(", ")}` : ", no entries"}`
-  const content = <><span>{Number(date.slice(8))}</span>{entries.length > 0 && <CategoryLine entries={entries} />}</>
+  const content = <>{entries.length > 0 && <CategoryFill entries={entries} />}<span className="consumption-day-number">{Number(date.slice(8))}</span></>
   const className = `consumption-day ${compact ? "compact" : ""} ${date === today ? "is-today" : ""}`
   return entries.length ? <button type="button" className={className} aria-label={label} aria-current={date === today ? "date" : undefined} onClick={() => onSelect(date)}>{content}</button>
     : <div className={className} aria-label={label} aria-current={date === today ? "date" : undefined}>{content}</div>

@@ -17,7 +17,8 @@
 .category-post { --category-color: #3f7c64; --category-bg: #d3e9dd; }
 .category-podcast { --category-color: #79569d; --category-bg: #e5daf2; }
 .consumption-category-segment { flex: 1; background: var(--category-color); }
-.consumption-category-line { position: absolute; top: 0; bottom: 0; left: 0; display: flex; flex-direction: column; width: 3px; border-radius: 3px 0 0 3px; overflow: hidden; pointer-events: none; }
+.consumption-day-number { position: relative; }
+.consumption-category-fill { position: absolute; inset: 0; display: flex; border-radius: inherit; overflow: hidden; pointer-events: none; opacity: .12; }
 .consumption-period-nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
 .consumption-period-nav h2 { font-size: 22px; font-weight: 500; }
 .consumption-period-nav > div { display: flex; gap: 8px; }
@@ -94,10 +95,16 @@ button.consumption-day:hover { color: #244d8a; }
 .consumption-month-label { text-align: center; font-size: 20px; font-weight: 500; }
 .consumption-month-controls { display: flex; justify-self: end; align-items: center; gap: 8px; }
 @media (max-width: 650px) {
-  .consumption-toolbar { grid-template-columns: 1fr 1fr; gap: 12px 6px; }
-  .consumption-month-label { grid-column: 1 / -1; grid-row: 1; font-size: 18px; }
-  .consumption-toolbar > .consumption-segment { grid-column: 1; }
-  .consumption-month-controls { grid-column: 2; gap: 4px; }
+  .consumption-toolbar { grid-template-columns: minmax(0, 1fr) auto; gap: 16px 8px; }
+  .consumption-month-label { grid-column: 1; grid-row: 2; text-align: left; font-size: 16px; }
+  .consumption-toolbar > .consumption-segment { grid-column: 1 / -1; grid-row: 1; justify-self: stretch; }
+  .consumption-toolbar > .consumption-segment button { flex: 1; }
+  .consumption-month-controls { grid-column: 2; grid-row: 2; gap: 4px; }
   .consumption-month-controls .consumption-action { min-width: 32px; padding: 8px 6px; }
   .consumption-toolbar .consumption-segment button { padding: 6px; }
+}
+
+@media (max-width: 1023px) {
+  main[data-mode="growth"] .page-article[data-page="upto"] > .mobile-page-nav { position: relative; top: auto; }
+  .consumption-embedded .consumption-content { padding-left: 0; padding-right: 0; }
 }
