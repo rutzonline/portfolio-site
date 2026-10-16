@@ -1,5 +1,6 @@
 export const cursorCase = String.raw`
 
+ 
 tl;dr
 - Run a 90-day India campus pilot that helps students finish projects for real users.
 - Start with 60 students; pair campus mentors with educational creators for build sessions and debugging clinics.
@@ -84,6 +85,7 @@ For this small pilot, propose a minimum of 60% of enrolled students completing a
 
 export const revolutCase = String.raw`
 
+ 
 tl;dr
 - Turn F1 and Manchester City fan interest into a useful payment journey for eligible Indian users.
 - Separate overseas travellers from domestic screening attendees; give each a relevant payment task.
@@ -171,6 +173,7 @@ For travel, agree on a contribution-based acquisition ceiling before media start
 
 export const heyclickyCase = String.raw`
 
+ 
 tl;dr
 - Show Heyclicky solving a recognisable After Effects problem for Mac users, from obstacle to completed edit.
 - Test creator narration against a plain screen recording of the same task.
