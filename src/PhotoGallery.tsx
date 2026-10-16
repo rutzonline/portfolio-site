@@ -87,7 +87,7 @@ export default function PhotoGallery({ onClose, origin, immersive = false }: { o
   const [opening, setOpening] = useState(() => fullPage && Boolean(origin) && !window.matchMedia("(prefers-reduced-motion: reduce)").matches)
   useEffect(() => {
     if (!opening) return
-    const timer = window.setTimeout(() => setOpening(false), extraTurn ? 2535 : 1700)
+    const timer = window.setTimeout(() => setOpening(false), extraTurn ? 2789 : 1700)
     return () => window.clearTimeout(timer)
   }, [opening, extraTurn])
   const panelLeft = extraTurn ? window.innerWidth * 0.2 : 0
