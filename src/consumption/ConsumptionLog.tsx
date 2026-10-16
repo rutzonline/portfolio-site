@@ -77,7 +77,8 @@ export default function ConsumptionLog() {
     if (!group || !scroller) return
     group.focus({ preventScroll: true })
     // Scroll only the log panel: scrollIntoView also moves the outer shell and document.
-    const top = scroller.scrollTop + group.getBoundingClientRect().top - scroller.getBoundingClientRect().top - scroller.clientTop - 24
+    const navHeight = scroller.querySelector<HTMLElement>(":scope > .mobile-page-nav")?.offsetHeight ?? 0
+    const top = scroller.scrollTop + group.getBoundingClientRect().top - scroller.getBoundingClientRect().top - scroller.clientTop - navHeight - 24
     scroller.scrollTo({ top: Math.max(0, top), behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" })
   }, [view, selected])
 
