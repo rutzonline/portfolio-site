@@ -1,5 +1,6 @@
-export const wisprCase = String.raw`## tl;dr — plan at a glance
+export const wisprCase = String.raw`
 
+tl;dr
 - Launch a single-purpose WhatsApp bot that turns forwarded voice notes into readable text, with Hinglish support and summaries.
 - Target the first 100 users in 7–10 days through personal networks, communities and direct outreach.
 - Make every transcript a distribution surface with a referral footer and a route to try Wispr Flow.
