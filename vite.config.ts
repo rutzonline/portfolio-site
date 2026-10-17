@@ -84,6 +84,7 @@ type FigmaSiteConfiguration = {
   }
   openGraph?: {
     image?: string
+    description?: string
   }
   analytics?: {
     googleAnalyticsId?: string
@@ -170,9 +171,10 @@ function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
         if (title) {
           tags.push({ tag: 'meta', attrs: { property: 'og:title', content: title }, injectTo: 'head' })
         }
-        if (description) {
-          tags.push({ tag: 'meta', attrs: { property: 'og:description', content: description }, injectTo: 'head' })
-          tags.push({ tag: 'meta', attrs: { name: 'twitter:description', content: description }, injectTo: 'head' })
+        const previewDescription = config.openGraph?.description ?? description
+        if (previewDescription || config.openGraph?.description !== undefined) {
+          tags.push({ tag: 'meta', attrs: { property: 'og:description', content: previewDescription }, injectTo: 'head' })
+          tags.push({ tag: 'meta', attrs: { name: 'twitter:description', content: previewDescription }, injectTo: 'head' })
         }
         if (socialImage) {
           tags.push(

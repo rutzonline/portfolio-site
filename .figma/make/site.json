@@ -3,12 +3,11 @@
   "description": "i help people discover, use, and love products through growth experiments, lifecycle content, and brand storytelling. explore my work and case studies.",
   "language": "en",
   "icons": {
-    "icon": "/favicon.png",
-    "light": "/brand.png",
-    "dark": "/growth.png"
+    "icon": "/rr.png"
   },
   "openGraph": {
-    "image": "https://www.rutzonline.com/og%20image.png"
+    "image": "https://www.rutzonline.com/og%20image.png",
+    "description": ""
   },
   "accessibility": {
     "addBypassLinks": false,
