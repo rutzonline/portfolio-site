@@ -1455,8 +1455,13 @@ export default function App() {
     return () => anim.cancel()
   }, [page])
 
+  const scrollHomeToTop = () => window.scrollTo({
+    top: 0,
+    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+  })
   const focusControls = (
     <div className="focus-controls px-6 pt-6 lg:absolute lg:left-5 lg:top-5 lg:p-0">
+      {isMobile && !page && <button type="button" className="mobile-scroll-top" onClick={scrollHomeToTop} aria-label="Back to top" />}
       <div
         className="toggle-group relative grid grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"
         role="group"
@@ -1474,14 +1479,19 @@ export default function App() {
             key={option}
             type="button"
             aria-pressed={mode === option}
+            aria-label={option}
             onClick={() => {
               navigate(`/${option}${page ? `/${slugOf(page, option)}` : ""}`, true)
+              if (isMobile && !page) scrollHomeToTop()
             }}
             className={`mode-button relative min-h-11 lg:min-h-8 cursor-pointer rounded-[3px] px-3 text-base font-medium capitalize ${
               mode === option ? "active" : ""
             }`}
           >
-            {option}
+            {isMobile ? <>
+              <img src={`/${option}.png`} alt="" width="80" height="80" className="h-full w-full object-contain" />
+              {mode === option && <span className="mode-image-label" style={{ color: option === "growth" ? SAPPHIRE : "#7d2e4b" }}>{option}</span>}
+            </> : option}
           </button>
         ))}
       </div>
