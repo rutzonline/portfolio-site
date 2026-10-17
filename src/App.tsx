@@ -632,14 +632,13 @@ function Experience({ mode }: { mode: Mode }) {
   if (sel === null) return (
     <div className="-mx-6 mt-4 min-h-0 overflow-y-auto overscroll-contain lg:-mx-10 lg:mt-6">
       <ul className="border-y border-[#1A1A1A]/15">
-        {timeline.map(([company, dates], i) => (
+        {timeline.map(([company], i) => (
           <li key={company} className="border-b border-[#1A1A1A]/15 last:border-b-0">
             <button type="button" onClick={() => setSel(i)} className="group flex w-full items-center gap-4 px-6 py-5 text-left lg:px-10">
               <Logo domain={stintDomains[i]} src={stintLogo(company)} name={company} size="size-10" />
               <span className="min-w-0 flex-1">
                 <span className="block text-[17px] font-semibold leading-tight group-hover:text-[color:var(--hl-link)]">{company}</span>
                 <span className="mt-0.5 block text-[#1A1A1A]/60">{jobs[i][1]}</span>
-                <span className="mt-1 block text-sm text-[#1A1A1A]/50">{dates}</span>
               </span>
               <span className="hidden lg:block"><Chev right /></span>
             </button>
