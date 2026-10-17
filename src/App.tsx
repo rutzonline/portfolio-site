@@ -1673,6 +1673,7 @@ export default function App() {
               {!isMobile && <>
                 <button type="button" aria-label="Open About" data-home-card="about"
                   className="absolute inset-0 z-[1] cursor-pointer" onClick={() => open("about")} />
+                <span className="desktop-mode-label">{mode}</span>
                 <div className="desktop-about-identity">
                   <Greeting key={mode} visitorName={visitorName} onChange={setVisitorName} desktop />
                   <h2 className="mobile-name" style={mode === "brand" ? { color: "#7d2e4b" } : undefined}><span className="sr-only">i’m rutuja</span><NameLettering /></h2>

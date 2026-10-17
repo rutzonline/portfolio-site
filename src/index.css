@@ -820,3 +820,20 @@ main[data-mode="brand"] .mode-toggle { background: color-mix(in srgb, #7d2e4b 14
 @media (prefers-reduced-motion: reduce) {
   .mode-toggle { transition: none; }
 }
+
+@media (min-width: 1024px) {
+  .desktop-mode-label {
+    position: absolute; top: 20px; right: 20px;
+    font-family: "Inter", sans-serif; font-size: 16px; font-weight: 600;
+    line-height: 24px; letter-spacing: .03em; text-transform: uppercase;
+    color: rgb(26 26 26 / .3); pointer-events: none;
+  }
+  /* Center the visible lettering, accounting for the SVG's uneven ink bounds. */
+  .desktop-about-card .mobile-name svg { transform: translateY(15.4%); }
+}
+@media (min-width: 1280px) {
+  .desktop-mode-label { top: 24px; right: 24px; }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .desktop-about-card .desktop-about-identity { padding-top: 32px; }
+}
