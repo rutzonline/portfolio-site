@@ -113,7 +113,7 @@ function Brands() {
   const { rows, status } = useMoodboard("brands")
   return (
     <>
-      <Intro>why i probably won&rsquo;t skip them on my feed</Intro>
+      <Intro>and why i probably won&rsquo;t skip them on my feed</Intro>
       <State status={status} count={rows.length} />
       <ul className="grid gap-3 md:grid-cols-2">
         {rows.map((brand) => (
