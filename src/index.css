@@ -770,3 +770,16 @@ main, main * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) trans
   .charm-controls { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
   .charm-choice { width: min(56px, 100%); min-width: 44px; height: auto; aspect-ratio: 1; }
 }
+
+@media (max-width: 1023px) {
+  .upto-extras { padding-top: 32px; }
+  .focus-controls {
+    position: sticky; top: 0; z-index: 40; order: 0; align-self: start;
+    padding-top: max(16px, env(safe-area-inset-top)); padding-bottom: 12px;
+    background: #faf9f6;
+  }
+  .focus-controls::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -16px; height: 16px;
+    background: linear-gradient(to bottom, #faf9f6, transparent); pointer-events: none;
+  }
+}

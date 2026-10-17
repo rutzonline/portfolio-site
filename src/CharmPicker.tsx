@@ -137,7 +137,7 @@ export default function CharmPicker({ photos }: { photos: ReactNode }) {
   }, [attempt])
 
   return <div className="charm-picker">
-    <p className="charm-intro text-base text-[#1A1A1A]/65">collect some charms to put my tokenmaxxing to use</p>
+    <p className="charm-intro text-base text-[#1A1A1A]/65"><span className="lg:hidden">collect some charms before you go</span><span className="hidden lg:inline">collect some charms to put my tokenmaxxing to use</span></p>
     <div className="charm-controls">
         {charms.map((src, index) => <button key={src} type="button" disabled={!ready} aria-label={`Drop charm ${index + 1}`}
           onClick={() => { drop.current?.(src); setCount((n) => n + 1) }}

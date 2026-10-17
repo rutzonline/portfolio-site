@@ -1455,7 +1455,40 @@ export default function App() {
     return () => anim.cancel()
   }, [page])
 
-  // Hash navigation needs explicit paths so each portfolio page gets its own view.
+  const focusControls = (
+    <div className="focus-controls px-6 pt-6 lg:absolute lg:left-5 lg:top-5 lg:p-0">
+      <div
+        className="toggle-group relative grid grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"
+        role="group"
+        aria-label="Choose portfolio focus"
+      >
+        <span
+          aria-hidden="true"
+          className="toggle-thumb absolute bottom-1 left-1 top-1 w-[calc(50%-4px)] rounded-[3px]"
+          style={{
+            transform: mode === "brand" ? "translateX(100%)" : "none",
+          }}
+        />
+        {(["growth", "brand"] as const).map((option) => (
+          <button
+            key={option}
+            type="button"
+            aria-pressed={mode === option}
+            onClick={() => {
+              navigate(`/${option}${page ? `/${slugOf(page, option)}` : ""}`, true)
+            }}
+            className={`mode-button relative min-h-11 lg:min-h-8 cursor-pointer rounded-[3px] px-3 text-base font-medium capitalize ${
+              mode === option ? "active" : ""
+            }`}
+          >
+            {option}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+
+  // Track the active mode and page.
   const analyticsPath = `/${mode}${page ? `/${slugOf(page, mode)}` : ""}`
 
   return (
@@ -1493,6 +1526,7 @@ export default function App() {
           mode === "growth" && !page ? "fade-others " : ""
         }${independentPage ? "h-full min-h-0 " : ""}grid grid-cols-1 lg:h-full lg:grid-cols-[20%_repeat(3,minmax(0,1fr))] lg:grid-rows-2`}
       >
+        {isMobile && !page && focusControls}
         <Card
           ariaLabel="Portfolio focus"
           padded={false}
@@ -1510,36 +1544,7 @@ export default function App() {
         >
           {!isMobile && <PhotoSlideshow active={page !== null} portrait={content.portrait}
             onReturnHome={page ? close : undefined} />}
-          <div className="focus-controls px-6 pt-6 lg:absolute lg:left-5 lg:top-5 lg:p-0">
-            <div
-              className="toggle-group relative grid grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"
-              role="group"
-              aria-label="Choose portfolio focus"
-            >
-              <span
-                aria-hidden="true"
-                className="toggle-thumb absolute bottom-1 left-1 top-1 w-[calc(50%-4px)] rounded-[3px]"
-                style={{
-                  transform: mode === "brand" ? "translateX(100%)" : "none",
-                }}
-              />
-              {(["growth", "brand"] as const).map((option) => (
-                <button
-                  key={option}
-                  type="button"
-                  aria-pressed={mode === option}
-                  onClick={() => {
-                    navigate(`/${option}${page ? `/${slugOf(page, option)}` : ""}`, true)
-                  }}
-                  className={`mode-button relative min-h-11 lg:min-h-8 cursor-pointer rounded-[3px] px-3 text-base font-medium capitalize ${
-                    mode === option ? "active" : ""
-                  }`}
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
-          </div>
+          {!isMobile && focusControls}
           <div className={`mobile-identity px-6 pb-7 pt-7 lg:hidden ${mode === "brand" ? "mobile-brand-identity" : ""}`}>
             <div className="mobile-greeting-row mb-1 flex items-center justify-between gap-3">
               <Greeting visitorName={visitorName} onChange={setVisitorName} />
