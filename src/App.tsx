@@ -1455,13 +1455,42 @@ export default function App() {
     return () => anim.cancel()
   }, [page])
 
-  const scrollHomeToTop = () => window.scrollTo({
-    top: 0,
-    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
-  })
+  const homeScrollCleanup = useRef<(() => void) | null>(null)
+  useEffect(() => () => homeScrollCleanup.current?.(), [page])
+  const scrollHomeToTop = () => {
+    homeScrollCleanup.current?.()
+    const start = window.scrollY
+    if (!start || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      window.scrollTo({ top: 0, behavior: "instant" })
+      return
+    }
+    let frame = 0
+    let started: number | null = null
+    const finish = () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener("pointerdown", finish)
+      window.removeEventListener("touchstart", finish)
+      window.removeEventListener("wheel", finish)
+      homeScrollCleanup.current = null
+    }
+    const tick = (time: number) => {
+      started ??= time
+      const progress = Math.min(1, (time - started) / 450)
+      window.scrollTo({ top: start * Math.pow(1 - progress, 3), behavior: "instant" })
+      if (progress < 1) frame = requestAnimationFrame(tick)
+      else finish()
+    }
+    homeScrollCleanup.current = finish
+    window.addEventListener("pointerdown", finish, { passive: true })
+    window.addEventListener("touchstart", finish, { passive: true })
+    window.addEventListener("wheel", finish, { passive: true })
+    frame = requestAnimationFrame(tick)
+  }
   const focusControls = (
     <div className="focus-controls px-6 pt-6 lg:absolute lg:left-5 lg:top-5 lg:p-0">
-      {isMobile && !page && <button type="button" className="mobile-scroll-top" onClick={scrollHomeToTop} aria-label="Back to top" />}
+      {isMobile && !page && <button type="button" className="mobile-scroll-top" onClick={scrollHomeToTop} aria-label="Back to top">
+        <span className="mode-bar-label" style={{ color: mode === "growth" ? SAPPHIRE : "#7d2e4b" }} aria-hidden="true">{mode}</span>
+      </button>}
       <div
         className="toggle-group relative grid grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"
         role="group"
@@ -1489,8 +1518,7 @@ export default function App() {
             }`}
           >
             {isMobile ? <>
-              <img src={`/${option}.png`} alt="" width="80" height="80" className="h-full w-full object-contain" />
-              {mode === option && <span className="mode-image-label" style={{ color: option === "growth" ? SAPPHIRE : "#7d2e4b" }}>{option}</span>}
+              <img src={`/${option}.png`} alt="" width="64" height="64" className="h-full w-full object-contain" />
             </> : option}
           </button>
         ))}

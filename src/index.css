@@ -1,6 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Chillink";
+  src: url("/fonts/chillink.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   font-family: "Inter", sans-serif;
   color: #1a1a1a;
@@ -785,17 +793,14 @@ main, main * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) trans
 }
 
 @media (max-width: 1023px) {
-  .mobile-scroll-top { position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer; outline-offset: -3px; }
+  .mobile-scroll-top { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; padding-top: 12px; cursor: pointer; outline-offset: -3px; }
   .focus-controls .toggle-group { pointer-events: none; }
   .focus-controls .mode-button,
   .focus-controls .mode-button.active {
-    width: 80px; height: 80px; min-height: 80px; padding: 0;
+    width: 64px; height: 64px; min-height: 64px; padding: 0;
     border: 0; border-radius: 0; background: transparent; pointer-events: auto;
   }
   .focus-controls .mode-button img { mix-blend-mode: multiply; }
-  .mode-image-label {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    padding: 1px 5px; border-radius: 3px; background: rgb(250 249 246 / .94);
-    font-size: 14px; font-weight: 500; line-height: 20px;
-  }
+  .mode-bar-label { font-family: "Chillink", cursive; font-size: 24px; font-weight: 400; line-height: 1.2; }
+
 }
