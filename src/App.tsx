@@ -1489,46 +1489,17 @@ export default function App() {
   const focusControls = (
     <div className="focus-controls px-6 pt-6 lg:absolute lg:left-5 lg:top-5 lg:p-0">
       {isMobile && !page && <button type="button" className="mobile-scroll-top" onClick={scrollHomeToTop} aria-label="Back to top" />}
-      {isMobile ? <button type="button" role="switch" aria-checked={mode === "brand"} aria-label="Brand mode"
+      <button type="button" role="switch" aria-checked={mode === "brand"} aria-label="Brand mode"
         title={`Switch to ${mode === "growth" ? "brand" : "growth"} mode`}
-        className="mobile-mode-toggle" onClick={() => {
-          navigate(`/${mode === "growth" ? "brand" : "growth"}`, true)
-          scrollHomeToTop()
+        className="mode-toggle" onClick={() => {
+          const nextMode = mode === "growth" ? "brand" : "growth"
+          navigate(`/${nextMode}${page ? `/${slugOf(page, nextMode)}` : ""}`, true)
+          if (isMobile && !page) scrollHomeToTop()
         }}>
         <span className="toggle-thumb" aria-hidden="true" style={{ transform: mode === "brand" ? "translateX(100%)" : "none" }}>
           <img src={`/${mode}.png`} alt="" width="32" height="32" />
         </span>
-      </button> : (
-        <div
-          className="toggle-group relative grid grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"
-          role="group"
-          aria-label="Choose portfolio focus"
-        >
-          <span
-            aria-hidden="true"
-            className="toggle-thumb absolute bottom-1 left-1 top-1 w-[calc(50%-4px)] rounded-[3px]"
-            style={{
-              transform: mode === "brand" ? "translateX(100%)" : "none",
-            }}
-          />
-          {(["growth", "brand"] as const).map((option) => (
-            <button
-              key={option}
-              type="button"
-              aria-pressed={mode === option}
-              aria-label={option}
-              onClick={() => {
-                navigate(`/${option}${page ? `/${slugOf(page, option)}` : ""}`, true)
-              }}
-              className={`mode-button relative min-h-11 lg:min-h-8 cursor-pointer rounded-[3px] px-3 text-base font-medium capitalize ${
-                mode === option ? "active" : ""
-              }`}
-            >
-              {option}
-            </button>
-          ))}
-        </div>
-      )}
+      </button>
       {isMobile && <span className="mode-bar-label" style={{ color: mode === "growth" ? SAPPHIRE : "#7d2e4b" }}>{mode}</span>}
     </div>
   )
@@ -1712,11 +1683,14 @@ export default function App() {
                   <Typewriter key={mode} text={aboutIntro.main} />
                   {aboutIntro.explanation && <span className="about-explanation mt-2 block text-[20px] font-semibold opacity-50 xl:text-[22px]">{aboutIntro.explanation}</span>}
                 </p>}
-                <p className="mobile-specialties mt-3 leading-snug text-[#1A1A1A]/65">
-                  {mode === "growth"
-                    ? "email, paid, creators, and offline"
-                    : "copy, content, social, and brand comms"}
-                </p>
+                <div className="about-card-footer mt-3">
+                  <p className="mobile-specialties leading-snug text-[#1A1A1A]/65">
+                    {mode === "growth"
+                      ? "email, paid, creators, and offline"
+                      : "copy, content, social, and brand comms"}
+                  </p>
+                  {!isMobile && <span className="mode-tag" style={{ color: mode === "growth" ? SAPPHIRE : "#7d2e4b" }}>{mode}</span>}
+                </div>
               </div>
             </Card>
 
