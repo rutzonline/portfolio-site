@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react"
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react"
 import { useMoodboard } from "@/useMoodboard"
 
 const ph = (label: string) =>
@@ -141,8 +141,31 @@ function Brands() {
   )
 }
 
+function CampaignImage({ src, brand, active }: { src?: string; brand: string; active: boolean }) {
+  const [loaded, setLoaded] = useState(false)
+  const [failed, setFailed] = useState(false)
+  return <>
+    <img src={src || ph(brand)} alt={active ? brand : ""} aria-hidden={!active}
+      loading="eager" decoding="async" fetchPriority={active ? "high" : "low"}
+      onLoad={(event) => {
+        const image = event.currentTarget
+        image.decode().catch(() => {}).then(() => setLoaded(true))
+      }}
+      onError={() => setFailed(true)}
+      className={`absolute inset-0 h-full w-full object-cover ${active && loaded && !failed ? "opacity-100" : "opacity-0"}`} />
+    {active && !loaded && !failed && <Loading />}
+    {active && failed && <p role="status" className="absolute inset-0 flex items-center justify-center p-4 text-sm text-[#1A1A1A]/65">couldn’t load this image.</p>}
+  </>
+}
+
 function Campaigns() {
-  const { rows, status } = useMoodboard("campaigns")
+  const { rows: sourceRows, status } = useMoodboard("campaigns")
+  const rows = useMemo(() => {
+    const middle = sourceRows.filter((row) => row.brand.trim().toLowerCase() === "ottilie")
+    const others = sourceRows.filter((row) => row.brand.trim().toLowerCase() !== "ottilie")
+    others.splice(Math.floor(sourceRows.length / 2), 0, ...middle)
+    return others
+  }, [sourceRows])
   const [index, setIndex] = useState(0)
   const campaign = rows[index]
   const step = (direction: number) => setIndex((current) => rows.length ? (current + direction + rows.length) % rows.length : 0)
@@ -158,8 +181,8 @@ function Campaigns() {
               if (event.key === "ArrowLeft") { event.preventDefault(); step(-1) }
               if (event.key === "ArrowRight") { event.preventDefault(); step(1) }
             }}>
-            <div className="aspect-[16/9] overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-[#F0EEEA] shadow-sm">
-              <Img src={campaign.image_url} alt={campaign.brand} className="h-full object-cover" />
+            <div className="relative aspect-[16/9] overflow-hidden rounded-[24px] border border-[#D6D1C9] bg-[#F0EEEA] shadow-sm">
+              {rows.map((row, imageIndex) => <CampaignImage key={`${row.brand}:${row.image_url}`} src={row.image_url} brand={row.brand} active={imageIndex === index} />)}
             </div>
             <div className="mt-3 flex items-center justify-center gap-4">
               <button type="button" aria-label="Previous campaign" disabled={rows.length < 2} onClick={() => step(-1)} className={arrow}>
