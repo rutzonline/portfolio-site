@@ -824,7 +824,7 @@ main[data-mode="brand"] .mode-toggle { background: color-mix(in srgb, #7d2e4b 14
 @media (min-width: 1024px) {
   .desktop-mode-label {
     position: absolute; top: 20px; right: 20px;
-    font-family: "Inter", sans-serif; font-size: 16px; font-weight: 600;
+    font-family: "Inter", sans-serif; font-size: 14px; font-weight: 600;
     line-height: 24px; letter-spacing: .03em; text-transform: uppercase;
     color: rgb(26 26 26 / .3); pointer-events: none;
   }
