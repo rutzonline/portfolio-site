@@ -177,10 +177,10 @@ function NoteBody({ body }: { body: string }) {
   return <>{body.split(/\n\n+/).map((block, index) => {
     const lines = block.split("\n")
     return lines.every((line) => line.startsWith("- ")) ? (
-      <ul key={index} className="list-disc space-y-2 pl-6 text-lg max-lg:text-base leading-relaxed text-[#1A1A1A]/85">
+      <ul key={index} className="list-disc space-y-2 pl-6 text-base leading-relaxed text-[#1A1A1A]/85">
         {lines.map((line, item) => <li key={item}>{inline(line.slice(2))}</li>)}
       </ul>
-    ) : <p key={index} className="whitespace-pre-line text-lg max-lg:text-base leading-relaxed text-[#1A1A1A]/85">{inline(block)}</p>
+    ) : <p key={index} className="whitespace-pre-line text-base leading-relaxed text-[#1A1A1A]/85">{inline(block)}</p>
   })}</>
 }
 
@@ -208,7 +208,7 @@ function NotesPage({ mode }: { mode: Mode }) {
           <Chev />
           all notes
         </button>
-        <h2 className="font-body-serif text-[clamp(28px,3.4vw,46px)] leading-[1.05] tracking-[-0.025em]">
+        <h2 className="case-title leading-[1.15] tracking-[-0.02em]">
           {n.title}
         </h2>
         <NoteBody body={n.body} />
