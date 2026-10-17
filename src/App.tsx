@@ -259,9 +259,6 @@ function NotesPage({ mode }: { mode: Mode }) {
                 <span className="block text-[17px] font-semibold leading-tight transition-colors group-hover:text-[color:var(--hl-link)]">
                   {n.title}
                 </span>
-                <span className="mt-0.5 line-clamp-2 text-[#1A1A1A]/60">
-                  {n.body.split("\n")[0]}
-                </span>
               </span>
               <span
                 aria-hidden="true"

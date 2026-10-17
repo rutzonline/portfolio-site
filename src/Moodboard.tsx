@@ -169,7 +169,7 @@ function Campaigns() {
   const [index, setIndex] = useState(0)
   const campaign = rows[index]
   const step = (direction: number) => setIndex((current) => rows.length ? (current + direction + rows.length) % rows.length : 0)
-  const arrow = "flex size-9 items-center justify-center rounded-full border border-[#B8B3AA] transition-colors hover:border-[#1A1A1A] disabled:cursor-default disabled:opacity-30"
+  const chevronControl = "flex size-11 items-center justify-center rounded transition-opacity hover:opacity-70 disabled:cursor-default disabled:opacity-30"
   return (
     <section className="flex flex-col lg:min-h-full">
       <Intro>my content marketing hall of fame</Intro>
@@ -185,12 +185,12 @@ function Campaigns() {
               {rows.map((row, imageIndex) => <CampaignImage key={`${row.brand}:${row.image_url}`} src={row.image_url} brand={row.brand} active={imageIndex === index} />)}
             </div>
             <div className="mt-3 flex items-center justify-center gap-4">
-              <button type="button" aria-label="Previous campaign" disabled={rows.length < 2} onClick={() => step(-1)} className={arrow}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m13 7-5 5 5 5M8 12h10" /></svg>
+              <button type="button" aria-label="Previous campaign" disabled={rows.length < 2} onClick={() => step(-1)} className={chevronControl}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg>
               </button>
               <p className="text-sm tabular-nums text-[#1A1A1A]/55">{index + 1} / {rows.length}</p>
-              <button type="button" aria-label="Next campaign" disabled={rows.length < 2} onClick={() => step(1)} className={arrow}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m11 7 5 5-5 5M6 12h10" /></svg>
+              <button type="button" aria-label="Next campaign" disabled={rows.length < 2} onClick={() => step(1)} className={chevronControl}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m10 6 6 6-6 6" /></svg>
               </button>
             </div>
           </div>
