@@ -809,8 +809,9 @@ main, main * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) trans
   }
   .mobile-mode-toggle img { width: 32px; height: 32px; object-fit: contain; mix-blend-mode: multiply; }
   .mode-bar-label {
-    position: relative; pointer-events: none;
-    font-family: "Inter", sans-serif; font-size: 16px; font-weight: 600; line-height: 1.5;
+    position: relative; pointer-events: none; margin-left: auto; opacity: .75;
+    font-family: "Inter", sans-serif; font-size: 18px; font-weight: 600; line-height: 1.5;
+    text-transform: uppercase; letter-spacing: .03em;
   }
 }
 @media (prefers-reduced-motion: reduce) {
