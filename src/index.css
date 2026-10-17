@@ -706,7 +706,7 @@ main[data-mode="brand"] .upto-card dt { color: rgb(11 45 110 / .95); }
 }
 
 @media (min-width: 1024px) {
-  .charm-controls .upto-icon-button picture img { width: 144px; height: 108px; max-width: none; }
+  .charm-controls .upto-icon-button img { width: 144px; height: 108px; max-width: none; }
 }
 .camera-opening { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
 .camera-flight { position: absolute; opacity: 0; max-width: none; object-fit: contain; }
