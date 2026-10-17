@@ -1488,41 +1488,48 @@ export default function App() {
   }
   const focusControls = (
     <div className="focus-controls px-6 pt-6 lg:absolute lg:left-5 lg:top-5 lg:p-0">
-      {isMobile && !page && <button type="button" className="mobile-scroll-top" onClick={scrollHomeToTop} aria-label="Back to top">
-        <span className="mode-bar-label" style={{ color: mode === "growth" ? SAPPHIRE : "#7d2e4b" }} aria-hidden="true">{mode}</span>
-      </button>}
-      <div
-        className="toggle-group relative grid grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"
-        role="group"
-        aria-label="Choose portfolio focus"
-      >
-        <span
-          aria-hidden="true"
-          className="toggle-thumb absolute bottom-1 left-1 top-1 w-[calc(50%-4px)] rounded-[3px]"
-          style={{
-            transform: mode === "brand" ? "translateX(100%)" : "none",
-          }}
-        />
-        {(["growth", "brand"] as const).map((option) => (
-          <button
-            key={option}
-            type="button"
-            aria-pressed={mode === option}
-            aria-label={option}
-            onClick={() => {
-              navigate(`/${option}${page ? `/${slugOf(page, option)}` : ""}`, true)
-              if (isMobile && !page) scrollHomeToTop()
+      {isMobile && !page && <button type="button" className="mobile-scroll-top" onClick={scrollHomeToTop} aria-label="Back to top" />}
+      {isMobile ? <button type="button" role="switch" aria-checked={mode === "brand"} aria-label="Brand mode"
+        title={`Switch to ${mode === "growth" ? "brand" : "growth"} mode`}
+        className="mobile-mode-toggle" onClick={() => {
+          navigate(`/${mode === "growth" ? "brand" : "growth"}`, true)
+          scrollHomeToTop()
+        }}>
+        <span className="toggle-thumb" aria-hidden="true" style={{ transform: mode === "brand" ? "translateX(100%)" : "none" }}>
+          <img src={`/${mode}.png`} alt="" width="32" height="32" />
+        </span>
+      </button> : (
+        <div
+          className="toggle-group relative grid grid-cols-2 rounded-[6px] border border-[#E5E1DA] p-1"
+          role="group"
+          aria-label="Choose portfolio focus"
+        >
+          <span
+            aria-hidden="true"
+            className="toggle-thumb absolute bottom-1 left-1 top-1 w-[calc(50%-4px)] rounded-[3px]"
+            style={{
+              transform: mode === "brand" ? "translateX(100%)" : "none",
             }}
-            className={`mode-button relative min-h-11 lg:min-h-8 cursor-pointer rounded-[3px] px-3 text-base font-medium capitalize ${
-              mode === option ? "active" : ""
-            }`}
-          >
-            {isMobile ? <>
-              <img src={`/${option}.png`} alt="" width="48" height="48" className="h-full w-full object-contain" />
-            </> : option}
-          </button>
-        ))}
-      </div>
+          />
+          {(["growth", "brand"] as const).map((option) => (
+            <button
+              key={option}
+              type="button"
+              aria-pressed={mode === option}
+              aria-label={option}
+              onClick={() => {
+                navigate(`/${option}${page ? `/${slugOf(page, option)}` : ""}`, true)
+              }}
+              className={`mode-button relative min-h-11 lg:min-h-8 cursor-pointer rounded-[3px] px-3 text-base font-medium capitalize ${
+                mode === option ? "active" : ""
+              }`}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      )}
+      {isMobile && <span className="mode-bar-label" style={{ color: mode === "growth" ? SAPPHIRE : "#7d2e4b" }}>{mode}</span>}
     </div>
   )
 
