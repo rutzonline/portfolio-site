@@ -760,3 +760,13 @@ main, main * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) trans
     overflow: visible;
   }
 }
+
+/* Keep every mobile page heading below the full-width navigation bar. */
+@media (max-width: 1023px) {
+  main[data-mode] .page-article { padding-top: 0; }
+  main[data-mode] .page-article > .mobile-page-nav { margin-top: 0; top: 0; }
+  main[data-mode="growth"] .page-article[data-page="moodboard"]:has([data-essay]) > .mobile-page-nav,
+  .page-article[data-page="projects"]:has([data-essay]) > .mobile-page-nav { top: 0; }
+  .charm-controls { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+  .charm-choice { width: min(56px, 100%); min-width: 44px; height: auto; aspect-ratio: 1; }
+}

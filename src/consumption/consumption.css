@@ -105,7 +105,7 @@ button.consumption-day:hover { color: #244d8a; }
 }
 
 @media (max-width: 1023px) {
-  main[data-mode="growth"] .page-article[data-page="upto"] > .mobile-page-nav { position: sticky; top: -24px; }
+  main[data-mode="growth"] .page-article[data-page="upto"] > .mobile-page-nav { position: sticky; top: 0; }
   .consumption-embedded .consumption-content { padding-left: 0; padding-right: 0; }
 }
 
@@ -118,7 +118,7 @@ button.consumption-day:hover { color: #244d8a; }
 }
 
 @media (max-width: 1023px) and (max-height: 700px) {
-  main[data-mode="growth"] .page-article[data-page="upto"] > .mobile-page-nav { top: -16px; }
+  main[data-mode="growth"] .page-article[data-page="upto"] > .mobile-page-nav { top: 0; }
 }
 
 .consumption-date-tooltip {
@@ -130,3 +130,8 @@ button.consumption-day:hover { color: #244d8a; }
   text-align: left; overflow-wrap: anywhere;
 }
 .consumption-date-tooltip p + p { margin-top: 8px; padding-top: 8px; border-top: 1px solid #e5e1da; }
+
+@media (min-width: 1024px) {
+  .consumption-list :is(h2, h2 time, .consumption-entry-title, .consumption-entry-title a, .consumption-badge) { text-transform: lowercase; }
+  .consumption-date-group { margin-bottom: 64px; }
+}

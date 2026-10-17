@@ -1,3 +1,4 @@
+import { navigate, useDetailRoute, usePathname } from "@/navigation"
 import Carousel from "@/Carousel"
 import { getCaseVisual } from "@/caseVisuals"
 import NameLettering from "@/NameLettering"
@@ -176,16 +177,16 @@ function NoteBody({ body }: { body: string }) {
   return <>{body.split(/\n\n+/).map((block, index) => {
     const lines = block.split("\n")
     return lines.every((line) => line.startsWith("- ")) ? (
-      <ul key={index} className="list-disc space-y-2 pl-6 text-lg leading-relaxed text-[#1A1A1A]/85">
+      <ul key={index} className="list-disc space-y-2 pl-6 text-lg max-lg:text-base leading-relaxed text-[#1A1A1A]/85">
         {lines.map((line, item) => <li key={item}>{inline(line.slice(2))}</li>)}
       </ul>
-    ) : <p key={index} className="whitespace-pre-line text-lg leading-relaxed text-[#1A1A1A]/85">{inline(block)}</p>
+    ) : <p key={index} className="whitespace-pre-line text-lg max-lg:text-base leading-relaxed text-[#1A1A1A]/85">{inline(block)}</p>
   })}</>
 }
 
 function NotesPage({ mode }: { mode: Mode }) {
   const noteList = notesByMode[mode]
-  const [sel, setSel] = useState<number | null>(null)
+  const [sel, setSel] = useDetailRoute(noteList.map((note) => note.title), `/${mode}/notes`)
   useBack(
     sel !== null
       ? () => {
@@ -231,7 +232,7 @@ function NotesPage({ mode }: { mode: Mode }) {
               className="back-btn text-left"
             >
               next: {noteList[sel + 1].title}
-              <Chev right />
+              <span className="hidden lg:block"><Chev right /></span>
             </button>
           )}
         </div>
@@ -264,7 +265,7 @@ function NotesPage({ mode }: { mode: Mode }) {
               </span>
               <span
                 aria-hidden="true"
-                className="text-2xl leading-none text-[color:var(--hl-link)] max-lg:opacity-100 opacity-0 transition-opacity group-hover:opacity-100"
+                className="text-2xl leading-none text-[color:var(--hl-link)] max-lg:hidden opacity-0 transition-opacity group-hover:opacity-100"
               >
                 ↗
               </span>
@@ -629,7 +630,7 @@ const stintMd = (i: number) => {
 }
 
 function Experience({ mode }: { mode: Mode }) {
-  const [sel, setSel] = useState<number | null>(null)
+  const [sel, setSel] = useDetailRoute(timeline.map(([company]) => company), `/${mode}/experience`)
   useBack(sel !== null ? () => { setSel(null); return true } : null, "experience")
   if (sel === null) return (
     <div className="-mx-6 mt-4 min-h-0 overflow-y-auto overscroll-contain lg:-mx-10 lg:mt-6">
@@ -643,7 +644,7 @@ function Experience({ mode }: { mode: Mode }) {
                 <span className="mt-0.5 block text-[#1A1A1A]/60">{jobs[i][1]}</span>
                 <span className="mt-1 block text-sm text-[#1A1A1A]/50">{dates}</span>
               </span>
-              <Chev right />
+              <span className="hidden lg:block"><Chev right /></span>
             </button>
           </li>
         ))}
@@ -1204,11 +1205,7 @@ function CaseStudy({
 }
 
 function CasesPage({ mode }: { mode: Mode }) {
-  const [open, setOpen] = useState<number | null>(() => {
-    const slug = window.location.hash.split("/")[2]
-    const index = cases.findIndex(([name]) => name.replace(/ /g, "-") === slug)
-    return index >= 0 ? index : null
-  })
+  const [open, setOpen] = useDetailRoute(cases.map(([name]) => name), `/${mode}/case-studies`)
   useBack(
     open !== null
       ? () => {
@@ -1272,7 +1269,7 @@ function CasesPage({ mode }: { mode: Mode }) {
               </span>
               <span
                 aria-hidden="true"
-                className="text-2xl leading-none text-[color:var(--hl-link)] max-lg:opacity-100 opacity-0 transition-opacity group-hover:opacity-100"
+                className="text-2xl leading-none text-[color:var(--hl-link)] max-lg:hidden opacity-0 transition-opacity group-hover:opacity-100"
               >
                 ↗
               </span>
@@ -1299,14 +1296,16 @@ const SLUGS: Record<PageKey, string> = {
 const slugOf = (k: PageKey, m: Mode) =>
   k === "moodboard" && m === "growth" ? "case-studies" : SLUGS[k]
 
-function readHash(): { mode: Mode | null; page: PageKey | null } {
-  const [m, slug] = window.location.hash.replace("#", "").split("/")
+function readRoute(path: string): { mode: Mode | null; page: PageKey | null } {
+  const [m, slug] = path.slice(1).split("/")
   const mode = m === "growth" || m === "brand" ? m : null
   const page = PAGE_KEYS.find((k) => mode && slugOf(k, mode) === slug) ?? null
   return { mode, page }
 }
 
 export default function App() {
+  const pathname = usePathname()
+  const route = readRoute(pathname)
   const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 1023px)").matches)
   useEffect(() => {
     const query = window.matchMedia("(max-width: 1023px)")
@@ -1322,12 +1321,13 @@ export default function App() {
       image.decode().catch(() => {})
     }
   }, [])
-  const [mode, setMode] = useState<Mode>(() => readHash().mode ?? "growth")
+  const mode = route.mode ?? "growth"
   const [visitorName, setVisitorName] = useState("first name")
-  const [galleryOpen, setGalleryOpen] = useState(() => (window.matchMedia("(max-width: 1023px)").matches || window.location.hash === "#brand/what-im-up-to/photos") && window.location.hash.endsWith("/photos"))
+  const galleryOpen = pathname.endsWith("/photos") && (isMobile || pathname === "/brand/what-im-up-to/photos")
   const [galleryOrigin, setGalleryOrigin] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
   const [copied, setCopied] = useState(false)
-  const [page, setPage] = useState<PageKey | null>(() => readHash().page)
+  const page = route.page
+  const hasDetail = Boolean(pathname.split("/")[3]) && (page === "notes" || page === "projects" || (page === "moodboard" && mode === "growth"))
   const mobileHomePosition = useRef<{ page: PageKey; y: number } | null>(null)
   const previousPageRef = useRef(page)
   const casePage = page === "moodboard" && mode === "growth"
@@ -1338,17 +1338,6 @@ export default function App() {
   const tint = (k: PageKey) => isMobile && mode === "brand"
     ? ({ projects: BLUE, work: LIME, upto: PINK } as Partial<Record<PageKey, string>>)[k] ?? CREAM
     : content.tints[k] ?? CREAM
-
-  useEffect(() => {
-    const onHash = () => {
-      const h = readHash()
-      if (h.mode) setMode(h.mode)
-      setPage(h.page)
-      setGalleryOpen((window.matchMedia("(max-width: 1023px)").matches || window.location.hash === "#brand/what-im-up-to/photos") && window.location.hash.endsWith("/photos"))
-    }
-    window.addEventListener("hashchange", onHash)
-    return () => window.removeEventListener("hashchange", onHash)
-  }, [])
 
   useEffect(() => {
     const article = document.querySelector<HTMLElement>(".page-article")
@@ -1362,7 +1351,7 @@ export default function App() {
     if (!window.matchMedia("(min-width: 1024px)").matches) {
       mobileHomePosition.current = { page: k, y: window.scrollY }
     }
-    window.location.hash = `${mode}/${slugOf(k, mode)}`
+    navigate(`/${mode}/${slugOf(k, mode)}`)
   }
   useEffect(() => {
     const desktop = window.matchMedia("(min-width: 1024px)")
@@ -1388,8 +1377,7 @@ export default function App() {
     close()
   }
   const close = () => {
-    history.pushState(null, "", `${window.location.pathname}#${mode}`)
-    setPage(null)
+    navigate(`/${mode}`)
   }
 
   const originRef = useRef<DOMRect | null>(null)
@@ -1494,7 +1482,7 @@ export default function App() {
         } as CSSProperties
       }
     >
-      {galleryOpen && <PhotoGallery origin={galleryOrigin} immersive={page === "upto" && mode === "brand"} onClose={() => { setGalleryOpen(false); history.replaceState(null, "", page === "upto" ? `#${mode}/what-im-up-to` : `#${mode}`) }} />}
+      {galleryOpen && <PhotoGallery origin={galleryOrigin} immersive={page === "upto" && mode === "brand"} onClose={() => navigate(page === "upto" ? `/${mode}/what-im-up-to` : `/${mode}`, true)} />}
       {page && (
         <span
           key={page}
@@ -1545,12 +1533,7 @@ export default function App() {
                   type="button"
                   aria-pressed={mode === option}
                   onClick={() => {
-                    setMode(option)
-                    history.replaceState(
-                      null,
-                      "",
-                      `#${option}${page ? `/${slugOf(page, option)}` : ""}`,
-                    )
+                    navigate(`/${option}${page ? `/${slugOf(page, option)}` : ""}`, true)
                   }}
                   className={`mode-button relative min-h-11 lg:min-h-8 cursor-pointer rounded-[3px] px-3 text-base font-medium capitalize ${
                     mode === option ? "active" : ""
@@ -1567,8 +1550,7 @@ export default function App() {
               <button type="button" onClick={(event) => {
                 const rect = event.currentTarget.getBoundingClientRect()
                 setGalleryOrigin({ x: rect.x, y: rect.y, width: rect.width, height: rect.height })
-                setGalleryOpen(true)
-                history.pushState(null, "", `#${mode}/photos`)
+                navigate(`/${mode}/photos`)
               }}
                 aria-label="Open photo gallery" aria-haspopup="dialog" className="photo-folder-button shrink-0">
                 <img src="/photo-folder.png" alt="" className={`h-full w-full object-contain ${galleryOpen ? "opacity-0" : ""}`} />
@@ -1596,9 +1578,9 @@ export default function App() {
                 className="back-btn min-h-11 min-w-0 truncate"
               >
                 <Chev />
-                {backLabel ? "Back" : "homepage"}
+                {hasDetail || backLabel ? "Back" : "homepage"}
               </button>
-              {backLabel && <button
+              {(hasDetail || backLabel) && <button
                 type="button"
                 onClick={close}
                 aria-label="Return to homepage"
@@ -1656,8 +1638,7 @@ export default function App() {
             <PageBody page={page} mode={mode} photosOpen={galleryOpen} onOpenPhotos={(element) => {
               const rect = (element.querySelector("img") ?? element).getBoundingClientRect()
               setGalleryOrigin({ x: rect.x, y: rect.y, width: rect.width, height: rect.height })
-              setGalleryOpen(true)
-              history.pushState(null, "", "#brand/what-im-up-to/photos")
+              navigate("/brand/what-im-up-to/photos")
             }} />
           </article>
         ) : (
