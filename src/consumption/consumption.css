@@ -39,7 +39,7 @@ button.consumption-day:hover { color: #244d8a; }
 .consumption-week-day h3 { text-align: center; color: #656560; font-size: 16px; margin-bottom: 12px; }
 .consumption-week-day > p { text-align: center; font-size: 12px; color: #676661; margin-top: 12px; }
 .consumption-list { padding-top: 4px; }
-.consumption-date-group { scroll-margin-top: 24px; margin-bottom: 80px; outline: none; }
+.consumption-date-group { scroll-margin-top: 24px; margin-bottom: 64px; outline: none; }
 .consumption-date-group:focus-visible { outline: 2px solid #315ca4; outline-offset: 8px; }
 .consumption-date-group h2 { font-size: 16px; font-weight: 600; color: #858581; text-transform: uppercase; letter-spacing: .025em; padding-bottom: 12px; border-bottom: 1px solid #d9d5ce; }
 .consumption-date-group.is-selected h2 { color: #244d8a; }
@@ -53,7 +53,6 @@ button.consumption-day:hover { color: #244d8a; }
   .consumption-year { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; }
   .consumption-entry { gap: 12px; }
   .consumption-entry-title { font-size: 16px; }
-  .consumption-date-group { margin-bottom: 48px; }
 }
 @media (max-width: 480px) {
   .consumption-content { padding-right: 16px; padding-left: 16px; }
@@ -131,7 +130,4 @@ button.consumption-day:hover { color: #244d8a; }
 }
 .consumption-date-tooltip p + p { margin-top: 8px; padding-top: 8px; border-top: 1px solid #e5e1da; }
 
-@media (min-width: 1024px) {
-  .consumption-list :is(h2, h2 time, .consumption-entry-title, .consumption-entry-title a, .consumption-badge) { text-transform: lowercase; }
-  .consumption-date-group { margin-bottom: 64px; }
-}
+.consumption-list :is(h2, h2 time, .consumption-entry-title, .consumption-entry-title a, .consumption-badge) { text-transform: lowercase; }
