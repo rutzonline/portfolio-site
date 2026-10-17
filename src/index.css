@@ -797,10 +797,10 @@ main, main * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) trans
   .focus-controls .toggle-group { pointer-events: none; }
   .focus-controls .mode-button,
   .focus-controls .mode-button.active {
-    width: 64px; height: 64px; min-height: 64px; padding: 0;
+    width: 48px; height: 48px; min-height: 48px; padding: 0;
     border: 0; border-radius: 0; background: transparent; pointer-events: auto;
   }
   .focus-controls .mode-button img { mix-blend-mode: multiply; }
-  .mode-bar-label { font-family: "Chillink", cursive; font-size: 24px; font-weight: 400; line-height: 1.2; }
+  .mode-bar-label { font-family: "Fira Code", ui-monospace, monospace; font-size: 16px; font-weight: 400; line-height: 1.5; }
 
 }
