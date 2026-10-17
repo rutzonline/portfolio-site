@@ -1497,7 +1497,12 @@ export default function App() {
           if (isMobile && !page) scrollHomeToTop()
         }}>
         <span className="toggle-thumb" aria-hidden="true" style={{ transform: mode === "brand" ? "translateX(100%)" : "none" }}>
-          <img src={`/${mode}.png`} alt="" width="32" height="32" />
+          {isMobile ? <img src={`/${mode}.png`} alt="" width="32" height="32" /> :
+            (["growth", "brand"] as const).map(iconMode => (
+              <img key={iconMode} src={`/${iconMode}.png`} alt="" width="32" height="32"
+                loading="eager" decoding="sync" className="desktop-mode-icon"
+                style={{ opacity: mode === iconMode ? 1 : 0 }} />
+            ))}
         </span>
       </button>
       {isMobile && <span className="mode-bar-label" style={{ color: mode === "growth" ? SAPPHIRE : "#7d2e4b" }}>{mode}</span>}
@@ -1683,14 +1688,11 @@ export default function App() {
                   <Typewriter key={mode} text={aboutIntro.main} />
                   {aboutIntro.explanation && <span className="about-explanation mt-2 block text-[20px] font-semibold opacity-50 xl:text-[22px]">{aboutIntro.explanation}</span>}
                 </p>}
-                <div className="about-card-footer mt-3">
-                  <p className="mobile-specialties leading-snug text-[#1A1A1A]/65">
+                <p className="mobile-specialties mt-3 leading-snug text-[#1A1A1A]/65">
                     {mode === "growth"
                       ? "email, paid, creators, and offline"
                       : "copy, content, social, and brand comms"}
-                  </p>
-                  {!isMobile && <span className="mode-tag" style={{ color: mode === "growth" ? SAPPHIRE : "#7d2e4b" }}>{mode}</span>}
-                </div>
+                </p>
               </div>
             </Card>
 

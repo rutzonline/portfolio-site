@@ -165,7 +165,7 @@ function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
         }
         for (const scheme of ['light', 'dark'] as const) {
           const icon = config.icons?.[scheme]
-          if (icon) tags.push({ tag: 'link', attrs: { rel: 'icon', type: 'image/png', href: icon, media: `(prefers-color-scheme: ${scheme})` }, injectTo: 'head' })
+          if (icon) tags.push({ tag: 'link', attrs: { rel: 'icon', type: 'image/png', href: icon, media: `(max-width: 1023px) and (prefers-color-scheme: ${scheme})` }, injectTo: 'head' })
         }
         if (title) {
           tags.push({ tag: 'meta', attrs: { property: 'og:title', content: title }, injectTo: 'head' })
