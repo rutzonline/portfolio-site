@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react"
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 import { useMoodboard } from "@/useMoodboard"
 
 const ph = (label: string) =>
@@ -132,7 +132,7 @@ function Brands() {
                   </div>
                 </div>
               </header>
-              <p className="mt-4 whitespace-pre-line text-sm leading-snug text-[#1A1A1A]/60">{brand.description}</p>
+              <p className="mt-4 whitespace-pre-line text-base leading-snug text-[#1A1A1A]/60">{brand.description}</p>
             </article>
           </li>
         ))}
@@ -188,16 +188,16 @@ function Campaigns() {
               <button type="button" aria-label="Previous campaign" disabled={rows.length < 2} onClick={() => step(-1)} className={chevronControl}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg>
               </button>
-              <p className="text-sm tabular-nums text-[#1A1A1A]/55">{index + 1} / {rows.length}</p>
+              <p className="text-sm tabular-nums text-[#1A1A1A]/60">{index + 1} / {rows.length}</p>
               <button type="button" aria-label="Next campaign" disabled={rows.length < 2} onClick={() => step(1)} className={chevronControl}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m10 6 6 6-6 6" /></svg>
               </button>
             </div>
           </div>
           <article className="min-w-0 lg:pb-12" aria-live="polite" aria-atomic="true">
-            <p className="mb-1 text-sm text-[#1A1A1A]/55">{campaign.kicker}</p>
+            <p className="mb-1 text-sm text-[#1A1A1A]/60">{campaign.kicker}</p>
             <h3 className="mb-3 text-lg font-semibold">{campaign.brand}</h3>
-            <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#1A1A1A]/75">{campaign.description}</p>
+            <p className="whitespace-pre-line text-base leading-relaxed text-[#1A1A1A]/75">{campaign.description}</p>
           </article>
         </div>
       </div>}
@@ -225,7 +225,7 @@ function Newsletters() {
               >
                 {r.category}
               </p>
-              <p className="mt-2 whitespace-pre-line text-sm leading-snug text-[#1A1A1A]/60">{r.description}</p>
+              <p className="mt-2 whitespace-pre-line text-base leading-snug text-[#1A1A1A]/60">{r.description}</p>
             </Link>
           </li>
         ))}
@@ -290,7 +290,7 @@ export default function Moodboard() {
         a running list of the campaigns, brands, products, and corners of the
         internet that have shaped my marketing instincts.
       </p>
-      <div className="flex min-w-0 flex-col gap-6 text-[15px] lg:min-h-0 lg:flex-1">
+      <div className="flex min-w-0 flex-col gap-6 text-base lg:min-h-0 lg:flex-1">
         <nav aria-label="moodboard sections" className="panel-menu relative shrink-0 border-b border-[#D6D1C9]">
           <div ref={tabsRef} role="tablist" aria-label="Moodboard categories" className="flex gap-6 overflow-x-auto sm:gap-8">
             {sections.map((section, index) => (

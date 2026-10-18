@@ -78,7 +78,7 @@ test('the existing deployment fallback covers clean routes and preserves asset/A
   for (const path of ['/growth', '/brand', '/growth/case-studies/wispr-flow', '/brand/experience/hopstack', '/brand/notes/the-tyranny-of-optimal']) {
     assert.match(path, pattern)
   }
-  for (const path of ['/assets/app.js', '/work-samples/sample.webp', '/imports/image.png', '/api/lastfm/recent-tracks']) {
+  for (const path of ['/assets/app.js', '/work-samples/sample.webp', '/imports/image.png', '/api/example']) {
     assert.doesNotMatch(path, pattern)
   }
 })

@@ -1,5 +1,4 @@
-import { recentTracks } from "./server/lastfm"
-import { loadEnv, defineConfig, type HtmlTagDescriptor, type Plugin } from 'vite'
+import { defineConfig, type HtmlTagDescriptor, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'node:path'
@@ -11,7 +10,6 @@ import siteConfiguration from './.figma/make/site.json'
 export default defineConfig(({ mode }) => {
   // .figma/make/deploy-preview passes `--mode development` for cached-preview builds.
   const emitSourcemaps = mode === 'development'
-  const localEnv = loadEnv(mode, process.cwd(), '')
 
   return {
     base: process.env.FIGMA_PUBLIC_URL ? `${process.env.FIGMA_PUBLIC_URL}/` : '/',
@@ -29,17 +27,6 @@ export default defineConfig(({ mode }) => {
       minify: !emitSourcemaps,
     },
     plugins: [
-      {
-        name: 'lastfm-local-api',
-        configureServer(server) {
-          server.middlewares.use('/api/lastfm/recent-tracks', async (request, response) => {
-            if (request.method !== 'GET') { response.writeHead(405, { Allow: 'GET' }); response.end(); return }
-            const result = await recentTracks({ LASTFM_API_KEY: process.env.LASTFM_API_KEY || localEnv.LASTFM_API_KEY, LASTFM_USERNAME: process.env.LASTFM_USERNAME || localEnv.LASTFM_USERNAME })
-            response.writeHead(result.status, Object.fromEntries(result.headers))
-            response.end(await result.text())
-          })
-        },
-      },
       react(),
       tailwindcss(),
       figmaSiteConfiguration(siteConfiguration),

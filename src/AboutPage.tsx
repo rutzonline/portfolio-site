@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { aboutContent } from "@/aboutContent"
 import ImagePreview from "@/ImagePreview"
-import { Rows, ImageSlot } from "@/contentComponents"
+import { Rows, ImageSlot } from "@/ContentComponents"
 
 type Mode = "growth" | "brand"
 
@@ -26,11 +26,11 @@ function AboutExtras({ mode }: { mode: Mode }) {
             <li key={t} className="flex min-w-0 flex-col gap-2">
               <button type="button" aria-label={`Expand image: ${t}`} aria-haspopup="dialog"
                 onClick={() => {
-                  const src = c.interestImages?.[i]
+                  const src = c.interestImages[i]
                   if (src) setExpanded({ src, alt: t })
                 }}
                 className="block w-full cursor-zoom-in rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]">
-                <ImageSlot alt={t} src={c.interestImages?.[i]} className="aspect-[4/3]" />
+                <ImageSlot alt={t} src={c.interestImages[i]} className="aspect-[4/3]" />
               </button>
               <span className="text-sm leading-relaxed text-[#1A1A1A]/75">{t}</span>
             </li>

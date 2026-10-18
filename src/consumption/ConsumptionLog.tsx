@@ -15,7 +15,7 @@ function CategoryFill({ entries }: { entries: Entry[] }) {
   return <span className="consumption-category-fill" aria-hidden="true">{categories.filter((category) => present.has(category)).map((category) => <i key={category} className={`consumption-category-segment category-${category}`} />)}</span>
 }
 
-function Day({ date, entries, today, onSelect, compact = false }: { date: string; entries: Entry[]; today: string; onSelect: (date: string) => void; compact?: boolean }) {
+function Day({ date, entries, today, onSelect }: { date: string; entries: Entry[]; today: string; onSelect: (date: string) => void }) {
   const button = useRef<HTMLButtonElement>(null)
   const tooltip = useRef<HTMLDivElement>(null)
   const tooltipId = useId()
@@ -57,7 +57,7 @@ function Day({ date, entries, today, onSelect, compact = false }: { date: string
   }, [showTitles, closeTitles, tooltipId])
   const label = `${labelDate(date)}${entries.length ? `, ${entries.length} ${entries.length === 1 ? "entry" : "entries"}: ${[...new Set(entries.map((e) => titleCase(e.category)))].join(", ")}` : ", no entries"}`
   const content = <>{entries.length > 0 && <CategoryFill entries={entries} />}<span className="consumption-day-number">{Number(date.slice(8))}</span></>
-  const className = `consumption-day ${compact ? "compact" : ""} ${date === today ? "is-today" : ""}`
+  const className = `consumption-day ${date === today ? "is-today" : ""}`
   return entries.length ? <><button ref={button} type="button" className={className}
     aria-label={`${label}. ${entries.map((entry) => entry.title).join("; ")}`} aria-describedby={showTitles ? tooltipId : undefined}
     onPointerEnter={(event) => { if (event.pointerType === "mouse") openTitles() }} onPointerLeave={leaveTitles}
@@ -70,12 +70,11 @@ function Day({ date, entries, today, onSelect, compact = false }: { date: string
     : <div className={className} aria-label={label} aria-current={date === today ? "date" : undefined}>{content}</div>
 }
 
-function Month({ date, grouped, today, onSelect, compact = false }: { date: string; grouped: Map<string, Entry[]>; today: string; onSelect: (date: string) => void; compact?: boolean }) {
-  return <section className={compact ? "consumption-mini-month" : ""} aria-label={labelDate(date, { month: "long", year: "numeric" })}>
-    {compact && <h3>{labelDate(date, { month: "long" })}</h3>}
-    <div className="consumption-weekdays" aria-hidden="true">{dayNames.map((day) => <span key={day}>{compact ? day[0] : day}</span>)}</div>
+function Month({ date, grouped, today, onSelect }: { date: string; grouped: Map<string, Entry[]>; today: string; onSelect: (date: string) => void }) {
+  return <section aria-label={labelDate(date, { month: "long", year: "numeric" })}>
+    <div className="consumption-weekdays" aria-hidden="true">{dayNames.map((day) => <span key={day}>{day}</span>)}</div>
     <div className="consumption-month-grid">
-      {monthDays(date).map((day, index) => day ? <Day key={day} date={day} entries={grouped.get(day) ?? []} today={today} onSelect={onSelect} compact={compact} /> : <div key={`blank-${index}`} aria-hidden="true" />)}
+      {monthDays(date).map((day, index) => day ? <Day key={day} date={day} entries={grouped.get(day) ?? []} today={today} onSelect={onSelect} /> : <div key={`blank-${index}`} aria-hidden="true" />)}
     </div>
   </section>
 }

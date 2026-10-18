@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "format": "oxfmt",
     "test:consumption": "node --test tests/consumption.test.mjs",
-    "test:navigation": "node --test tests/navigation.test.mjs"
+    "test:navigation": "node --test tests/navigation.test.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run test:navigation && npm run test:consumption"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

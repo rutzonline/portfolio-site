@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react"
 import { getPhotos } from "@/PhotoSlideshow"
 import CameraOpening, { cameraPhoto } from "@/CameraOpening"
-import photoThumbnails from "@/photoThumbnails.json"
+import photoThumbnails from "@/photo-thumbnails.json"
 
 const thumbnails: Record<string, string> = photoThumbnails
 const initialPhotos = Object.keys(thumbnails)

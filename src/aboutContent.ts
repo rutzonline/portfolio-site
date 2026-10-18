@@ -1,20 +1,20 @@
-import cooking from "@/imports/a4ebfa7d97a0cbad273f046153d61bb2-1.jpg"
-import nyt from "@/imports/IMG_8735-1.jpg"
-import f1 from "@/imports/e879fbe87a6553c74fafc66039d7eecbx-1.jpg"
-import futbol from "@/imports/image00002-1.jpeg"
-import fpl from "@/imports/fpl-1.png"
-import window1 from "@/imports/image00001.jpeg"
-import boardGames from "@/imports/IMG_5557.jpg"
-import hotChoc from "@/imports/16.jpg"
-import skincare from "@/imports/IMG_5623.jpg"
-import fruit from "@/imports/IMG_7686-1.jpg"
+import cooking from "@/imports/cooking.jpg"
+import nyt from "@/imports/nyt-games.jpg"
+import f1 from "@/imports/formula-one.jpg"
+import futbol from "@/imports/football.jpeg"
+import fpl from "@/imports/fantasy-premier-league.png"
+import window1 from "@/imports/window-view.jpeg"
+import boardGames from "@/imports/board-games.jpg"
+import hotChoc from "@/imports/hot-chocolate.jpg"
+import skincare from "@/imports/skincare.jpg"
+import fruit from "@/imports/fruit.jpg"
 
 export type AboutExtra = {
   intro: string
   bio: string
   languages: [string, string][]
   interests: string[]
-  interestImages?: string[]
+  interestImages: string[]
   faqs: [string, string][]
 }
 

@@ -9,7 +9,7 @@ import { growthNotes } from "@/growthNotes"
 import { brandNotes } from "@/brandNotes"
 import { routePanelWheel } from "@/panelScroll"
 import AboutPage, { splitAboutIntro } from "@/AboutPage"
-import { Rows, ImageSlot } from "@/contentComponents"
+import { Rows, ImageSlot } from "@/ContentComponents"
 import {
   useEffect,
   useLayoutEffect,
@@ -21,25 +21,25 @@ import {
 } from "react"
 import { wisprCase } from "@/wisprCase"
 import { cursorCase, revolutCase, heyclickyCase } from "@/portfolioCases"
-import { statePlateCase } from "@/TSPCase"
-import liq1 from "@/imports/liquide/l1.jpg"
-import liq2 from "@/imports/liquide/l2.jpg"
-import liq3 from "@/imports/liquide/l3.jpg"
-import liq4 from "@/imports/liquide/l4.jpg"
-import liq5 from "@/imports/liquide/l5.png"
-import liq6 from "@/imports/liquide/l6.png"
-import liq7 from "@/imports/liquide/l7.png"
-import liq8 from "@/imports/liquide/l8.png"
-import liq9 from "@/imports/liquide/l9.png"
-import liq10 from "@/imports/liquide/l10.png"
-import stateplateLogo from "@/imports/Report_Card.png"
-import freelanceLogo from "@/imports/freelance___1_.png"
+import { statePlateCase } from "@/statePlateCase"
+import liq1 from "@/imports/liquide/sample-01.jpg"
+import liq2 from "@/imports/liquide/sample-02.jpg"
+import liq3 from "@/imports/liquide/sample-03.jpg"
+import liq4 from "@/imports/liquide/sample-04.jpg"
+import liq5 from "@/imports/liquide/sample-05.png"
+import liq6 from "@/imports/liquide/sample-06.png"
+import liq7 from "@/imports/liquide/sample-07.png"
+import liq8 from "@/imports/liquide/sample-08.png"
+import liq9 from "@/imports/liquide/sample-09.png"
+import liq10 from "@/imports/liquide/sample-10.png"
+import stateplateLogo from "@/imports/state-plate-logo.png"
+import freelanceLogo from "@/imports/freelance-logo.png"
 import Moodboard from "@/Moodboard"
 import PhotoSlideshow from "@/PhotoSlideshow"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
-import growthPortrait from "@/imports/figma_growth_new.png"
-import contentPortrait from "@/imports/Untitled_design__20_.png"
+import growthPortrait from "@/imports/growth-portrait.png"
+import contentPortrait from "@/imports/brand-portrait.png"
 
 type Mode = "growth" | "brand"
 type PageKey = "about" | "work" | "notes" | "projects" | "moodboard" | "upto"
@@ -59,13 +59,6 @@ const LIME = "#DDF080"
 const BLUE = "#9EC5F4"
 const SAPPHIRE = "#0F3A8A"
 const DESKTOP_NAVY = "#0B2D6E"
-
-const timeline = [
-  ["freelance marketer", "apr 2025 – present"],
-  ["the state plate", "jan 2024 – mar 2025"],
-  ["hopstack", "jun 2023 – sep 2023"],
-  ["liquide", "mar 2022 – jul 2022"],
-]
 
 const jobs = [
   ["freelance marketer", "content, copy, strategy"],
@@ -154,18 +147,11 @@ const skillDomains: Record<string, string> = {
   claude: "claude.ai",
   elevenlabs: "elevenlabs.io",
   buffer: "buffer.com",
-  SQL: "postgresql.org",
-  Amplitude: "amplitude.com",
-  Mixpanel: "mixpanel.com",
-  "Customer.io": "customer.io",
   "Google Analytics": "analytics.google.com",
-  Looker: "looker.com",
   Figma: "figma.com",
   Notion: "notion.so",
   Webflow: "webflow.com",
   Canva: "canva.com",
-  Substack: "substack.com",
-  "Are.na": "are.na",
 }
 
 const stintDomains = ["", "thestateplate.com", "hopstack.io", "liquide.life"]
@@ -252,7 +238,7 @@ function NotesPage({ mode }: { mode: Mode }) {
               onClick={() => setSel(i)}
               className="group flex w-full items-center gap-4 px-6 py-5 text-left lg:px-10"
             >
-              <span className="w-8 shrink-0 text-[#1A1A1A]/45">
+              <span className="w-8 shrink-0 text-[#1A1A1A]/60">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="min-w-0 flex-1">
@@ -622,17 +608,17 @@ const stintLogo = (company: string) =>
 const stintMd = (i: number) => {
   const st = stints[i]
   const did =
-    timeline[i][0] === "liquide" ? [...liquideDid, ...st.points] : st.points
+    jobs[i][0] === "liquide" ? [...liquideDid, ...st.points] : st.points
   return `## 01. overview\n\n${st.summary}\n\n${st.body.join("\n")}\n\n## 02. what i worked on\n\n${did.map((p) => `- ${p}`).join("\n")}\n`
 }
 
 function Experience({ mode }: { mode: Mode }) {
-  const [sel, setSel] = useDetailRoute(timeline.map(([company]) => company), `/${mode}/experience`)
+  const [sel, setSel] = useDetailRoute(jobs.map(([company]) => company), `/${mode}/experience`)
   useBack(sel !== null ? () => { setSel(null); return true } : null, "experience")
   if (sel === null) return (
     <div className="-mx-6 mt-4 min-h-0 overflow-y-auto overscroll-contain lg:-mx-10 lg:mt-6">
       <ul className="border-y border-[#1A1A1A]/15">
-        {timeline.map(([company], i) => (
+        {jobs.map(([company], i) => (
           <li key={company} className="border-b border-[#1A1A1A]/15 last:border-b-0">
             <button type="button" onClick={() => setSel(i)} className="group flex w-full items-center gap-4 px-6 py-5 text-left lg:px-10">
               <Logo domain={stintDomains[i]} src={stintLogo(company)} name={company} size="size-10" />
@@ -647,7 +633,7 @@ function Experience({ mode }: { mode: Mode }) {
       </ul>
     </div>
   )
-  const company = timeline[sel][0]
+  const company = jobs[sel][0]
   const freelance = company === "freelance marketer"
   return (
     <div data-essay className="-mr-6 -mt-6 flex min-h-0 flex-1 flex-col overflow-hidden lg:-mr-10">
@@ -728,7 +714,6 @@ const uptoRows: Record<Mode, [string, string][]> = {
 }
 
 function PageBody({ page, mode, onOpenPhotos, photosOpen }: { page: PageKey; mode: Mode; onOpenPhotos: (element: HTMLButtonElement) => void; photosOpen: boolean }) {
-  const brand = modeCopy[mode]
   switch (page) {
     case "about":
       return <AboutPage mode={mode} />
@@ -975,7 +960,7 @@ function CaseStudy({
       out.push(
         <h2
           key={i}
-          className="font-body-serif text-[clamp(22px,2.2vw,30px)] leading-tight tracking-[-0.02em]"
+          className="font-body-light text-[clamp(22px,2.2vw,30px)] leading-tight tracking-[-0.02em]"
         >
           {l.slice(2)}
         </h2>,
@@ -1002,7 +987,7 @@ function CaseStudy({
             id={id}
             className={`${hasSummary && toc.length === 1 ? "mt-0" : "mt-10"} flex scroll-mt-6 items-baseline gap-3 border-t border-[#1A1A1A]/15 pt-6 font-heading text-[clamp(22px,2.2vw,30px)] tracking-[-0.02em] first:mt-0 first:border-t-0 first:pt-0`}
           >
-            {m && <span className="text-[#1A1A1A]/45">{m[1]}</span>}
+            {m && <span className="text-[#1A1A1A]/60">{m[1]}</span>}
             {m ? m[2] : t}
           </h3>,
         )
@@ -1083,7 +1068,7 @@ function CaseStudy({
         <p
           key={i}
           className={`leading-snug ${hasSummary && /^tl;dr$/i.test(l.trim()) ? "mt-10" : ""} ${
-            em ? "text-[#1A1A1A]/55" : "text-[#1A1A1A]/85"
+            em ? "text-[#1A1A1A]/60" : "text-[#1A1A1A]/85"
           }`}
         >
           <Inline text={l} />
@@ -1095,7 +1080,7 @@ function CaseStudy({
         out.push(
           <figure key={`img-${i}`} className="my-2">
             <ImageSlot expandable src={visual.src} alt={visual.alt} fit="contain" />
-            {!isExperience && <figcaption className="mt-1.5 text-sm text-[#1A1A1A]/50">
+            {!isExperience && <figcaption className="mt-1.5 text-sm text-[#1A1A1A]/60">
               {visual.source ? <a href={visual.source} target="_blank" rel="noreferrer" className="contact-link">{visual.caption} ↗</a> : visual.caption}
             </figcaption>}
           </figure>,
@@ -1159,7 +1144,7 @@ function CaseStudy({
                   className={`transition-colors hover:text-[color:var(--hl-link)] ${
                     active === k
                       ? "font-medium text-[#1A1A1A]"
-                      : "text-[#1A1A1A]/50"
+                      : "text-[#1A1A1A]/60"
                   }`}
                 >
                   {label}
@@ -1178,12 +1163,11 @@ function CaseStudy({
         className={`min-w-0 ${independentScroll ? "min-h-0 overflow-y-auto overscroll-contain" : ""}`}
       >
         <div className={`flex max-w-[44rem] flex-col gap-4 ${independentScroll ? "mr-6 pb-6 pr-3 pt-6 lg:mr-10 lg:pt-[88px]" : ""}`}>
-          {backControl && !isExperience && <div className="mb-2 lg:hidden">{backControl}</div>}
           {header}
           {out}
           {footer}
           {sources.length > 0 && (
-            <footer className="mt-10 border-t border-[#1A1A1A]/15 pt-4 text-sm text-[#1A1A1A]/55">
+            <footer className="mt-10 border-t border-[#1A1A1A]/15 pt-4 text-sm text-[#1A1A1A]/60">
               <p className="mb-1 font-semibold">sources</p>
               <ul className="flex flex-col gap-0.5">
                 {sources.map((x) => (
