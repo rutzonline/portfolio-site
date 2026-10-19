@@ -775,6 +775,28 @@ main, main * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) trans
   }
 }
 
+.mode-switch {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start;
+  gap: 8px; max-width: 100%; padding: 0; border: 0; background: transparent;
+  cursor: pointer; border-radius: 12px;
+}
+.mode-switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.mode-switch-label {
+  display: block; border-radius: 6px; padding: 6px 10px; line-height: 1.25;
+  text-align: left; box-shadow: 0 1px 4px rgb(26 26 26 / .15);
+}
+.mode-switch-label[data-target-mode="growth"] {
+  background: #0f3a8a; color: #fff; font-family: "Inter", sans-serif;
+  font-size: 13px; font-weight: 600;
+}
+.mode-switch-label[data-target-mode="brand"] {
+  background: #ffa9c8; color: #7d2e4b; font-family: "Chillink", cursive;
+  font-size: 20px; font-weight: 400;
+}
+@media (max-width: 1023px) {
+  .mode-switch { flex-direction: row; align-items: center; }
+}
+
 .mode-toggle {
   position: relative; flex-shrink: 0; width: 104px; height: 52px; padding: 4px;
   border: 0; border-radius: 12px; cursor: pointer;

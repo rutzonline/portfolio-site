@@ -1494,21 +1494,25 @@ export default function App() {
     <div className="focus-controls px-6 pt-6 lg:absolute lg:left-5 lg:top-5 lg:p-0">
       {isMobile && !page && <button type="button" className="mobile-scroll-top" onClick={scrollHomeToTop} aria-label="Back to top" />}
       <button type="button" role="switch" aria-checked={mode === "brand"} aria-label="Brand mode"
-        className="mode-toggle" onClick={() => {
+        className="mode-switch" onClick={() => {
           const nextMode = mode === "growth" ? "brand" : "growth"
           navigate(`/${nextMode}${page ? `/${slugOf(page, nextMode)}` : ""}`, true)
           if (isMobile && !page) scrollHomeToTop()
         }}>
-        <span className="toggle-thumb" aria-hidden="true" style={{ transform: mode === "brand" ? "translateX(100%)" : "none" }}>
-          {isMobile ? <img src={`/${mode}.png`} alt="" width="32" height="32" /> :
-            (["growth", "brand"] as const).map(iconMode => (
-              <img key={iconMode} src={`/${iconMode}.png`} alt="" width="32" height="32"
-                loading="eager" decoding="sync" className="desktop-mode-icon"
-                style={{ opacity: mode === iconMode ? 1 : 0 }} />
-            ))}
+        <span className="mode-toggle" aria-hidden="true">
+          <span className="toggle-thumb" style={{ transform: mode === "brand" ? "translateX(100%)" : "none" }}>
+            {isMobile ? <img src={`/${mode}.png`} alt="" width="32" height="32" /> :
+              (["growth", "brand"] as const).map(iconMode => (
+                <img key={iconMode} src={`/${iconMode}.png`} alt="" width="32" height="32"
+                  loading="eager" decoding="sync" className="desktop-mode-icon"
+                  style={{ opacity: mode === iconMode ? 1 : 0 }} />
+              ))}
+          </span>
+        </span>
+        <span className="mode-switch-label" data-target-mode={mode === "growth" ? "brand" : "growth"}>
+          switch to {mode === "growth" ? "brand" : "growth"} mode
         </span>
       </button>
-      {isMobile && <span className="mode-bar-label" style={{ color: mode === "growth" ? SAPPHIRE : "#7d2e4b" }}>{mode}</span>}
     </div>
   )
 
