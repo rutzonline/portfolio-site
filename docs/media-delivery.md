@@ -24,8 +24,8 @@ ffmpeg -i original.mp4 -vf 'scale=1280:-2' -c:v libx264 -preset fast -crf 26 -pi
 
 ## Tool-logo sources
 
-- Simple Icons 16.35.0 (CC0): Meta, Replit, Shopify, Google Analytics, Supabase, Cursor, PostHog, Webflow, Figma, Mailchimp, Claude, ElevenLabs, Buffer and Notion. Brand colors are applied locally.
+- Simple Icons 16.35.0 (CC0): Meta, Replit, Shopify, Google Analytics, Supabase, Cursor, PostHog, Webflow, Claude, ElevenLabs, Buffer and Notion. Brand colors are applied locally.
 - SVGL (`pheralb/svgl`, MIT): Ahrefs and Canva.
-- `gilbarbara/logos`: Mention. The supplied wordmark viewBox is cropped to its symbol for legibility in a 24px tool badge.
+- `gilbarbara/logos`: Figma (original multicolor mark), Mailchimp (original Freddie symbol, without the wordmark), and Mention. The supplied wordmark viewBox is cropped to its symbol for legibility in a 24px tool badge.
 
 Logos remain trademarks of their respective owners and identify tools used in the portfolio.
