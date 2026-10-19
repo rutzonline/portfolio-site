@@ -1493,7 +1493,7 @@ export default function App() {
   const focusControls = (
     <div className="focus-controls px-6 pt-6 lg:absolute lg:left-5 lg:top-5 lg:p-0">
       {isMobile && !page && <button type="button" className="mobile-scroll-top" onClick={scrollHomeToTop} aria-label="Back to top" />}
-      <button type="button" role="switch" aria-checked={mode === "brand"} aria-label="Brand mode"
+      <button type="button" role="switch" aria-checked={mode === "brand"} aria-label="Brand mode" aria-describedby="mode-switch-tooltip"
         className="mode-switch" onClick={() => {
           const nextMode = mode === "growth" ? "brand" : "growth"
           navigate(`/${nextMode}${page ? `/${slugOf(page, nextMode)}` : ""}`, true)
@@ -1509,7 +1509,7 @@ export default function App() {
               ))}
           </span>
         </span>
-        <span className="mode-switch-label" data-target-mode={mode === "growth" ? "brand" : "growth"}>
+        <span id="mode-switch-tooltip" role="tooltip" className="mode-switch-label">
           switch to {mode === "growth" ? "brand" : "growth"} mode
         </span>
       </button>
