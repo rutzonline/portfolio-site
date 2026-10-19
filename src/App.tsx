@@ -466,9 +466,9 @@ function CardHeading({
   )
 }
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
+function Section({ title, children, divider = true }: { title: string; children: ReactNode; divider?: boolean }) {
   return (
-    <section className="border-t border-[#1A1A1A]/15 pt-4">
+    <section className={divider ? "border-t border-[#1A1A1A]/15 pt-4" : undefined}>
       <h3 className="mb-2 text-base font-semibold">{title}</h3>
       <div className="leading-snug text-[#1A1A1A]/75">{children}</div>
     </section>
@@ -741,9 +741,9 @@ function PageBody({ page, mode, onOpenPhotos, photosOpen }: { page: PageKey; mod
               </span>
             ))}
           </div>
-          <div className="flex max-w-3xl flex-col gap-8">
+          <div className="flex max-w-3xl flex-col gap-8 pt-10">
             {skillSets[mode].sections.map(([t, d]) => (
-              <Section key={t} title={t}>
+              <Section key={t} title={t} divider={false}>
                 {d}
               </Section>
             ))}
