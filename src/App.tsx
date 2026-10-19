@@ -1,6 +1,7 @@
 import { toolLogos } from "@/toolLogos"
 import { navigate, useDetailRoute, usePathname } from "@/navigation"
 import Carousel from "@/Carousel"
+import experienceUploads from "@/experienceUploads.json"
 import { getCaseVisual } from "@/caseVisuals"
 import NameLettering from "@/NameLettering"
 import PhotoGallery from "@/PhotoGallery"
@@ -639,6 +640,7 @@ function Experience({ mode }: { mode: Mode }) {
   )
   const company = jobs[sel][0]
   const freelance = company === "freelance marketer"
+  const uploads = experienceUploads[company as keyof typeof experienceUploads] ?? []
   return (
     <div data-essay className="-mr-6 -mt-6 flex min-h-0 flex-1 flex-col overflow-hidden lg:-mr-10">
       <CaseStudy
@@ -647,8 +649,20 @@ function Experience({ mode }: { mode: Mode }) {
         backControl={<button type="button" onClick={() => setSel(null)} className="back-btn"><Chev />all experience</button>}
         md={company === "the state plate" ? statePlateCase : stintMd(sel)}
         header={<CaseHeader name={company} sub={jobs[sel][1]} domain={stintDomains[sel]} src={stintLogo(company)} />}
-        footer={company === "the state plate" ? undefined : (
+        footer={(
           <div className="mt-10 space-y-12">
+            {uploads.map((sample) => (
+              <section key={sample.title} aria-label={sample.title} className="space-y-4">
+                <h3 className="text-lg font-semibold">{sample.title}</h3>
+                {sample.images.length > 1 ? (
+                  <Carousel label={sample.title} slides={sample.images.map((src, i) => (
+                    <ImageSlot expandable key={src} src={src} alt={`${sample.title} — slide ${i + 1}`} fit="contain" />
+                  ))} />
+                ) : (
+                  <ImageSlot expandable src={sample.images[0]} alt={sample.title} fit="contain" />
+                )}
+              </section>
+            ))}
             {experienceSamples[company] && (
               <section aria-label="Selected work samples" className="space-y-4">
                 <h3 className="text-lg font-semibold">selected work samples</h3>
