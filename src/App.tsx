@@ -650,68 +650,69 @@ function Experience({ mode }: { mode: Mode }) {
         md={company === "the state plate" ? statePlateCase : stintMd(sel)}
         header={<CaseHeader name={company} sub={jobs[sel][1]} domain={stintDomains[sel]} src={stintLogo(company)} />}
         footer={(
-          <div className="mt-10 space-y-12">
-            {uploads.map((sample) => (
-              <section key={sample.title} aria-label={sample.title} className="space-y-4">
-                {sample.images.length > 1 ? (
-                  <Carousel label={sample.title} slides={sample.images.map((src, i) => (
-                    <ImageSlot expandable key={src} src={src} alt={`${sample.title} — slide ${i + 1}`} fit="contain" />
+          <section className="mt-10" aria-label="Selected work">
+            <h3 className="mb-4 text-lg font-semibold">selected work</h3>
+            <div className="space-y-12">
+              {uploads.map((sample) => (
+                <section key={sample.title} aria-label={sample.title} className="space-y-4">
+                  {sample.images.length > 1 ? (
+                    <Carousel label={sample.title} slides={sample.images.map((src, i) => (
+                      <ImageSlot expandable key={src} src={src} alt={`${sample.title} — slide ${i + 1}`} fit="contain" />
+                    ))} />
+                  ) : (
+                    <ImageSlot expandable src={sample.images[0]} alt={sample.title} fit="contain" />
+                  )}
+                </section>
+              ))}
+              {experienceSamples[company] && (
+                <section aria-label="Selected work samples" className="space-y-4">
+                  <div className={`grid grid-cols-2 gap-3 sm:gap-5 ${freelance ? "sm:grid-cols-3" : ""}`}>
+                    {experienceSamples[company].map((sample) => (
+                      <figure key={sample.src} className={sample.wide ? "col-span-2" : undefined}>
+                        <ImageSlot expandable src={sample.src} alt={sample.caption} fit="contain" />
+                      </figure>
+                    ))}
+                  </div>
+                </section>
+              )}
+              {freelance && (
+                <section className="space-y-4">
+                  <h3 className="text-lg font-semibold">content & social media pitch deck</h3>
+                  <Carousel label="Content and social media pitch deck" slides={Array.from({ length: 15 }, (_, i) => (
+                    <ImageSlot expandable key={i} src={`/work-samples/content-sm-deck/${i + 1}.png`} alt={`Content and social media pitch deck — slide ${i + 1}`} fit="contain" />
                   ))} />
-                ) : (
-                  <ImageSlot expandable src={sample.images[0]} alt={sample.title} fit="contain" />
-                )}
-              </section>
-            ))}
-            {experienceSamples[company] && (
-              <section aria-label="Selected work samples" className="space-y-4">
-                <h3 className="text-lg font-semibold">selected work samples</h3>
-                <div className={`grid grid-cols-2 gap-3 sm:gap-5 ${freelance ? "sm:grid-cols-3" : ""}`}>
-                  {experienceSamples[company].map((sample) => (
-                    <figure key={sample.src} className={sample.wide ? "col-span-2" : undefined}>
-                      <ImageSlot expandable src={sample.src} alt={sample.caption} fit="contain" />
-                    </figure>
-                  ))}
-                </div>
-              </section>
-            )}
-            {freelance && (
-              <section className="space-y-4">
-                <h3 className="text-lg font-semibold">content & social media pitch deck</h3>
-                <Carousel label="Content and social media pitch deck" slides={Array.from({ length: 15 }, (_, i) => (
-                  <ImageSlot expandable key={i} src={`/work-samples/content-sm-deck/${i + 1}.png`} alt={`Content and social media pitch deck — slide ${i + 1}`} fit="contain" />
-                ))} />
-              </section>
-            )}
-            {company === "liquide" && (
-              <section aria-label="Liquide work samples" className="space-y-4">
-                <h3 className="text-lg font-semibold">selected work samples</h3>
-                <div className="grid grid-cols-2 gap-3 sm:gap-5">
-                  {liquideImages.slice(0, 9).map((src, k) => (
-                    <figure key={src}>
-                      <ImageSlot expandable src={src} alt={liquideCaptions[k]} fit="contain" />
-                    </figure>
-                  ))}
-                  <video
-                    controls
-                    playsInline
-                    preload="metadata"
-                    aria-label="Liquide app launch video — copywriting and editing"
-                    poster="/media/liquide-video-poster.webp"
-                    className="w-full rounded-sm bg-black"
-                  >
-                    <source src="/work-samples/liquide/app-launch.mp4" type="video/mp4" />
-                    Your browser does not support embedded video.
-                  </video>
-                </div>
-                <div className="grid grid-cols-2 gap-3 sm:gap-5" aria-label="Instagram rebrand comparison">
-                  {liquideImages.slice(9).map((src, k) => <figure key={src}>
-                    <ImageSlot expandable src={src} alt={liquideCaptions[k + 9]} fit="contain" />
-                    <figcaption className="mt-2 text-sm text-[#1A1A1A]/60">{k === 0 ? "Before →" : "After →"}</figcaption>
-                  </figure>)}
-                </div>
-              </section>
-            )}
-          </div>
+                </section>
+              )}
+              {company === "liquide" && (
+                <section aria-label="Liquide work samples" className="space-y-4">
+                  <div className="grid grid-cols-2 gap-3 sm:gap-5">
+                    {liquideImages.slice(0, 9).map((src, k) => (
+                      <figure key={src}>
+                        <ImageSlot expandable src={src} alt={liquideCaptions[k]} fit="contain" />
+                      </figure>
+                    ))}
+                    <video
+                      controls
+                      playsInline
+                      preload="metadata"
+                      aria-label="Liquide app launch video — copywriting and editing"
+                      poster="/media/liquide-video-poster.webp"
+                      className="w-full rounded-sm bg-black"
+                    >
+                      <source src="/work-samples/liquide/app-launch.mp4" type="video/mp4" />
+                      Your browser does not support embedded video.
+                    </video>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 sm:gap-5" aria-label="Instagram rebrand comparison">
+                    {liquideImages.slice(9).map((src, k) => <figure key={src}>
+                      <ImageSlot expandable src={src} alt={liquideCaptions[k + 9]} fit="contain" />
+                      <figcaption className="mt-2 text-sm text-[#1A1A1A]/60">{k === 0 ? "Before →" : "After →"}</figcaption>
+                    </figure>)}
+                  </div>
+                </section>
+              )}
+            </div>
+          </section>
         )}
       />
     </div>
