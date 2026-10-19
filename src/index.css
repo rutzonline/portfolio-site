@@ -783,7 +783,7 @@ main, main * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) trans
 .mode-switch-label {
   position: absolute; top: calc(100% + 8px); left: 0; z-index: 50;
   visibility: hidden; opacity: 0; pointer-events: none; white-space: nowrap;
-  border-radius: 6px; padding: 6px 10px; background: color-mix(in srgb, #0f3a8a 14%, #faf9f6); color: #1a1a1a;
+  border-radius: 6px; padding: 6px 10px; background: color-mix(in srgb, #7d2e4b 14%, #faf9f6); color: #1a1a1a;
   font-family: "Inter", sans-serif; font-size: 13px; font-weight: 400; line-height: 1.5;
   text-align: left; box-shadow: 0 1px 6px rgb(26 26 26 / .2);
 }
@@ -798,8 +798,8 @@ main, main * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) trans
   background: color-mix(in srgb, #0f3a8a 14%, #faf9f6);
   transition: background-color 180ms ease;
 }
-main[data-mode="brand"] .mode-toggle,
-main[data-mode="brand"] .mode-switch-label { background: color-mix(in srgb, #7d2e4b 14%, #faf9f6); }
+main[data-mode="brand"] .mode-toggle { background: color-mix(in srgb, #7d2e4b 14%, #faf9f6); }
+main[data-mode="brand"] .mode-switch-label { background: color-mix(in srgb, #0f3a8a 14%, #faf9f6); }
 .mode-toggle .toggle-thumb {
   position: absolute; display: flex; align-items: center; justify-content: center;
   left: 4px; top: 4px; bottom: 4px; width: 48px; border-radius: 8px;
