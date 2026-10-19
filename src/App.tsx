@@ -653,7 +653,6 @@ function Experience({ mode }: { mode: Mode }) {
           <div className="mt-10 space-y-12">
             {uploads.map((sample) => (
               <section key={sample.title} aria-label={sample.title} className="space-y-4">
-                <h3 className="text-lg font-semibold">{sample.title}</h3>
                 {sample.images.length > 1 ? (
                   <Carousel label={sample.title} slides={sample.images.map((src, i) => (
                     <ImageSlot expandable key={src} src={src} alt={`${sample.title} — slide ${i + 1}`} fit="contain" />
