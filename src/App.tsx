@@ -1,3 +1,4 @@
+import { toolLogos } from "@/toolLogos"
 import { navigate, useDetailRoute, usePathname } from "@/navigation"
 import Carousel from "@/Carousel"
 import { getCaseVisual } from "@/caseVisuals"
@@ -22,24 +23,24 @@ import {
 import { wisprCase } from "@/wisprCase"
 import { cursorCase, revolutCase, heyclickyCase } from "@/portfolioCases"
 import { statePlateCase } from "@/statePlateCase"
-import liq1 from "@/imports/liquide/sample-01.jpg"
-import liq2 from "@/imports/liquide/sample-02.jpg"
-import liq3 from "@/imports/liquide/sample-03.jpg"
-import liq4 from "@/imports/liquide/sample-04.jpg"
-import liq5 from "@/imports/liquide/sample-05.png"
-import liq6 from "@/imports/liquide/sample-06.png"
-import liq7 from "@/imports/liquide/sample-07.png"
-import liq8 from "@/imports/liquide/sample-08.png"
-import liq9 from "@/imports/liquide/sample-09.png"
-import liq10 from "@/imports/liquide/sample-10.png"
-import stateplateLogo from "@/imports/state-plate-logo.png"
-import freelanceLogo from "@/imports/freelance-logo.png"
+import liq1 from "@/imports/liquide/sample-01.webp"
+import liq2 from "@/imports/liquide/sample-02.webp"
+import liq3 from "@/imports/liquide/sample-03.webp"
+import liq4 from "@/imports/liquide/sample-04.webp"
+import liq5 from "@/imports/liquide/sample-05.webp"
+import liq6 from "@/imports/liquide/sample-06.webp"
+import liq7 from "@/imports/liquide/sample-07.webp"
+import liq8 from "@/imports/liquide/sample-08.webp"
+import liq9 from "@/imports/liquide/sample-09.webp"
+import liq10 from "@/imports/liquide/sample-10.webp"
+import stateplateLogo from "@/imports/state-plate-logo.webp"
+import freelanceLogo from "@/imports/freelance-logo.webp"
 import Moodboard from "@/Moodboard"
 import PhotoSlideshow from "@/PhotoSlideshow"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
-import growthPortrait from "@/imports/growth-portrait.png"
-import contentPortrait from "@/imports/brand-portrait.png"
+import growthPortrait from "@/imports/growth-portrait.webp"
+import contentPortrait from "@/imports/brand-portrait.webp"
 
 type Mode = "growth" | "brand"
 type PageKey = "about" | "work" | "notes" | "projects" | "moodboard" | "upto"
@@ -137,6 +138,9 @@ const skillSets: Record<Mode, {
 }
 
 const skillDomains: Record<string, string> = {
+  ahrefs: "ahrefs.com",
+  replit: "replit.com",
+  mention: "mention.com",
   shopify: "shopify.com",
   clay: "clay.com",
   posthog: "posthog.com",
@@ -679,6 +683,7 @@ function Experience({ mode }: { mode: Mode }) {
                     playsInline
                     preload="metadata"
                     aria-label="Liquide app launch video — copywriting and editing"
+                    poster="/media/liquide-video-poster.webp"
                     className="w-full rounded-sm bg-black"
                   >
                     <source src="/work-samples/liquide/app-launch.mp4" type="video/mp4" />
@@ -727,6 +732,7 @@ function PageBody({ page, mode, onOpenPhotos, photosOpen }: { page: PageKey; mod
                 className="flex items-center gap-2 rounded-full border border-[#1A1A1A]/20 py-1.5 pl-2 pr-4"
               >
                 <Logo
+                  src={toolLogos[t.toLowerCase()]}
                   domain={skillDomains[t] ?? skillDomains[t.toLowerCase()]}
                   name={t}
                   size="size-6"
@@ -735,7 +741,7 @@ function PageBody({ page, mode, onOpenPhotos, photosOpen }: { page: PageKey; mod
               </span>
             ))}
           </div>
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="flex max-w-3xl flex-col gap-8">
             {skillSets[mode].sections.map(([t, d]) => (
               <Section key={t} title={t}>
                 {d}
@@ -1474,7 +1480,6 @@ export default function App() {
     <div className="focus-controls px-6 pt-6 lg:absolute lg:left-5 lg:top-5 lg:p-0">
       {isMobile && !page && <button type="button" className="mobile-scroll-top" onClick={scrollHomeToTop} aria-label="Back to top" />}
       <button type="button" role="switch" aria-checked={mode === "brand"} aria-label="Brand mode"
-        title={`Switch to ${mode === "growth" ? "brand" : "growth"} mode`}
         className="mode-toggle" onClick={() => {
           const nextMode = mode === "growth" ? "brand" : "growth"
           navigate(`/${nextMode}${page ? `/${slugOf(page, nextMode)}` : ""}`, true)
@@ -1559,7 +1564,7 @@ export default function App() {
                 navigate(`/${mode}/photos`)
               }}
                 aria-label="Open photo gallery" aria-haspopup="dialog" className="photo-folder-button shrink-0">
-                <img src="/photo-folder.png" alt="" className={`h-full w-full object-contain ${galleryOpen ? "opacity-0" : ""}`} />
+                <img src="/media/photo-folder.webp" alt="" className={`h-full w-full object-contain ${galleryOpen ? "opacity-0" : ""}`} />
               </button>
             </div>
             <h1 className="mobile-name" style={mode === "brand" ? { color: "#7d2e4b" } : undefined}><span className="sr-only">i’m rutuja</span><NameLettering /></h1>

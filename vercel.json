@@ -9,7 +9,7 @@
       "destination": "/index.html"
     },
     {
-      "source": "/((?!api/|work-samples/|imports/|assets/|fonts/|case-images/|photo-thumbnails/|charms/).*)",
+      "source": "/((?!api/|work-samples/|imports/|assets/|fonts/|case-images/|photo-thumbnails/|charms/|media/|tool-logos/|videos/).*)",
       "destination": "/index.html"
     }
   ]

@@ -1,13 +1,13 @@
-import cooking from "@/imports/cooking.jpg"
-import nyt from "@/imports/nyt-games.jpg"
-import f1 from "@/imports/formula-one.jpg"
-import futbol from "@/imports/football.jpeg"
-import fpl from "@/imports/fantasy-premier-league.png"
-import window1 from "@/imports/window-view.jpeg"
-import boardGames from "@/imports/board-games.jpg"
-import hotChoc from "@/imports/hot-chocolate.jpg"
-import skincare from "@/imports/skincare.jpg"
-import fruit from "@/imports/fruit.jpg"
+import cooking from "@/imports/cooking.webp"
+import nyt from "@/imports/nyt-games.webp"
+import f1 from "@/imports/formula-one.webp"
+import futbol from "@/imports/football.webp"
+import fpl from "@/imports/fantasy-premier-league.webp"
+import window1 from "@/imports/window-view.webp"
+import boardGames from "@/imports/board-games.webp"
+import hotChoc from "@/imports/hot-chocolate.webp"
+import skincare from "@/imports/skincare.webp"
+import fruit from "@/imports/fruit.webp"
 
 export type AboutExtra = {
   intro: string

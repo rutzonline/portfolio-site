@@ -1,3 +1,4 @@
+import { mediaSrc } from "@/media"
 import { useEffect, useRef, useState, type CSSProperties } from "react"
 import { getPhotos } from "@/PhotoSlideshow"
 import CameraOpening, { cameraPhoto } from "@/CameraOpening"
@@ -21,7 +22,7 @@ function LoadingPhoto({ src, alt, full = false, eager = false, preview }: { src:
   const [failed, setFailed] = useState(false)
   return <div className={`relative overflow-hidden rounded-lg ${full ? "aspect-[4/5] w-full" : "aspect-square"} ${loaded || (full && preview) ? "" : "photo-skeleton"}`}>
     {full && preview && <img src={preview} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />}
-    <img src={src} alt={alt} loading={full || eager ? "eager" : "lazy"} decoding="async" draggable={false}
+    <img src={mediaSrc(src)} alt={alt} loading={full || eager ? "eager" : "lazy"} decoding="async" draggable={false}
       onLoad={async (event) => {
         const image = event.currentTarget
         try { await image.decode() } catch { /* Loaded images can still render if decode is unavailable. */ }
@@ -138,7 +139,7 @@ export default function PhotoGallery({ onClose, origin, immersive = false }: { o
     {opening && extraTurn && origin && <CameraOpening origin={origin} target={cameraTarget} thumbnail={thumbnails[cameraPhoto]} />}
     {opening && !extraTurn && <div className="gallery-opening" style={flightStyle} aria-hidden="true">
       <div className="folder-flight">
-        <img src="/photo-folder.png" alt="" />
+        <img src="/media/photo-folder.webp" alt="" />
 
       </div>
       <div className="middle-photo-flight"><div className="middle-photo-front" /><div className="middle-photo-back" /></div>

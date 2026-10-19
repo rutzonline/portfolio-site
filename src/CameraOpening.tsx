@@ -36,7 +36,7 @@ export default function CameraOpening({ origin, target, thumbnail }: { origin: R
     return () => { cancelAnimationFrame(frame); animations.forEach((animation) => animation.cancel()) }
   }, [origin, target])
   return <div ref={layer} className="camera-opening" aria-hidden="true">
-    <img ref={camera} src="/camlab-cam6.png" alt="" className="camera-flight" />
+    <img ref={camera} src="/media/camlab-cam6.webp" alt="" className="camera-flight" />
     <div ref={photo} className="camera-screen-flight"><img ref={image} src={thumbnail} alt="" /></div>
   </div>
 }

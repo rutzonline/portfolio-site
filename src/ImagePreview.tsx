@@ -1,3 +1,4 @@
+import { mediaSrc } from "@/media"
 import { useEffect, useRef } from "react"
 
 export default function ImagePreview({ src, alt, onClose }: {
@@ -34,7 +35,7 @@ export default function ImagePreview({ src, alt, onClose }: {
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") { event.preventDefault(); onClose() }
       }}>
-      <img src={src} alt={alt} className="block h-auto max-h-[76dvh] w-auto max-w-[86vw] object-contain lg:max-w-[min(80vw,1120px)]" />
+      <img src={mediaSrc(src)} alt={alt} className="block h-auto max-h-[76dvh] w-auto max-w-[86vw] object-contain lg:max-w-[min(80vw,1120px)]" />
     </dialog>
   )
 }

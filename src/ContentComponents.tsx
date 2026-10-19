@@ -1,3 +1,4 @@
+import { mediaSrc } from "@/media"
 import { useState } from "react"
 import ImagePreview from "@/ImagePreview"
 
@@ -33,7 +34,7 @@ export function ImageSlot({
   const [expanded, setExpanded] = useState(false)
   const image = (
     <img
-      src={src}
+      src={mediaSrc(src)}
       alt={alt}
       loading="lazy"
       decoding="async"
@@ -46,6 +47,6 @@ export function ImageSlot({
       onClick={() => setExpanded(true)} className="block w-full cursor-zoom-in rounded-md focus-visible:outline-2 focus-visible:outline-offset-4">
       {image}
     </button>
-    {expanded && <ImagePreview src={src} alt={alt} onClose={() => setExpanded(false)} />}
+    {expanded && <ImagePreview src={mediaSrc(src)} alt={alt} onClose={() => setExpanded(false)} />}
   </>
 }

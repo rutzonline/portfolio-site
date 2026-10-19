@@ -1,3 +1,4 @@
+import { mediaSrc } from "@/media"
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { fetchTable } from "@/lib/supabase"
 
@@ -131,7 +132,7 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
         failed.add(next)
         if (failed.size < photos.length) advance()
       }
-      image.src = next
+      image.src = mediaSrc(next)
     }
     startIfNeeded.current = () => { if (!current) advance() }
     // Give the initial cover, and each newly selected view's cover, a full
@@ -170,8 +171,8 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
         style={{ WebkitTouchCallout: "none" }} />}
       {showPhoto && (
         <>
-          {previous && <img key={previous} src={previous} alt="" className="absolute inset-0 h-full w-full object-cover" />}
-          <img key={shown} src={shown} alt="" className="photo-fade-in absolute inset-0 h-full w-full object-cover" />
+          {previous && <img key={previous} src={mediaSrc(previous)} alt="" className="absolute inset-0 h-full w-full object-cover" />}
+          <img key={shown} src={mediaSrc(shown)} alt="" className="photo-fade-in absolute inset-0 h-full w-full object-cover" />
         </>
       )}
       {onReturnHome && <button type="button" aria-label="Return to homepage"

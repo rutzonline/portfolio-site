@@ -1,3 +1,4 @@
+import { mediaSrc } from "@/media"
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 import { useMoodboard } from "@/useMoodboard"
 
@@ -17,7 +18,7 @@ const Img = ({
   className?: string
 }) => (
   <img
-    src={src || ph(alt)}
+    src={src ? mediaSrc(src) : ph(alt)}
     alt={alt}
     loading="lazy"
     decoding="async"
@@ -145,7 +146,7 @@ function CampaignImage({ src, brand, active }: { src?: string; brand: string; ac
   const [loaded, setLoaded] = useState(false)
   const [failed, setFailed] = useState(false)
   return <>
-    <img src={src || ph(brand)} alt={active ? brand : ""} aria-hidden={!active}
+    <img src={src ? mediaSrc(src) : ph(brand)} alt={active ? brand : ""} aria-hidden={!active}
       loading="eager" decoding="async" fetchPriority={active ? "high" : "low"}
       onLoad={(event) => {
         const image = event.currentTarget
