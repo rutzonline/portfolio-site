@@ -1327,6 +1327,22 @@ export default function App() {
   const [galleryOrigin, setGalleryOrigin] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
   const [copied, setCopied] = useState(false)
   const page = route.page
+  const [showModeHint, setShowModeHint] = useState(false)
+  const modeHintShown = useRef(false)
+  useEffect(() => {
+    if (page || modeHintShown.current) return
+    modeHintShown.current = true
+    setShowModeHint(true)
+  }, [page])
+  useEffect(() => {
+    if (!showModeHint) return
+    if (page) {
+      setShowModeHint(false)
+      return
+    }
+    const timer = window.setTimeout(() => setShowModeHint(false), 5000)
+    return () => window.clearTimeout(timer)
+  }, [showModeHint, page])
   const hasDetail = Boolean(pathname.split("/")[3]) && (page === "notes" || page === "projects" || (page === "moodboard" && mode === "growth"))
   const mobileHomePosition = useRef<{ page: PageKey; y: number } | null>(null)
   const previousPageRef = useRef(page)
@@ -1493,8 +1509,9 @@ export default function App() {
   const focusControls = (
     <div className="focus-controls px-6 pt-6 lg:absolute lg:left-5 lg:top-5 lg:p-0">
       {isMobile && !page && <button type="button" className="mobile-scroll-top" onClick={scrollHomeToTop} aria-label="Back to top" />}
-      <button type="button" role="switch" aria-checked={mode === "brand"} aria-label="Brand mode" aria-describedby="mode-switch-tooltip"
+      <button type="button" role="switch" aria-checked={mode === "brand"} aria-label="Brand mode" aria-describedby={showModeHint && !page ? "mode-switch-tooltip" : undefined}
         className="mode-switch" onClick={() => {
+          setShowModeHint(false)
           const nextMode = mode === "growth" ? "brand" : "growth"
           navigate(`/${nextMode}${page ? `/${slugOf(page, nextMode)}` : ""}`, true)
           if (isMobile && !page) scrollHomeToTop()
@@ -1509,9 +1526,14 @@ export default function App() {
               ))}
           </span>
         </span>
-        <span id="mode-switch-tooltip" role="tooltip" className="mode-switch-label">
-          switch to {mode === "growth" ? "brand" : "growth"} mode
-        </span>
+        {showModeHint && !page && (
+          <span id="mode-switch-tooltip" role="tooltip" className="mode-switch-label">
+            <svg width="36" height="32" viewBox="0 0 36 32" fill="none" aria-hidden="true">
+              <path d="M30 27C12 29 8 19 11 5M4 11L11 4L18 11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            explore my split personality
+          </span>
+        )}
       </button>
     </div>
   )
