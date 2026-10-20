@@ -781,12 +781,14 @@ main, main * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) trans
 }
 .mode-switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .mode-switch-label {
-  position: absolute; top: calc(100% + 8px); left: 0; z-index: 50;
-  display: flex; flex-direction: column; align-items: flex-start; pointer-events: none; white-space: nowrap;
-  border: 1px solid rgb(26 26 26 / .12); border-radius: 10px; padding: 10px 14px 14px; background: #faf9f6; color: #0f3a8a;
+  position: absolute; top: 50%; left: calc(100% + 8px); transform: translateY(-50%); z-index: 50;
+  display: flex; align-items: center; gap: 4px; width: max-content; max-width: calc(100vw - 150px); pointer-events: none; white-space: normal;
+  border: 1px solid rgb(26 26 26 / .12); border-radius: 6px; padding: 6px 8px; background: #faf9f6; color: #0f3a8a;
   font-family: "Inter", sans-serif; font-size: 13px; font-weight: 400; line-height: 1.5;
   text-align: left; box-shadow: 0 1px 6px rgb(26 26 26 / .2);
 }
+
+.mode-switch-label svg { flex-shrink: 0; }
 
 .mode-toggle {
   position: relative; flex-shrink: 0; width: 104px; height: 52px; padding: 4px;

@@ -1528,8 +1528,8 @@ export default function App() {
         </span>
         {showModeHint && !page && (
           <span id="mode-switch-tooltip" role="tooltip" className="mode-switch-label">
-            <svg width="36" height="32" viewBox="0 0 36 32" fill="none" aria-hidden="true">
-              <path d="M30 27C12 29 8 19 11 5M4 11L11 4L18 11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M15 5L8 12L15 19" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             explore my split personality
           </span>
