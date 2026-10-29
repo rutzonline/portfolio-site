@@ -1,13 +1,12 @@
 {
-  "title": "rutuja rochkari",
-  "description": "product growth & brand marketer",
+  "title": "Rutuja Rochkari | Product Growth & Brand Marketer",
+  "description": "Rutuja Rochkari is a product growth and brand marketer. Case studies on how AI and tech products get their first users.",
   "language": "en",
   "icons": {
     "icon": "/rr.png"
   },
   "openGraph": {
-    "image": "https://www.rutzonline.com/og%20image.png",
-    "description": ""
+    "image": "https://www.rutzonline.com/og%20image.png"
   },
   "accessibility": {
     "addBypassLinks": false,

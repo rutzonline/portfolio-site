@@ -157,6 +157,7 @@ function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
         }
         if (title) {
           tags.push({ tag: 'meta', attrs: { property: 'og:title', content: title }, injectTo: 'head' })
+          tags.push({ tag: 'meta', attrs: { name: 'twitter:title', content: title }, injectTo: 'head' })
         }
         const previewDescription = config.openGraph?.description ?? description
         if (previewDescription || config.openGraph?.description !== undefined) {
