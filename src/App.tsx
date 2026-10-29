@@ -1762,7 +1762,7 @@ export default function App() {
           <CardHeading detail={"Open to work"}>Contact</CardHeading>
           <div className="mt-6 lg:mt-auto">
             <div className="flex flex-col items-start gap-1">
-              <a className="contact-link" href="https://drive.google.com/drive/folders/1EU17gkRK0W9eNjuB3oejzxbXpIOy58ET">
+              <a className="contact-link" href="https://drive.google.com/file/d/1ncwgmvXZ8XSxs49LZgxki_QWY0UI6uRy/view?usp=sharing">
                 Resume
               </a>
               <button
