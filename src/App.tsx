@@ -1571,6 +1571,7 @@ export default function App() {
           }
         >
           {!isMobile && <PhotoSlideshow active={page !== null} portrait={content.portrait}
+            initialCoverDuration={mode === "growth" ? 2000 : undefined}
             onReturnHome={page ? close : undefined} />}
           {!isMobile && focusControls}
           <div className={`mobile-identity px-6 pb-7 pt-7 lg:hidden ${mode === "brand" ? "mobile-brand-identity" : ""}`}>

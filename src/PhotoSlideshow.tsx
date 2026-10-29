@@ -25,8 +25,8 @@ export function getPhotos() {
   return photoRequest
 }
 
-export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
-  active: boolean; portrait: string; onReturnHome?: () => void
+export default function PhotoSlideshow({ active, portrait, initialCoverDuration, onReturnHome }: {
+  active: boolean; portrait: string; initialCoverDuration?: number; onReturnHome?: () => void
 }) {
   const [desktop, setDesktop] = useState(() => window.matchMedia("(min-width: 1024px)").matches)
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)
@@ -34,6 +34,8 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
   const [shown, setShown] = useState<string | null>(null)
   const [shownPortrait, setShownPortrait] = useState(portrait)
   const [coverCycle, setCoverCycle] = useState(portrait)
+  // Capture the initial view only; later mode switches keep the normal dwell.
+  const initialCover = useRef({ portrait, deadline: initialCoverDuration === undefined ? null : Date.now() + initialCoverDuration })
   const visited = useRef(new Set([portrait]))
   const [previous, setPrevious] = useState<string | null>(null)
   const enabled = desktop
@@ -135,10 +137,13 @@ export default function PhotoSlideshow({ active, portrait, onReturnHome }: {
       image.src = mediaSrc(next)
     }
     startIfNeeded.current = () => { if (!current) advance() }
-    // Give the initial cover, and each newly selected view's cover, a full
-    // dwell before starting photos. Returning home does not restart this effect.
-    const firstPhotoAt = Date.now() + 15000
-    schedule()
+    // Only the initial Growth cover has a shorter dwell, measured from mount.
+    // Photo loading must not add another full dwell; later covers and photos
+    // retain their 15-second timing. Returning home does not restart this effect.
+    const firstPhotoAt = coverCycle === initialCover.current.portrait && initialCover.current.deadline !== null
+      ? initialCover.current.deadline
+      : Date.now() + 15000
+    timer = window.setTimeout(advance, Math.max(0, firstPhotoAt - Date.now()))
     const resume = () => { if (!current && Date.now() >= firstPhotoAt) advance() }
     document.addEventListener("visibilitychange", resume)
     return () => {
