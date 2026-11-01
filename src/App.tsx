@@ -1501,7 +1501,6 @@ export default function App() {
           navigate(`/${nextMode}${page ? `/${slugOf(page, nextMode)}` : ""}`, true)
           if (isMobile && !page) scrollHomeToTop()
         }}>
-        <span className="mode-switch-heading" aria-hidden="true">Growth <span>↔</span> Brand</span>
         <span className="mode-toggle" aria-hidden="true">
           <span className="toggle-thumb" style={{ transform: mode === "brand" ? "translateX(100%)" : "none" }}>
             {isMobile ? <img src={`/${mode}.png`} alt="" width="32" height="32" /> :
@@ -1512,8 +1511,8 @@ export default function App() {
               ))}
           </span>
         </span>
-        <span id="mode-switch-tooltip" className="mode-switch-label">
-          switch to {mode === "growth" ? "brand" : "growth"} →
+        <span id="mode-switch-tooltip" role="tooltip" className="mode-switch-label">
+          switch to {mode === "growth" ? "brand" : "growth"} mode
         </span>
       </button>
     </div>
