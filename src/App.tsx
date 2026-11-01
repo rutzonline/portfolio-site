@@ -40,8 +40,10 @@ import Moodboard from "@/Moodboard"
 import PhotoSlideshow from "@/PhotoSlideshow"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
-import growthPortrait from "@/imports/growth-portrait.webp"
 import contentPortrait from "@/imports/brand-portrait.webp"
+
+// Show a cached gallery photo while the Growth slideshow loads.
+const growthPortrait = "/media/11f58c937bfbc3d4fa.webp"
 
 type Mode = "growth" | "brand"
 type PageKey = "about" | "work" | "notes" | "projects" | "moodboard" | "upto"
@@ -1499,6 +1501,7 @@ export default function App() {
           navigate(`/${nextMode}${page ? `/${slugOf(page, nextMode)}` : ""}`, true)
           if (isMobile && !page) scrollHomeToTop()
         }}>
+        <span className="mode-switch-heading" aria-hidden="true">Growth <span>↔</span> Brand</span>
         <span className="mode-toggle" aria-hidden="true">
           <span className="toggle-thumb" style={{ transform: mode === "brand" ? "translateX(100%)" : "none" }}>
             {isMobile ? <img src={`/${mode}.png`} alt="" width="32" height="32" /> :
@@ -1509,8 +1512,8 @@ export default function App() {
               ))}
           </span>
         </span>
-        <span id="mode-switch-tooltip" role="tooltip" className="mode-switch-label">
-          switch to {mode === "growth" ? "brand" : "growth"} mode
+        <span id="mode-switch-tooltip" className="mode-switch-label">
+          switch to {mode === "growth" ? "brand" : "growth"} →
         </span>
       </button>
     </div>
@@ -1571,7 +1574,8 @@ export default function App() {
           }
         >
           {!isMobile && <PhotoSlideshow active={page !== null} portrait={content.portrait}
-            initialCoverDuration={mode === "growth" ? 2000 : undefined}
+            initialCoverDuration={mode === "growth" ? 0 : undefined}
+            portraitAlt={mode === "growth" ? "A yellow flower at sunset" : "Portrait of Rutuja Rochkari"}
             onReturnHome={page ? close : undefined} />}
           {!isMobile && focusControls}
           <div className={`mobile-identity px-6 pb-7 pt-7 lg:hidden ${mode === "brand" ? "mobile-brand-identity" : ""}`}>
@@ -1763,7 +1767,7 @@ export default function App() {
           <CardHeading detail={"Open to work"}>Contact</CardHeading>
           <div className="mt-6 lg:mt-auto">
             <div className="flex flex-col items-start gap-1">
-              <a className="contact-link" href="https://drive.google.com/file/d/1ncwgmvXZ8XSxs49LZgxki_QWY0UI6uRy/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+              <a className="contact-link" href="https://drive.google.com/file/d/1gImcrEWnoxNjyA5v3fyzTaz9dn8jfCZV/view?usp=sharing" target="_blank" rel="noopener noreferrer">
                 Resume
               </a>
               <button

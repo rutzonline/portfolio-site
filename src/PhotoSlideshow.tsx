@@ -25,8 +25,8 @@ export function getPhotos() {
   return photoRequest
 }
 
-export default function PhotoSlideshow({ active, portrait, initialCoverDuration, onReturnHome }: {
-  active: boolean; portrait: string; initialCoverDuration?: number; onReturnHome?: () => void
+export default function PhotoSlideshow({ active, portrait, portraitAlt, initialCoverDuration, onReturnHome }: {
+  active: boolean; portrait: string; portraitAlt: string; initialCoverDuration?: number; onReturnHome?: () => void
 }) {
   const [desktop, setDesktop] = useState(() => window.matchMedia("(min-width: 1024px)").matches)
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)
@@ -34,6 +34,7 @@ export default function PhotoSlideshow({ active, portrait, initialCoverDuration,
   const [shown, setShown] = useState<string | null>(null)
   const [shownPortrait, setShownPortrait] = useState(portrait)
   const [coverCycle, setCoverCycle] = useState(portrait)
+  const coverAlts = useRef(new Map([[portrait, portraitAlt]]))
   // Capture the initial view only; later mode switches keep the normal dwell.
   const initialCover = useRef({ portrait, deadline: initialCoverDuration === undefined ? null : Date.now() + initialCoverDuration })
   const visited = useRef(new Set([portrait]))
@@ -46,6 +47,7 @@ export default function PhotoSlideshow({ active, portrait, initialCoverDuration,
   useLayoutEffect(() => {
     if (!visited.current.has(portrait)) {
       visited.current.add(portrait)
+      coverAlts.current.set(portrait, portraitAlt)
       setCoverCycle(portrait)
     } else {
       setShownPortrait(coverCycle)
@@ -137,7 +139,7 @@ export default function PhotoSlideshow({ active, portrait, initialCoverDuration,
       image.src = mediaSrc(next)
     }
     startIfNeeded.current = () => { if (!current) advance() }
-    // Only the initial Growth cover has a shorter dwell, measured from mount.
+    // Growth starts photos immediately; any initial dwell is measured from mount.
     // Photo loading must not add another full dwell; later covers and photos
     // retain their 15-second timing. Returning home does not restart this effect.
     const firstPhotoAt = coverCycle === initialCover.current.portrait && initialCover.current.deadline !== null
@@ -163,7 +165,7 @@ export default function PhotoSlideshow({ active, portrait, initialCoverDuration,
   const showPhoto = enabled && shown && visited.current.has(portrait) && shownPortrait === coverCycle
   return (
     <div className="absolute inset-0">
-      <img key={coverCycle} src={coverCycle} alt={showPhoto ? "" : "Portrait of Rutuja Rochkari"}
+      <img key={coverCycle} src={coverCycle} alt={showPhoto ? "" : coverAlts.current.get(coverCycle)}
         aria-hidden={Boolean(showPhoto)}
         draggable={false}
         onContextMenu={(event) => event.preventDefault()}
