@@ -869,21 +869,26 @@ function Logo({
   )
 }
 
-function CaseList() {
+function ImpactNumbers() {
+  const metrics = [
+    ["~7,000", "app downloads", "from ~150"],
+    ["~30%", "higher average order value", "₹808 → ₹1,047"],
+    ["3.14×", "Meta ads ROAS", "localised campaigns"],
+    ["35–40%", "email open rate", "from 8–10%"],
+  ]
   return (
-    <ul className="case-list divide-y divide-[#1A1A1A]/15">
-      {cases.map(([name, sub]) => (
-        <li
-          key={name}
-          className="group py-1.5 leading-snug first:pt-0 last:pb-0"
-        >
-          <span className="block text-[16px] font-medium transition-colors group-hover:text-[color:var(--accent-text)]">
-            {name}
-          </span>
-          <span className="case-subtitle block text-[14px] text-[#1A1A1A]/60">{sub}</span>
-        </li>
-      ))}
-    </ul>
+    <div>
+      <dl className="grid grid-cols-2 gap-x-5 gap-y-6">
+        {metrics.map(([value, label, context]) => (
+          <div key={label}>
+            <dt className="text-sm leading-snug text-[#1A1A1A]/65">{label}</dt>
+            <dd className="mt-1 text-[clamp(22px,2.2vw,32px)] font-semibold leading-tight tracking-tight text-[color:var(--accent-text)]">{value}</dd>
+            <dd className="mt-1 text-xs text-[#1A1A1A]/55">{context}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="mt-4 text-xs leading-snug text-[#1A1A1A]/55">Email lift includes list cleanup.</p>
+    </div>
   )
 }
 
@@ -1323,7 +1328,7 @@ export default function App() {
       image.decode().catch(() => {})
     }
   }, [])
-  const mode = route.mode ?? "growth"
+  const mode = route.mode ?? "brand"
   const [visitorName, setVisitorName] = useState("first name")
   const galleryOpen = pathname.endsWith("/photos") && (isMobile || pathname === "/brand/what-im-up-to/photos")
   const [galleryOrigin, setGalleryOrigin] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
@@ -1647,8 +1652,7 @@ export default function App() {
                 )}
                 {page === "moodboard" && mode === "growth" && (
                   <p className="mt-3 text-[#1A1A1A]/60">
-                    growth plans, campaigns and experiments, written up end to
-                    end.
+                    conceptual plans, campaigns, and experiments
                   </p>
                 )}
               </div>
@@ -1838,13 +1842,13 @@ export default function App() {
 
             {mode === "growth" ? (
               <Card
-                ariaLabel="Case studies"
+                ariaLabel="Impact and case studies"
                 className="order-5 lg:order-none"
                 {...openProps("moodboard")}
               >
-                <CardHeading detail="conceptual">Case studies</CardHeading>
+                <CardHeading detail="The State Plate">Impact</CardHeading>
                 <div className="mt-6 lg:mt-auto">
-                  <CaseList />
+                  <ImpactNumbers />
                 </div>
               </Card>
             ) : (
