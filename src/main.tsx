@@ -4,7 +4,7 @@ import App from './App'
 import './index.css'
 import { normalizeLegacyURL } from './navigation'
 
-normalizeLegacyURL()
+normalizeLegacyURL(true)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

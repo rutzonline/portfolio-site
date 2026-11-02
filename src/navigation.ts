@@ -34,7 +34,12 @@ export function useDetailRoute(labels: string[], base: string): [number | null, 
 }
 
 // Keep old shared links working while new navigation uses clean paths.
-export function normalizeLegacyURL() {
+export function normalizeLegacyURL(resetOnReload = false) {
+  const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined
+  if (resetOnReload && navigation?.type === "reload") {
+    window.history.replaceState(null, "", `/brand${window.location.search}`)
+    return
+  }
   const shortcuts: Record<string, string> = {
     consumption: "growth/what-im-up-to", cursor: "growth/case-studies/cursor",
     wispr: "growth/case-studies/wispr-flow", writing: "growth/notes",

@@ -328,10 +328,14 @@ function Card({
   bg = CREAM,
   onOpen,
   onClick,
+  onMouseMove,
+  onMouseLeave,
   homeKey,
 }: {
   children: ReactNode
   onClick?: (e: MouseEvent<HTMLElement>) => void
+  onMouseMove?: (e: MouseEvent<HTMLElement>) => void
+  onMouseLeave?: () => void
   className?: string
   ariaLabel: string
   padded?: boolean
@@ -362,6 +366,8 @@ function Card({
       style={{ background: bg }}
       className={cls}
       onClick={onClick}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
     >
       {children}
     </article>
@@ -1328,6 +1334,7 @@ export default function App() {
     }
   }, [])
   const mode = route.mode ?? "brand"
+  const [modeHint, setModeHint] = useState<{ x: number; y: number } | null>(null)
   const [visitorName, setVisitorName] = useState("first name")
   const galleryOpen = pathname.endsWith("/photos") && (isMobile || pathname === "/brand/what-im-up-to/photos")
   const [galleryOrigin, setGalleryOrigin] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
@@ -1499,8 +1506,16 @@ export default function App() {
   const focusControls = (
     <div className="focus-controls px-6 pt-6 lg:absolute lg:left-5 lg:top-5 lg:p-0">
       {isMobile && !page && <button type="button" className="mobile-scroll-top" onClick={scrollHomeToTop} aria-label="Back to top" />}
-      <button type="button" role="switch" aria-checked={mode === "brand"} aria-label="Brand mode" aria-describedby="mode-switch-tooltip"
-        className="mode-switch" onClick={() => {
+      <button type="button" role="switch" aria-checked={mode === "brand"} aria-label="Brand mode" aria-describedby="mode-switch-description"
+        className="mode-switch"
+        onFocus={(event) => {
+          if (!event.currentTarget.matches(":focus-visible") || isMobile) return
+          const rect = event.currentTarget.getBoundingClientRect()
+          setModeHint({ x: rect.left, y: rect.bottom + 12 })
+        }}
+        onBlur={() => setModeHint(null)}
+        onKeyDown={(event) => { if (event.key === "Escape") setModeHint(null) }}
+        onClick={() => {
           const nextMode = mode === "growth" ? "brand" : "growth"
           navigate(`/${nextMode}${page ? `/${slugOf(page, nextMode)}` : ""}`, true)
           if (isMobile && !page) scrollHomeToTop()
@@ -1515,7 +1530,7 @@ export default function App() {
               ))}
           </span>
         </span>
-        <span id="mode-switch-tooltip" role="tooltip" className="mode-switch-label">
+        <span id="mode-switch-description" className="sr-only">
           switch to {mode === "growth" ? "brand" : "growth"} mode
         </span>
       </button>
@@ -1545,6 +1560,13 @@ export default function App() {
         } as CSSProperties
       }
     >
+      {!isMobile && modeHint && (
+        <div aria-hidden="true" className="mode-cursor-hint"
+          style={{ left: Math.max(8, Math.min(modeHint.x, window.innerWidth - 280)), top: Math.max(8, Math.min(modeHint.y, window.innerHeight - 76)), background: mode === "brand" ? PINK : DESKTOP_NAVY, color: mode === "brand" ? "#1A1A1A" : "#fff" }}>
+          <span>you’re in {mode} mode</span>
+          <span className="block text-xs opacity-80">use the toggle to explore {mode === "brand" ? "growth" : "brand"}</span>
+        </div>
+      )}
       {galleryOpen && <PhotoGallery origin={galleryOrigin} immersive={page === "upto" && mode === "brand"} onClose={() => navigate(page === "upto" ? `/${mode}/what-im-up-to` : `/${mode}`, true)} />}
       {page && (
         <span
@@ -1563,6 +1585,10 @@ export default function App() {
         {isMobile && !page && focusControls}
         <Card
           ariaLabel="Portfolio focus"
+          onMouseMove={(event) => {
+            if (!isMobile) setModeHint({ x: event.clientX + 16, y: event.clientY + 18 })
+          }}
+          onMouseLeave={() => setModeHint(null)}
           padded={false}
           className={`portrait-card relative order-1 lg:order-none ${
             page ? "cursor-pointer max-lg:hidden" : ""
@@ -1577,7 +1603,7 @@ export default function App() {
           }
         >
           {!isMobile && <PhotoSlideshow active={page !== null} portrait={content.portrait}
-            initialCoverDuration={mode === "growth" ? 0 : undefined}
+            coverDuration={mode === "growth" ? 0 : 4000}
             portraitAlt={mode === "growth" ? "A yellow flower at sunset" : "Portrait of Rutuja Rochkari"}
             onReturnHome={page ? close : undefined} />}
           {!isMobile && focusControls}

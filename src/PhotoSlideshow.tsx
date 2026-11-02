@@ -25,8 +25,8 @@ export function getPhotos() {
   return photoRequest
 }
 
-export default function PhotoSlideshow({ active, portrait, portraitAlt, initialCoverDuration, onReturnHome }: {
-  active: boolean; portrait: string; portraitAlt: string; initialCoverDuration?: number; onReturnHome?: () => void
+export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDuration, onReturnHome }: {
+  active: boolean; portrait: string; portraitAlt: string; coverDuration: number; onReturnHome?: () => void
 }) {
   const [desktop, setDesktop] = useState(() => window.matchMedia("(min-width: 1024px)").matches)
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)
@@ -35,8 +35,8 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, initialC
   const [shownPortrait, setShownPortrait] = useState(portrait)
   const [coverCycle, setCoverCycle] = useState(portrait)
   const coverAlts = useRef(new Map([[portrait, portraitAlt]]))
-  // Capture the initial view only; later mode switches keep the normal dwell.
-  const initialCover = useRef({ portrait, deadline: initialCoverDuration === undefined ? null : Date.now() + initialCoverDuration })
+  // Each cover gets its own deadline; the photo cadence remains 15 seconds.
+  const coverDeadlines = useRef(new Map([[portrait, Date.now() + coverDuration]]))
   const visited = useRef(new Set([portrait]))
   const [previous, setPrevious] = useState<string | null>(null)
   const enabled = desktop
@@ -48,6 +48,7 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, initialC
     if (!visited.current.has(portrait)) {
       visited.current.add(portrait)
       coverAlts.current.set(portrait, portraitAlt)
+      coverDeadlines.current.set(portrait, Date.now() + coverDuration)
       setCoverCycle(portrait)
     } else {
       setShownPortrait(coverCycle)
@@ -139,12 +140,8 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, initialC
       image.src = mediaSrc(next)
     }
     startIfNeeded.current = () => { if (!current) advance() }
-    // Growth starts photos immediately; any initial dwell is measured from mount.
-    // Photo loading must not add another full dwell; later covers and photos
-    // retain their 15-second timing. Returning home does not restart this effect.
-    const firstPhotoAt = coverCycle === initialCover.current.portrait && initialCover.current.deadline !== null
-      ? initialCover.current.deadline
-      : Date.now() + 15000
+    // Measure cover dwell from display, not from the completion of the photo request.
+    const firstPhotoAt = coverDeadlines.current.get(coverCycle) ?? Date.now()
     timer = window.setTimeout(advance, Math.max(0, firstPhotoAt - Date.now()))
     const resume = () => { if (!current && Date.now() >= firstPhotoAt) advance() }
     document.addEventListener("visibilitychange", resume)

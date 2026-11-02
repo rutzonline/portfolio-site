@@ -94,3 +94,19 @@ test('homepage defaults explicitly to Brand and keeps query parameters', () => {
     source: '/', destination: '/brand', permanent: false,
   })
 })
+
+
+test('reload resets to Brand only during app startup', () => {
+  const original = performance.getEntriesByType
+  performance.getEntriesByType = () => [{ type: 'reload' }]
+  try {
+    at('/growth/notes?source=resume')
+    normalizeLegacyURL(true)
+    assert.equal(window.location.pathname + window.location.search, '/brand?source=resume')
+    at('/growth#growth/notes')
+    normalizeLegacyURL()
+    assert.equal(window.location.pathname, '/growth/notes')
+  } finally {
+    performance.getEntriesByType = original
+  }
+})
