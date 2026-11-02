@@ -1562,9 +1562,8 @@ export default function App() {
     >
       {!isMobile && modeHint && (
         <div aria-hidden="true" className="mode-cursor-hint"
-          style={{ left: Math.max(8, Math.min(modeHint.x, window.innerWidth - 280)), top: Math.max(8, Math.min(modeHint.y, window.innerHeight - 76)), background: mode === "brand" ? PINK : DESKTOP_NAVY, color: mode === "brand" ? "#1A1A1A" : "#fff" }}>
-          <span>you’re in {mode} mode</span>
-          <span className="block text-xs opacity-80">use the toggle to explore {mode === "brand" ? "growth" : "brand"}</span>
+          style={{ left: Math.max(8, Math.min(modeHint.x, window.innerWidth - 210)), top: Math.max(8, Math.min(modeHint.y, window.innerHeight - 52)), background: mode === "brand" ? PINK : DESKTOP_NAVY, color: mode === "brand" ? "#1A1A1A" : "#fff" }}>
+          switch to {mode === "brand" ? "growth" : "brand"} mode
         </div>
       )}
       {galleryOpen && <PhotoGallery origin={galleryOrigin} immersive={page === "upto" && mode === "brand"} onClose={() => navigate(page === "upto" ? `/${mode}/what-im-up-to` : `/${mode}`, true)} />}

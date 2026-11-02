@@ -781,8 +781,9 @@ main, main * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) trans
 }
 .mode-switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .mode-cursor-hint {
-  position: fixed; z-index: 100; pointer-events: none; width: 264px;
-  padding: 10px 16px; border-radius: 4px 22px 22px 22px;
+  position: fixed; z-index: 100; pointer-events: none; width: max-content; white-space: nowrap;
+  padding: 8px 14px; border-radius: 4px 22px 22px 22px;
+  border: 1px solid rgb(26 26 26 / .14);
   box-shadow: 0 2px 6px rgb(26 26 26 / .15);
   font-family: "Inter", sans-serif; font-size: 15px; line-height: 1.5;
 }
