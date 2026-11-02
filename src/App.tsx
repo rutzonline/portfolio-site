@@ -1719,7 +1719,7 @@ export default function App() {
               <CardHeading detail="selected work">Experience</CardHeading>
               <div className="mt-6 lg:mt-auto">
                 <ul className="divide-y divide-[#1A1A1A]/15">
-                  {jobs.map(([company], i) => (
+                  {jobs.map(([company, title], i) => (
                     <li
                       key={company}
                       className="py-1.5 leading-snug first:pt-0 last:pb-0"
@@ -1734,6 +1734,7 @@ export default function App() {
                         >
                           {company}
                         </span>
+                        <span className="block text-[#1A1A1A]/60">{title}</span>
                       </span>
                     </li>
                   ))}
@@ -1742,21 +1743,31 @@ export default function App() {
             </Card>
 
             <Card
-              ariaLabel="Notes"
-              className="order-6 lg:order-none"
-              {...openProps("notes")}
+              ariaLabel="Skills & stack"
+              className="skills-card order-6 lg:order-none"
+              {...openProps("work")}
+              bg={tint("notes")}
             >
-              <CardHeading detail="Writing">Notes</CardHeading>
-              <ul className="mt-6 divide-y divide-[#1A1A1A]/15 lg:mt-auto">
-                {notesByMode[mode].map(({ title: t }) => (
-                  <li
-                    key={t}
-                    className="py-2.5 leading-snug first:pt-0 last:pb-0"
-                  >
-                    {t}
-                  </li>
-                ))}
-              </ul>
+              <CardHeading detail="Toolkit">Skills &amp; stack</CardHeading>
+              <div className="mt-6 lg:mt-auto">
+                <div className="skills-tags relative -left-0.5 -top-1 flex flex-wrap gap-2">
+                  {skillSets[mode].tags.map((tool) => (
+                    <span
+                      key={tool}
+                      className={`rounded-full border px-3 py-1.5 text-base ${
+                        mode === "brand"
+                          ? "border-[#8A8A8A] lg:border-[#7d2e4b]/45"
+                          : "border-[#B3ADA1]"
+                      }`}
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+                <p className="mt-4 leading-snug text-[#1A1A1A]/60">
+                  {skillSets[mode].line}
+                </p>
+              </div>
             </Card>
           </>
         )}
@@ -1810,32 +1821,22 @@ export default function App() {
         {!page && (
           <>
             <Card
-              ariaLabel="Skills & stack"
-              className={`skills-card ${
-                mode === "brand" ? "order-5" : "order-4"
-              } lg:order-none`}
-              {...openProps("work")}
+              ariaLabel="Notes"
+              className={`notes-card ${mode === "brand" ? "order-5" : "order-4"} lg:order-none`}
+              {...openProps("notes")}
+              bg={tint("work")}
             >
-              <CardHeading detail="Toolkit">Skills &amp; stack</CardHeading>
-              <div className="mt-6 lg:mt-auto">
-                <div className="skills-tags relative -left-0.5 -top-1 flex flex-wrap gap-2">
-                  {skillSets[mode].tags.map((tool) => (
-                    <span
-                      key={tool}
-                      className={`rounded-full border px-3 py-1.5 text-base ${
-                        mode === "brand"
-                          ? "border-[#8A8A8A] lg:border-[#7d2e4b]/45"
-                          : "border-[#B3ADA1]"
-                      }`}
-                    >
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-                <p className="mt-4 leading-snug text-[#1A1A1A]/60">
-                  {skillSets[mode].line}
-                </p>
-              </div>
+              <CardHeading detail="Writing">Notes</CardHeading>
+              <ul className="mt-6 divide-y divide-[#1A1A1A]/15 lg:mt-auto">
+                {notesByMode[mode].map(({ title: t }) => (
+                  <li
+                    key={t}
+                    className="py-2.5 leading-snug first:pt-0 last:pb-0"
+                  >
+                    {t}
+                  </li>
+                ))}
+              </ul>
             </Card>
 
             {mode === "growth" ? (

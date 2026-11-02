@@ -44,6 +44,9 @@ export function normalizeLegacyURL() {
   const legacyPath = window.location.pathname.replace(/^\/|\/$/g, "")
   const route = /^(growth|brand)(\/|$)/.test(hashRoute) ? hashRoute : shortcuts[legacyPath]
   if (route) window.history.replaceState(null, "", `/${route}${window.location.search}`)
+  else if (window.location.pathname === "/") {
+    window.history.replaceState(null, "", `/brand${window.location.search}${window.location.hash}`)
+  }
   else if (window.location.pathname.length > 1 && window.location.pathname.endsWith("/")) {
     window.history.replaceState(window.history.state, "", `${getPath()}${window.location.search}${window.location.hash}`)
   }

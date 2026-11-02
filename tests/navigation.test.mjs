@@ -82,3 +82,15 @@ test('the existing deployment fallback covers clean routes and preserves asset/A
     assert.doesNotMatch(path, pattern)
   }
 })
+
+
+test('homepage defaults explicitly to Brand and keeps query parameters', () => {
+  at('/?source=resume'); normalizeLegacyURL()
+  assert.equal(window.location.pathname + window.location.search, '/brand?source=resume')
+  at('/growth'); normalizeLegacyURL()
+  assert.equal(window.location.pathname, '/growth')
+  const config = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'))
+  assert.deepEqual(config.redirects.find(rule => rule.source === '/'), {
+    source: '/', destination: '/brand', permanent: false,
+  })
+})
