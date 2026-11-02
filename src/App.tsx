@@ -871,9 +871,9 @@ function Logo({
 
 function ImpactNumbers() {
   const metrics = [
-    ["~7,000", "app downloads", "from ~150"],
-    ["~30%", "higher average order value", "₹808 → ₹1,047"],
-    ["3.14×", "Meta ads ROAS", "localised campaigns"],
+    ["7,000", "app downloads", "from ~150"],
+    ["30%", "higher AOV", "₹808 → ₹1,047"],
+    ["3.14", "Meta ads ROAS", "localised campaigns"],
     ["35–40%", "email open rate", "from 8–10%"],
   ]
   return (
@@ -887,7 +887,6 @@ function ImpactNumbers() {
           </div>
         ))}
       </dl>
-      <p className="mt-4 text-xs leading-snug text-[#1A1A1A]/55">Email lift includes list cleanup.</p>
     </div>
   )
 }
@@ -1720,7 +1719,7 @@ export default function App() {
               <CardHeading detail="selected work">Experience</CardHeading>
               <div className="mt-6 lg:mt-auto">
                 <ul className="divide-y divide-[#1A1A1A]/15">
-                  {jobs.map(([company, title], i) => (
+                  {jobs.map(([company], i) => (
                     <li
                       key={company}
                       className="py-1.5 leading-snug first:pt-0 last:pb-0"
@@ -1735,7 +1734,6 @@ export default function App() {
                         >
                           {company}
                         </span>
-                        <span className="block text-[#1A1A1A]/60">{title}</span>
                       </span>
                     </li>
                   ))}
@@ -1842,11 +1840,11 @@ export default function App() {
 
             {mode === "growth" ? (
               <Card
-                ariaLabel="Impact and case studies"
+                ariaLabel="The numbers and case studies"
                 className="order-5 lg:order-none"
                 {...openProps("moodboard")}
               >
-                <CardHeading detail="The State Plate">Impact</CardHeading>
+                <CardHeading detail="The State Plate">the numbers</CardHeading>
                 <div className="mt-6 lg:mt-auto">
                   <ImpactNumbers />
                 </div>
