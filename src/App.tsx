@@ -1562,7 +1562,7 @@ export default function App() {
     >
       {!isMobile && modeHint && (
         <div aria-hidden="true" className="mode-cursor-hint"
-          style={{ left: Math.max(8, Math.min(modeHint.x, window.innerWidth - 210)), top: Math.max(8, Math.min(modeHint.y, window.innerHeight - 52)), background: mode === "brand" ? PINK : DESKTOP_NAVY, color: mode === "brand" ? "#1A1A1A" : "#fff" }}>
+          style={{ left: Math.max(8, Math.min(modeHint.x, window.innerWidth - 180)), top: Math.max(8, Math.min(modeHint.y, window.innerHeight - 38)), background: mode === "brand" ? PINK : DESKTOP_NAVY, color: mode === "brand" ? "#1A1A1A" : "#fff" }}>
           switch to {mode === "brand" ? "growth" : "brand"} mode
         </div>
       )}
@@ -1585,7 +1585,7 @@ export default function App() {
         <Card
           ariaLabel="Portfolio focus"
           onMouseMove={(event) => {
-            if (!isMobile) setModeHint({ x: event.clientX + 16, y: event.clientY + 18 })
+            if (!isMobile) setModeHint({ x: event.clientX + 8, y: event.clientY + 8 })
           }}
           onMouseLeave={() => setModeHint(null)}
           padded={false}
