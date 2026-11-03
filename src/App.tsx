@@ -1744,10 +1744,10 @@ export default function App() {
               <CardHeading detail="selected work">Experience</CardHeading>
               <div className="mt-6 flex min-h-0 flex-1 items-center">
                 <img
-                  src="/experience.png"
+                  src={mode === "brand" ? "/brandex.png" : "/experience.png"}
                   alt="Freelance and internship experience across B2B, D2C, fintech, SaaS, and startups"
-                  width={500}
-                  height={300}
+                  width={1024}
+                  height={647}
                   decoding="async"
                   className="block max-h-full w-full object-contain"
                 />
