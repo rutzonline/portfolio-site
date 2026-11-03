@@ -1742,28 +1742,15 @@ export default function App() {
               {...openProps("projects")}
             >
               <CardHeading detail="selected work">Experience</CardHeading>
-              <div className="mt-6 lg:mt-auto">
-                <ul className="divide-y divide-[#1A1A1A]/15">
-                  {jobs.map(([company, title], i) => (
-                    <li
-                      key={company}
-                      className="py-1.5 leading-snug first:pt-0 last:pb-0"
-                    >
-                      <span className="min-w-0">
-                        <span
-                          className={`block ${
-                            i === 0
-                              ? "accent-text font-semibold"
-                              : "font-medium"
-                          }`}
-                        >
-                          {company}
-                        </span>
-                        <span className="block text-[#1A1A1A]/60">{title}</span>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+              <div className="mt-6 flex min-h-0 flex-1 items-center">
+                <img
+                  src="/experience.png"
+                  alt="Freelance and internship experience across B2B, D2C, fintech, SaaS, and startups"
+                  width={500}
+                  height={300}
+                  decoding="async"
+                  className="block max-h-full w-full object-contain"
+                />
               </div>
             </Card>
 
