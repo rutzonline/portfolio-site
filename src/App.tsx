@@ -113,7 +113,7 @@ const skillSets: Record<Mode, {
       "Webflow",
       "clay",
     ],
-    line: "Funnels, experiments and lifecycle.",
+    line: "funnels, experiments and lifecycle.",
     sections: [
       ["Lifecycle", "Onboarding, activation loops, and retention programmes."],
       ["Analytics", "Funnel analysis, cohorts, and experiment readouts."],
@@ -131,7 +131,7 @@ const skillSets: Record<Mode, {
       "Buffer",
       "Notion",
     ],
-    line: "Voice, story and personality.",
+    line: "voice, story and personality.",
     sections: [
       ["Narrative", "Brand voice, manifestos, and launch storytelling."],
       ["Content", "Essays, newsletters, and social adaptations."],
