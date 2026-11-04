@@ -469,7 +469,12 @@ function CardHeading({
         </svg>
       </h2>
       {detail && (
-        <span className={`text-right text-base ${detailClassName ?? "text-[#1A1A1A]/65"}`}>{detail}</span>
+        <span className={`card-heading-detail text-right text-base ${detailClassName ?? "text-[#1A1A1A]/65"}`}>
+          <span className="card-heading-subtitle">{detail}</span>
+          <svg className="card-heading-arrow" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M5 19 19 5M5 5h14v14" />
+          </svg>
+        </span>
       )}
     </header>
   )
@@ -740,6 +745,19 @@ const uptoRows: Record<Mode, [string, string][]> = {
   ],
 }
 
+function LiveUptoRows({ mode }: { mode: Mode }) {
+  const [now, setNow] = useState(() => new Date())
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 1000)
+    return () => window.clearInterval(timer)
+  }, [])
+  const time = new Intl.DateTimeFormat("en-GB", {
+    hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
+    ...(mode === "brand" ? { timeZone: "Asia/Kolkata" } : {}),
+  }).format(now)
+  return <Rows items={[...uptoRows[mode], [mode === "brand" ? "Time (IST)" : "Your local time", time]]} />
+}
+
 function PageBody({ page, mode, onOpenPhotos, photosOpen }: { page: PageKey; mode: Mode; onOpenPhotos: (element: HTMLButtonElement) => void; photosOpen: boolean }) {
   switch (page) {
     case "about":
@@ -781,9 +799,7 @@ function PageBody({ page, mode, onOpenPhotos, photosOpen }: { page: PageKey; mod
     case "upto":
       return (
         <div className={`upto-page w-full pt-2 ${mode === "growth" ? "growth-upto" : ""}`}>
-          <Rows
-            items={uptoRows[mode]}
-          />
+          <LiveUptoRows mode={mode} />
           {mode === "brand" ? <UpToExtras onOpenPhotos={onOpenPhotos} photosOpen={photosOpen} /> : <ConsumptionLog />}
         </div>
       )
@@ -877,10 +893,10 @@ function Logo({
 
 function ImpactNumbers() {
   const metrics = [
-    ["7,000", "app downloads", "from ~150"],
-    ["30%", "higher AOV", "₹808 → ₹1,047"],
-    ["3.14", "Meta ads ROAS", "localised campaigns"],
-    ["35–40%", "email open rate", "from 8–10%"],
+    ["47x", "app downloads", "from 150 to 7K+"],
+    ["by 30%", "increased AOV", "₹808 → 1,047"],
+    ["3.14x", "Meta ads ROAS", "localised campaigns"],
+    ["up to 35%", "email open rate", "from 8–10%"],
   ]
   return (
     <div>
@@ -1742,7 +1758,7 @@ export default function App() {
               {...openProps("projects")}
             >
               <CardHeading detail="selected work">Experience</CardHeading>
-              <div className="mt-6 flex min-h-0 flex-1 items-center">
+              <div className="mt-6 flex min-h-0 flex-1 items-center pt-6">
                 <img
                   src={mode === "brand" ? "/brandex.png" : "/experience.png"}
                   alt="Freelance and internship experience across B2B, D2C, fintech, SaaS, and startups"
@@ -1853,11 +1869,11 @@ export default function App() {
 
             {mode === "growth" ? (
               <Card
-                ariaLabel="The numbers and case studies"
+                ariaLabel="Growth metrics and case studies"
                 className="order-5 lg:order-none"
                 {...openProps("moodboard")}
               >
-                <CardHeading detail="The State Plate">the numbers</CardHeading>
+                <CardHeading detail="the numbers">growth metrics</CardHeading>
                 <div className="mt-6 lg:mt-auto">
                   <ImpactNumbers />
                 </div>
@@ -1883,7 +1899,7 @@ export default function App() {
             >
               <CardHeading detail="Now">What I&rsquo;m up to</CardHeading>
               <div className="mt-8 w-full lg:mt-auto lg:pt-8">
-                <Rows items={uptoRows[mode]} />
+                <LiveUptoRows mode={mode} />
               </div>
             </Card>
           </>

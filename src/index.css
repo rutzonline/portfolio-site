@@ -834,3 +834,14 @@ main[data-mode="brand"] .mode-toggle { background: color-mix(in srgb, #7d2e4b 14
 @media (min-width: 1024px) and (max-width: 1279px) {
   .desktop-about-card .desktop-about-identity { padding-top: 32px; }
 }
+
+
+.card-heading-detail { display: grid; align-items: center; }
+.card-heading-subtitle, .card-heading-arrow { grid-area: 1 / 1; }
+.card-heading-arrow { justify-self: end; visibility: hidden; }
+.card-link:focus-visible .card-heading-subtitle { visibility: hidden; }
+.card-link:focus-visible .card-heading-arrow { visibility: visible; }
+@media (hover: hover) {
+  .card-link:hover .card-heading-subtitle { visibility: hidden; }
+  .card-link:hover .card-heading-arrow { visibility: visible; }
+}
