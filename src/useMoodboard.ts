@@ -20,10 +20,10 @@ const copyCorrections: Record<string, string> = {
   "instgram": "instagram",
   "about the products was just": "about the products were just",
   "the team's super casual, candid outlook on 'build in public' loop and witty jabs at competition approach has made its presence known for good.": "the team's super casual, candid approach to building in public and witty jabs at competitors have made its presence known.",
-  "i organize": "i organise",
-  "extensive organization": "extensive organisation",
-  "cult favorite": "cult favourite",
-  "skits satirizing": "skits satirising",
+  "i organise": "i organize",
+  "extensive organisation": "extensive organization",
+  "cult favourite": "cult favorite",
+  "skits satirising": "skits satirizing",
   "Lenny's Newsletters": "Lenny's Newsletter",
 }
 

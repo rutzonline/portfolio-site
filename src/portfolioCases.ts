@@ -4,11 +4,11 @@ export const cursorCase = String.raw`
 tl;dr
 - Run a 90-day India campus pilot that helps students finish projects for real users.
 - Start with 60 students; pair campus mentors with educational creators for build sessions and debugging clinics.
-- Recruit through student organisations, using unfinished projects as the entry point.
+- Recruit through student organizations, using unfinished projects as the entry point.
 - Turn owner-tested tools into briefs and referrals for the next cohort.
 - Judge the pilot on repeat building and retained paid adoption, then scale only if the economics work.
 
-**Proposed scope:** A 90-day India campus pilot, with recruitment through student organisations and educational creators.
+**Proposed scope:** A 90-day India campus pilot, with recruitment through student organizations and educational creators.
 
 ## 01. The growth problem
 
@@ -16,13 +16,13 @@ Cursor's campus opportunity is to help students return after their first prototy
 
 **Problem statement:** Increase repeat building and paid adoption among Indian students who know basic programming but have an unfinished project, using campus communities to supply project briefs and educational creators to teach debugging and verification.
 
-That barrier remains a hypothesis. Before recruiting, interview 12 students and four organisers, asking to see their last unfinished project. Establish where work stopped, what support they sought and whether usage limits or price affected their decision. If the recurring problem is unrelated to the product or programme, revise the brief before commissioning creators.
+That barrier remains a hypothesis. Before recruiting, interview 12 students and four organizers, asking to see their last unfinished project. Establish where work stopped, what support they sought and whether usage limits or price affected their decision. If the recurring problem is unrelated to the product or programme, revise the brief before commissioning creators.
 
 ## 02. Evidence and audience
 
 Cursor reported more than 3 million users in India in July 2026, a tripling over the previous year, and described India as its third-largest market. Its India Start plan launched at ₹649 per month including tax, with INR payments through UPI or card. These company figures do not establish student penetration or paid conversion. [C1]
 
-Campus Leads already provides a route for student organisers and club activities. Cursor's student page also describes free entry and promotions through campus and online events. The proposal would use these existing routes; any offer must follow the live programme terms. [C2–C3]
+Campus Leads already provides a route for student organizers and club activities. Cursor's student page also describes free entry and promotions through campus and online events. The proposal would use these existing routes; any offer must follow the live programme terms. [C2–C3]
 
 In Stack Overflow's 2026 AI-trust question, 48% of 14,304 respondents selected trust when they could easily verify the output. This global developer survey supports including verification in teaching; it does not measure the problem among Indian students. [C4]
 
@@ -30,7 +30,7 @@ Recruit second- and third-year engineering students who can read basic code and 
 
 ## 03. Partners and the work they would do
 
-IIT Madras E-Cell's Entrepreneurship Development Drive supports student entrepreneurship organisations across India. That makes it a prospective route to project owners and campus organisers; it does not establish access or an existing Cursor relationship. Start with two willing campus organisations where hosts can commit mentor time and identify real users for projects. [C5]
+IIT Madras E-Cell's Entrepreneurship Development Drive supports student entrepreneurship organizations across India. That makes it a prospective route to project owners and campus organizers; it does not establish access or an existing Cursor relationship. Start with two willing campus organizations where hosts can commit mentor time and identify real users for projects. [C5]
 
 | Prospective partner | Specific brief | Reason to participate |
 |---|---|---|
@@ -40,7 +40,7 @@ IIT Madras E-Cell's Entrepreneurship Development Drive supports student entrepre
 
 ChaiCode's cohort format and instructors Hitesh Choudhary and Piyush Garg provide a specific educational fit. Before contracting, check current audience location, student share, prior sponsorship conflicts and availability. Use Hindi/Hinglish delivery where it suits the recruited cohort, with English code and captions. [C6]
 
-One brief could be a volunteer scheduling tool for a campus festival. The organiser supplies shifts, roles and the rules for conflicts. Students build a usable version, test double-bookings and change it after organiser feedback. Another option is a directory for student founders, with explicit consent and edit permissions. The host selects a brief with an available owner; avoid collecting real personal data during the initial build.
+One brief could be a volunteer scheduling tool for a campus festival. The organizer supplies shifts, roles and the rules for conflicts. Students build a usable version, test double-bookings and change it after organizer feedback. Another option is a directory for student founders, with explicit consent and edit permissions. The host selects a brief with an available owner; avoid collecting real personal data during the initial build.
 
 The creator shows how to check generated code and diagnose a broken feature. The campus mentor handles the student's own implementation. This division keeps the creator's broad teaching useful without assuming they can provide individual support to every participant.
 
@@ -57,7 +57,7 @@ Plan for 60 students working in pairs across two hosts. Keep the initial project
 
 A student completes the programme when a project owner can use the core feature and the student can explain a relevant piece of code. For repeat building, record use on a later day to implement an owner-requested fix or feature. Attendance and a single generated prototype do not meet those definitions.
 
-The recruitment loop is a hypothesis to instrument: a project owner shares a working tool with another campus organiser; that organiser submits a brief and invites eligible students; completed projects supply examples for the next recruitment round. Track referred organisers who actually submit a usable brief. Repositories and social views alone do not demonstrate a loop.
+The recruitment loop is a hypothesis to instrument: a project owner shares a working tool with another campus organizer; that organizer submits a brief and invites eligible students; completed projects supply examples for the next recruitment round. Track referred organizers who actually submit a usable brief. Repositories and social views alone do not demonstrate a loop.
 
 **Recruitment copy concept:** “Build the volunteer tool your campus festival needs. Bring basic coding skills; weekly clinics will help you test and fix it.” Publish participant stories only after collecting the work and permission to share it.
 
@@ -69,7 +69,7 @@ If the full budget produced 30 retained paying users, all-in acquisition cost wo
 
 Before spending, agree on an acquisition ceiling using net revenue, contribution margin and observed retention. Do not invent that ceiling from subscription price alone. Define retained paid adoption as payment followed by a second paid-month renewal, reporting both the count and the denominator of eligible participants offered the plan.
 
-For this small pilot, propose a minimum of 60% of enrolled students completing an owner-tested project, with at least 40% of completers returning within 30 days to make an accepted change. Pause another cohort if either gate fails; examine mentor capacity, project difficulty and the interview evidence before changing recruitment copy. Commercial expansion additionally requires measured acquisition cost within the agreed ceiling and sufficient renewal follow-up. A descriptive pilot can establish feasibility; a comparable cohort or randomised invitation test would be needed to estimate the programme's incremental effect.
+For this small pilot, propose a minimum of 60% of enrolled students completing an owner-tested project, with at least 40% of completers returning within 30 days to make an accepted change. Pause another cohort if either gate fails; examine mentor capacity, project difficulty and the interview evidence before changing recruitment copy. Commercial expansion additionally requires measured acquisition cost within the agreed ceiling and sufficient renewal follow-up. A descriptive pilot can establish feasibility; a comparable cohort or randomized invitation test would be needed to estimate the programme's incremental effect.
 
 ## Sources
 
@@ -79,7 +79,7 @@ For this small pilot, propose a minimum of 60% of enrolled students completing a
 - **C2** Cursor, Campus Leads. Existing programme and partner activities. https://cursor.com/campus-leads
 - **C3** Cursor, Students. Current free entry and event promotions. https://cursor.com/students
 - **C4** Stack Exchange Inc., Trust in AI tools, Stack Overflow Developer Survey 2026. Optional single-choice question, n = 14,304; data licensed ODbL 1.0. https://survey.stackoverflow.co/2026/ai/data/ai-trust
-- **C5** IIT Madras E-Cell, Entrepreneurship Development Drive. Support and mentorship for student entrepreneurship organisations across India; a prospective route, with no partnership implied. https://ecell.iitm.ac.in/event/edd
+- **C5** IIT Madras E-Cell, Entrepreneurship Development Drive. Support and mentorship for student entrepreneurship organizations across India; a prospective route, with no partnership implied. https://ecell.iitm.ac.in/event/edd
 - **C6** ChaiCode, Web Development cohort and community reviews. Instructor and learning-format evidence. https://chaicode.com/cohorts/web-dev and https://chaicode.com/reviews
 `
 
@@ -89,7 +89,7 @@ export const revolutCase = String.raw`
 tl;dr
 - Turn F1 and Manchester City fan interest into a useful payment journey for eligible Indian users.
 - Separate overseas travellers from domestic screening attendees; give each a relevant payment task.
-- Recruit an initial 40 qualified prospects through fan organisers and practical creator guides.
+- Recruit an initial 40 qualified prospects through fan organizers and practical creator guides.
 - Set a ₹5 lakh pilot ceiling, with product eligibility and partner permissions checked before launch.
 - Measure funded accounts, successful payments and continued use after the event or trip.
 
@@ -99,13 +99,13 @@ tl;dr
 
 Audi F1 and Manchester City partnerships give Revolut access to fan attention. Indian acquisition requires a product benefit that fans can use under Indian eligibility and product rules. A screening attendee and a fan booking an overseas race trip have different payment needs.
 
-**Problem statement:** Test whether trusted fan organisers and creators can help eligible Indian users adopt Revolut for a specific payment task, then continue using it after the event or trip.
+**Problem statement:** Test whether trusted fan organizers and creators can help eligible Indian users adopt Revolut for a specific payment task, then continue using it after the event or trip.
 
 Revolut announced an ambition of 20 million customers in India by 2030. Its India help pages describe a PPI product with domestic payment capabilities and multicurrency availability subject to eligibility, including passport requirements for international use and destination restrictions. International bank transfers are not supported by the India product. Confirm access and exact terms before recruiting each cohort. [R1–R3]
 
 Revolut announced the future Audi F1 team's title partnership in July 2025, beginning in 2026, and a global partnership with Manchester City's men's and women's first teams in February 2026. The City announcement's virtual cards were for the UK and Europe; the India campaign must not imply local availability without confirmation. Partner assets and benefits require separate permission. [R4–R5]
 
-Formula 1 estimated 78.8 million Indian fans in its 2025 season review. This indicates fandom scale, not travel intent or an addressable pool of eligible Revolut customers. FanCode's extended Indian broadcast agreement and screenings establish an existing fan-gathering context. They do not grant Revolut broadcast rights or access to organisers. [R6–R7]
+Formula 1 estimated 78.8 million Indian fans in its 2025 season review. This indicates fandom scale, not travel intent or an addressable pool of eligible Revolut customers. FanCode's extended Indian broadcast agreement and screenings establish an existing fan-gathering context. They do not grant Revolut broadcast rights or access to organizers. [R6–R7]
 
 ## 02. Choose audiences by payment task
 
@@ -121,15 +121,15 @@ Niyo and Scapia already market zero-forex propositions. A travel creator should 
 |---|---|---|
 | Soumil Arora / Inside Line F1 community | A practical guide to planning payments for an overseas race trip, followed by a moderated screening discussion | His public links connect F1 content with live screenings [R10] |
 | Manchester City's official Mumbai supporters branch | A small screening pilot with a clearly stated payment benefit, if one is established | An existing local branch can provide relevant community context [R11] |
-| FanCode screening organisers | Explore an authorised event placement and host collaboration | A documented Indian screening context; commercial access remains unconfirmed [R7] |
+| FanCode screening organizers | Explore an authorized event placement and host collaboration | A documented Indian screening context; commercial access remains unconfirmed [R7] |
 
-Treat these as candidates to approach after product and rights checks. Obtain organiser capacity, expected audience composition and actual commercial quotes. Partner selection should favour eligible participants and useful discussion over the largest follower count.
+Treat these as candidates to approach after product and rights checks. Obtain organizer capacity, expected audience composition and actual commercial quotes. Partner selection should favour eligible participants and useful discussion over the largest follower count.
 
 For travel, commission **“Planning a Grand Prix trip from India.”** The creator uses a real itinerary to explain ticket timing, accommodation, card acceptance and a destination-specific payment plan. Any demonstration of Revolut must use verified India functionality. A cost worksheet separates booked costs from estimates and specifies the exchange-rate date. The CTA directs viewers with an upcoming trip to an eligibility check, then the relevant product flow.
 
-For City supporters, use **“Organising a City screening in Mumbai.”** Follow the host's actual work and show the payment task being tested. A sponsor badge or shirt image cannot substitute for a benefit. Do not imply ticket access, team appearances, rewards or branded cards unless those are contracted and available locally.
+For City supporters, use **“Organizing a City screening in Mumbai.”** Follow the host's actual work and show the payment task being tested. A sponsor badge or shirt image cannot substitute for a benefit. Do not imply ticket access, team appearances, rewards or branded cards unless those are contracted and available locally.
 
-Hosts should retain control of community discussion. Pay for facilitation and production; avoid paying organisers solely for completed KYC, which can encourage recruitment of people with no reason to use the product.
+Hosts should retain control of community discussion. Pay for facilitation and production; avoid paying organizers solely for completed KYC, which can encourage recruitment of people with no reason to use the product.
 
 ## 04. Journey, measurement and constraints
 
@@ -140,7 +140,7 @@ Hosts should retain control of community discussion. Pay for facilitation and pr
 
 Report eligibility rejection, verification abandonment and support contacts at each step. A booked traveller whose departure is outside the observation period remains pending. Do not count that person as a failed overseas activation. Obtain consent for measurement without giving creators access to financial records.
 
-Test the travel guide against a simpler product explainer for similarly qualified audiences, holding the offer and destination consistent where possible. Use an appropriate platform experiment or randomised invitation allocation. Compare funded accounts and subsequent purchases rather than viewing time alone. The domestic pilot should first test usefulness through observed task completion and participant feedback; it has not yet earned an acquisition budget merely because the fandom is large.
+Test the travel guide against a simpler product explainer for similarly qualified audiences, holding the offer and destination consistent where possible. Use an appropriate platform experiment or randomized invitation allocation. Compare funded accounts and subsequent purchases rather than viewing time alone. The domestic pilot should first test usefulness through observed task completion and participant feedback; it has not yet earned an acquisition budget merely because the fandom is large.
 
 A possible referral mechanism begins after a traveller has used the product: they share a practical payment guide with a friend who has a confirmed trip; that friend checks eligibility and completes the journey. Measure qualified referred travellers and their purchases. Do not describe a referral loop as established before repeat referral behaviour is observed.
 
@@ -175,7 +175,7 @@ export const heyclickyCase = String.raw`
 
  
 tl;dr
-- Show Heyclicky solving a recognisable After Effects problem for Mac users, from obstacle to completed edit.
+- Show Heyclicky solving a recognizable After Effects problem for Mac users, from obstacle to completed edit.
 - Test creator narration against a plain screen recording of the same task.
 - Run a 60-day US pilot with a proposed $12,000 ceiling.
 - Match the ad to the landing page, installation flow and first useful session.
@@ -187,7 +187,7 @@ tl;dr
 
 Heyclicky needs to make screen-aware help understandable in a short ad and attract users whose task benefits from it. A character introduction can win attention without explaining why someone should install the application or return.
 
-**Problem statement:** Turn a recognisable editing obstacle into an accurate product demonstration, then test whether acquired Mac users complete a useful first session and return for another task.
+**Problem statement:** Turn a recognizable editing obstacle into an accurate product demonstration, then test whether acquired Mac users complete a useful first session and return for another task.
 
 The official site describes a Mac product requiring Sonoma 14.2 or later, with free monthly usage limits and listed Pro and Max plans at $20 and $100 per month. The homepage's “100% free” language needs reconciliation with those limits before ad copy is approved. Use “Start free” with accessible plan terms, subject to the current offer. [H1]
 
@@ -240,7 +240,7 @@ Propose a $12,000, 60-day ceiling: $2,000 production, $1,000 creator licensing, 
 
 If $6,000 in media produced 300 useful first sessions and 30 payers, media cost would be $20 per useful session and $200 per payer. All-in acquisition cost at the full budget would be $400 per payer. These are sensitivity inputs, not forecasts. At a hypothetical 70% contribution margin on the $20 plan, four monthly payments would provide $56 before churn, referral commissions and any costs excluded from that assumed margin. The example shows why cheap clicks cannot justify scaling; actual margin and retention must set the ceiling.
 
-Before launch, agree on the allowable acquisition cost and payback period using net revenue, variable service costs, free-user costs, discounts and commissions. Choose creative using cost per useful first session, provided repeat use does not deteriorate. Authorise expansion only when paid acquisition cost fits the agreed ceiling and a renewal cohort has been observed.
+Before launch, agree on the allowable acquisition cost and payback period using net revenue, variable service costs, free-user costs, discounts and commissions. Choose creative using cost per useful first session, provided repeat use does not deteriorate. Authorize expansion only when paid acquisition cost fits the agreed ceiling and a renewal cohort has been observed.
 
 As a provisional early stop rule, pause acquisition if fewer than 30% of the first 50 activated users complete a useful second session within seven days. Pause sooner if the advertised demonstration is unreliable or the install journey cannot be measured. Report paid conversion among activated users and second-month renewal among payers eligible to renew; late entrants remain pending.
 

@@ -14,13 +14,13 @@ somehow, at the start of the 2020s, we decided every small thing has a correct w
 
 the quantified self movement started in 2007 with a few silicon valley guys tracking their sleep cycles on spreadsheets, and in the years since it has become the whole culture, or at least the whole culture that can afford an oura ring. whoop bands score your recovery out of 100. apps grade your sleep like a quiz you willingly appeared for.
 
-the wellness industrial complex took "be healthy" and turned it into "be optimised," and the difference matters, because health has a ceiling and optimisation doesn't. you can be healthy. you can never be fully optimised. there's always a better ratio, a better routine, a better way. the finish line keeps moving because the industry needs it to keep moving. after all, a finished customer is a former customer.
+the wellness industrial complex took "be healthy" and turned it into "be optimized," and the difference matters, because health has a ceiling and optimization doesn't. you can be healthy. you can never be fully optimized. there's always a better ratio, a better routine, a better way. the finish line keeps moving because the industry needs it to keep moving. after all, a finished customer is a former customer.
 
 and the instinct bleeds outward from the body into everything else, into the hobbies and the mornings and the sundays, into the way you do your skincare, until the pleasure of doing a thing has been replaced by the performance of doing it correctly. efficiency has eaten the part of doing things where you get to be a person. the meta strips all of that out and hands you efficiency, and efficiency is the least memorable thing a hobby can give you.
 
 "optimal" started masquerading as the only legitimate way, and everything else got downgraded to "you just don't know the trick yet." as if doing your hobby personally and slightly badly is a phase you'll grow out of once someone shows you the spreadsheet.
 
-i don't want to grow out of it. i want to keep losing points on purpose. i want a starter word that says something about me instead of about vowel frequency. the optimised version of anything is, almost by definition, the version that could belong to anyone.
+i don't want to grow out of it. i want to keep losing points on purpose. i want a starter word that says something about me instead of about vowel frequency. the optimized version of anything is, almost by definition, the version that could belong to anyone.
 
 so keep your bad starter. keep the scenic route that takes 20 mins longer to reach your destination. the trick is to not have a trick.`,
   },
@@ -44,7 +44,7 @@ every AI commercial for a company with ‘tAsTe’ right now is the exact same b
 
 i’m sorry i wasn’t aware i signed up for a tour of The Vague?
 
-kyle chayka coined a term for this. "AirSpace": the flat, placeless, instantly recognisable aesthetic of globalised tech. same fonts, same gradients, same whitespace, same hero section, same everything. it describes physical spaces (every third-wave coffee shop in the world) and digital ones (every saas homepage in the world). the aesthetic spreads because it's optimised. it's optimised because it's safe. it's safe because nobody ever got fired for choosing the same intercom layout as the company that raised more than them.
+kyle chayka coined a term for this. "AirSpace": the flat, placeless, instantly recognizable aesthetic of globalized tech. same fonts, same gradients, same whitespace, same hero section, same everything. it describes physical spaces (every third-wave coffee shop in the world) and digital ones (every saas homepage in the world). the aesthetic spreads because it's optimized. it's optimized because it's safe. it's safe because nobody ever got fired for choosing the same intercom layout as the company that raised more than them.
 
 brand voice gets treated like an afterthought that you sort out once the product is real enough, once the funding lands, or once there are enough people in the room to have an opinion. so in the meantime everyone reaches for the same shelf of safe words.
 
@@ -52,7 +52,7 @@ the archetypes are easy to spot by now.
 
 - the capable but vague: "unlock the power of ai for your workflow."
 - the humble brag: "we're not just a tool, we're a teammate."
-- and the one that skips having a point entirely: "summarise. analyse. generate. automate. collaborate." (noun. noun. noun. inspiring stuff.)
+- and the one that skips having a point entirely: "summarize. analyse. generate. automate. collaborate." (noun. noun. noun. inspiring stuff.)
 
 every edit reasonable on its own, the sum total a sentence that could belong to any product, in any category, at any stage.
 
@@ -75,9 +75,9 @@ and the browser company.
 arc was a browser without tabs. vertical sidebar. auto-archiving. custom css injection into any website. it looked like nintendo designed a browser, which is what the founders wanted.
 
 - their tagline: "your home on the internet."
-- they wrote an essay called "optimising for feelings" that attacked OKRs, KPIs, and the growth mindset. "when our software optimises for numbers alone, it appears doomed to lack a certain spirit, and a certain humanity."
+- they wrote an essay called "optimizing for feelings" that attacked OKRs, KPIs, and the growth mindset. "when our software optimizes for numbers alone, it appears doomed to lack a certain spirit, and a certain humanity."
 - they called users "members." the discord hit 10,000+ people. a community formed around a browser.
-- but in may 2025, they stopped developing arc. adoption was brutal: 5.52% of daily users used more than one "space." 0.4% used the calendar preview. they realised they were building features nobody opened.
+- but in may 2025, they stopped developing arc. adoption was brutal: 5.52% of daily users used more than one "space." 0.4% used the calendar preview. they realized they were building features nobody opened.
 - atlassian acquired the company for $610 million in september 2025.
 
 arc is gone. but ask anyone in tech about it and they'll tell you it was the most interesting browser in a decade. when the team moved to dia, people followed. atlassian paid $610 million for the team, their infrastructure, and a brand that proved these people know how to make something you remember.
@@ -96,7 +96,7 @@ i've started to think that sentence is the rarest thing left on the internet.
 
 here's the situation we've built. discovery is completely automated now. what to watch, what to hear, what to buy, where to eat, which tool to use at work, all of it routed through some recommendation engine that's technically very good at its job. and because the engines are good, everything they surface is competent, and because everything is competent, none of it means anything. i get served a hundred fine options a day and remember zero of them by evening.
 
-the machine has one fatal tell. it can only give you more of what you've already told it you like. it's a mirror pointed at your history. it cannot hand you the thing you didn't know to want, because it has no idea you exist beyond your clicks. it optimises toward the version of you it already has on file.
+the machine has one fatal tell. it can only give you more of what you've already told it you like. it's a mirror pointed at your history. it cannot hand you the thing you didn't know to want, because it has no idea you exist beyond your clicks. it optimizes toward the version of you it already has on file.
 
 a friend does the opposite. a friend goes "i know this looks like nothing you'd normally go for, trust me." and they're right, because they know the you that isn't in the data. the you that's changed since last month. the you who's ready for something you'd have hated a year ago. that's not pattern-matching. that's being known.
 

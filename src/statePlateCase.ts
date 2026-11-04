@@ -5,7 +5,7 @@ tl;dr
 - grew app downloads to ~7,000
 - increased email open rates from 8–10% to 35–40%; CTR: 4.1%
 - owned the Shopify store, social and email marketing
-- ran localised Meta ad campaigns with 3.14 ROAS
+- ran localized Meta ad campaigns with 3.14 ROAS
 - redesigned the website and app flows, increasing average order value from ₹808 to ₹1,047 (~30%)
 - achieved an 8% app conversion rate
 - managed operations for offline activations across Bengaluru
@@ -73,7 +73,7 @@ I used sampling as a discovery and app-acquisition channel. I owned the corporat
 ### Email lifecycle reset
 - Diagnosed deliverability problems caused by spam signups
 - Scoped and rolled out CAPTCHA and cleaned tens of thousands of fake contacts
-- Fixed sender reputation and standardised templates
+- Fixed sender reputation and standardized templates
 - Rebuilt journeys with clearer copy, CTAs, and product recommendations
 
 ---

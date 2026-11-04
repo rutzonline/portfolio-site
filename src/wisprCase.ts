@@ -153,7 +153,7 @@ tl;dr
 |---|---|---|
 | **Week 1: Early traction** | **100 users** | 20% daily active, 3+ notes per active user, 50% activation |
 | **Month 1: Loops working** | **1K users** | Viral coefficient ≥ 0.25, 30% 7-day retention |
-| **Month 3: Scale and monetise** | **10K users** | Viral coefficient ≥ 0.4, 40% 30-day retention (stretch). Find the top 3 use cases (sales teams, founders, parents). Convert bot users to Wispr Flow as the monetisation path. |
+| **Month 3: Scale and monetize** | **10K users** | Viral coefficient ≥ 0.4, 40% 30-day retention (stretch). Find the top 3 use cases (sales teams, founders, parents). Convert bot users to Wispr Flow as the monetization path. |
 
 ---
 

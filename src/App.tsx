@@ -61,8 +61,8 @@ const CREAM = "#FAF9F6"
 const PINK = "#ffa9c8"
 const LIME = "#DDF080"
 const BLUE = "#9EC5F4"
-const SAPPHIRE = "#0F3A8A"
-const DESKTOP_NAVY = "#0B2D6E"
+const SAPPHIRE = "#32677F"
+const DESKTOP_NAVY = "#32677F"
 
 const jobs = [
   ["freelance marketer", "content, copy, strategy"],
@@ -644,7 +644,7 @@ function Experience({ mode }: { mode: Mode }) {
                 <span className="block text-[17px] font-semibold leading-tight group-hover:text-[color:var(--hl-link)]">{company}</span>
                 <span className="mt-0.5 block text-[#1A1A1A]/60">{jobs[i][1]}</span>
               </span>
-              <span className="hidden lg:block"><Chev right /></span>
+              <svg aria-hidden="true" className="experience-entry-arrow size-[22px] shrink-0 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M5 19 19 5M5 5h14v14" /></svg>
             </button>
           </li>
         ))}
@@ -896,7 +896,7 @@ function ImpactNumbers() {
     ["47x", "app downloads", "from 150 to 7K+"],
     ["30%", "increased the AOV by", "₹808 → ₹1,047"],
     ["35.8%", "email open rate", "from 8–10%"],
-    ["3.14x", "Meta ads ROAS", "localised campaigns"],
+    ["3.14x", "Meta ads ROAS", "localized campaigns"],
   ]
   return (
     <div>
@@ -904,8 +904,8 @@ function ImpactNumbers() {
         {metrics.map(([value, label, context]) => (
           <div key={label}>
             <dt className="text-sm leading-snug text-[#1A1A1A]/85">{label}</dt>
-            <dd className="mt-1 text-[clamp(22px,2.2vw,32px)] font-semibold leading-tight tracking-tight text-[color:var(--accent-text)]">{value}</dd>
-            <dd className="mt-1 text-sm leading-snug text-[#1A1A1A]/85">{context.includes(" → ") ? <>{context.split(" → ")[0]}<span aria-hidden="true" className="mx-1 inline-block text-[10px]">→</span><span className="sr-only"> to </span>{context.split(" → ")[1]}</> : context}</dd>
+            <dd className="metric-value mt-1 text-[clamp(22px,2.2vw,32px)] font-semibold leading-tight tracking-tight text-[color:var(--accent-text)]">{value}</dd>
+            <dd className="mt-1 text-sm leading-snug text-[#1A1A1A]/65">{context.includes(" → ") ? <>{context.split(" → ")[0]}<span aria-hidden="true" className="mx-1 inline-block text-[10px]">→</span><span className="sr-only"> to </span>{context.split(" → ")[1]}</> : context}</dd>
           </div>
         ))}
       </dl>
@@ -966,7 +966,7 @@ function CaseHeader({
         <h2 className="case-title leading-[1.15] tracking-[-0.02em]">
           {name}
         </h2>
-        <p className="mt-1 text-[#1A1A1A]/60">{sub}</p>
+        <p className="case-subtitle mt-1 text-[#1A1A1A]/60">{sub}</p>
       </div>
     </div>
   )
@@ -1529,7 +1529,7 @@ export default function App() {
           const rect = event.currentTarget.getBoundingClientRect()
           setModeHint({ x: rect.left, y: rect.bottom + 12 })
         }}
-        onBlur={() => setModeHint(null)}
+        onBlur={(event) => { if (!event.currentTarget.matches(":hover")) setModeHint(null) }}
         onKeyDown={(event) => { if (event.key === "Escape") setModeHint(null) }}
         onClick={() => {
           const nextMode = mode === "growth" ? "brand" : "growth"
@@ -1680,18 +1680,18 @@ export default function App() {
                   </button>}
                 </h1>
                 {page === "work" && (
-                  <p className="mt-3 text-[#1A1A1A]/60">
+                  <p className="page-subtitle mt-3 text-[#1A1A1A]/60">
                     {skillSets[mode].line}
                   </p>
                 )}
                 {page === "notes" && (
-                  <p className="mt-3 text-[#1A1A1A]/60">
+                  <p className="page-subtitle mt-3 text-[#1A1A1A]/60">
                     essays on marketing, writing and the small systems behind
                     good work.
                   </p>
                 )}
                 {page === "moodboard" && mode === "growth" && (
-                  <p className="mt-3 text-[#1A1A1A]/60">
+                  <p className="page-subtitle mt-3 text-[#1A1A1A]/60">
                     conceptual plans, campaigns, and experiments
                   </p>
                 )}
