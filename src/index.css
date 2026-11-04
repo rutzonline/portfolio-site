@@ -53,9 +53,10 @@ button {
   font: inherit;
 }
 
-.font-heading {
-  font-family: "Inter", sans-serif;
-  font-weight: 900;
+.font-heading,
+main :is(h1, h2, h3, h4, h5, h6) {
+  font-family: "Playpen Sans", cursive;
+  font-weight: 800;
 }
 
 .font-body-light {
@@ -843,3 +844,6 @@ main[data-mode="brand"] .mode-toggle { background: color-mix(in srgb, #7d2e4b 14
 
 .desktop-about-card:has(> button:focus-visible) .card-heading-subtitle { visibility: hidden; }
 .desktop-about-card:has(> button:focus-visible) .card-heading-arrow { visibility: visible; }
+
+/* Keep the name a little tighter than the other headings. */
+.mobile-name { letter-spacing: -0.035em; }
