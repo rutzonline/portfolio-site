@@ -894,7 +894,8 @@ main .entity-name { font-family: "Inter", sans-serif; }
 main :is(h1, h2, h3, h4, h5, h6).entity-name { font-weight: 600; }
 
 .card-heading-subtitle { font-size: 14px; }
-main[data-mode] .desktop-about-card .mobile-specialties {
+main[data-mode] .desktop-about-card .mobile-specialties,
+main[data-mode] .skills-card > div > p {
   font-family: "Playpen Sans", cursive;
   font-size: 14px;
   font-weight: 500;
