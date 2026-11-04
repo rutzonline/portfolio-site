@@ -845,3 +845,6 @@ main[data-mode="brand"] .mode-toggle { background: color-mix(in srgb, #7d2e4b 14
   .card-link:hover .card-heading-subtitle { visibility: hidden; }
   .card-link:hover .card-heading-arrow { visibility: visible; }
 }
+
+.desktop-about-card:has(> button:focus-visible) .card-heading-subtitle { visibility: hidden; }
+.desktop-about-card:has(> button:focus-visible) .card-heading-arrow { visibility: visible; }

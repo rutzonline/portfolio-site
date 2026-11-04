@@ -755,7 +755,7 @@ function LiveUptoRows({ mode }: { mode: Mode }) {
     hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
     ...(mode === "brand" ? { timeZone: "Asia/Kolkata" } : {}),
   }).format(now)
-  return <Rows items={[...uptoRows[mode], [mode === "brand" ? "Time (IST)" : "Your local time", time]]} />
+  return <Rows items={[...uptoRows[mode], [mode === "brand" ? "Time (IST)" : "Time", time]]} />
 }
 
 function PageBody({ page, mode, onOpenPhotos, photosOpen }: { page: PageKey; mode: Mode; onOpenPhotos: (element: HTMLButtonElement) => void; photosOpen: boolean }) {
@@ -894,18 +894,18 @@ function Logo({
 function ImpactNumbers() {
   const metrics = [
     ["47x", "app downloads", "from 150 to 7K+"],
-    ["by 30%", "increased AOV", "₹808 → 1,047"],
+    ["30%", "increased the AOV by", "₹808 → ₹1,047"],
+    ["35.8%", "email open rate", "from 8–10%"],
     ["3.14x", "Meta ads ROAS", "localised campaigns"],
-    ["up to 35%", "email open rate", "from 8–10%"],
   ]
   return (
     <div>
       <dl className="grid grid-cols-2 gap-x-5 gap-y-6">
         {metrics.map(([value, label, context]) => (
           <div key={label}>
-            <dt className="text-sm leading-snug text-[#1A1A1A]/65">{label}</dt>
+            <dt className="text-sm leading-snug text-[#1A1A1A]/85">{label}</dt>
             <dd className="mt-1 text-[clamp(22px,2.2vw,32px)] font-semibold leading-tight tracking-tight text-[color:var(--accent-text)]">{value}</dd>
-            <dd className="mt-1 text-xs text-[#1A1A1A]/55">{context}</dd>
+            <dd className="mt-1 text-xs text-[#1A1A1A]/75">{context.includes(" → ") ? <>{context.split(" → ")[0]}<span aria-hidden="true" className="mx-1 inline-block text-[10px]">→</span><span className="sr-only"> to </span>{context.split(" → ")[1]}</> : context}</dd>
           </div>
         ))}
       </dl>
@@ -1728,7 +1728,12 @@ export default function App() {
               {!isMobile && <>
                 <button type="button" aria-label="Open About" data-home-card="about"
                   className="absolute inset-0 z-[1] cursor-pointer" onClick={() => open("about")} />
-                <span className="desktop-mode-label">{mode}</span>
+                <span className="desktop-mode-label card-heading-detail">
+                  <span className="card-heading-subtitle">{mode}</span>
+                  <svg className="card-heading-arrow text-[#1A1A1A]/65" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M5 19 19 5M5 5h14v14" />
+                  </svg>
+                </span>
                 <div className="desktop-about-identity">
                   <Greeting key={mode} visitorName={visitorName} onChange={setVisitorName} desktop />
                   <h2 className="mobile-name" style={mode === "brand" ? { color: "#7d2e4b" } : undefined}><span className="sr-only">i’m rutuja</span><NameLettering /></h2>
@@ -1758,7 +1763,7 @@ export default function App() {
               {...openProps("projects")}
             >
               <CardHeading detail="selected work">Experience</CardHeading>
-              <div className="mt-6 flex min-h-0 flex-1 items-center pt-6">
+              <div className="mt-6 flex min-h-0 flex-1 items-end">
                 <img
                   src={mode === "brand" ? "/brandex.png" : "/experience.png"}
                   alt="Freelance and internship experience across B2B, D2C, fintech, SaaS, and startups"
