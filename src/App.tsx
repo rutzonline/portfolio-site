@@ -343,7 +343,7 @@ function Card({
   onOpen?: (e: MouseEvent<HTMLButtonElement>) => void
   homeKey?: PageKey
 }) {
-  const cls = `portfolio-card flex min-w-0 flex-col overflow-hidden lg:min-h-0 ${
+  const cls = `portfolio-card ${bg === CREAM ? "paper-surface" : ""} flex min-w-0 flex-col overflow-hidden lg:min-h-0 ${
     padded ? "p-6 lg:p-5 xl:p-6" : ""
   } ${className}`
   if (onOpen) {
@@ -353,7 +353,7 @@ function Card({
         aria-label={`Open ${ariaLabel}`}
         data-home-card={homeKey}
         onClick={onOpen}
-        style={{ background: bg }}
+        style={{ backgroundColor: bg }}
         className={`${cls} card-link w-full cursor-pointer text-left`}
       >
         {children}
@@ -363,7 +363,7 @@ function Card({
   return (
     <article
       aria-label={ariaLabel}
-      style={{ background: bg }}
+      style={{ backgroundColor: bg }}
       className={cls}
       onClick={onClick}
       onMouseMove={onMouseMove}
