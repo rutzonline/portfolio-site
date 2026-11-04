@@ -61,8 +61,8 @@ const CREAM = "#FAF9F6"
 const PINK = "#ffa9c8"
 const LIME = "#DDF080"
 const BLUE = "#9EC5F4"
-const SAPPHIRE = "#4669AD"
-const DESKTOP_NAVY = "#4669AD"
+const SAPPHIRE = "#3E5F9E"
+const DESKTOP_NAVY = "#3E5F9E"
 
 const jobs = [
   ["freelance marketer", "content, copy, strategy"],

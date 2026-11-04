@@ -907,7 +907,7 @@ main[data-mode] .skills-card > div > p {
 
 /* Quiet stationery textures sit behind content, never over photos or colored cards. */
 main[data-mode="growth"] .paper-surface:not(.portrait-card):not(.contact-card) {
-  background-image: radial-gradient(rgb(70 105 173 / .08) 1px, transparent 1px);
+  background-image: radial-gradient(color-mix(in srgb, var(--accent) 8%, transparent) 1px, transparent 1px);
   background-size: 24px 24px;
   background-position: 12px 12px;
 }
@@ -915,3 +915,6 @@ main[data-mode="brand"] .paper-surface:not(.portrait-card) {
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%3Cfilter%20id%3D%22grain%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.8%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeColorMatrix%20type%3D%22saturate%22%20values%3D%220%22%2F%3E%3CfeComponentTransfer%3E%3CfeFuncA%20type%3D%22linear%22%20slope%3D%220.045%22%2F%3E%3C%2FfeComponentTransfer%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url%28%23grain%29%22%2F%3E%3C%2Fsvg%3E");
   background-size: 160px 160px;
 }
+
+main[data-mode="brand"] .desktop-about-card .about-intro { color: #26364f; }
+main[data-mode] .desktop-about-card .mobile-specialties { margin-top: 20px; }
