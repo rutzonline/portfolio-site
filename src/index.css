@@ -888,3 +888,7 @@ main[data-mode="growth"] .mode-toggle { background: color-mix(in srgb, var(--acc
 @media (min-width: 1024px) {
   .desktop-about-card .mobile-name svg { transform: translateY(15.4%); }
 }
+
+/* Brand, company, and tool names keep the body typeface, including headings. */
+main .entity-name { font-family: "Inter", sans-serif; }
+main :is(h1, h2, h3, h4, h5, h6).entity-name { font-weight: 600; }

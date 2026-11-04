@@ -61,8 +61,8 @@ const CREAM = "#FAF9F6"
 const PINK = "#ffa9c8"
 const LIME = "#DDF080"
 const BLUE = "#9EC5F4"
-const SAPPHIRE = "#32677F"
-const DESKTOP_NAVY = "#32677F"
+const SAPPHIRE = "#4669AD"
+const DESKTOP_NAVY = "#4669AD"
 
 const jobs = [
   ["freelance marketer", "content, copy, strategy"],
@@ -641,7 +641,7 @@ function Experience({ mode }: { mode: Mode }) {
             <button type="button" onClick={() => setSel(i)} className="group flex w-full items-center gap-4 px-6 py-5 text-left lg:px-10">
               <Logo domain={stintDomains[i]} src={stintLogo(company)} name={company} size="size-10" />
               <span className="min-w-0 flex-1">
-                <span className="block text-[17px] font-semibold leading-tight group-hover:text-[color:var(--hl-link)]">{company}</span>
+                <span className="entity-name block text-[17px] font-semibold leading-tight group-hover:text-[color:var(--hl-link)]">{company}</span>
                 <span className="mt-0.5 block text-[#1A1A1A]/60">{jobs[i][1]}</span>
               </span>
               <svg aria-hidden="true" className="experience-entry-arrow size-[22px] shrink-0 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M5 19 19 5M5 5h14v14" /></svg>
@@ -769,7 +769,7 @@ function PageBody({ page, mode, onOpenPhotos, photosOpen }: { page: PageKey; mod
             {skillSets[mode].tags.map((t) => (
               <span
                 key={t}
-                className="flex items-center gap-2 rounded-full border border-[#1A1A1A]/20 py-1.5 pl-2 pr-4"
+                className="entity-name flex items-center gap-2 rounded-full border border-[#1A1A1A]/20 py-1.5 pl-2 pr-4"
               >
                 <Logo
                   src={toolLogos[t.toLowerCase()]}
@@ -963,7 +963,7 @@ function CaseHeader({
     <div className="flex items-center gap-4">
       <Logo domain={domain} src={src} name={name} size="size-12" />
       <div>
-        <h2 className="case-title leading-[1.15] tracking-[-0.02em]">
+        <h2 className="entity-name case-title leading-[1.15] tracking-[-0.02em]">
           {name}
         </h2>
         <p className="case-subtitle mt-1 text-[#1A1A1A]/60">{sub}</p>
@@ -1787,7 +1787,7 @@ export default function App() {
                   {skillSets[mode].tags.map((tool) => (
                     <span
                       key={tool}
-                      className={`rounded-full border px-3 py-1.5 text-base ${
+                      className={`entity-name rounded-full border px-3 py-1.5 text-base ${
                         mode === "brand"
                           ? "border-[#8A8A8A] lg:border-[#7d2e4b]/45"
                           : "border-[#B3ADA1]"

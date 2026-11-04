@@ -101,7 +101,7 @@ function Sites() {
           <li key={r.name}>
             <Link href={r.url} className={`${siteCard} block`}>
               <Img src={r.image_url} alt={r.name} className="aspect-[16/9]" />
-              <p className="px-3 py-2 text-sm font-medium">{r.name}</p>
+              <p className="entity-name px-3 py-2 text-sm font-medium">{r.name}</p>
             </Link>
           </li>
         ))}
@@ -125,10 +125,10 @@ function Brands() {
                   <Img src={brand.logo_url} alt="" className="aspect-square" />
                 </div>
                 <div>
-                  <h3 className="text-base font-semibold">{brand.name}</h3>
+                  <h3 className="entity-name text-base font-semibold">{brand.name}</h3>
                   <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
                     {(brand.platforms ?? []).map((platform) => (
-                      <span key={platform} className="text-sm font-semibold" style={{ color: platformColors[platform] ?? categoryColor(platform) }}>{platform}</span>
+                      <span key={platform} className="entity-name text-sm font-semibold" style={{ color: platformColors[platform] ?? categoryColor(platform) }}>{platform}</span>
                     ))}
                   </div>
                 </div>
@@ -197,7 +197,7 @@ function Campaigns() {
           </div>
           <article className="min-w-0 lg:pb-12" aria-live="polite" aria-atomic="true">
             <p className="mb-1 text-sm text-[#1A1A1A]/60">{campaign.kicker}</p>
-            <h3 className="mb-3 text-lg font-semibold">{campaign.brand}</h3>
+            <h3 className="entity-name mb-3 text-lg font-semibold">{campaign.brand}</h3>
             <p className="whitespace-pre-line text-base leading-relaxed text-[#1A1A1A]/75">{campaign.description}</p>
           </article>
         </div>
@@ -219,7 +219,7 @@ function Newsletters() {
               href={r.url}
               className={`${card} block h-full p-4 text-sm leading-snug`}
             >
-              <p className="text-base font-semibold">{r.title}</p>
+              <p className="entity-name text-base font-semibold">{r.title}</p>
               <p
                 className="mt-1 text-sm font-semibold"
                 style={{ color: categoryColor(r.category) }}
