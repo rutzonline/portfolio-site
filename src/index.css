@@ -59,6 +59,10 @@ main :is(h1, h2, h3, h4, h5, h6) {
   font-weight: 800;
 }
 
+main :is(h1, h2, h3, h4, h5, h6):not(.mobile-name) {
+  color: #26364f;
+}
+
 .font-body-light {
   font-family: "Inter", sans-serif;
   font-weight: 300;
