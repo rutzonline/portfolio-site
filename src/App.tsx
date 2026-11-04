@@ -900,12 +900,12 @@ function ImpactNumbers() {
   ]
   return (
     <div>
-      <dl className="grid grid-cols-2 gap-x-5 gap-y-6">
+      <dl className="grid grid-cols-2 gap-x-5 gap-y-10">
         {metrics.map(([value, label, context]) => (
           <div key={label}>
             <dt className="text-sm leading-snug text-[#1A1A1A]/85">{label}</dt>
             <dd className="mt-1 text-[clamp(22px,2.2vw,32px)] font-semibold leading-tight tracking-tight text-[color:var(--accent-text)]">{value}</dd>
-            <dd className="mt-1 text-xs text-[#1A1A1A]/75">{context.includes(" → ") ? <>{context.split(" → ")[0]}<span aria-hidden="true" className="mx-1 inline-block text-[10px]">→</span><span className="sr-only"> to </span>{context.split(" → ")[1]}</> : context}</dd>
+            <dd className="mt-1 text-sm leading-snug text-[#1A1A1A]/85">{context.includes(" → ") ? <>{context.split(" → ")[0]}<span aria-hidden="true" className="mx-1 inline-block text-[10px]">→</span><span className="sr-only"> to </span>{context.split(" → ")[1]}</> : context}</dd>
           </div>
         ))}
       </dl>
