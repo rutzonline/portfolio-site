@@ -131,7 +131,7 @@ const skillSets: Record<Mode, {
       "Buffer",
       "Notion",
     ],
-    line: "voice, story and personality.",
+    line: "voice, story, and personality.",
     sections: [
       ["Narrative", "Brand voice, manifestos, and launch storytelling."],
       ["Content", "Essays, newsletters, and social adaptations."],
