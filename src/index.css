@@ -522,7 +522,7 @@ main[data-mode="brand"] .mode-button.active { color: #5E1F3A; }
 @media (min-width: 1024px) {
   main[data-mode="brand"] .portfolio-card { border-color: #E9E5DF; }
   main[data-mode="growth"] .card-link:hover {
-    background-color: color-mix(in srgb, var(--accent) 5%, #FFFFFF) !important;
+    background-color: color-mix(in srgb, var(--accent) 9%, #FFFFFF) !important;
   }
 }
 
@@ -892,3 +892,6 @@ main[data-mode="growth"] .mode-toggle { background: color-mix(in srgb, var(--acc
 /* Brand, company, and tool names keep the body typeface, including headings. */
 main .entity-name { font-family: "Inter", sans-serif; }
 main :is(h1, h2, h3, h4, h5, h6).entity-name { font-weight: 600; }
+
+.card-heading-subtitle { font-size: 14px; }
+.mobile-specialties { font-family: "Playpen Sans", cursive; font-weight: 500; }
