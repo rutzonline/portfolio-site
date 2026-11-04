@@ -899,8 +899,8 @@ main[data-mode] .desktop-about-card .mobile-specialties {
   font-size: 14px;
   font-weight: 500;
   line-height: 24px;
-  letter-spacing: .03em;
-  text-transform: uppercase;
+  letter-spacing: normal;
+  text-transform: none;
   color: rgb(26 26 26 / .3);
 }
 
