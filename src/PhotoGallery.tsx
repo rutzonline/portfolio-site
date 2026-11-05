@@ -133,8 +133,9 @@ export default function PhotoGallery({ onClose, origin, immersive = false }: { o
     {fullPage && <header className={`photo-page-nav ${opening ? "photo-page-nav-opening" : ""}`}>
       <button type="button" className="back-btn" onClick={onClose}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg>
-        {immersive ? "back to what i’m up to" : "back to home"}
+        {mobile ? (immersive ? "back" : "homepage") : (immersive ? "back to what i’m up to" : "back to home")}
       </button>
+      {mobile && <h1 className="mobile-nav-title">photos</h1>}
     </header>}
     {opening && extraTurn && origin && <CameraOpening origin={origin} target={cameraTarget} thumbnail={thumbnails[cameraPhoto]} />}
     {opening && !extraTurn && <div className="gallery-opening" style={flightStyle} aria-hidden="true">

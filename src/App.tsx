@@ -1659,6 +1659,7 @@ export default function App() {
             } lg:col-span-3 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:min-h-0 lg:p-10`}
           >
             <div className="mobile-page-nav sticky top-0 z-30 -mx-6 -mt-6 flex shrink-0 items-center justify-between gap-3 border-b border-[var(--grid-line)] bg-[#FAF9F6] px-6 py-2 lg:hidden">
+              <div className="mobile-nav-actions">
               <button
                 type="button"
                 onClick={mobileBack}
@@ -1675,19 +1676,21 @@ export default function App() {
               >
                 home
               </button>}
+              </div>
+              {isMobile && <h1 className="mobile-nav-title">{pageTitle(page, mode)}</h1>}
             </div>
-            <header className={`-mx-6 flex shrink-0 items-baseline justify-between gap-4 px-6 lg:-mx-10 lg:px-10 ${page === "about" ? "about-page-header" : ""}`}>
+            {(!isMobile || page === "work" || page === "notes" || (page === "moodboard" && mode === "growth")) && <header className={`-mx-6 flex shrink-0 items-baseline justify-between gap-4 px-6 lg:-mx-10 lg:px-10 ${page === "about" ? "about-page-header" : ""}`}>
               <div>
-                <h1 className="page-title leading-[1.15] tracking-[-0.02em]">
-                  {isMobile ? pageTitle(page, mode) : <button
+                {!isMobile && <h1 className="page-title leading-[1.15] tracking-[-0.02em]">
+                  <button
                     type="button"
                     onClick={close}
                     title="Back to homepage"
                     className="text-left"
                   >
                     {pageTitle(page, mode)}
-                  </button>}
-                </h1>
+                  </button>
+                </h1>}
                 {page === "work" && (
                   <p className="page-subtitle mt-3 text-[#1A1A1A]/60">
                     {skillSets[mode].line}
@@ -1720,7 +1723,7 @@ export default function App() {
               >
                 Homepage
               </button>
-            </header>
+            </header>}
             <PageBody page={page} mode={mode} photosOpen={galleryOpen} onOpenPhotos={(element) => {
               const rect = (element.querySelector("img") ?? element).getBoundingClientRect()
               setGalleryOrigin({ x: rect.x, y: rect.y, width: rect.width, height: rect.height })
@@ -1764,7 +1767,7 @@ export default function App() {
                       ? "email, paid, creators, and offline"
                       : "copy, content, social, and brand comms"}
                 </p>
-                {isMobile && <span className="mobile-about-link">more about me <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M5 19 19 5M5 5h14v14" /></svg></span>}
+                {isMobile && <span className="mobile-about-link">tmi <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M5 19 19 5M5 5h14v14" /></svg></span>}
               </div>
             </Card>
 
