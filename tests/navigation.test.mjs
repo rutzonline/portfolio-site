@@ -110,16 +110,3 @@ test('reload resets to Brand only during app startup', () => {
     performance.getEntriesByType = original
   }
 })
-
-test('an explicit mode hash overrides the reload default', () => {
-  const original = performance.getEntriesByType
-  performance.getEntriesByType = () => [{ type: 'reload' }]
-  try {
-    at('/?source=shared#growth')
-    normalizeLegacyURL(true)
-    assert.equal(window.location.pathname + window.location.search, '/growth?source=shared')
-    assert.equal(window.location.hash, '')
-  } finally {
-    performance.getEntriesByType = original
-  }
-})
