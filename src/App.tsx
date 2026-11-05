@@ -1,3 +1,4 @@
+import { IntroModeHint, MarketerTitle, useHomeIntro } from "@/HomeIntro"
 import { toolLogos } from "@/toolLogos"
 import { navigate, useDetailRoute, usePathname } from "@/navigation"
 import Carousel from "@/Carousel"
@@ -1356,6 +1357,7 @@ export default function App() {
   const [galleryOrigin, setGalleryOrigin] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
   const [copied, setCopied] = useState(false)
   const page = route.page
+  const intro = useHomeIntro(!page && !galleryOpen)
   const hasDetail = Boolean(pathname.split("/")[3]) && (page === "notes" || page === "projects" || (page === "moodboard" && mode === "growth"))
   const mobileHomePosition = useRef<{ page: PageKey; y: number } | null>(null)
   const previousPageRef = useRef(page)
@@ -1559,6 +1561,7 @@ export default function App() {
   return (
     <main
       data-mode={mode}
+      data-intro={intro.phase}
       className={`relative bg-[#FAF9F6] text-base text-[#1A1A1A] max-lg:overflow-x-clip lg:h-svh lg:overflow-hidden ${independentPage ? "h-svh overflow-hidden" : "lg:min-h-[640px]"}`}
       style={
         {
@@ -1576,7 +1579,8 @@ export default function App() {
         } as CSSProperties
       }
     >
-      {!isMobile && modeHint && (
+      <IntroModeHint visible={intro.hint} />
+      {!intro.hint && !isMobile && modeHint && (
         <div aria-hidden="true" className="mode-cursor-hint"
           style={{ left: Math.max(8, Math.min(modeHint.x, window.innerWidth - 180)), top: Math.max(8, Math.min(modeHint.y, window.innerHeight - 38)), background: mode === "brand" ? PINK : DESKTOP_NAVY, color: mode === "brand" ? "#1A1A1A" : "#fff" }}>
           switch to {mode === "brand" ? "growth" : "brand"} mode
@@ -1635,6 +1639,7 @@ export default function App() {
               </button>
             </div>
             <h1 className="mobile-name" style={mode === "brand" ? { color: "#7d2e4b" } : undefined}><span className="sr-only">i’m rutuja</span><NameLettering /></h1>
+            <MarketerTitle mode={mode} shuffle={intro.phase === "playing"} />
 
           </div>
         </Card>
@@ -1736,7 +1741,9 @@ export default function App() {
                 </span>
                 <div className="desktop-about-identity">
                   <Greeting key={mode} visitorName={visitorName} onChange={setVisitorName} desktop />
-                  <h2 className="mobile-name" style={mode === "brand" ? { color: "#7d2e4b" } : undefined}><span className="sr-only">i’m rutuja</span><NameLettering /></h2>
+                  <div className="intro-identity-name"><h2 className="mobile-name" style={mode === "brand" ? { color: "#7d2e4b" } : undefined}><span className="sr-only">i’m rutuja</span><NameLettering /></h2>
+                    <MarketerTitle mode={mode} shuffle={intro.phase === "playing"} />
+                  </div>
                 </div>
               </>}
               <div className={`mobile-about-copy ${mode === "brand" ? "mobile-brand-copy" : ""}`}>

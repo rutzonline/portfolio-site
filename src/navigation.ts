@@ -36,7 +36,7 @@ export function useDetailRoute(labels: string[], base: string): [number | null, 
 // Keep old shared links working while new navigation uses clean paths.
 export function normalizeLegacyURL(resetOnReload = false) {
   const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined
-  if (resetOnReload && navigation?.type === "reload") {
+  if (resetOnReload && navigation?.type === "reload" && !/^#(growth|brand)(\/|$)/.test(window.location.hash)) {
     window.history.replaceState(null, "", `/brand${window.location.search}`)
     return
   }
