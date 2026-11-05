@@ -1,3 +1,4 @@
+import { BrandCoffeeArt, BrandNotesArt } from "@/BrandCardArt"
 import { ModeSwitchHint } from "@/ModeSwitchHint"
 import { toolLogos } from "@/toolLogos"
 import { navigate, useDetailRoute, usePathname } from "@/navigation"
@@ -746,7 +747,7 @@ const uptoRows: Record<Mode, [string, string][]> = {
   ],
 }
 
-function LiveUptoRows({ mode }: { mode: Mode }) {
+function LiveUptoRows({ mode, artwork = false }: { mode: Mode; artwork?: boolean }) {
   const [now, setNow] = useState(() => new Date())
   useEffect(() => {
     const timer = window.setInterval(() => setNow(new Date()), 1000)
@@ -756,7 +757,8 @@ function LiveUptoRows({ mode }: { mode: Mode }) {
     hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
     ...(mode === "brand" ? { timeZone: "Asia/Kolkata" } : {}),
   }).format(now)
-  return <Rows items={[...uptoRows[mode], [mode === "brand" ? "Time (IST)" : "Time", time]]} />
+  const items: [string, string][] = [...uptoRows[mode], [mode === "brand" ? "my time" : "Time", time]]
+  return artwork ? <BrandCoffeeArt items={items} /> : <Rows items={items} />
 }
 
 function PageBody({ page, mode, onOpenPhotos, photosOpen }: { page: PageKey; mode: Mode; onOpenPhotos: (element: HTMLButtonElement) => void; photosOpen: boolean }) {
@@ -1866,7 +1868,7 @@ export default function App() {
               bg={tint("work")}
             >
               <CardHeading detail="Writing">Notes</CardHeading>
-              <ul className="mt-6 divide-y divide-[#1A1A1A]/15 lg:mt-auto">
+              {mode === "brand" ? <BrandNotesArt titles={notesByMode.brand.map(note => note.title)} /> : <ul className="mt-6 divide-y divide-[#1A1A1A]/15 lg:mt-auto">
                 {notesByMode[mode].map(({ title: t }) => (
                   <li
                     key={t}
@@ -1875,7 +1877,7 @@ export default function App() {
                     {t}
                   </li>
                 ))}
-              </ul>
+              </ul>}
             </Card>
 
             {mode === "growth" ? (
@@ -1909,9 +1911,9 @@ export default function App() {
               {...openProps("upto")}
             >
               <CardHeading detail="Now">What I&rsquo;m up to</CardHeading>
-              <div className="mt-8 w-full lg:mt-auto lg:pt-8">
+              {mode === "brand" ? <LiveUptoRows mode={mode} artwork /> : <div className="mt-8 w-full lg:mt-auto lg:pt-8">
                 <LiveUptoRows mode={mode} />
-              </div>
+              </div>}
             </Card>
           </>
         )}
