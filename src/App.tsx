@@ -1770,16 +1770,21 @@ export default function App() {
               {...openProps("projects")}
             >
               <CardHeading detail="selected work">Experience</CardHeading>
-              <div className="mt-6 flex min-h-0 flex-1 items-end">
+              {mode === "brand" ? <div className="mt-6 flex min-h-0 flex-1 items-end">
                 <img
-                  src={mode === "brand" ? "/brandex.png" : "/experience.png"}
+                  src="/experience.png"
                   alt="Freelance and internship experience across B2B, D2C, fintech, SaaS, and startups"
-                  width={1024}
-                  height={647}
+                  width={500}
+                  height={300}
                   decoding="async"
                   className="block max-h-full w-full object-contain"
                 />
-              </div>
+              </div> : <ul className="growth-experience-list mt-6 divide-y divide-[#1A1A1A]/15 lg:mt-auto">
+                {jobs.map(([company, role], index) => <li key={company} className="py-2 first:pt-0 last:pb-0">
+                  <span className={`entity-name block font-medium ${index === 0 ? "text-[color:var(--accent)]" : ""}`}>{company}</span>
+                  <span className="block leading-snug text-[#1A1A1A]/60">{role}</span>
+                </li>)}
+              </ul>}
             </Card>
 
             <Card
@@ -1796,7 +1801,7 @@ export default function App() {
                       key={tool}
                       className={`entity-name rounded-full border px-3 py-1.5 text-base ${
                         mode === "brand"
-                          ? "border-[#8A8A8A] lg:border-[#7d2e4b]/45"
+                          ? "border-[#B3ADA1]"
                           : "border-[#B3ADA1]"
                       }`}
                     >

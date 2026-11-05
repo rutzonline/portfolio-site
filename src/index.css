@@ -931,30 +931,30 @@ main[data-mode] .desktop-about-card .mobile-specialties { margin-top: 20px; }
 
 /* Brand homepage: real text arranged on the supplied paper and coffee cutouts. */
 .brand-art-slot { display: flex; flex: 1; min-height: 0; align-items: flex-end; justify-content: center; padding-top: 20px; }
-.brand-notes-art { position: relative; width: min(100%, 290px); aspect-ratio: 352 / 235; container-type: inline-size; }
+.brand-notes-art { position: relative; width: min(100%, 340px); aspect-ratio: 352 / 235; container-type: inline-size; }
 .brand-notes-art > img { width: 100%; height: 100%; object-fit: contain; }
 .brand-paper-titles { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; color: #26364f; font: 500 clamp(10px, 3.9cqw, 11.5px)/1.45 "Playpen Sans", cursive; }
 .brand-paper-titles li { position: absolute; width: 31%; }
 .brand-paper-titles li:nth-child(1) { left: 17%; top: 19%; }
 .brand-paper-titles li:nth-child(2) { left: 17%; top: 49%; }
 .brand-paper-titles li:nth-child(3) { left: 53%; top: 30%; width: 34%; overflow-wrap: anywhere; }
-.paper-note-number { position: absolute; right: calc(100% + 4px); top: .3em; font: 500 8px/1.4 "Inter", sans-serif; color: #607087; }
+.paper-note-number { white-space: nowrap; overflow-wrap: normal; width: max-content; position: absolute; right: calc(100% + 4px); top: .3em; font: 500 8px/1.4 "Inter", sans-serif; color: #607087; }
 
 .brand-coffee-art { position: relative; width: min(100%, 350px); aspect-ratio: 1.12; container-type: inline-size; }
 .brand-coffee-art > img { position: absolute; width: 90%; left: 5%; top: 3%; }
 .brand-coffee-art .coffee-detail { position: absolute; max-width: 44%; border: 0; color: #26364f; line-height: 1.3; }
-.coffee-detail dt { font: 500 clamp(10px, 3.4cqw, 12px)/1.4 "Playpen Sans", cursive; color: #43516a; margin-bottom: 3px; }
+.coffee-detail dt { font: 500 clamp(11px, 3.8cqw, 13px)/1.4 "Playpen Sans", cursive; color: #43516a; margin-bottom: 3px; }
 .coffee-detail dd { margin: 0; font: 500 clamp(12px, 4.5cqw, 16px)/1.3 "Playpen Sans", cursive; }
 .coffee-detail-0 { left: 0; top: 24%; }
-.coffee-detail-1 { right: 4%; top: 7%; text-align: right; }
-.coffee-detail-2 { right: 0; bottom: 5%; text-align: right; }
+.coffee-detail-1 { right: 4%; top: 7%; text-align: left; }
+.coffee-detail-2 { right: 0; bottom: 5%; text-align: left; }
 .coffee-detail-3 { left: 2%; bottom: 13%; }
 @media (min-width: 1024px) {
-  .brand-notes-art { width: min(100%, 290px, calc((50svh - 98px) * 1.498)); }
+  .brand-notes-art { width: min(100%, 340px, calc((50svh - 118px) * 1.498)); }
   .brand-coffee-art { width: min(100%, 350px, calc((50svh - 98px) * 1.12)); }
 }
 @media (max-width: 1023px) {
   .brand-art-slot { padding-top: 28px; }
   .brand-coffee-art { max-width: 340px; }
 }
-
+.notes-card .brand-art-slot { padding-bottom: 20px; }
