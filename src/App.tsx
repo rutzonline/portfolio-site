@@ -1614,7 +1614,7 @@ export default function App() {
           }}
           onMouseLeave={() => setModeHint(null)}
           padded={false}
-          className={`portrait-card relative order-1 lg:order-none ${
+          className={`portrait-card relative order-1 lg:order-none ${switchHint && !page ? "mode-hint-active" : ""} ${
             page ? "cursor-pointer max-lg:hidden" : ""
           }`}
           onClick={
@@ -1628,7 +1628,7 @@ export default function App() {
         >
           {!isMobile && <PhotoSlideshow active={page !== null} portrait={content.portrait}
             onFirstPhoto={() => { if (!page) setSwitchHint(true) }}
-            coverDuration={mode === "growth" ? 0 : 6000}
+            coverDuration={mode === "growth" ? 0 : 5000}
             portraitAlt={mode === "growth" ? "A yellow flower at sunset" : "Portrait of Rutuja Rochkari"}
             onReturnHome={page ? close : undefined} />}
           {!isMobile && focusControls}
