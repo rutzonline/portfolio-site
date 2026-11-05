@@ -36,7 +36,7 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDur
   const [shownPortrait, setShownPortrait] = useState(portrait)
   const [coverCycle, setCoverCycle] = useState(portrait)
   const coverAlts = useRef(new Map([[portrait, portraitAlt]]))
-  // Each cover gets its own deadline; the photo cadence remains 10 seconds.
+  // Each cover gets its own deadline; the photo cadence remains 7 seconds.
   const coverDeadlines = useRef(new Map([[portrait, Date.now() + coverDuration]]))
   const visited = useRef(new Set([portrait]))
   const [previous, setPrevious] = useState<string | null>(null)
@@ -97,7 +97,7 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDur
     const autoPlay = !reducedMotion && photos.length > 1
     const schedule = () => {
       window.clearTimeout(timer)
-      timer = window.setTimeout(advance, 10000)
+      timer = window.setTimeout(advance, 7000)
     }
     const advance = () => {
       if (cancelled || pending) return
