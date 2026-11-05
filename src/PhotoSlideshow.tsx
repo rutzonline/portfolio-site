@@ -1,3 +1,4 @@
+import { cameraPhoto } from "@/CameraOpening"
 import { mediaSrc } from "@/media"
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { fetchTable } from "@/lib/supabase"
@@ -5,6 +6,12 @@ import { fetchTable } from "@/lib/supabase"
 type PhotoRow = { url?: string }
 let photoRequest: Promise<string[]> | null = null
 const lastStartKey = "portfolio:last-slideshow-start"
+// Curated night / dark-interior photos, rather than dimmed daytime scenes.
+const darkPhotos = [
+  "https://mzelpafnpdcchykekdux.supabase.co/storage/v1/object/public/photos/unnamed.jpg",
+  "https://mzelpafnpdcchykekdux.supabase.co/storage/v1/object/public/photos/IMG_8801.jpg",
+  "https://mzelpafnpdcchykekdux.supabase.co/storage/v1/object/public/photos/original%202024-11-02%20181046.651.jpg",
+]
 
 export function getPhotos() {
   if (!photoRequest) {
@@ -26,8 +33,8 @@ export function getPhotos() {
   return photoRequest
 }
 
-export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDuration, onReturnHome, onFirstPhotoVisibleChange }: {
-  active: boolean; portrait: string; portraitAlt: string; coverDuration: number; onReturnHome?: () => void; onFirstPhotoVisibleChange?: (visible: boolean) => void
+export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDuration, onReturnHome, onHintVisibilityChange }: {
+  active: boolean; portrait: string; portraitAlt: string; coverDuration: number; onReturnHome?: () => void; onHintVisibilityChange?: (visible: boolean) => void
 }) {
   const [desktop, setDesktop] = useState(() => window.matchMedia("(min-width: 1024px)").matches)
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)
@@ -42,6 +49,27 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDur
   const [previous, setPrevious] = useState<string | null>(null)
   const enabled = desktop
   const startIfNeeded = useRef<() => void>(() => {})
+  const returnToHome = useRef<() => void>(() => {})
+  const pageActive = useRef(active)
+  pageActive.current = active
+  const cueStage = useRef<"pending" | "hint" | "camera" | "done">("pending")
+  const [hintPhoto] = useState(() => {
+    let last: string | null = null
+    try { last = localStorage.getItem(lastStartKey) } catch {}
+    const choices = darkPhotos.filter(photo => photo !== last)
+    return choices[Math.floor(Math.random() * choices.length)]
+  })
+  const [isHintPhoto, setIsHintPhoto] = useState(false)
+
+  useEffect(() => {
+    // These local snapshots are decoded while the cover is still showing,
+    // so returning home can reveal the queued hint immediately.
+    for (const src of [...darkPhotos, cameraPhoto]) {
+      const image = new Image()
+      image.src = mediaSrc(src)
+      image.decode().catch(() => {})
+    }
+  }, [])
 
   // Only a view's first visit shows its cover. Apply this before painting so
   // returning to a visited view cannot flash its portrait for a frame.
@@ -88,66 +116,90 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDur
     if (!photos.length) return
     let cancelled = false
     let pending = false
+    let request = 0
     let timer: number | undefined
     let remaining: string[] = []
     let current: string | null = null
-    let lastStart: string | null = null
-    try { lastStart = localStorage.getItem(lastStartKey) } catch {}
+    let firstCycle = true
     const failed = new Set<string>()
-    const autoPlay = !reducedMotion && photos.length > 1
+    const autoPlay = !reducedMotion
     const schedule = () => {
       window.clearTimeout(timer)
       timer = window.setTimeout(advance, 7000)
     }
+    const load = (next: string, kind: "hint" | "camera" | "random") => {
+      window.clearTimeout(timer)
+      const id = ++request
+      pending = true
+      const image = new Image()
+      image.onload = async () => {
+        try { await image.decode() } catch {}
+        if (cancelled || id !== request) return
+        pending = false
+        setPrevious(current)
+        current = next
+        const hintVisible = kind === "hint" && !pageActive.current
+        if (hintVisible) {
+          cueStage.current = "hint"
+          try { localStorage.setItem(lastStartKey, next) } catch {}
+        } else if (kind === "camera") cueStage.current = "done"
+        setIsHintPhoto(hintVisible)
+        setShownPortrait(coverCycle)
+        setShown(next)
+        if (autoPlay) schedule()
+      }
+      image.onerror = () => {
+        if (cancelled || id !== request) return
+        pending = false
+        failed.add(next)
+        if (kind === "camera") cueStage.current = "done"
+        advance()
+      }
+      image.src = mediaSrc(next)
+    }
+    const showCue = () => {
+      const next = [hintPhoto, ...darkPhotos].find(photo => !failed.has(photo))
+      if (next) load(next, "hint")
+      else {
+        // Never substitute a bright photo behind the white hint.
+        cueStage.current = "camera"
+        advance()
+      }
+    }
     const advance = () => {
       if (cancelled || pending) return
       window.clearTimeout(timer)
-      if (document.hidden) {
-        schedule()
+      if (document.hidden) { schedule(); return }
+      if (!pageActive.current && cueStage.current === "pending") {
+        showCue()
+        return
+      }
+      if (cueStage.current === "hint" || cueStage.current === "camera") {
+        cueStage.current = "camera"
+        load(cameraPhoto, "camera")
         return
       }
       if (!remaining.length) {
-        remaining = photos.filter((photo) => !failed.has(photo))
+        remaining = photos.filter(photo => !failed.has(photo) &&
+          (!firstCycle || (photo !== cameraPhoto && !darkPhotos.includes(photo))))
+        firstCycle = false
+        if (!remaining.length) remaining = photos.filter(photo => !failed.has(photo))
         for (let i = remaining.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1))
           ;[remaining[i], remaining[j]] = [remaining[j], remaining[i]]
         }
-        // Start each load differently, and avoid repeats between shuffled cycles.
         const last = remaining.length - 1
-        if (last > 0 && remaining[last] === (current ?? lastStart)) {
-          const swap = Math.floor(Math.random() * last)
-          ;[remaining[swap], remaining[last]] = [remaining[last], remaining[swap]]
+        if (last > 0 && remaining[last] === current) {
+          ;[remaining[0], remaining[last]] = [remaining[last], remaining[0]]
         }
       }
       const next = remaining.pop()
-      if (!next || next === current) return
-      pending = true
-      const image = new Image()
-      image.onload = async () => {
-        // Decode before swapping layers so a cached or large image never
-        // leaves a blank frame during the crossfade.
-        try { await image.decode() } catch {}
-        if (cancelled) return
-        pending = false
-        setPrevious(current)
-        if (!current) {
-          try { localStorage.setItem(lastStartKey, next) } catch {}
-        }
-        current = next
-        setShownPortrait(coverCycle)
-        setShown(current)
-        if (autoPlay) schedule()
-      }
-      image.onerror = () => {
-        if (cancelled) return
-        pending = false
-        failed.add(next)
-        if (failed.size < photos.length) advance()
-      }
-      image.src = mediaSrc(next)
+      if (next && next !== current) load(next, "random")
     }
     startIfNeeded.current = () => { if (!current) advance() }
-    // Measure cover dwell from display, not from the completion of the photo request.
+    returnToHome.current = () => {
+      if (cueStage.current === "pending") showCue()
+    }
     const firstPhotoAt = coverDeadlines.current.get(coverCycle) ?? Date.now()
     timer = window.setTimeout(advance, Math.max(0, firstPhotoAt - Date.now()))
     const resume = () => { if (!current && Date.now() >= firstPhotoAt) advance() }
@@ -155,27 +207,30 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDur
     return () => {
       cancelled = true
       startIfNeeded.current = () => {}
+      returnToHome.current = () => {}
       window.clearTimeout(timer)
       document.removeEventListener("visibilitychange", resume)
     }
-  }, [enabled, photos, reducedMotion, coverCycle])
+  }, [enabled, photos, reducedMotion, coverCycle, hintPhoto])
 
-  // Opening a page starts photos immediately. Page navigation never resets
-  // the running slideshow; a view toggle still gets its own cover dwell.
+  // Inner pages can keep playing photos, but cannot consume the homepage hint.
+  const wasActive = useRef(active)
+  const homeReturnPending = useRef(false)
   useEffect(() => {
+    if (wasActive.current && !active) homeReturnPending.current = true
+    wasActive.current = active
     if (active) startIfNeeded.current()
+    else if (homeReturnPending.current && photos.length && enabled) {
+      homeReturnPending.current = false
+      returnToHome.current()
+    }
   }, [active, photos.length, enabled])
 
-  const firstPhoto = useRef<string | null>(null)
-  const firstPhotoFinished = useRef(false)
   const showPhoto = enabled && shown && visited.current.has(portrait) && shownPortrait === coverCycle
   useEffect(() => {
-    if (showPhoto && !firstPhoto.current) firstPhoto.current = shown
-    if (firstPhoto.current && (!showPhoto || shown !== firstPhoto.current)) {
-      firstPhotoFinished.current = true
-    }
-    onFirstPhotoVisibleChange?.(Boolean(showPhoto && !firstPhotoFinished.current))
-  }, [showPhoto, shown, onFirstPhotoVisibleChange])
+    onHintVisibilityChange?.(Boolean(showPhoto && isHintPhoto && !active))
+  }, [showPhoto, isHintPhoto, active, onHintVisibilityChange])
+
   return (
     <div className="absolute inset-0">
       <img key={coverCycle} src={coverCycle} alt={showPhoto ? "" : coverAlts.current.get(coverCycle)}

@@ -1622,7 +1622,7 @@ export default function App() {
           }
         >
           {!isMobile && <PhotoSlideshow active={page !== null} portrait={content.portrait}
-            onFirstPhotoVisibleChange={setSwitchHint}
+            onHintVisibilityChange={setSwitchHint}
             coverDuration={mode === "growth" ? 0 : 4000}
             portraitAlt={mode === "growth" ? "A yellow flower at sunset" : "Portrait of Rutuja Rochkari"}
             onReturnHome={page ? close : undefined} />}
