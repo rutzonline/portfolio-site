@@ -996,3 +996,24 @@ main[data-mode] .desktop-about-card .mobile-specialties { margin-top: 20px; }
   .photo-gallery-window { top: calc(65px + env(safe-area-inset-top)); padding-bottom: max(24px, env(safe-area-inset-bottom)); }
   .mobile-page-nav { padding-top: max(8px, env(safe-area-inset-top)); }
 }
+
+/* Simple mobile reading pages; leave the desktop display type unchanged. */
+@media (max-width: 1023px) {
+  main[data-mode] .page-article :is(h1, h2, h3, h4, h5, h6, .about-greeting, .font-heading) {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    letter-spacing: -.015em;
+  }
+  main[data-mode] .page-article .page-title { font-size: 26px; line-height: 1.25; }
+  main[data-mode] .page-article .case-title { font-size: 22px; line-height: 1.3; }
+  main[data-mode] .page-article .about-greeting { font-size: 20px; line-height: 1.4; }
+  .about-reading-column, .about-reading-column > div { gap: 40px; }
+  .about-reading-column h3 { font-size: 18px; line-height: 1.4; }
+
+  /* Explicit block sizing avoids intrinsic flex/container-size collapse in iOS. */
+  .brand-art-slot { display: block; flex: none; width: 100%; align-self: stretch; min-height: auto; }
+  .notes-card .brand-notes-art { width: 100%; max-width: 360px; margin-inline: auto; aspect-ratio: auto; container-type: normal; }
+  .brand-notes-art > img { display: block; width: 100%; height: auto; }
+  .brand-paper-titles { font-size: clamp(10px, 2.8vw, 11.5px); line-height: 1.35; }
+  .brand-coffee-art { width: 100%; max-width: 340px; margin-inline: auto; container-type: normal; }
+}

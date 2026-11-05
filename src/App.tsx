@@ -1361,6 +1361,7 @@ export default function App() {
   const [copied, setCopied] = useState(false)
   const page = route.page
   const hasDetail = Boolean(pathname.split("/")[3]) && (page === "notes" || page === "projects" || (page === "moodboard" && mode === "growth"))
+  const restoreMobileFocus = useRef(false)
   const mobileHomePosition = useRef<{ page: PageKey; y: number } | null>(null)
   const previousPageRef = useRef(page)
   const casePage = page === "moodboard" && mode === "growth"
@@ -1418,6 +1419,7 @@ export default function App() {
   const openProps = (k: PageKey) => ({
     homeKey: k,
     onOpen: (e: MouseEvent<HTMLButtonElement>) => {
+      restoreMobileFocus.current = e.detail === 0
       originRef.current = e.currentTarget.getBoundingClientRect()
       open(k)
     },
@@ -1441,7 +1443,7 @@ export default function App() {
         } else {
           card?.scrollIntoView({ block: "start", behavior: "instant" })
         }
-        card?.focus({ preventScroll: true })
+        if (restoreMobileFocus.current) card?.focus({ preventScroll: true })
       }
       return
     }
