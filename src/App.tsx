@@ -1618,7 +1618,7 @@ export default function App() {
           }
         >
           {!isMobile && <PhotoSlideshow active={page !== null} portrait={content.portrait}
-            coverDuration={mode === "growth" ? 0 : 4000}
+            coverDuration={mode === "growth" ? 0 : 6000}
             portraitAlt={mode === "growth" ? "A yellow flower at sunset" : "Portrait of Rutuja Rochkari"}
             onReturnHome={page ? close : undefined} />}
           {!isMobile && focusControls}

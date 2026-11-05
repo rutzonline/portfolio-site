@@ -4,6 +4,7 @@ import { fetchTable } from "@/lib/supabase"
 
 type PhotoRow = { url?: string }
 let photoRequest: Promise<string[]> | null = null
+const lastStartKey = "portfolio:last-slideshow-start"
 
 export function getPhotos() {
   if (!photoRequest) {
@@ -90,6 +91,8 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDur
     let timer: number | undefined
     let remaining: string[] = []
     let current: string | null = null
+    let lastStart: string | null = null
+    try { lastStart = localStorage.getItem(lastStartKey) } catch {}
     const failed = new Set<string>()
     const autoPlay = !reducedMotion && photos.length > 1
     const schedule = () => {
@@ -109,10 +112,11 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDur
           const j = Math.floor(Math.random() * (i + 1))
           ;[remaining[i], remaining[j]] = [remaining[j], remaining[i]]
         }
-        // Avoid repeating the last photo at the start of a new shuffled cycle.
+        // Start each load differently, and avoid repeats between shuffled cycles.
         const last = remaining.length - 1
-        if (last > 0 && remaining[last] === current) {
-          ;[remaining[0], remaining[last]] = [remaining[last], remaining[0]]
+        if (last > 0 && remaining[last] === (current ?? lastStart)) {
+          const swap = Math.floor(Math.random() * last)
+          ;[remaining[swap], remaining[last]] = [remaining[last], remaining[swap]]
         }
       }
       const next = remaining.pop()
@@ -126,6 +130,9 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDur
         if (cancelled) return
         pending = false
         setPrevious(current)
+        if (!current) {
+          try { localStorage.setItem(lastStartKey, next) } catch {}
+        }
         current = next
         setShownPortrait(coverCycle)
         setShown(current)
