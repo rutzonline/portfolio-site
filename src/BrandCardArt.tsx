@@ -5,7 +5,7 @@ export function BrandNotesArt({ titles }: { titles: string[] }) {
       <ol className="brand-paper-titles">
         {titles.map((title, index) => <li key={title}>
           <span aria-hidden="true" className="paper-note-number">0{index + 1}</span>
-          {title}
+          {title.replace("recommendation", "recom\u00admendation")}
         </li>)}
       </ol>
     </div>

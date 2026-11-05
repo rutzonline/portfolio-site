@@ -1780,8 +1780,8 @@ export default function App() {
                   className="block max-h-full w-full object-contain"
                 />
               </div> : <ul className="growth-experience-list mt-6 divide-y divide-[#1A1A1A]/15 lg:mt-auto">
-                {jobs.map(([company, role], index) => <li key={company} className="py-2 first:pt-0 last:pb-0">
-                  <span className={`entity-name block font-medium ${index === 0 ? "text-[color:var(--accent)]" : ""}`}>{company}</span>
+                {jobs.map(([company, role]) => <li key={company} className="py-2 first:pt-0 last:pb-0">
+                  <span className="entity-name block font-medium">{company}</span>
                   <span className="block leading-snug text-[#1A1A1A]/60">{role}</span>
                 </li>)}
               </ul>}
