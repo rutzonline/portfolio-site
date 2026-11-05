@@ -26,8 +26,8 @@ export function getPhotos() {
   return photoRequest
 }
 
-export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDuration, onReturnHome, onFirstPhoto }: {
-  active: boolean; portrait: string; portraitAlt: string; coverDuration: number; onReturnHome?: () => void; onFirstPhoto?: () => void
+export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDuration, onReturnHome, onFirstPhotoVisibleChange }: {
+  active: boolean; portrait: string; portraitAlt: string; coverDuration: number; onReturnHome?: () => void; onFirstPhotoVisibleChange?: (visible: boolean) => void
 }) {
   const [desktop, setDesktop] = useState(() => window.matchMedia("(min-width: 1024px)").matches)
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)
@@ -36,7 +36,7 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDur
   const [shownPortrait, setShownPortrait] = useState(portrait)
   const [coverCycle, setCoverCycle] = useState(portrait)
   const coverAlts = useRef(new Map([[portrait, portraitAlt]]))
-  // Each cover gets its own deadline; the photo cadence remains 15 seconds.
+  // Each cover gets its own deadline; the photo cadence remains 10 seconds.
   const coverDeadlines = useRef(new Map([[portrait, Date.now() + coverDuration]]))
   const visited = useRef(new Set([portrait]))
   const [previous, setPrevious] = useState<string | null>(null)
@@ -97,7 +97,7 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDur
     const autoPlay = !reducedMotion && photos.length > 1
     const schedule = () => {
       window.clearTimeout(timer)
-      timer = window.setTimeout(advance, 15000)
+      timer = window.setTimeout(advance, 10000)
     }
     const advance = () => {
       if (cancelled || pending) return
@@ -166,14 +166,16 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDur
     if (active) startIfNeeded.current()
   }, [active, photos.length, enabled])
 
-  const notifiedFirstPhoto = useRef(false)
+  const firstPhoto = useRef<string | null>(null)
+  const firstPhotoFinished = useRef(false)
   const showPhoto = enabled && shown && visited.current.has(portrait) && shownPortrait === coverCycle
   useEffect(() => {
-    if (showPhoto && !notifiedFirstPhoto.current) {
-      notifiedFirstPhoto.current = true
-      onFirstPhoto?.()
+    if (showPhoto && !firstPhoto.current) firstPhoto.current = shown
+    if (firstPhoto.current && (!showPhoto || shown !== firstPhoto.current)) {
+      firstPhotoFinished.current = true
     }
-  }, [showPhoto, onFirstPhoto])
+    onFirstPhotoVisibleChange?.(Boolean(showPhoto && !firstPhotoFinished.current))
+  }, [showPhoto, shown, onFirstPhotoVisibleChange])
   return (
     <div className="absolute inset-0">
       <img key={coverCycle} src={coverCycle} alt={showPhoto ? "" : coverAlts.current.get(coverCycle)}

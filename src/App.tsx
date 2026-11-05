@@ -1352,11 +1352,6 @@ export default function App() {
   }, [])
   const mode = route.mode ?? "brand"
   const [switchHint, setSwitchHint] = useState(false)
-  useEffect(() => {
-    if (!switchHint) return
-    const timer = window.setTimeout(() => setSwitchHint(false), 5000)
-    return () => window.clearTimeout(timer)
-  }, [switchHint])
   const [modeHint, setModeHint] = useState<{ x: number; y: number } | null>(null)
   const [visitorName, setVisitorName] = useState("first name")
   const galleryOpen = pathname.endsWith("/photos") && (isMobile || pathname === "/brand/what-im-up-to/photos")
@@ -1627,7 +1622,7 @@ export default function App() {
           }
         >
           {!isMobile && <PhotoSlideshow active={page !== null} portrait={content.portrait}
-            onFirstPhoto={() => { if (!page) setSwitchHint(true) }}
+            onFirstPhotoVisibleChange={setSwitchHint}
             coverDuration={mode === "growth" ? 0 : 5000}
             portraitAlt={mode === "growth" ? "A yellow flower at sunset" : "Portrait of Rutuja Rochkari"}
             onReturnHome={page ? close : undefined} />}
