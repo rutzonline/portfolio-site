@@ -964,3 +964,35 @@ main[data-mode] .desktop-about-card .mobile-specialties { margin-top: 20px; }
   .brand-paper-titles li:nth-child(1) { top: 16%; }
   .brand-paper-titles li:nth-child(2) { top: 47%; }
 }
+
+/* Touch layouts only: desktop composition and typography remain unchanged. */
+@media (max-width: 1023px) {
+  .mobile-identity { display: grid; grid-template-columns: minmax(0, 1fr) 64px; align-items: center; gap: 10px 12px; }
+  .mobile-greeting-row { display: contents; }
+  .mobile-identity .mobile-greeting { grid-column: 1 / -1; grid-row: 1; font-size: clamp(16px, 4.3vw, 18px); }
+  .mobile-identity .greeting-name-wrap { max-width: calc(100vw - 180px); overflow: hidden; }
+  .mobile-greeting-row .photo-folder-button { position: static; grid-column: 2; grid-row: 2; justify-self: end; width: 64px; height: 68px; }
+  .mobile-identity .mobile-name { grid-column: 1; grid-row: 2; min-width: 0; padding-right: 0; font-size: clamp(40px, 12vw, 64px); }
+  .mobile-about-card { text-align: left; }
+  .mobile-about-link { display: flex; align-items: center; gap: 8px; min-height: 44px; width: fit-content; margin-top: 12px; font: 500 14px/1.5 "Inter", sans-serif; color: #26364f; }
+  .experience-card > div { justify-content: center; }
+  .experience-card > div > img { max-width: 500px; max-height: 300px; }
+  .experience-entry-arrow { opacity: .65; }
+  .contact-card .contact-link { display: inline-flex; align-items: center; min-height: 44px; padding-right: 12px; }
+  .contact-card .contact-link:focus-visible { outline-offset: 2px; }
+  .notes-card .brand-notes-art { flex-shrink: 0; width: calc(100% + 24px); max-width: 360px; }
+  .brand-paper-titles { font-size: clamp(10.5px, 3.2cqw, 11.5px); line-height: 1.35; }
+  .brand-paper-titles li { width: 28%; }
+  .brand-paper-titles li:nth-child(1) { left: 19%; top: 16%; }
+  .brand-paper-titles li:nth-child(2) { left: 19%; top: 48%; }
+  .brand-paper-titles li:nth-child(3) { left: 56%; top: 25%; }
+  .coffee-detail dt { font-size: 12px; }
+  .coffee-detail dd { font-size: 14px; }
+  .coffee-detail-0 { top: 20%; }
+  .coffee-detail-1 { top: 4%; }
+  .coffee-detail-2 { bottom: 1%; }
+  .mobile-preview-close { position: fixed; top: max(16px, env(safe-area-inset-top)); right: max(16px, env(safe-area-inset-right)); display: flex; width: 44px; height: 44px; align-items: center; justify-content: center; color: #fff; border: 1px solid #ffffff60; border-radius: 50%; background: #0006; }
+  .photo-page-nav { padding-top: env(safe-area-inset-top); height: calc(65px + env(safe-area-inset-top)); }
+  .photo-gallery-window { top: calc(65px + env(safe-area-inset-top)); padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+  .mobile-page-nav { padding-top: max(8px, env(safe-area-inset-top)); }
+}

@@ -35,6 +35,10 @@ export default function ImagePreview({ src, alt, onClose }: {
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") { event.preventDefault(); onClose() }
       }}>
+      <button type="button" aria-label="Close image preview" className="mobile-preview-close lg:hidden"
+        onClick={(event) => { event.stopPropagation(); onClose() }}>
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="m6 6 12 12M6 18 18 6" /></svg>
+      </button>
       <img src={mediaSrc(src)} alt={alt} className="block h-auto max-h-[76dvh] w-auto max-w-[86vw] object-contain lg:max-w-[min(80vw,1120px)]" />
     </dialog>
   )

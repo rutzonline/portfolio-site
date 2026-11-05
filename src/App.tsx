@@ -1729,6 +1729,7 @@ export default function App() {
           <>
             <Card
               ariaLabel="About"
+              {...(isMobile ? openProps("about") : {})}
               className={`mobile-about-card desktop-about-card relative order-2 lg:order-none ${isMobile ? "" : "card-link"}`}
               bg={tint("about")}
             >
@@ -1761,6 +1762,7 @@ export default function App() {
                       ? "email, paid, creators, and offline"
                       : "copy, content, social, and brand comms"}
                 </p>
+                {isMobile && <span className="mobile-about-link">more about me <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M5 19 19 5M5 5h14v14" /></svg></span>}
               </div>
             </Card>
 
