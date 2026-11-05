@@ -26,8 +26,8 @@ export function getPhotos() {
   return photoRequest
 }
 
-export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDuration, onReturnHome }: {
-  active: boolean; portrait: string; portraitAlt: string; coverDuration: number; onReturnHome?: () => void
+export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDuration, onReturnHome, onFirstPhoto }: {
+  active: boolean; portrait: string; portraitAlt: string; coverDuration: number; onReturnHome?: () => void; onFirstPhoto?: () => void
 }) {
   const [desktop, setDesktop] = useState(() => window.matchMedia("(min-width: 1024px)").matches)
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)
@@ -166,7 +166,14 @@ export default function PhotoSlideshow({ active, portrait, portraitAlt, coverDur
     if (active) startIfNeeded.current()
   }, [active, photos.length, enabled])
 
+  const notifiedFirstPhoto = useRef(false)
   const showPhoto = enabled && shown && visited.current.has(portrait) && shownPortrait === coverCycle
+  useEffect(() => {
+    if (showPhoto && !notifiedFirstPhoto.current) {
+      notifiedFirstPhoto.current = true
+      onFirstPhoto?.()
+    }
+  }, [showPhoto, onFirstPhoto])
   return (
     <div className="absolute inset-0">
       <img key={coverCycle} src={coverCycle} alt={showPhoto ? "" : coverAlts.current.get(coverCycle)}

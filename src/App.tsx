@@ -1,3 +1,4 @@
+import { ModeSwitchHint } from "@/ModeSwitchHint"
 import { toolLogos } from "@/toolLogos"
 import { navigate, useDetailRoute, usePathname } from "@/navigation"
 import Carousel from "@/Carousel"
@@ -1350,6 +1351,12 @@ export default function App() {
     }
   }, [])
   const mode = route.mode ?? "brand"
+  const [switchHint, setSwitchHint] = useState(false)
+  useEffect(() => {
+    if (!switchHint) return
+    const timer = window.setTimeout(() => setSwitchHint(false), 5000)
+    return () => window.clearTimeout(timer)
+  }, [switchHint])
   const [modeHint, setModeHint] = useState<{ x: number; y: number } | null>(null)
   const [visitorName, setVisitorName] = useState("first name")
   const galleryOpen = pathname.endsWith("/photos") && (isMobile || pathname === "/brand/what-im-up-to/photos")
@@ -1532,6 +1539,7 @@ export default function App() {
         onBlur={(event) => { if (!event.currentTarget.matches(":hover")) setModeHint(null) }}
         onKeyDown={(event) => { if (event.key === "Escape") setModeHint(null) }}
         onClick={() => {
+          setSwitchHint(false)
           const nextMode = mode === "growth" ? "brand" : "growth"
           navigate(`/${nextMode}${page ? `/${slugOf(page, nextMode)}` : ""}`, true)
           if (isMobile && !page) scrollHomeToTop()
@@ -1576,7 +1584,8 @@ export default function App() {
         } as CSSProperties
       }
     >
-      {!isMobile && modeHint && (
+      <ModeSwitchHint visible={switchHint && !page} />
+      {!switchHint && !isMobile && modeHint && (
         <div aria-hidden="true" className="mode-cursor-hint"
           style={{ left: Math.max(8, Math.min(modeHint.x, window.innerWidth - 180)), top: Math.max(8, Math.min(modeHint.y, window.innerHeight - 38)), background: mode === "brand" ? PINK : DESKTOP_NAVY, color: mode === "brand" ? "#1A1A1A" : "#fff" }}>
           switch to {mode === "brand" ? "growth" : "brand"} mode
@@ -1618,6 +1627,7 @@ export default function App() {
           }
         >
           {!isMobile && <PhotoSlideshow active={page !== null} portrait={content.portrait}
+            onFirstPhoto={() => { if (!page) setSwitchHint(true) }}
             coverDuration={mode === "growth" ? 0 : 6000}
             portraitAlt={mode === "growth" ? "A yellow flower at sunset" : "Portrait of Rutuja Rochkari"}
             onReturnHome={page ? close : undefined} />}
@@ -1848,6 +1858,7 @@ export default function App() {
                 </a>
               ))}
             </div>
+            <p className="contact-copyright">© {new Date().getFullYear()} Rutuja Rochkari</p>
           </div>
         </Card>
 
