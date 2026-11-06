@@ -1,0 +1,99 @@
+/* This entire refinement pass is mobile-only. */
+@media (max-width: 1023px) {
+  main[data-mode] .focus-controls::after {
+    font-size: 13px;
+    font-weight: 400;
+    opacity: .55;
+    letter-spacing: .02em;
+  }
+  .mobile-identity {
+    position: relative;
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 88px;
+    padding-bottom: 28px;
+    row-gap: 22px;
+  }
+  .mobile-identity .mobile-greeting {
+    display: flex;
+    align-items: baseline;
+    gap: .35em;
+    line-height: 26px;
+  }
+  .mobile-identity .greeting-token { display: inline-flex; align-items: baseline; }
+  .mobile-identity .greeting-name-wrap {
+    display: inline-grid;
+    grid-template-columns: max-content;
+    align-items: baseline;
+    overflow: visible;
+    padding-right: 4px;
+    max-width: none;
+    vertical-align: baseline;
+  }
+  .mobile-identity .greeting-name-measure, .mobile-identity .greeting-name {
+    grid-area: 1 / 1;
+    font: inherit;
+    line-height: inherit;
+  }
+  .mobile-identity .greeting-name {
+    position: static;
+    inset: auto;
+    align-self: baseline;
+    width: 0;
+    min-width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .mobile-identity .mobile-name { grid-column: 1; grid-row: 2; }
+  .mobile-identity .photo-folder-button {
+    position: absolute; top: 4px; right: 24px; width: 64px; height: 68px;
+  }
+  main[data-mode] .desktop-about-card .mobile-specialties { display: none; }
+  .mobile-about-card { padding-bottom: 32px; }
+
+  [data-home-card="moodboard"], .skills-card {
+    min-height: 360px; padding-top: 28px; padding-bottom: 32px;
+  }
+  [data-home-card="moodboard"] > ul { margin-top: 32px; margin-bottom: 32px; gap: 12px; }
+  .skills-card > div { margin-top: 32px; }
+  .skills-card .skills-tags { gap: 12px 10px; }
+  .skills-card > div > p { margin-top: 28px; }
+  .contact-card a[href="https://www.are.na/rutz-r"],
+  .contact-card a[href="https://cursor.com/@rutuja"] { display: none; }
+
+  /* Nested pages return to their parent list, not a second homepage action. */
+  .page-article:has([data-essay]) .mobile-page-nav button[aria-label="Return to homepage"] { display: none; }
+  .page-article > [data-essay] { margin-top: 0; }
+  .page-article > [data-essay] [data-panel-content] > div { padding-top: 24px; }
+  .page-article > [data-essay] > .flex { padding-top: 24px; }
+  .mobile-page-nav:has(.mobile-case-return) .mobile-nav-actions .back-btn { display: none; }
+  .mobile-page-nav .mobile-case-return {
+    grid-column: 1 / 3; grid-row: 1; justify-self: start; font-size: 14px;
+  }
+  main[data-mode] .page-article .mobile-page-nav:has(.mobile-case-return) .mobile-nav-title {
+    grid-column: 3; justify-self: end; font-size: 14px; max-width: none;
+  }
+  main[data-mode] .page-article > .mobile-page-nav:has(.mobile-case-return) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  /* One neutral rounded scrollbar for document and nested panels. */
+  html, body, #root, main[data-mode], main[data-mode] * {
+    --scroll-thumb: #c9c9c9; scrollbar-width: thin; scrollbar-color: #c9c9c9 transparent;
+  }
+  @supports selector(::-webkit-scrollbar) {
+    html, body, #root, main[data-mode], main[data-mode] * { scrollbar-width: auto; scrollbar-color: auto; }
+    html::-webkit-scrollbar, body::-webkit-scrollbar, #root::-webkit-scrollbar,
+    main[data-mode]::-webkit-scrollbar, main[data-mode] *::-webkit-scrollbar { width: 6px; height: 6px; }
+    html::-webkit-scrollbar-track, body::-webkit-scrollbar-track, #root::-webkit-scrollbar-track,
+    main[data-mode]::-webkit-scrollbar-track, main[data-mode] *::-webkit-scrollbar-track { background: transparent; }
+    html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb, #root::-webkit-scrollbar-thumb,
+    main[data-mode]::-webkit-scrollbar-thumb, main[data-mode] *::-webkit-scrollbar-thumb { background: #c9c9c9; border-radius: 6px; }
+    html::-webkit-scrollbar-button, body::-webkit-scrollbar-button, #root::-webkit-scrollbar-button,
+    main[data-mode]::-webkit-scrollbar-button, main[data-mode] *::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+    html::-webkit-scrollbar-corner, body::-webkit-scrollbar-corner, #root::-webkit-scrollbar-corner,
+    main[data-mode]::-webkit-scrollbar-corner, main[data-mode] *::-webkit-scrollbar-corner { background: transparent; }
+  }
+}
