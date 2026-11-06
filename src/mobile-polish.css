@@ -1,0 +1,68 @@
+/*
+  Finishes the mobile polish task Codex started on Nov 6, 2026.
+  Overrides land here, after index.css, so they win the cascade.
+  Mobile rules are scoped to (max-width: 1023px); desktop untouched.
+*/
+
+/* 1. Homepage card titles: back to Playpen Sans 22px on mobile.
+   Undoes the 20px Inter override that made homepage text look too small. */
+@media (max-width: 1023px) {
+  main[data-mode] .portfolio-card .card-heading .card-title {
+    font-family: "Playpen Sans", cursive;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -.02em;
+  }
+
+  /* 2. Card subtitle details ("selected work" etc.): back to Playpen Sans 14px. */
+  .card-heading-subtitle {
+    font-family: "Playpen Sans", cursive;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: normal;
+  }
+
+  /* 3. Skills card tagline: back to Playpen Sans 14px. */
+  main[data-mode] .skills-card > div > p {
+    font-family: "Playpen Sans", cursive;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: normal;
+    color: rgb(26 26 26 / .5);
+  }
+
+  /* 4. The About card opens with a tap anywhere; the "tmi" text link is retired. */
+  .mobile-about-link { display: none; }
+
+  /* 5. Mode name visible at the top right of the homepage. */
+  .focus-controls::after {
+    display: block;
+    position: static;
+    height: auto;
+    margin-left: auto;
+    background: none;
+    pointer-events: none;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+    opacity: .75;
+  }
+  main[data-mode="growth"] .focus-controls::after { content: "growth"; }
+  main[data-mode="brand"] .focus-controls::after { content: "brand"; }
+}
+
+/* 6. Desktop pages: inner headings (not the page names) share one size
+   and the title blue. Case-study titles, greetings, and company names keep
+   their own treatment. */
+@media (min-width: 1024px) {
+  .page-article :is(h2, h3):not(.page-title):not(.case-title):not(.about-greeting):not(.entity-name) {
+    font-size: 20px;
+    font-weight: 600;
+    color: #26364f;
+  }
+}
