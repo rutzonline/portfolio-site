@@ -74,12 +74,13 @@
 }
 
 /* 8. About page, both modes: the "hello, i'm rutuja..." greeting matches
-   the section headings (20px) instead of the larger page-title size. */
+   the section headings: same 20px size and same title blue. */
 @media (min-width: 1024px) {
   main .page-article[data-page="about"] .about-greeting {
     font-size: 20px;
     font-weight: 600;
     line-height: 1.4;
     letter-spacing: 0;
+    color: #26364f;
   }
 }
