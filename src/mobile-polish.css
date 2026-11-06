@@ -54,6 +54,37 @@
   }
   main[data-mode="growth"] .focus-controls::after { content: "growth"; }
   main[data-mode="brand"] .focus-controls::after { content: "brand"; }
+
+  /* 9. Page nav bar: back sits left, the page name sits centered,
+     home sits right. The title reads as a label, not a stray blue link. */
+  main[data-mode] .page-article > .mobile-page-nav {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+  }
+  .mobile-page-nav > .mobile-nav-actions { display: contents; }
+  .mobile-page-nav .back-btn {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+  }
+  main[data-mode] .page-article .mobile-page-nav .mobile-nav-title {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    text-align: center;
+    font-weight: 600;
+    color: #1a1a1a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 46vw;
+  }
+  .mobile-page-nav button[aria-label="Return to homepage"] {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
 }
 
 /* 6. Desktop pages: inner headings (not the page names) share one size
